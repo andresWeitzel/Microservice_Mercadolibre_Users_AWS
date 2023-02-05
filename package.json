@@ -1,0 +1,24 @@
+{
+  "name": "apirest_mercadolibre_serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andresWeitzel/ApiRest_Mercadolibre_Serverless.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andresWeitzel/ApiRest_Mercadolibre_Serverless/issues"
+  },
+  "homepage": "https://github.com/andresWeitzel/ApiRest_Mercadolibre_Serverless#readme",
+  "devDependencies": {
+    "serverless-offline": "^12.0.4",
+    "serverless-offline-ssm": "^6.2.0"
+  }
+}
