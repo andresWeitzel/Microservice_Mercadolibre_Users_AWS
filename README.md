@@ -107,6 +107,25 @@ npm i serverless-offline --save-dev
 ```git
 npm i serverless-offline-ssm --save-dev
 ```
+* Una vez instalado git, lo inicializamos en nuestro proyecto
+```git
+git init
+```
+* Asiganmos la uri del remoto
+```git
+git remote add origin https://github.com/andresWeitzel/ApiRest_Mercadolibre_Serverless
+```
+* Traemos los cambios del remoto
+```git
+git pull origin master
+```
+* Agregamos lo local, commitiamos y pusheamos
+```git
+git add .
+git commit -m "Updated x"
+git push origin master
+```
+
 
 
 <br>
