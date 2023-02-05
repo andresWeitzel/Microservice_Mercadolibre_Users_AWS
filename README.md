@@ -18,7 +18,9 @@ Api Rest para la gestión de usuarios, servicios, productos replicando y modific
  - [1.2) Configurar un proyecto serverless desde cero](#12-configurar-un-proyecto-serverless-desde-cero-)
  - [1.3) Tecnologías.](#13-tecnologías-)
 
+<br>
 
+</details>
 
 
 
