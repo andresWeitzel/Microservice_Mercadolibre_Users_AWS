@@ -1,5 +1,6 @@
 # ApiRest_Mercadolibre_Serverless
 Api Rest para la gestión de usuarios, servicios, productos replicando y modificando parte de la arquitectura de desarrollo de ML.
+* [Repositorio base de datos](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 
 
 <br>
@@ -36,6 +37,17 @@ Api Rest para la gestión de usuarios, servicios, productos replicando y modific
  
  <br>
 
+<br>
+
+</details>
+
+
+### 1.1) Ejecución del Proyecto [🔝](#índice-)
+
+<details>
+  <summary>Ver</summary>
+ 
+ 
 * Una vez creado un entorno de trabajo a través de algún ide, clonamos el proyecto
 ```git
 git clone https://github.com/andresWeitzel/ApiRest_Mercadolibre_Serverless
@@ -53,15 +65,19 @@ npm i
 sls offline start
 ```
  
+ 
 <br>
 
 </details>
 
 
-### 1.1) Ejecución del Proyecto [🔝](#índice-)
+### 1.2) Configurar un proyecto serverless desde cero [🔝](#índice-)
 
 <details>
   <summary>Ver</summary>
+ 
+ <br>
+ 
   
 * Una vez creado un entorno de trabajo a través de algún ide, clonamos el proyecto
 ```git
@@ -97,17 +113,6 @@ npm i serverless-offline --save-dev
 ```git
 npm i serverless-offline-ssm --save-dev
 ```
-<br>
-
-</details>
-
-
-### 1.2) Configurar un proyecto serverless desde cero [🔝](#índice-)
-
-<details>
-  <summary>Ver</summary>
- 
- <br>
 
 
 <br>
