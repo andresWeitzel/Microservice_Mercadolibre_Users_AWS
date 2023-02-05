@@ -51,7 +51,8 @@ npm i
 * Levantamos el proyecto
 ```git
 sls offline start
-
+```
+ 
 <br>
 
 </details>
