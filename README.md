@@ -60,6 +60,14 @@ cd 'projectName'
 ```git
 npm i
 ```
+* Creamos un archivo para almacenar las variables ssm necesarias
+  * Click der sobre la raíz del proyecto
+  * New file
+  * Creamos el archivo con el name `serverless_ssm.yml`. Este deberá estar a la misma altura que el serverless.yml
+  * Añadimos las ssm necesarias dentro del archivo. Ej:
+  ```git
+  HELLO_TEST : 'HELLO_SSM_TEST'
+  ```  
 * Levantamos el proyecto
 ```git
 sls offline start
