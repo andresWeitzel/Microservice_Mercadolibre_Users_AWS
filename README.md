@@ -96,9 +96,6 @@ npm i serverless-offline --save-dev
 ```git
 npm i serverless-offline-ssm --save-dev
 ```
-
-
-
 <br>
 
 </details>
