@@ -79,11 +79,7 @@ sls offline start
  <br>
  
   
-* Una vez creado un entorno de trabajo a través de algún ide, clonamos el proyecto
-```git
-git clone https://github.com/andresWeitzel/ApiRest_Mercadolibre_Serverless
-```
-* Nos posicionamos sobre el proyecto
+* Creamos un entorno de trabajo a través de algún ide, luego de crear una carpeta nos posicionamos sobre la misma
 ```git
 cd 'projectName'
 ```
