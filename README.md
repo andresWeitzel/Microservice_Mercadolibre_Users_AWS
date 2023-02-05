@@ -87,11 +87,7 @@ git clone https://github.com/andresWeitzel/ApiRest_Mercadolibre_Serverless
 ```git
 cd 'projectName'
 ```
-* Inicializamos un proyecto npm
-```git
-npm init -y
-```
-* Instalamos Serverless Framework de forma global
+* Instalamos Serverless Framework de forma global si es que aún no lo hemos realizado
 ```git
 npm install -g serverless
 ```
@@ -101,9 +97,11 @@ sls -v
 ```
 * Inicializamos un template de serverles
 ```git
-serverless create \
-  --template-url https://github.com/serverless/serverless/tree/master/lib/plugins/create/templates/aws-nodejs \
-  --path myService
+serverless create --template aws-nodejs
+```
+* Inicializamos un proyecto npm
+```git
+npm init -y
 ```
 * Instalamos serverless offline 
 ```git
