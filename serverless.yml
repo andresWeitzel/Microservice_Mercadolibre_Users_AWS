@@ -20,13 +20,18 @@ plugins:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/lambdas/test/hello.handler
     events:
       - http:
-          path: /users/create
+          path: /test
           method: get
+  getUsers:
+    handler: src/lambdas/users/getAll.handler
+    events:
+      - http:
+          path: /users/list
+          method: get  
 
-resources:
 
 
 custom:
