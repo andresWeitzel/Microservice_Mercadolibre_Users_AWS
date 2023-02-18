@@ -12,12 +12,13 @@ Api Rest para la gestión de usuarios, servicios, productos replicando y modific
  
  <br>
  
-### Sección 1) Descripción, Tecnologías y Dependencias 
+### Sección 1) Descripción, Tecnologías y Referencias
 
  - [1.0) Descripción del Proyecto.](#10-descripción-)
  - [1.1) Ejecución del Proyecto.](#11-ejecución-del-proyecto-)
  - [1.2) Configurar un proyecto serverless desde cero](#12-configurar-un-proyecto-serverless-desde-cero-)
  - [1.3) Tecnologías.](#13-tecnologías-)
+ - [1.4) Referencias.](#14-referencias-)
 
 <br>
 
@@ -147,6 +148,20 @@ git push origin master
  
  <br>
 
+
+<br>
+
+</details>
+
+
+### 1.4) Referencias [🔝](#índice-)
+
+<details>
+  <summary>Ver</summary>
+ 
+ <br>
+
+ * [Cómo usar Sequelize con Node.js y MySQL](https://www.digitalocean.com/community/tutorials/how-to-use-sequelize-with-node-js-and-mysql)
 
 <br>
 
