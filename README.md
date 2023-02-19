@@ -162,6 +162,7 @@ git push origin master
  <br>
 
  * [Cómo usar Sequelize con Node.js y MySQL](https://jasonwatmore.com/post/2022/06/26/nodejs-mysql-connect-to-mysql-database-with-sequelize-mysql2)
+ * [Videotutorial Recomendado](https://www.youtube.com/watch?v=im7THL67z0c)
 
 <br>
 
