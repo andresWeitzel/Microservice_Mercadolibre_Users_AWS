@@ -12,8 +12,8 @@
 // };
 
 
-const db = require("./../models/user");
-const User = db.User;
+// const db = require("./../models/user");
+// const User = db.User;
 
 
 // async function getAll() {
@@ -30,13 +30,13 @@ const User = db.User;
 //  getAll();
 
 
-    User.authenticate()
-    .then(() => {
-      console.log('Connect');
-    })
-    .catch((error => {
-      console.log(error);
-    }))
+    // User.authenticate()
+    // .then(() => {
+    //   console.log('Connect');
+    // })
+    // .catch((error => {
+    //   console.log(error);
+    // }))
 
 // User.findAll()
 // .then(data=>{
@@ -46,8 +46,20 @@ const User = db.User;
 //     console.log(error);
 // })
 
+const dbModel = require('../models/user');
+const User = dbModel.User;;
+
+User.findAll()
+.then(users => {
+  let usersString = JSON.stringify(users);
+  console.log(usersString);
+})
+.catch(error => {
+  console.log(error);
+})
 
 
-module.exports = {
-    getAll
-};
+
+// module.exports = {
+//     getAll
+// };
