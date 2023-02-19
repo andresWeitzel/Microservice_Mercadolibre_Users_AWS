@@ -17,28 +17,28 @@ plugins:
 
 functions:
   hello:
-    handler: src/lambdas/test/hello.handler
+    handler: src/controller/test/hello.handler
     events:
       - http:
           path: /test
           method: get
           private: true
   database:
-    handler: src/lambdas/db/connection.handler
+    handler: src/controller/db/connection.handler
     events:
       - http:
           path: /db-connection
           method: get
           private: true
   getAllUsers:
-    handler: src/lambdas/users/getAll.handler
+    handler: src/controller/users/getAll.handler
     events:
       - http:
           path: /users/list
           method: get
           private: true
   getByIdUsers:
-    handler: src/lambdas/users/getById.handler
+    handler: src/controller/users/getById.handler
     events:
       - http:
           path: /users/id/{id}
