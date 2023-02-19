@@ -3,6 +3,7 @@ const dbModel = require('../models/user');
 const User = dbModel.User;
 //Const/Vars
 let usersList;
+let user;
 
 
 const getAll = async function () {
@@ -23,7 +24,26 @@ const getAll = async function () {
    
 }
 
+const getById = async function (id) {
+    try {
+        user=null;
+        await User.findByPk(id)
+        .then(findUser => {
+            user = JSON.stringify(findUser);
+            console.log(user);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        return user;
+    } catch (error) {
+        console.log(error);
+    }
+   
+}
+
 
 module.exports = {
-    getAll
+    getAll,
+    getById
 };

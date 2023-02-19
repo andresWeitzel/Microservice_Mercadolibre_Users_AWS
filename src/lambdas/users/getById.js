@@ -1,19 +1,24 @@
 'use strict';
 //Imports
-const {getAll} = require('../../service/users');
+const {getById} = require('../../service/users');
 //Const/Vars
-let userList;
+let user;
+let userId;
 
 module.exports.handler = async (event) => {
   try {
-    userList=null;
-    userList = await getAll();
+    user=null;
+    userId=null;
+
+    userId = await event.pathParameters.id;
+
+    user = await getById(userId);
 
     return {
       statusCode: 200,
       body: JSON.stringify(
         {
-          message: userList,
+          message: user,
           input: event,
         },
         null,

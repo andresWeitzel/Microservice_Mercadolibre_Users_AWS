@@ -33,13 +33,20 @@ functions:
           path: /db-connection
           method: get      
           private: true  
-  getUsers:
+  getAllUsers:
     handler: src/lambdas/users/getAll.handler
     events:
       - http:
           path: /users/list
           method: get  
           private: true
+  getByIdUsers:
+    handler: src/lambdas/users/getById.handler
+    events:
+      - http:
+          path: /users/id/{id}
+          method: get  
+          private: true          
 
 resources:
   - ${file(src/resources/api-gateway.yml)}
