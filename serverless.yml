@@ -25,19 +25,24 @@ functions:
       - http:
           path: /test
           method: get
+          private: true
   database:
     handler: src/lambdas/db/connection.handler
     events:
       - http:
           path: /db-connection
-          method: get        
+          method: get      
+          private: true  
   getUsers:
     handler: src/lambdas/users/getAll.handler
     events:
       - http:
           path: /users/list
           method: get  
+          private: true
 
+resources:
+  - ${file(src/resources/api-gateway.yml)}
 
 
 custom:
