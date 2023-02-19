@@ -1,6 +1,5 @@
 //Imports
-const dbModel = require('../models/user');
-const User = dbModel.User;
+const {User} = require('../models/user');
 //Const/Vars
 let usersList;
 let user;

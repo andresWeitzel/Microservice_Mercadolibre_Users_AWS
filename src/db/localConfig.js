@@ -2,7 +2,7 @@
 const { Sequelize } = require('sequelize');
 
 
-const localConnection = new Sequelize(
+const dbConnection = new Sequelize(
   process.env.DATABASE_NAME,
   process.env.DATABASE_USER,
   process.env.DATABASE_PASSWORD,
@@ -21,5 +21,5 @@ const localConnection = new Sequelize(
 
 
 module.exports = {
-  localConnection
+  dbConnection
 }

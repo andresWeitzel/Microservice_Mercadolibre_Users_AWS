@@ -1,10 +1,9 @@
 
 
 const { DataTypes } = require('sequelize');
-const db = require('../db/localConfig');
-const sequelize = db.localConnection;
+const {dbConnection} = require('../db/localConfig');
 
-const User = sequelize.define("user", {
+const User = dbConnection.define("user", {
     id: {
         type: DataTypes.INTEGER
         , allowNull: false
