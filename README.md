@@ -1,5 +1,5 @@
-# ApiRest_Mercadolibre_Serverless
-Api Rest para la gestión de usuarios, servicios, productos y otras categorías replicando y modificando parte de la arquitectura de desarrollo de ML..
+# Microservice_Mercadolibre_Users_AWS
+Microservicio para la gestión de usuarios replicando y modificando parte de la arquitectura de desarrollo de ML..
 * [Repositorio base de datos](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 
 
@@ -51,7 +51,7 @@ Api Rest para la gestión de usuarios, servicios, productos y otras categorías 
  
 * Una vez creado un entorno de trabajo a través de algún ide, clonamos el proyecto
 ```git
-git clone https://github.com/andresWeitzel/ApiRest_Mercadolibre_Serverless
+git clone https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS
 ```
 * Nos posicionamos sobre el proyecto
 ```git
@@ -131,7 +131,7 @@ git init
 ```
 * Asiganmos la uri del remoto
 ```git
-git remote add origin https://github.com/andresWeitzel/ApiRest_Mercadolibre_Serverless
+git remote add origin https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS
 ```
 * Traemos los cambios del remoto
 ```git
