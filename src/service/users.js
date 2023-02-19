@@ -1,65 +1,21 @@
-// const db = require('../db/localConfig');
 
-
-
-// async function getAll() {
-//     return await db.User.findAll();
-// }
-
-
-// module.exports = {
-//     getAll
-// };
-
-
-// const db = require("./../models/user");
-// const User = db.User;
-
-
-// async function getAll() {
-//     try {
-//         let users=await User.findAll();
-//         console.log(JSON.stringify(users, null, 2));
-//         return users;
-//     } catch (error) {
-//         console.log(error);
-//     }
-
-// };
-
-//  getAll();
-
-
-    // User.authenticate()
-    // .then(() => {
-    //   console.log('Connect');
-    // })
-    // .catch((error => {
-    //   console.log(error);
-    // }))
-
-// User.findAll()
-// .then(data=>{
-//     console.log(data);
-// })
-// .catch(error=>{
-//     console.log(error);
-// })
 
 const dbModel = require('../models/user');
 const User = dbModel.User;;
 
-User.findAll()
-.then(users => {
-  let usersString = JSON.stringify(users);
-  console.log(usersString);
-})
-.catch(error => {
-  console.log(error);
-})
+const getAll = async function () {
+    await User.findAll()
+        .then(users => {
+            let usersString = JSON.stringify(users);
+            console.log(usersString);
+            return usersString;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+}
 
 
-
-// module.exports = {
-//     getAll
-// };
+module.exports = {
+    getAll
+};
