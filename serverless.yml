@@ -25,6 +25,12 @@ functions:
       - http:
           path: /test
           method: get
+  database:
+    handler: src/lambdas/db/connection.handler
+    events:
+      - http:
+          path: /db-connection
+          method: get        
   getUsers:
     handler: src/lambdas/users/getAll.handler
     events:
