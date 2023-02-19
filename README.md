@@ -1,5 +1,5 @@
 # ApiRest_Mercadolibre_Serverless
-Api Rest para la gestión de usuarios, servicios, productos replicando y modificando parte de la arquitectura de desarrollo de ML.
+Api Rest para la gestión de usuarios, servicios, productos y otras categorías replicando y modificando parte de la arquitectura de desarrollo de ML..
 * [Repositorio base de datos](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 
 
