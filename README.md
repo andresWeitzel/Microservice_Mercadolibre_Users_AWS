@@ -61,13 +61,22 @@ cd 'projectName'
 ```git
 npm i
 ```
-* Creamos un archivo para almacenar las variables ssm necesarias
+* Creamos un archivo para almacenar las variables ssm utilizadas en el proyecto (Más allá que sea un proyecto con fines no comerciales es una buena práctica utilizar variables de entorno).
   * Click der sobre la raíz del proyecto
   * New file
   * Creamos el archivo con el name `serverless_ssm.yml`. Este deberá estar a la misma altura que el serverless.yml
-  * Añadimos las ssm necesarias dentro del archivo. Ej:
+  * Añadimos las ssm necesarias dentro del archivo.
   ```git
-  HELLO_TEST : 'HELLO_SSM_TEST'
+   # Test
+   HELLO_TEST : 'HELLO_SSM_TEST'
+
+   # Database
+   DATABASE_NAME : 'microdb_mercadolibre'
+   DATABASE_USER : 'root'
+   DATABASE_PASSWORD : ''
+   DATABASE_HOST : 'localhost'
+   DATABASE_DIALECT : 'mysql'
+
   ```  
 * Levantamos el proyecto
 ```git
