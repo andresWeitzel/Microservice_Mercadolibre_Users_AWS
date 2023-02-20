@@ -10,10 +10,10 @@ const dbConnection = new Sequelize(
     host: process.env.DATABASE_HOST, 
     dialect: process.env.DATABASE_DIALECT,
     pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
+      max: parseInt(process.env.DATABASE_POOL_MAX),
+      min: parseInt(process.env.DATABASE_POOL_MIN),
+      acquire: parseInt(process.env.DATABASE_POOL_ACQUIRE),
+      idle: parseInt(process.env.DATABASE_POOL_IDLE)
     }
 
   }

@@ -87,7 +87,7 @@ const getLikeFirstName = async function (firstName, pageSizeNro, pageNro, orderB
                 order: orderBy,
                 where: {
                     first_name: {
-                        [Op.like]: firstName
+                        [Op.like]: `%${firstName}%`//containing what is entered, less strictmatch 
                     }
                 }
             },

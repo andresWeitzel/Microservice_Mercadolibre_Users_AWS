@@ -71,15 +71,19 @@ npm i
   * Creamos el archivo con el name `serverless_ssm.yml`. Este deberá estar a la misma altura que el serverless.yml
   * Añadimos las ssm necesarias dentro del archivo.
   ```git
-   # Test
-   HELLO_TEST : 'HELLO_SSM_TEST'
+    # Test
+    HELLO_TEST : 'HELLO_SSM_TEST'
 
-   # Database
-   DATABASE_NAME : 'microdb_mercadolibre'
-   DATABASE_USER : 'root'
-   DATABASE_PASSWORD : ''
-   DATABASE_HOST : 'localhost'
-   DATABASE_DIALECT : 'mysql'
+    # Database
+    DATABASE_NAME : 'microdb_mercadolibre'
+    DATABASE_USER : 'root'
+    DATABASE_PASSWORD : ''
+    DATABASE_HOST : 'localhost'
+    DATABASE_DIALECT : 'mysql'
+    DATABASE_POOL_MAX: 5
+    DATABASE_POOL_MIN: 5
+    DATABASE_POOL_ACQUIRE: 30000
+    DATABASE_POOL_IDLE: 10000
 
   ```  
 * Levantamos el proyecto
