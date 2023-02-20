@@ -1,6 +1,6 @@
 'use strict';
 //Services
-const { getLikeNickname } = require('../../services/users');
+const { getLikeNickname } = require('../../services/users/getLikeNickname');
 //Enums
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers

@@ -16,14 +16,14 @@ plugins:
   - serverless-offline
 
 functions:
-  hello:
+  helloTest:
     handler: src/controllers/test/hello.handler
     events:
       - http:
           path: /test
           method: get
           private: true
-  database:
+  databaseTest:
     handler: src/controllers/db/connection.handler
     events:
       - http:
@@ -58,7 +58,13 @@ functions:
           path: /users/first-name/{firstName}
           method: get
           private: true          
-
+  getLikeLastNameUsers:
+    handler: src/controllers/users/getLikeLastName.handler
+    events:
+      - http:
+          path: /users/last-name/{lastName}
+          method: get
+          private: true  
 resources:
   - ${file(src/resources/api-gateway.yml)}
 

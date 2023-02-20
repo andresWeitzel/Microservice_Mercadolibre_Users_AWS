@@ -1,6 +1,6 @@
 'use strict';
 //Services
-const { getById } = require('../../services/users');
+const { getById } = require('../../services/users/getById');
 //Enums
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers

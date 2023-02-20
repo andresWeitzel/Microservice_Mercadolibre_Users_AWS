@@ -1,13 +1,13 @@
 'use strict';
 //Services
-const { getLikeFirstName } = require('../../services/users/getLikeFirstName');
+const { getLikeLastName } = require('../../services/users/getLikeLastName');
 //Enums
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
 const { requestResult } = require('../../helpers/http/bodyResponse');
 //Const/Vars
 let userList;
-let userName;
+let lastName;
 const pageSizeNro = 5;
 const pageNro = 0;
 const orderBy = [
@@ -22,12 +22,12 @@ const orderBy = [
 module.exports.handler = async (event) => {
   try {
     userList = null;
-    userName = null;
+    lastName = null;
 
-    userName = await event.pathParameters.firstName;
+    lastName = await event.pathParameters.lastName;
 
 
-    userList = await getLikeFirstName(userName, pageSizeNro, pageNro, orderBy);
+    userList = await getLikeLastName(lastName, pageSizeNro, pageNro, orderBy);
 
     return await requestResult(statusCode.OK, userList, event);
 
