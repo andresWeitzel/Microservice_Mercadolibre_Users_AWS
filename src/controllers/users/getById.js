@@ -1,6 +1,6 @@
 'use strict';
 //Services
-const { getById } = require('../../services/users/getById');
+const { getById, getByIdLimit } = require('../../services/users/getById');
 //Enums
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
@@ -22,7 +22,7 @@ module.exports.handler = async (event) => {
 
     userId = await event.pathParameters.id;
 
-    user = await getById(userId);
+    user = await getByIdLimit(userId);
 
     return await requestResult(statusCode.OK, user, event);
 

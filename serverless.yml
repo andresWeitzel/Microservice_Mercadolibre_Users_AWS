@@ -65,6 +65,14 @@ functions:
           path: /users/last-name/{lastName}
           method: get
           private: true  
+  getLikeIdentificationTypeUsers:
+    handler: src/controllers/users/getLikeIdentificationType.handler
+    events:
+      - http:
+          path: /users/identification-type/{identificationType}
+          method: get
+          private: true  
+
 resources:
   - ${file(src/resources/api-gateway.yml)}
 
