@@ -1,4 +1,4 @@
-![Index app](./doc/assets/readme/MicroService_Users_ML.drawio.png)
+![Index app](./doc/assets/MicroService_Users_ML.drawio.png)
 
 <br>
 
