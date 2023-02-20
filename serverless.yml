@@ -17,33 +17,40 @@ plugins:
 
 functions:
   hello:
-    handler: src/controller/test/hello.handler
+    handler: src/controllers/test/hello.handler
     events:
       - http:
           path: /test
           method: get
           private: true
   database:
-    handler: src/controller/db/connection.handler
+    handler: src/controllers/db/connection.handler
     events:
       - http:
           path: /db-connection
           method: get
           private: true
   getAllUsers:
-    handler: src/controller/users/getAll.handler
+    handler: src/controllers/users/getAll.handler
     events:
       - http:
           path: /users/list
           method: get
           private: true
   getByIdUsers:
-    handler: src/controller/users/getById.handler
+    handler: src/controllers/users/getById.handler
     events:
       - http:
           path: /users/id/{id}
           method: get
           private: true
+  getLikeFirstNameUsers:
+    handler: src/controllers/users/getLikeFirstName.handler
+    events:
+      - http:
+          path: /users/first-name/{firstName}
+          method: get
+          private: true          
 
 resources:
   - ${file(src/resources/api-gateway.yml)}

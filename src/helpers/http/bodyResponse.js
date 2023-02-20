@@ -1,7 +1,13 @@
-
-const requestSuccessful = async (message, input) => {
+/**
+ * @description get a json with the http status code, a message and input
+ * @param {Number} statusCode Number type
+ * @param {String} message String type
+ * @param {Object} input Object type
+ * @returns a json for the lambda response
+ */
+const requestResult = async (statusCode,message, input) => {
     return {
-        statusCode: 200,
+        statusCode: statusCode,
         body: JSON.stringify(
             {
                 message: message,
@@ -13,4 +19,4 @@ const requestSuccessful = async (message, input) => {
     };
 }
 
-module.exports = { requestSuccessful }
+module.exports = { requestResult }

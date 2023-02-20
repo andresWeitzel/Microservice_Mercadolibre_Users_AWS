@@ -1,8 +1,14 @@
 
 
 const { DataTypes } = require('sequelize');
-const {dbConnection} = require('../db/localConfig');
+const { dbConnection } = require('../db/localConfig');
 
+
+
+
+/**
+ * @description database user model with their respective fields and constraints
+ */
 const User = dbConnection.define("user", {
     id: {
         type: DataTypes.INTEGER
