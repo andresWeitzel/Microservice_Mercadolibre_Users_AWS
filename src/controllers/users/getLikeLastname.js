@@ -5,9 +5,13 @@ const { getLikeLastName } = require('../../services/users/getLikeLastName');
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
 const { requestResult } = require('../../helpers/http/bodyResponse');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
 //Const/Vars
 let userList;
 let lastName;
+let xApiKey;
+let authorization;
+let validate;
 const pageSizeNro = 5;
 const pageNro = 0;
 const orderBy = [
@@ -24,8 +28,17 @@ module.exports.handler = async (event) => {
     userList = null;
     lastName = null;
 
-    lastName = await event.pathParameters.lastName;
+    //Headers
+    xApiKey = await event.headers["x-api-key"];
+    authorization = await event.headers["Authorization"];
 
+    validate = await validateAuthHeaders(xApiKey, authorization);
+
+    if (!validate) {
+      return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
+    }
+
+    lastName = await event.pathParameters.lastName;
 
     userList = await getLikeLastName(lastName, pageSizeNro, pageNro, orderBy);
 
