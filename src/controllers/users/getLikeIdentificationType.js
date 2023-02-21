@@ -5,9 +5,13 @@ const { getLikeIdentificationType } = require('../../services/users/getLikeIdent
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
 const { requestResult } = require('../../helpers/http/bodyResponse');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
 //Const/Vars
 let userList;
 let identificationType;
+let xApiKey;
+let authorization;
+let validate;
 const pageSizeNro = 5;
 const pageNro = 0;
 const orderBy = [
@@ -23,6 +27,16 @@ module.exports.handler = async (event) => {
   try {
     userList = null;
     identificationType = null;
+
+    //Headers
+    xApiKey = await event.headers["x-api-key"];
+    authorization = await event.headers["Authorization"];
+
+    validate = await validateAuthHeaders(xApiKey, authorization);
+
+    if (!validate) {
+      return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
+    }
 
     identificationType = await event.pathParameters.identificationType;
 
