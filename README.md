@@ -71,6 +71,11 @@ npm i
   * Creamos el archivo con el name `serverless_ssm.yml`. Este deberá estar a la misma altura que el serverless.yml
   * Añadimos las ssm necesarias dentro del archivo.
   ```git
+    # Keys
+    X_API_KEY : 'f98d8cd98h73s204e3456998ecl9427j'
+
+    BEARER_TOKEN : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+
     # Test
     HELLO_TEST : 'HELLO_SSM_TEST'
 
@@ -80,10 +85,10 @@ npm i
     DATABASE_PASSWORD : ''
     DATABASE_HOST : 'localhost'
     DATABASE_DIALECT : 'mysql'
-    DATABASE_POOL_MAX: 5
-    DATABASE_POOL_MIN: 5
-    DATABASE_POOL_ACQUIRE: 30000
-    DATABASE_POOL_IDLE: 10000
+    DATABASE_POOL_MAX : 5
+    DATABASE_POOL_MIN : 0
+    DATABASE_POOL_ACQUIRE : 30000
+    DATABASE_POOL_IDLE : 10000
 
   ```  
 * Levantamos el proyecto
@@ -188,10 +193,9 @@ git push origin master
 #### Sequelize
  * [Modelos y Operadores](https://sequelize.org/docs/v6/core-concepts/model-querying-basics/)
 
-
-
-#### Buenas Prácticas 
+#### Api Gateway
  * [Buenas Prácticas Api-Gateway](https://docs.aws.amazon.com/whitepapers/latest/best-practices-api-gateway-private-apis-integration/rest-api.html)
+ * [Creación de Api-keys personalizadas](https://towardsaws.com/protect-your-apis-by-creating-api-keys-using-serverless-framework-fe662ad37447)
 
 <br>
 

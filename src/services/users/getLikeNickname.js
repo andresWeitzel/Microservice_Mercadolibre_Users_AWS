@@ -34,7 +34,7 @@ const getLikeNickname = async function (nickName, pageSizeNro, pageNro, orderBy)
 
         )
             .then(users => {
-                usersList = JSON.stringify(users);
+                usersList = users;
                 console.log(usersList);
             })
             .catch(error => {

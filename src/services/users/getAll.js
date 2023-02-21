@@ -25,7 +25,7 @@ const getAll = async function (pageSizeNro, pageNro, orderBy) {
             }
         )
             .then(users => {
-                usersList = JSON.stringify(users);
+                usersList = users;
                 console.log(usersList);
             })
             .catch(error => {
@@ -60,7 +60,7 @@ const getAllWithoutDate = async function (pageSizeNro, pageNro, orderBy) {
             }
         )
             .then(users => {
-                usersList = JSON.stringify(users);
+                usersList = users;
                 console.log(usersList);
             })
             .catch(error => {

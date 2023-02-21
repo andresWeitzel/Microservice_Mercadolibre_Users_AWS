@@ -10,6 +10,11 @@ provider:
   memorySize: 512
   timeout: 10
   environment: ${file(./serverless_ssm.yml)}
+  apiGateway:
+    apiKeys:
+      - name : xApiKey
+        value : ${file(./serverless_ssm.yml):X_API_KEY}
+      
 
 plugins:
   - serverless-offline-ssm
@@ -83,4 +88,5 @@ custom:
   serverless-offline-ssm:
     stages:
       - dev
-    ssm: ${file(./serverless_ssm.yml)}
+    ssm: 
+      ${file(./serverless_ssm.yml)}

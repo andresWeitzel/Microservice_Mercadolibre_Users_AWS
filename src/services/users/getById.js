@@ -19,7 +19,7 @@ const getById = async function (id) {
         user = null;
         await User.findByPk(id)
             .then(findUser => {
-                user = JSON.stringify(findUser);
+                user = findUser;
                 console.log(user);
             })
             .catch(error => {
@@ -50,7 +50,7 @@ const getByIdLimit = async function (id) {
             
             )
             .then(findUser => {
-                user = JSON.stringify(findUser);
+                user = findUser;
                 console.log(user);
             })
             .catch(error => {

@@ -33,7 +33,7 @@ const getLikeIdentificationType = async function (identificationType, pageSizeNr
 
         )
             .then(users => {
-                usersList = JSON.stringify(users);
+                usersList = users;
                 console.log(usersList);
             })
             .catch(error => {
