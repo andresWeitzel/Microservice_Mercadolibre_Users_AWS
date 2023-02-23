@@ -6,12 +6,16 @@ const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
 const { requestResult } = require('../../helpers/http/bodyResponse');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
+const {
+  validatePathParameters
+} = require('../../helpers/http/requestParameters');
 //Const/Vars
 let userList;
 let userName;
 let xApiKey;
 let authorization;
 let validate;
+let validatePathParams;
 const pageSizeNro = 5;
 const pageNro = 0;
 const orderBy = [
@@ -40,10 +44,18 @@ module.exports.handler = async (event) => {
 
     userName = await event.pathParameters.firstName;
 
+    validatePathParams = await validatePathParameters(userName);
 
-    userList = await getLikeFirstName(userName, pageSizeNro, pageNro, orderBy);
+    if (validatePathParams) {
 
-    return await requestResult(statusCode.OK, userList, event);
+      userList = await getLikeFirstName(userName, pageSizeNro, pageNro, orderBy);
+
+      return await requestResult(statusCode.OK, userList, event);
+
+    } else {
+      return await requestResult(statusCode.BAD_REQUEST, 'Wrong request, verify first name passed as parameter', event);
+    }
+
 
   } catch (error) {
     console.log(error);

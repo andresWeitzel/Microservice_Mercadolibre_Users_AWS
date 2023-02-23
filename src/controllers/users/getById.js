@@ -5,17 +5,17 @@ const { getById, getByIdLimit } = require('../../services/users/getById');
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
 const { requestResult } = require('../../helpers/http/bodyResponse');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
 const {
   validatePathParameters
 } = require('../../helpers/http/requestParameters');
-const { validateAuthHeaders } = require('../../helpers/auth/headers');
 //Const/Vars
 let user;
 let userId;
 let xApiKey;
 let authorization;
 let validateHeaders;
-let validatePathParams;
+let validatePathParam;
 
 /**
  * @description gets a user with all its attributes whose id matches the one passed as a parameter
@@ -37,19 +37,19 @@ module.exports.handler = async (event) => {
       return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
     }
 
-    validatePathParams = await validatePathParameters(event);
+    userId = await event.pathParameters.id;
 
-    if (validatePathParams) {
+    validatePathParam = await validatePathParameters(userId);
 
-      userId = await event.pathParameters.id;
+    if (validatePathParam) {
 
       user = await getByIdLimit(userId);
 
       return await requestResult(statusCode.OK, user, event);
-    
+
     } else {
 
-      return await requestResult(statusCode.BAD_REQUEST, 'Wrong request, verify user id', event);
+      return await requestResult(statusCode.BAD_REQUEST, 'Wrong request, check user id passed as parameter', event);
     }
 
 
