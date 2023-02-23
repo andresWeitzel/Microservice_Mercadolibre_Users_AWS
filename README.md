@@ -1,7 +1,5 @@
 ![Index app](./doc/assets/MicroService_Users_ML.drawio.png)
 
-<br>
-
 # Microservice_Mercadolibre_Users_AWS
 Microservicio para la gestión de usuarios replicando y modificando parte de la arquitectura de desarrollo de ML  implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, entre otros. 
 * [Repositorio base de datos](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
