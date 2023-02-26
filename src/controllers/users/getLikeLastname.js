@@ -6,14 +6,19 @@ const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
 const { requestResult } = require('../../helpers/http/bodyResponse');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
+const {
+  validatePathParameters
+} = require('../../helpers/http/requestParameters');
 //Const/Vars
 let userList;
 let lastName;
 let xApiKey;
 let authorization;
 let validate;
-const pageSizeNro = 5;
-const pageNro = 0;
+let validatePathParams;
+let queryStrParams;
+let pageSizeNro = 5;
+let pageNro = 0;
 const orderBy = [
   ['id', 'ASC']
 ];
@@ -28,7 +33,7 @@ module.exports.handler = async (event) => {
     userList = null;
     lastName = null;
 
-    //Headers
+    //-- start with validation Headers  ---
     xApiKey = await event.headers["x-api-key"];
     authorization = await event.headers["Authorization"];
 
@@ -37,12 +42,34 @@ module.exports.handler = async (event) => {
     if (!validate) {
       return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
     }
+    //-- end with validation Headers  ---
 
+    //-- start with path parameters  ---
     lastName = await event.pathParameters.lastName;
 
-    userList = await getLikeLastName(lastName, pageSizeNro, pageNro, orderBy);
+    validatePathParams = await validatePathParameters(lastName);
+    //-- end with path parameters  ---
 
-    return await requestResult(statusCode.OK, userList, event);
+    if (validatePathParams) {
+
+      //-- start with pagination  ---
+      queryStrParams = event.queryStringParameters;
+
+      if (!(queryStrParams == null)) {
+        pageSizeNro = parseInt(await event.queryStringParameters.limit);
+        pageNro = parseInt(await event.queryStringParameters.page);
+      }
+      //-- end with pagination  ---
+
+      //-- start with db query  ---
+      userList = await getLikeLastName(lastName, pageSizeNro, pageNro, orderBy);
+
+      return await requestResult(statusCode.OK, userList, event);
+      //-- end with db query  ---
+
+    } else {
+      return await requestResult(statusCode.BAD_REQUEST, 'Wrong request, verify last name passed as parameter', event);
+    }
 
   } catch (error) {
     console.log(error);

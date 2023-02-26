@@ -27,7 +27,7 @@ module.exports.handler = async (event) => {
     user = null;
     userId = null;
 
-    //Headers
+    //-- start with validation Headers  ---
     xApiKey = await event.headers["x-api-key"];
     authorization = await event.headers["Authorization"];
 
@@ -36,16 +36,21 @@ module.exports.handler = async (event) => {
     if (!validateHeaders) {
       return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
     }
+    //-- end with validation Headers  ---
 
+    //-- start with path parameters  ---
     userId = await event.pathParameters.id;
 
     validatePathParam = await validatePathParameters(userId);
+    //-- end with path parameters  ---
 
     if (validatePathParam) {
 
+      //-- start with db query  ---
       user = await getByIdLimit(userId);
 
       return await requestResult(statusCode.OK, user, event);
+      //-- end with db query  ---
 
     } else {
 

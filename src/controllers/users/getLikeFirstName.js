@@ -48,7 +48,6 @@ module.exports.handler = async (event) => {
     userName = await event.pathParameters.firstName;
 
     validatePathParams = await validatePathParameters(userName);
-
     //-- end with path parameters  ---
 
     if (validatePathParams) {
@@ -59,7 +58,6 @@ module.exports.handler = async (event) => {
       if (!(queryStrParams == null)) {
         pageSizeNro = parseInt(await event.queryStringParameters.limit);
         pageNro = parseInt(await event.queryStringParameters.page);
-
       }
       //-- end with pagination  ---
 
@@ -67,7 +65,6 @@ module.exports.handler = async (event) => {
       userList = await getLikeFirstName(userName, pageSizeNro, pageNro, orderBy);
 
       return await requestResult(statusCode.OK, userList, event);
-
       //-- end with db query  ---
 
     } else {

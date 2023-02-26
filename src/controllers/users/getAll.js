@@ -30,6 +30,7 @@ module.exports.handler = async (event) => {
     userList = null;
 
     //-- start with validation Headers  ---
+    
     xApiKey = await event.headers["x-api-key"];
     authorization = await event.headers["Authorization"];
 
