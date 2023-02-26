@@ -16,8 +16,9 @@ let xApiKey;
 let authorization;
 let validate;
 let validatePathParams;
-const pageSizeNro = 5;
-const pageNro = 0;
+let queryStrParams;
+let pageSizeNro = 5;
+let pageNro = 0;
 const orderBy = [
   ['id', 'ASC']
 ];
@@ -32,7 +33,7 @@ module.exports.handler = async (event) => {
     userList = null;
     userName = null;
 
-    //Headers
+    //-- start with validation Headers  ---
     xApiKey = await event.headers["x-api-key"];
     authorization = await event.headers["Authorization"];
 
@@ -41,16 +42,33 @@ module.exports.handler = async (event) => {
     if (!validate) {
       return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
     }
+    //-- end with validation Headers  ---
 
+    //-- start with path parameters  ---
     userName = await event.pathParameters.firstName;
 
     validatePathParams = await validatePathParameters(userName);
 
+    //-- end with path parameters  ---
+
     if (validatePathParams) {
 
+      //-- start with pagination  ---
+      queryStrParams = event.queryStringParameters;
+
+      if (!(queryStrParams == null)) {
+        pageSizeNro = parseInt(await event.queryStringParameters.limit);
+        pageNro = parseInt(await event.queryStringParameters.page);
+
+      }
+      //-- end with pagination  ---
+
+      //-- start with db query  ---
       userList = await getLikeFirstName(userName, pageSizeNro, pageNro, orderBy);
 
       return await requestResult(statusCode.OK, userList, event);
+
+      //-- end with db query  ---
 
     } else {
       return await requestResult(statusCode.BAD_REQUEST, 'Wrong request, verify first name passed as parameter', event);
