@@ -84,6 +84,27 @@ functions:
           path: /users/identification-number/{identificationNumber}
           method: get
           private: true            
+  getLikeCountryIdUsers:
+    handler: src/controllers/users/getLikeCountryId.handler
+    events:
+      - http:
+          path: /users/country-id/{countryId}
+          method: get
+          private: true 
+  getLikeEmailUsers:
+    handler: src/controllers/users/getLikeEmail.handler
+    events:
+      - http:
+          path: /users/email/{email}
+          method: get
+          private: true 
+  getLikeCreationDateUsers:
+    handler: src/controllers/users/getLikeCreationDate.handler
+    events:
+      - http:
+          path: /users/creation-date/{creationDate}
+          method: get
+          private: true                           
 
 resources:
   - ${file(src/resources/api-gateway.yml)}
