@@ -18,7 +18,7 @@ Microservicio para la gestión de usuarios replicando y modificando parte de la 
 
  - [1.0) Descripción del Proyecto.](#10-descripción-)
  - [1.1) Ejecución del Proyecto.](#11-ejecución-del-proyecto-)
- - [1.2) Configurar un proyecto serverless desde cero](#12-configurar-un-proyecto-serverless-desde-cero-)
+ - [1.2) Configuración del proyecto desde cero](#12-configuración-del-proyecto-desde-cero-)
  - [1.3) Tecnologías.](#13-tecnologías-)
  - [1.4) Referencias.](#14-referencias-)
 
@@ -100,7 +100,7 @@ sls offline start
 </details>
 
 
-### 1.2) Configurar un proyecto serverless desde cero [🔝](#índice-)
+### 1.2) Configuración del proyecto desde cero [🔝](#índice-)
 
 <details>
   <summary>Ver</summary>
