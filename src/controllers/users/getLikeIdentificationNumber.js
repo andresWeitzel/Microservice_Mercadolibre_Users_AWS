@@ -1,6 +1,6 @@
 'use strict';
 //Services
-const { getLikeNickname } = require('../../services/users/getLikeNickname');
+const { getLikeIdentificationNumber } = require('../../services/users/getLikeIdentificationNumber');
 //Enums
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
@@ -11,7 +11,7 @@ const {
 } = require('../../helpers/http/requestParameters');
 //Const/Vars
 let userList;
-let nickname;
+let identificationNumber;
 let xApiKey;
 let authorization;
 let validate;
@@ -24,14 +24,14 @@ const orderBy = [
 ];
 
 /**
- * @description get all paged users whose nickname matches the passed as parameter
+ * @description get all paged users whose IdentificationNumber matches the passed as parameter
  * @param {Object} event Object type
  * @returns a list of paginated users
  */
 module.exports.handler = async (event) => {
   try {
     userList = null;
-    nickname = null;
+    identificationNumber = null;
 
     //-- start with validation Headers  ---
     xApiKey = await event.headers["x-api-key"];
@@ -45,9 +45,9 @@ module.exports.handler = async (event) => {
     //-- end with validation Headers  ---
 
     //-- start with path parameters  ---
-    nickname = await event.pathParameters.nickname;
+    identificationNumber = await event.pathParameters.identificationNumber;
 
-    validatePathParams = await validatePathParameters(nickname);
+    validatePathParams = await validatePathParameters(identificationNumber);
     //-- end with path parameters  ---
 
     if (validatePathParams) {
@@ -62,15 +62,14 @@ module.exports.handler = async (event) => {
       //-- end with pagination  ---
 
       //-- start with db query  ---
-      userList = await getLikeNickname(nickname, pageSizeNro, pageNro, orderBy);
+      userList = await getLikeIdentificationNumber(identificationNumber, pageSizeNro, pageNro, orderBy);
 
       return await requestResult(statusCode.OK, userList, event);
       //-- end with db query  ---
 
     } else {
-      return await requestResult(statusCode.BAD_REQUEST, 'Wrong request, verify nickname passed as parameter', event);
+      return await requestResult(statusCode.BAD_REQUEST, 'Wrong request, verify identification number passed as parameter', event);
     }
-
 
   } catch (error) {
     console.log(error);

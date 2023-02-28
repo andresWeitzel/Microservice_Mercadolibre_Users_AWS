@@ -8,6 +8,7 @@ const { requestResult } = require('../../helpers/http/bodyResponse');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
 //Const/Vars
 let msg;
+let code;
 let validate;
 let xApiKey;
 let authorization;
@@ -16,6 +17,7 @@ module.exports.handler = async (event) => {
 
   try {
     msg = null;
+    code = null;
     //Headers
     xApiKey = await event.headers["x-api-key"];
     authorization = await event.headers["Authorization"];
@@ -28,14 +30,19 @@ module.exports.handler = async (event) => {
     await dbConnection.authenticate()
       .then(() => {
         msg = 'Connection has been established successfully.';
+        code = statusCode.OK;
+
         console.log(msg);
+
       }).catch((error) => {
         msg = 'Unable to connect to the database: ', error;
-        console.log(msg);
+        code = statusCode.INTERNAL_SERVER_ERROR;
+        console.log(error);
+
       });
 
+    return await requestResult(code, msg, event);
 
-    return await requestResult(statusCode.OK, msg, event);
 
   } catch (error) {
     console.log(error);
