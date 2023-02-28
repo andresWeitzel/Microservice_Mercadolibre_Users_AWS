@@ -18,7 +18,7 @@ Microservicio para la gestión de usuarios replicando y modificando parte de la 
 
  - [1.0) Descripción del Proyecto.](#10-descripción-)
  - [1.1) Ejecución del Proyecto.](#11-ejecución-del-proyecto-)
- - [1.2) Configurar un proyecto serverless desde cero](#12-configurar-un-proyecto-serverless-desde-cero-)
+ - [1.2) Configuración del proyecto desde cero](#12-configuración-del-proyecto-desde-cero-)
  - [1.3) Tecnologías.](#13-tecnologías-)
  - [1.4) Referencias.](#14-referencias-)
 
@@ -89,7 +89,7 @@ npm i
     DATABASE_POOL_IDLE : 10000
 
   ```  
-* Levantamos el proyecto
+* Ejecutamos el proyecto
 ```git
 sls offline start
 ```
@@ -100,7 +100,7 @@ sls offline start
 </details>
 
 
-### 1.2) Configurar un proyecto serverless desde cero [🔝](#índice-)
+### 1.2) Configuración del proyecto desde cero [🔝](#índice-)
 
 <details>
   <summary>Ver</summary>
@@ -136,6 +136,10 @@ npm i serverless-offline --save-dev
 ```git
 npm i serverless-offline-ssm --save-dev
 ```
+* Ejecutamos el proyecto
+```git
+sls offline start
+```
 * Una vez instalado git, lo inicializamos en nuestro proyecto
 ```git
 git init
@@ -148,7 +152,7 @@ git remote add origin https://github.com/andresWeitzel/Microservice_Mercadolibre
 ```git
 git pull origin master
 ```
-* Agregamos lo local, commitiamos y pusheamos
+* Agregamos lo local, commit y push
 ```git
 git add .
 git commit -m "Updated x"
