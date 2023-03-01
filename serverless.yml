@@ -104,7 +104,14 @@ functions:
       - http:
           path: /users/creation-date/{creationDate}
           method: get
-          private: true                           
+          private: true 
+  getLikeUpdateDateUsers:
+    handler: src/controllers/users/getLikeUpdateDate.handler
+    events:
+      - http:
+          path: /users/update-date/{updateDate}
+          method: get
+          private: true                                     
 
 resources:
   - ${file(src/resources/api-gateway.yml)}
