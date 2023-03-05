@@ -52,8 +52,8 @@ module.exports.handler = async (event) => {
     //-- end with pagination  ---
 
     //-- start with db query  ---
-    //userList = await getAll(pageSizeNro, pageNro, orderBy);
-    userList = await getAllWithoutDate(pageSizeNro, pageNro, orderBy);
+    userList = await getAll(pageSizeNro, pageNro, orderBy);
+    // userList = await getAllWithoutDate(pageSizeNro, pageNro, orderBy);
 
     return await requestResult(statusCode.OK, userList, event);
     //-- end with db query  ---

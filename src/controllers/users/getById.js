@@ -47,7 +47,8 @@ module.exports.handler = async (event) => {
     if (validatePathParam) {
 
       //-- start with db query  ---
-      user = await getByIdLimit(userId);
+      user = await getById(userId);
+      //user = await getByIdLimit(userId);
 
       return await requestResult(statusCode.OK, user, event);
       //-- end with db query  ---

@@ -1,5 +1,5 @@
 //Externals
-const { Op } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 //Models
 const { User } = require('../../models/user');
 //Const/Vars
@@ -21,14 +21,23 @@ const getLikeCreationDate = async function (creationDate, pageSizeNro, pageNro, 
         usersList = null;
         await User.findAll(
             {
+                attributes: {
+                    include: [
+                        [Sequelize.fn("DATE", Sequelize.col("creation_date")), 'creation_date']
+                    ],
+                },
+                where: {
+                    creation_date: {
+                        [Op.eq]: `${creationDate}`//containing what is entered, less strictmatch 
+                    }
+                },
                 limit: pageSizeNro,
                 offset: pageNro,
                 order: orderBy,
-                where: {
-                    creation_date: {
-                        [Op.like]: `%${creationDate}%`//containing what is entered, less strictmatch 
-                    }
-                }
+                
+                
+
+
             },
 
         )
