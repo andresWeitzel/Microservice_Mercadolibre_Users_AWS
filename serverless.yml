@@ -112,6 +112,13 @@ functions:
           path: /users/update-date/{updateDate}
           method: get
           private: true                                     
+  addUser:
+    handler: src/controllers/users/addUser.handler
+    events:
+      - http:
+          path: /users/add-user/
+          method: post
+          private: true  
 
 resources:
   - ${file(src/resources/api-gateway.yml)}

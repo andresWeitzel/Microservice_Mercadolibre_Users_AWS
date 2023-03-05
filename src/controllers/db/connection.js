@@ -10,23 +10,23 @@ const { validateAuthHeaders } = require('../../helpers/auth/headers');
 let msg;
 let code;
 let validate;
-let xApiKey;
-let authorization;
 
 module.exports.handler = async (event) => {
 
   try {
     msg = null;
     code = null;
-    //Headers
-    xApiKey = await event.headers["x-api-key"];
-    authorization = await event.headers["Authorization"];
 
-    validate = await validateAuthHeaders(xApiKey, authorization);
+    //-- start with validation Headers  ---
+
+    validate = await validateAuthHeaders(event);
 
     if (!validate) {
       return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
     }
+    //-- end with validation Headers  ---
+
+    //-- start with db query  ---
     await dbConnection.authenticate()
       .then(() => {
         msg = 'Connection has been established successfully.';
@@ -42,7 +42,7 @@ module.exports.handler = async (event) => {
       });
 
     return await requestResult(code, msg, event);
-
+    //-- end with db query  ---
 
   } catch (error) {
     console.log(error);

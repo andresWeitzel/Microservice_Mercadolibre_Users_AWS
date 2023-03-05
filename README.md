@@ -199,6 +199,9 @@ git push origin master
  * [Buenas Prácticas Api-Gateway](https://docs.aws.amazon.com/whitepapers/latest/best-practices-api-gateway-private-apis-integration/rest-api.html)
  * [Creación de Api-keys personalizadas](https://towardsaws.com/protect-your-apis-by-creating-api-keys-using-serverless-framework-fe662ad37447)
 
+ #### Librerías
+ * [Validación de campos](https://www.npmjs.com/package/node-input-validator)
+
 <br>
 
 </details>

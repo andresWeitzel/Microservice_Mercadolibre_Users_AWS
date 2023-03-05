@@ -12,7 +12,7 @@ const { dbConnection } = require('../db/localConfig');
 const User = dbConnection.define("user", {
     id: {
         type: DataTypes.INTEGER
-        , allowNull: false
+        , allowNull: true
         , primaryKey: true
     },
     nickname: {

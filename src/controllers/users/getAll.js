@@ -6,12 +6,12 @@ const { getAll, getAllWithoutDate
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
 const { requestResult } = require('../../helpers/http/bodyResponse');
+const { validateHeadersParams } = require('../../helpers/http/requestHeadersParams');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
 //Const/Vars
 let userList;
-let xApiKey;
-let authorization;
-let validate;
+let validateReqParams;
+let validateAuth;
 let queryStrParams;
 let pageSizeNro = 5;
 let pageNro = 0;
@@ -30,13 +30,16 @@ module.exports.handler = async (event) => {
     userList = null;
 
     //-- start with validation Headers  ---
-    
-    xApiKey = await event.headers["x-api-key"];
-    authorization = await event.headers["Authorization"];
 
-    validate = await validateAuthHeaders(xApiKey, authorization);
+    validateReqParams = await validateHeadersParams(event);
 
-    if (!validate) {
+    if (!validateReqParams) {
+      return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers', event);
+    }
+
+    validateAuth = await validateAuthHeaders(event);
+
+    if (!validateAuth) {
       return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
     }
     //-- end with validation Headers  ---
