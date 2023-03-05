@@ -1,5 +1,5 @@
 //Externals
-const { Op } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 //Models
 const { User } = require('../../models/user');
 //Const/Vars
@@ -14,21 +14,30 @@ let usersList;
  * @param {Object} orderBy Array Object type
  * @returns a list of paginated users
  * @example 
- * [{"id":1,"nickname":"RAFA-CON","first_name":"Rafael","last_name":"Castro","email":"rafael_castro88@gmail.com","identification_type":"DNI","identification_number":"445938822","country_id":"AR","creation_date":"2023-02-12T15:03:04.000Z","update_date":"2023-02-12T15:03:04.000Z"},{"id".....]
+ * [{"id":1,"nickname":"RAFA-CON","first_name":"Rafael","last_name":"Castro","email":"rafael_castro88@gmail.com","identification_type":"DNI","identification_number":"445938822","country_id":"AR","creation_date":"22-02-2023 21:18:11","update_date":"22-02-2023 21:18:11"},{"id".....]
  */
 const getLikeCountryId = async function (countryId, pageSizeNro, pageNro, orderBy) {
     try {
         usersList = null;
         await User.findAll(
             {
-                limit: pageSizeNro,
-                offset: pageNro,
-                order: orderBy,
+                attributes: {
+                    include: [
+                        [Sequelize.fn("DATE_FORMAT", Sequelize.col("creation_date"),
+                            "%d-%m-%Y %H:%i:%s"), 'creation_date'],
+                        [Sequelize.fn("DATE_FORMAT", Sequelize.col("update_date"),
+                            "%d-%m-%Y %H:%i:%s"), 'update_date']
+                    ],
+                },
                 where: {
                     country_id: {
                         [Op.like]: `%${countryId}%`//containing what is entered, less strictmatch 
                     }
-                }
+                },
+                limit: pageSizeNro,
+                offset: pageNro,
+                order: orderBy,
+                
             },
 
         )

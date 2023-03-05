@@ -45,7 +45,7 @@ module.exports.handler = async (event) => {
     //-- end with validation Headers  ---
 
     //-- start with path parameters  ---
-    creationDate = JSON.stringify(await event.pathParameters.creationDate);
+    creationDate = await event.pathParameters.creationDate;
 
     validatePathParams = await validatePathParameters(creationDate);
     //-- end with path parameters  ---
