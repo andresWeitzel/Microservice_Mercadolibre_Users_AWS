@@ -5,11 +5,13 @@ const { dbConnection } = require('../../db/localConfig');
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
 const { requestResult } = require('../../helpers/http/bodyResponse');
+const { validateHeadersParams } = require('../../helpers/http/requestHeadersParams');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
 //Const/Vars
 let msg;
 let code;
 let validate;
+let validateReqParams;
 
 module.exports.handler = async (event) => {
 
@@ -18,6 +20,12 @@ module.exports.handler = async (event) => {
     code = null;
 
     //-- start with validation Headers  ---
+
+    validateReqParams = await validateHeadersParams(event);
+
+    if (!validateReqParams) {
+      return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers', event);
+    }
 
     validate = await validateAuthHeaders(event);
 

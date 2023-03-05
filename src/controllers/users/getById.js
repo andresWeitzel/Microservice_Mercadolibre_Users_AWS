@@ -5,16 +5,16 @@ const { getById, getByIdLimit } = require('../../services/users/getById');
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
 const { requestResult } = require('../../helpers/http/bodyResponse');
+const { validateHeadersParams } = require('../../helpers/http/requestHeadersParams');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
 const {
   validatePathParameters
-} = require('../../helpers/http/requestParameters');
+} = require('../../helpers/http/queryStringParams');
 //Const/Vars
 let user;
 let userId;
-let xApiKey;
-let authorization;
 let validateHeaders;
+let validateReqParams;
 let validatePathParam;
 
 /**
@@ -28,10 +28,14 @@ module.exports.handler = async (event) => {
     userId = null;
 
     //-- start with validation Headers  ---
-    xApiKey = await event.headers["x-api-key"];
-    authorization = await event.headers["Authorization"];
 
-    validateHeaders = await validateAuthHeaders(xApiKey, authorization);
+    validateReqParams = await validateHeadersParams(event);
+
+    if (!validateReqParams) {
+      return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers', event);
+    }
+
+    validateHeaders = await validateAuthHeaders(event);
 
     if (!validateHeaders) {
       return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
