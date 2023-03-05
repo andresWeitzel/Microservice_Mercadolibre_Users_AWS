@@ -6,12 +6,12 @@ const { addUser
 const { statusCode } = require('../../enums/http/statusCode');
 //Helpers
 const { requestResult } = require('../../helpers/http/bodyResponse');
+const { validateHeadersParams } = require('../../helpers/http/requestHeadersParams');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
 //Const/Vars
 let user;
-let xApiKey;
-let authorization;
 let validate;
+let validateReqParams;
 
 /**
  * @description add a user according to the parameters passed in the request body
@@ -24,11 +24,13 @@ module.exports.handler = async (event) => {
         user = null;
 
         //-- start with validation Headers  ---
+        validateReqParams = await validateHeadersParams(event);
 
-        xApiKey = await event.headers["x-api-key"];
-        authorization = await event.headers["Authorization"];
+        if (!validateReqParams) {
+          return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers', event);
+        }
 
-        validate = await validateAuthHeaders(xApiKey, authorization);
+        validate = await validateAuthHeaders(event);
 
         if (!validate) {
             return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
@@ -38,7 +40,7 @@ module.exports.handler = async (event) => {
 
         //-- start with db query  ---
 
-        user = await addUser('a', 'a', 'a', 'a', 'a', 'a', 'a');
+        // user = await addUser('a', 'a', 'a', 'a', 'a', 'a', 'a');
 
         return await requestResult(statusCode.OK, user, event);
         //-- end with db query  ---
