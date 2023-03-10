@@ -24,23 +24,26 @@ const getLikeCreationDate = async function (creationDate, pageSizeNro, pageNro, 
                 attributes: {
                     include: [
                         [Sequelize.fn("DATE_FORMAT", Sequelize.col("creation_date"),
-                            "%d-%m-%Y %H:%i:%s"), 'creation_date'],
+                            "%Y-%m-%d %H:%i:%s"), 'creation_date'],
                         [Sequelize.fn("DATE_FORMAT", Sequelize.col("update_date"),
-                            "%d-%m-%Y %H:%i:%s"), 'update_date']
+                            "%Y-%m-%d %H:%i:%s"),
+                            'update_date']
                     ],
                 },
                 where: {
-                    creation_date: {
-                        [Op.like]: `%${creationDate}%`//containing what is entered, less strictmatch 
-                    }
+                    [Op.and]: [
+                        //This case is for DATEONLY format
+                        Sequelize.where(
+                            Sequelize.fn('DATE', Sequelize.col('creation_date')),
+                            {
+                                [Op.eq]: creationDate,
+                            }
+                        ),
+                    ]
                 },
                 limit: pageSizeNro,
                 offset: pageNro,
                 order: orderBy,
-                
-                
-
-
             },
 
         )

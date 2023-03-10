@@ -24,9 +24,10 @@ const getLikeIdentificationType = async function (identificationType, pageSizeNr
                 attributes: {
                     include: [
                         [Sequelize.fn("DATE_FORMAT", Sequelize.col("creation_date"),
-                            "%d-%m-%Y %H:%i:%s"), 'creation_date'],
+                            "%Y-%m-%d %H:%i:%s"), 'creation_date'],
                         [Sequelize.fn("DATE_FORMAT", Sequelize.col("update_date"),
-                            "%d-%m-%Y %H:%i:%s"), 'update_date']
+                            "%Y-%m-%d %H:%i:%s"),
+                            'update_date']
                     ],
                 },
                 where: {
