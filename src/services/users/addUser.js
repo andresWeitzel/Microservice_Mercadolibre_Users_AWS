@@ -15,7 +15,7 @@ const addUser = async function (nickname, firstName, lastName, email, identifica
         user = null;
         dateNow = await currentDateTime();
 
-        user = await User.create(
+        await User.create(
             {
                 nickname: nickname,
                 first_name: firstName,
@@ -29,8 +29,8 @@ const addUser = async function (nickname, firstName, lastName, email, identifica
             },
 
         )
-            .then(user => {
-                user = user;
+            .then(userItem => {
+                user = userItem;
                 console.log(user);
             })
             .catch(error => {
