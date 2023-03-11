@@ -1,5 +1,5 @@
 //Externals
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 //Models
 const { User } = require('../../models/user');
 //Const/Vars
@@ -21,14 +21,30 @@ const getLikeUpdateDate = async function (updateDate, pageSizeNro, pageNro, orde
         usersList = null;
         await User.findAll(
             {
+                attributes: {
+                    include: [
+                        [Sequelize.fn("DATE_FORMAT", Sequelize.col("creation_date"),
+                            "%Y-%m-%d %H:%i:%s"), 'creation_date'],
+                        [Sequelize.fn("DATE_FORMAT", Sequelize.col("update_date"),
+                            "%Y-%m-%d %H:%i:%s"),
+                            'update_date']
+                    ],
+                },
+                where: {
+                    [Op.and]: [
+                        //This case is for DATEONLY format
+                        Sequelize.where(
+                            Sequelize.fn('DATE', Sequelize.col('update_date')),
+                            {
+                                [Op.eq]: updateDate,
+                            }
+                        ),
+                    ]
+                },
                 limit: pageSizeNro,
                 offset: pageNro,
                 order: orderBy,
-                where: {
-                    update_date: {
-                        [Op.like]: `%${updateDate}%`//containing what is entered, less strictmatch 
-                    }
-                }
+
             },
 
         )

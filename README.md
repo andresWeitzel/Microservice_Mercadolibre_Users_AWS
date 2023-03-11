@@ -169,6 +169,11 @@ git push origin master
 
 <details>
   <summary>Ver</summary>
+
+
+  #### Plugins
+  * Prettier
+  * YAML
  
  <br>
 

@@ -5,17 +5,17 @@ const { User } = require('../../models/user');
 //Hepers
 const { currentDateTime } = require('../../helpers/dates/date');
 //Const/Vars
-let userList;
+let user;
 let dateNow;
 
 
 
 const addUser = async function (nickname, firstName, lastName, email, identificationType, identificationNumber, countryId) {
     try {
-        userList = null;
+        user = null;
         dateNow = await currentDateTime();
 
-        await User.create(
+        user = await User.create(
             {
                 nickname: nickname,
                 first_name: firstName,
@@ -30,13 +30,13 @@ const addUser = async function (nickname, firstName, lastName, email, identifica
 
         )
             .then(user => {
-                userList = user;
-                console.log(userList);
+                user = user;
+                console.log(user);
             })
             .catch(error => {
                 console.log(error);
             })
-        return userList;
+        return user;
     } catch (error) {
         console.log(error);
     }
