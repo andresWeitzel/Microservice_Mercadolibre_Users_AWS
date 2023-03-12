@@ -59,6 +59,14 @@ git clone https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS
 ```git
 cd 'projectName'
 ```
+* Instalamos Serverless Framework de forma global si es que aún no lo hemos realizado
+```git
+npm install -g serverless
+```
+* Verificamos la versión de Serverless instalada
+```git
+sls -v
+```
 * Instalamos todos los paquetes necesarios
 ```git
 npm i
