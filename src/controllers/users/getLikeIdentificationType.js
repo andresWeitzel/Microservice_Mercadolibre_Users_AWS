@@ -66,6 +66,14 @@ module.exports.handler = async (event) => {
 
       //-- start with db query  ---
       userList = await getLikeIdentificationType(identificationType, pageSizeNro, pageNro, orderBy);
+      
+      if (userList == "ECONNREFUSED") {
+        return await requestResult(
+          statusCode.INTERNAL_SERVER_ERROR,
+          "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
+          event
+        );
+      }
 
       return await requestResult(statusCode.OK, userList, event);
       //-- end with db query  ---
