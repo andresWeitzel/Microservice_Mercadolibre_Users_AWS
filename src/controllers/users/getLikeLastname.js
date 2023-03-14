@@ -1,12 +1,22 @@
 'use strict';
 //Services
-const { getLikeLastName } = require('../../services/users/getLikeLastName');
+const {
+  getLikeLastName
+} = require('../../services/users/getLikeLastName');
 //Enums
-const { statusCode } = require('../../enums/http/statusCode');
+const {
+  statusCode
+} = require('../../enums/http/statusCode');
 //Helpers
-const { requestResult } = require('../../helpers/http/bodyResponse');
-const { validateHeadersParams } = require('../../helpers/http/requestHeadersParams');
-const { validateAuthHeaders } = require('../../helpers/auth/headers');
+const {
+  requestResult
+} = require('../../helpers/http/bodyResponse');
+const {
+  validateHeadersParams
+} = require('../../helpers/http/requestHeadersParams');
+const {
+  validateAuthHeaders
+} = require('../../helpers/auth/headers');
 const {
   validatePathParameters
 } = require('../../helpers/http/queryStringParams');
@@ -66,6 +76,14 @@ module.exports.handler = async (event) => {
 
       //-- start with db query  ---
       userList = await getLikeLastName(lastName, pageSizeNro, pageNro, orderBy);
+
+      if (userList == "ECONNREFUSED") {
+        return await requestResult(
+          statusCode.INTERNAL_SERVER_ERROR,
+          "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
+          event
+        );
+      }
 
       return await requestResult(statusCode.OK, userList, event);
       //-- end with db query  ---

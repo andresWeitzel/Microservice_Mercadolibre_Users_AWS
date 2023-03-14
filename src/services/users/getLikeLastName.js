@@ -1,9 +1,19 @@
 //Externals
-const { Sequelize, Op } = require("sequelize");
+const {
+    Sequelize,
+    Op
+} = require("sequelize");
 //Models
-const { User } = require('../../models/user');
+const {
+    User
+} = require('../../models/user');
+//Helpers
+const {
+    checkDbAuthentication
+} = require("../../helpers/db/authenticate");
 //Const/Vars
 let usersList;
+let checkDbConn;
 
 
 /**
@@ -19,40 +29,47 @@ let usersList;
 const getLikeLastName = async function (lastName, pageSizeNro, pageNro, orderBy) {
     try {
         usersList = null;
-        await User.findAll(
-            {
-                attributes: {
-                    include: [
-                        [Sequelize.fn("DATE_FORMAT", Sequelize.col("creation_date"),
-                            "%Y-%m-%d %H:%i:%s"), 'creation_date'],
-                        [Sequelize.fn("DATE_FORMAT", Sequelize.col("update_date"),
-                            "%Y-%m-%d %H:%i:%s"),
-                            'update_date']
-                    ],
-                },
-                where: {
-                    last_name: {
-                        [Op.like]: `%${lastName}%`//containing what is entered, less strictmatch 
-                    }
-                },
-                limit: pageSizeNro,
-                offset: pageNro,
-                order: orderBy,
-            },
+        checkDbConn = await checkDbAuthentication();
 
-        )
-            .then(users => {
-                usersList = users;
-                console.log(usersList);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        return usersList;
+        if (checkDbConn && User != null) {
+
+            await User.findAll({
+                        attributes: {
+                            include: [
+                                [Sequelize.fn("DATE_FORMAT", Sequelize.col("creation_date"),
+                                    "%Y-%m-%d %H:%i:%s"), 'creation_date'],
+                                [Sequelize.fn("DATE_FORMAT", Sequelize.col("update_date"),
+                                        "%Y-%m-%d %H:%i:%s"),
+                                    'update_date'
+                                ]
+                            ],
+                        },
+                        where: {
+                            last_name: {
+                                [Op.like]: `%${lastName}%` //containing what is entered, less strictmatch 
+                            }
+                        },
+                        limit: pageSizeNro,
+                        offset: pageNro,
+                        order: orderBy,
+                    },
+                )
+                .then(users => {
+                    usersList = users;
+                    console.log(usersList);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        } else {
+            usersList = "ECONNREFUSED";
+        }
     } catch (error) {
         console.log(error);
+        usersList = "ECONNREFUSED";
     }
-
+    console.log(usersList);
+    return usersList;
 }
 
 
