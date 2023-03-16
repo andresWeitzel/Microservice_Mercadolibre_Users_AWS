@@ -161,11 +161,48 @@ sls offline start
   <summary>Ver</summary>
 
 
-  #### Plugins
-  * Prettier
-  * YAML
- 
  <br>
+ 
+### Tecnologías Implementadas
+
+| **Tecnologías** | **Versión** | **Finalidad** |               
+| ------------- | ------------- | ------------- |
+| [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Inyección Automática de Módulos para Lambdas |
+| [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | Core Servicios AWS |
+| [Serverless Plugin](https://www.serverless.com/plugins/) | 6.2.2  | Librerías para la Definición Modular |
+| [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Manejo de Variables de Entorno |
+| [Amazon Api Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) | 2.0 | Gestor, Autenticación, Control y Procesamiento de la Api | 
+| [NodeJS](https://nodejs.org/en/) | 14.18.1  | Librería JS |
+| [Sequelize](https://sequelize.org/) | ^6.11.0 | ORM |
+| [Mysql](https://www.mysql.com/) | 10.1 | SGDB | 
+| [XAMPP](https://www.apachefriends.org/es/index.html) | 3.2.2 | Paquete de servidores | 
+| [VSC](https://code.visualstudio.com/docs) | 1.72.2  | IDE |
+| [Postman](https://www.postman.com/downloads/) | 10.11  | Cliente Http |
+| [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Símbolo del Sistema para linea de comandos | 
+| [Git](https://git-scm.com/downloads) | 2.29.1  | Control de Versiones |
+
+
+
+</br>
+
+
+### Plugins Implementados.
+
+| **Plugin** | **Descarga** |               
+| -------------  | ------------- |
+| serverless-offline |  https://www.serverless.com/plugins/serverless-offline |
+| serverless-offline-ssm |  https://www.npmjs.com/package/serverless-offline-ssm |
+
+
+
+</br>
+
+### Extensiones VSC Implementados.
+
+| **Extensión** |              
+| -------------  | 
+| Prettier - Code formatter |
+| YAML - Autoformatter .yml (alt+shift+f) |
 
 
 <br>
