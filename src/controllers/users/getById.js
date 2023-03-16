@@ -69,9 +69,9 @@ module.exports.handler = async (event) => {
           "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
           event
         );
-      }
-
+      }else{
       return await requestResult(statusCode.OK, user, event);
+      }
       //-- end with db query  ---
     } else {
       return await requestResult(
@@ -82,5 +82,10 @@ module.exports.handler = async (event) => {
     }
   } catch (error) {
     console.log(error);
+    return await requestResult(
+      statusCode.INTERNAL_SERVER_ERROR,
+      "The following error has been thrown" + error,
+      event
+    );
   }
 };

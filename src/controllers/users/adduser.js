@@ -106,5 +106,10 @@ module.exports.handler = async (event) => {
     //-- end with db query  ---
   } catch (error) {
     console.log(error);
+    return await requestResult(
+      statusCode.INTERNAL_SERVER_ERROR,
+      "The following error has been thrown" + error,
+      event
+    );
   }
 };
