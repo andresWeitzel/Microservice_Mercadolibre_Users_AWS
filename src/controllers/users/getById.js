@@ -15,6 +15,7 @@ const {
 //Const/Vars
 let user;
 let userId;
+let eventHeaders;
 let validateHeaders;
 let validateReqParams;
 let validatePathParam;
@@ -31,7 +32,9 @@ module.exports.handler = async (event) => {
 
     //-- start with validation Headers  ---
 
-    validateReqParams = await validateHeadersParams(event);
+    eventHeaders = await event.headers;
+
+    validateReqParams = await validateHeadersParams(eventHeaders);
 
     if (!validateReqParams) {
       return await requestResult(
@@ -41,7 +44,7 @@ module.exports.handler = async (event) => {
       );
     }
 
-    validateHeaders = await validateAuthHeaders(event);
+    validateHeaders = await validateAuthHeaders(eventHeaders);
 
     if (!validateHeaders) {
       return await requestResult(

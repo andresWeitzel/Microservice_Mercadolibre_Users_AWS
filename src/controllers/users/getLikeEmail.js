@@ -23,6 +23,7 @@ const {
 //Const/Vars
 let userList;
 let email;
+let eventHeaders;
 let validate;
 let validateReqParams;
 let validatePathParams;
@@ -44,13 +45,16 @@ module.exports.handler = async (event) => {
     email = null;
 
     //-- start with validation Headers  ---
-    validateReqParams = await validateHeadersParams(event);
+    eventHeaders = await event.headers;
+
+    validateReqParams = await validateHeadersParams(eventHeaders);
+
 
     if (!validateReqParams) {
       return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers', event);
     }
 
-    validate = await validateAuthHeaders(event);
+    validate = await validateAuthHeaders(eventHeaders);
 
     if (!validate) {
       return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
@@ -84,7 +88,7 @@ module.exports.handler = async (event) => {
           event
         );
       } else {
-        return await requestResult(statusCode.OK, user, event);
+        return await requestResult(statusCode.OK, userList, event);
       }
 
       //-- end with db query  ---
