@@ -17,6 +17,7 @@ const { validateAuthHeaders } = require("../../helpers/auth/headers");
 let newUser;
 let body;
 let headers;
+let eventHeaders;
 let validateAuth;
 let validateReqParams;
 let validateReqBodyParams;
@@ -37,11 +38,12 @@ module.exports.handler = async (event) => {
   try {
     //Init
     newUser = null;
-    headers = await JSON.parse(event.headers);
     body = await JSON.parse(event.body);
 
     //-- start with validation Headers  ---
-    validateReqParams = await validateHeadersParams(headers);
+    eventHeaders = await event.headers;
+
+    validateReqParams = await validateHeadersParams(eventHeaders);
 
     if (!validateReqParams) {
       return await requestResult(
@@ -51,7 +53,7 @@ module.exports.handler = async (event) => {
       );
     }
 
-    validateAuth = await validateAuthHeaders(headers);
+    validateAuth = await validateAuthHeaders(eventHeaders);
 
     if (!validateAuth) {
       return await requestResult(
