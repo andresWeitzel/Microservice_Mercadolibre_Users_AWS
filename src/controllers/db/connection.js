@@ -11,6 +11,7 @@ const { validateAuthHeaders } = require('../../helpers/auth/headers');
 let msg;
 let code;
 let validate;
+let eventHeaders;
 let validateReqParams;
 
 module.exports.handler = async (event) => {
@@ -21,13 +22,15 @@ module.exports.handler = async (event) => {
 
     //-- start with validation Headers  ---
 
-    validateReqParams = await validateHeadersParams(event);
+    eventHeaders = await event.headers;
+
+    validateReqParams = await validateHeadersParams(eventHeaders);
 
     if (!validateReqParams) {
       return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers', event);
     }
 
-    validate = await validateAuthHeaders(event);
+    validate = await validateAuthHeaders(eventHeaders);
 
     if (!validate) {
       return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
@@ -43,7 +46,7 @@ module.exports.handler = async (event) => {
         console.log(msg);
 
       }).catch((error) => {
-        msg = 'Unable to connect to the database: ', error;
+        msg = 'Unable to connect to the database: ', JSON.stringify(error);
         code = statusCode.INTERNAL_SERVER_ERROR;
         console.log(error);
 

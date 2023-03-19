@@ -13,6 +13,7 @@ const { checkDbAuthentication } = require("../../helpers/db/authenticate");
 //Const/Vars
 let validate;
 let validateReqParams;
+let eventHeaders;
 let checkDbConn;
 
 module.exports.handler = async (event) => {
@@ -21,9 +22,10 @@ module.exports.handler = async (event) => {
 
     if (checkDbConn) {
       //-- start with validation Headers  ---
+      eventHeaders = await event.headers;
 
-      validateReqParams = await validateHeadersParams(event);
-
+      validateReqParams = await validateHeadersParams(eventHeaders);
+  
       if (!validateReqParams) {
         return await requestResult(
           statusCode.BAD_REQUEST,
@@ -32,7 +34,7 @@ module.exports.handler = async (event) => {
         );
       }
 
-      validate = await validateAuthHeaders(event);
+      validate = await validateAuthHeaders(eventHeaders);
 
       if (!validate) {
         return await requestResult(
