@@ -67,7 +67,7 @@ const getLikeEmail = async function (email, pageSizeNro, pageNro, orderBy) {
         }
     } catch (error) {
         console.log(error);
-        usersList = "ECONNREFUSED";
+        usersList = "ERROR";
     }
 
     console.log(usersList);

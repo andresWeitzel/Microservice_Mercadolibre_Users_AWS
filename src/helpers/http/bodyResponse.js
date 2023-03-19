@@ -11,7 +11,6 @@ const requestResult = async (statusCode,message, input) => {
         body: JSON.stringify(
             {
                 message: message,
-                input: input,
             },
             null,
             2

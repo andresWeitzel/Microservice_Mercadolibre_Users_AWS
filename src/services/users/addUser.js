@@ -3,18 +3,23 @@ const { Sequelize, Op } = require("sequelize");
 //Models
 const { User } = require('../../models/user');
 //Hepers
-const { currentDateTime } = require('../../helpers/dates/date');
+const { currentDateTime,c } = require('../../helpers/dates/date');
+const { checkDbAuthentication } = require("../../helpers/db/authenticate");
 //Const/Vars
 let user;
 let dateNow;
+let checkDbConn;
 
 
 
 const addUser = async function (nickname, firstName, lastName, email, identificationType, identificationNumber, countryId) {
     try {
         user = null;
-        dateNow = await currentDateTime();
+        dateNow = await c();
 
+        checkDbConn = await checkDbAuthentication();
+
+        if (checkDbConn && User != null) {
         await User.create(
             {
                 nickname: nickname,
@@ -27,7 +32,6 @@ const addUser = async function (nickname, firstName, lastName, email, identifica
                 creation_date: dateNow,
                 update_date: dateNow,
             },
-
         )
             .then(userItem => {
                 user = userItem;
@@ -36,10 +40,15 @@ const addUser = async function (nickname, firstName, lastName, email, identifica
             .catch(error => {
                 console.log(error);
             })
-        return user;
+        } else {
+            user = "ECONNREFUSED";
+          }
     } catch (error) {
         console.log(error);
+        user = "ERROR";
     }
+    console.log(user);
+    return user;
 
 }
 

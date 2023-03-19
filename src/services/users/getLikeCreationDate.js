@@ -72,7 +72,7 @@ const getLikeCreationDate = async function (creationDate, pageSizeNro, pageNro, 
         }
     } catch (error) {
         console.log(error);
-        usersList = "ECONNREFUSED";
+        usersList = "ERROR";
 
     }
 

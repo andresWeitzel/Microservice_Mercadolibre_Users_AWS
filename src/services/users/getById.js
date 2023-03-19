@@ -54,7 +54,7 @@ const getById = async function (id) {
     }
   } catch (error) {
     console.log(error);
-    user = "ECONNREFUSED";
+    user = "ERROR";
   }
   console.log(user);
   return user;
@@ -89,7 +89,7 @@ const getByIdLimit = async function (id) {
     }
   } catch (error) {
     console.log(error);
-    user = "ECONNREFUSED";
+    user = "ERROR";
   }
   console.log(user);
   return user;

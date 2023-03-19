@@ -72,7 +72,7 @@ const getLikeUpdateDate = async function (updateDate, pageSizeNro, pageNro, orde
         }
     } catch (error) {
         console.log(error);
-        usersList = "ECONNREFUSED";
+        usersList = "ERROR";
     }
     console.log(usersList);
     return usersList;

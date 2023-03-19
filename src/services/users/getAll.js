@@ -59,7 +59,7 @@ const getAll = async function (pageSizeNro, pageNro, orderBy) {
     }
   } catch (error) {
     console.log(error);
-    usersList = "ECONNREFUSED";
+    usersList = "ERROR";
   }
 
   console.log(usersList);
@@ -100,7 +100,7 @@ const getAllWithoutDate = async function (pageSizeNro, pageNro, orderBy) {
     }
   } catch (error) {
     console.log(error);
-    usersList = "ECONNREFUSED";
+    usersList = "ERROR";
   }
 
   console.log(usersList);

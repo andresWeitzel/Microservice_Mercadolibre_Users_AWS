@@ -2,34 +2,50 @@
 const { Validator } = require("node-input-validator");
 //Const/vars
 let validateCheck;
-let body;
-
+let validatorObj;
+let eventBodyObj;
 /**
  * @description We validate the request body parameters for add an user
- * @param {object} body event.body type
+ * @param {object} eventBody event.body type
  * @returns a boolean
  */
-const validateBodyAddUserParams = async (body) => {
+const validateBodyAddUserParams = async (eventBody) => {
+  eventBodyObj = null;
+  validatorObj= null;
   validateCheck = false;
-  console.log(body);
   
   try{
-    if(body!=null){
-      validateCheck = new Validator(
+    if(eventBody!=null){
+
+      eventBodyObj ={
+        data:{
+          nickname: await eventBody["nickname"],
+          firstName: await eventBody["first_name"],
+          lastName: await eventBody["last_name"],
+          email: await eventBody["email"],
+          identificationType: await eventBody["identification_type"],
+          identificationNumber: await eventBody["identification_number"],
+          countryId: await eventBody["country_id"],
+        }
+      }
+
+
+      validatorObj = new Validator(
         {
-          body,
+          eventBodyObj,
         },
         {
-          "body.nickname": "required|string|minLength:6|maxLength:50",
-          "body.first_name": "required|string|minLength:4|maxLength:50",
-          "body.last_name": "required|string|minLength:4|maxLength:50",
-          "body.email": "required|string|minLength:10|maxLength:100",
-          "body.identification_type": "required|minLength:3|maxLength:20",
-          "body.identification_number": "required|minLength:6|maxLength:20",
-          "body.country_id": "required|string|minLength:2|maxLength:4",
+          "eventBodyObj.data.nickname": "required|string|minLength:4|maxLength:50",
+          "eventBodyObj.data.firstName": "required|string|minLength:4|maxLength:50",
+          "eventBodyObj.data.lastName": "required|string|minLength:4|maxLength:50",
+          "eventBodyObj.data.email": "required|string|minLength:10|maxLength:100",
+          "eventBodyObj.data.identificationType": "required|string|minLength:2|maxLength:20",
+          "eventBodyObj.data.identificationNumber": "required|string|minLength:6|maxLength:20",
+          "eventBodyObj.data.countryId": "required|string|minLength:2|maxLength:5",
         }
       );
-      await validateCheck.check();
+      validateCheck = await validatorObj.check();
+
     }
 
   } catch (error) {

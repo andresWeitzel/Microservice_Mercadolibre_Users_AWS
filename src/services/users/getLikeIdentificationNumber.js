@@ -65,7 +65,7 @@ const getLikeIdentificationNumber = async function (identificationNumber, pageSi
         }
     } catch (error) {
         console.log(error);
-        usersList = "ECONNREFUSED";
+        usersList = "ERROR";
     }
     console.log(usersList);
     return usersList;

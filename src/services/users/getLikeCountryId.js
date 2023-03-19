@@ -65,7 +65,7 @@ const getLikeCountryId = async function (countryId, pageSizeNro, pageNro, orderB
         }
     } catch (error) {
         console.log(error);
-        usersList = "ECONNREFUSED";
+        usersList = "ERROR";
     }
 
     console.log(usersList);

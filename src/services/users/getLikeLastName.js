@@ -66,7 +66,7 @@ const getLikeLastName = async function (lastName, pageSizeNro, pageNro, orderBy)
         }
     } catch (error) {
         console.log(error);
-        usersList = "ECONNREFUSED";
+        usersList = "ERROR";
     }
     console.log(usersList);
     return usersList;

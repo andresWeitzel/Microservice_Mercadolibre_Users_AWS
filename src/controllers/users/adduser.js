@@ -15,8 +15,7 @@ const { validateAuthHeaders } = require("../../helpers/auth/headers");
 
 //Const/Vars
 let newUser;
-let body;
-let headers;
+let eventBody;
 let eventHeaders;
 let validateAuth;
 let validateReqParams;
@@ -38,7 +37,6 @@ module.exports.handler = async (event) => {
   try {
     //Init
     newUser = null;
-    body = await JSON.parse(event.body);
 
     //-- start with validation Headers  ---
     eventHeaders = await event.headers;
@@ -66,7 +64,9 @@ module.exports.handler = async (event) => {
 
     //-- start with validation Body  ---
 
-    validateReqBodyParams = await validateBodyAddUserParams(body);
+    eventBody = JSON.parse(await event.body);
+
+    validateReqBodyParams = await validateBodyAddUserParams(eventBody);
 
     if (!validateReqBodyParams) {
       return await requestResult(
@@ -79,15 +79,15 @@ module.exports.handler = async (event) => {
 
     //-- start with db query  ---
 
-    nickname = body.nickname;
-    firstName = body.first_name;
-    lastName = body.last_name;
-    email = body.email;
-    identType = body.identification_type;
-    identNumber = body.identification_number;
-    countryId = body.country_id;
+    nickname = eventBody.nickname;
+    firstName = eventBody.first_name;
+    lastName = eventBody.last_name;
+    email = eventBody.email;
+    identType = eventBody.identification_type;
+    identNumber = eventBody.identification_number;
+    countryId = eventBody.country_id;
 
-    newUser = addUser(
+    newUser = await addUser(
       nickname,
       firstName,
       lastName,
@@ -96,15 +96,30 @@ module.exports.handler = async (event) => {
       identNumber,
       countryId
     );
-    if (newUser == null) {
+    if (newUser == "ECONNREFUSED") {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
-        "Bad request, could not add user. Try again",
+        "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
         event
       );
     }
-
+    else if (newUser == "ERROR") {
+      return await requestResult(
+        statusCode.INTERNAL_SERVER_ERROR,
+        "ERROR. An error has occurred in the process operations and queries with the database. Try again",
+        event
+      );
+    }
+    else if (newUser == null) {
+      return await requestResult(
+        statusCode.INTERNAL_SERVER_ERROR,
+        "Bad request, could not add user.Check the values of each attribute and try again",
+        event
+      );
+    }else{
     return await requestResult(statusCode.OK, newUser, event);
+  }
+
     //-- end with db query  ---
   } catch (error) {
     console.log(error);
