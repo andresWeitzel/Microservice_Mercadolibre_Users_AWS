@@ -10,8 +10,8 @@ const {
   validateHeadersParams,
 } = require("../../helpers/http/requestHeadersParams");
 const {
-  validateBodyAddUserParams,
-} = require("../../helpers/http/users/requestBodyAddUserParams");
+  validateBodyUpdateUserParams,
+} = require("../../helpers/http/users/requestBodyUpdateUserParams");
 const { validateAuthHeaders } = require("../../helpers/auth/headers");
 
 //Const/Vars
@@ -67,26 +67,24 @@ module.exports.handler = async (event) => {
 
     eventBody = JSON.parse(await event.body);
 
-    // validateReqBodyParams = await validateBodyAddUserParams(eventBody);
+    validateReqBodyParams = await validateBodyUpdateUserParams(eventBody);
 
-    // if (!validateReqBodyParams) {
-    //   return await requestResult(
-    //     statusCode.BAD_REQUEST,
-    //     "Bad request, check request attributes. Missing or incorrect",
-    //     event
-    //   );
-    // }
+    if (!validateReqBodyParams) {
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "Bad request, check request attributes. Missing or incorrect",
+        event
+      );
+    }
     //-- end with validation Body  ---
 
     //-- start with db query  ---
 
-
-    
     let userId = await event.pathParameters.id;
 
     let oldUser = await getById(userId);
 
-    nickname = (eventBody.nickname == null) ? oldUser.nickname : eventBody.nickname;
+    nickname = (eventBody.nickname == null || !eventBody.nickname.length) ? oldUser.nickname : eventBody.nickname;
     // firstName = eventBody.first_name;
     // lastName = eventBody.last_name;
     // email = eventBody.email;
