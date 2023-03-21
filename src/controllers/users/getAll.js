@@ -11,13 +11,12 @@ const {
 const { validateAuthHeaders } = require("../../helpers/auth/headers");
 //Const/Vars
 let userList;
-let eventBody;
 let eventHeaders;
 let validateReqParams;
 let validateAuth;
 let queryStrParams;
-let pageSizeNro = 5;
-let pageNro = 0;
+let pageSizeNro;
+let pageNro;
 const orderBy = [["id", "ASC"]];
 
 /**
@@ -29,6 +28,8 @@ module.exports.handler = async (event) => {
   try {
     //Init
     userList = null;
+    pageSizeNro=5;
+    pageNro=0;
 
     //-- start with validation Headers  ---
 
@@ -58,7 +59,7 @@ module.exports.handler = async (event) => {
     //-- start with pagination  ---
     queryStrParams = event.queryStringParameters;
 
-    if (!(queryStrParams == null)) {
+    if (queryStrParams != null) {
       pageSizeNro = parseInt(await event.queryStringParameters.limit);
       pageNro = parseInt(await event.queryStringParameters.page);
     }

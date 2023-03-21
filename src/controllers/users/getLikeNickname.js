@@ -28,8 +28,8 @@ let validate;
 let validateReqParams;
 let validatePathParams;
 let queryStrParams;
-let pageSizeNro = 5;
-let pageNro = 0;
+let pageSizeNro;
+let pageNro;
 const orderBy = [
   ['id', 'ASC']
 ];
@@ -43,6 +43,8 @@ module.exports.handler = async (event) => {
   try {
     userList = null;
     nickname = null;
+    pageSizeNro=5;
+    pageNro=0;
 
     //-- start with validation Headers  ---
     eventHeaders = await event.headers;
@@ -72,7 +74,7 @@ module.exports.handler = async (event) => {
       //-- start with pagination  ---
       queryStrParams = event.queryStringParameters;
 
-      if (!(queryStrParams == null)) {
+      if (queryStrParams != null) {
         pageSizeNro = parseInt(await event.queryStringParameters.limit);
         pageNro = parseInt(await event.queryStringParameters.page);
       }
