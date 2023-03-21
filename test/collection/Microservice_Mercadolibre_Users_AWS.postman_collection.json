@@ -720,7 +720,7 @@
 			"name": "POST",
 			"item": [
 				{
-					"name": "add",
+					"name": "add-user",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -745,7 +745,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "   {\r\n            \"nickname\": \"TEST01\",\r\n            \"first_name\": \"TEST\",\r\n            \"last_name\": \"TEST\",\r\n            \"email\": \"TEST@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"445938822\",\r\n            \"country_id\": \"AR\"\r\n        }"
+							"raw": "   {\r\n            \"nickname\": \"TEST011212\",\r\n            \"first_name\": \"TEST1212\",\r\n            \"last_name\": \"TEST1212\",\r\n            \"email\": \"TEST@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"445938822\",\r\n            \"country_id\": \"AR12\"\r\n        }"
 						},
 						"url": {
 							"raw": "http://localhost:4000/dev/users/add-user/",
@@ -759,6 +759,56 @@
 								"users",
 								"add-user",
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "update-user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n            \"nickname\": \"TEST\",\r\n            \"first_name\": \"TEST\",\r\n            \"last_name\": \"TEST\",\r\n            \"email\": \"prueba@gmail.com\",\r\n            \"identification_type\": \"\",\r\n            \"identification_number\": \"2672268765\",\r\n            \"country_id\": \"ASD\",\r\n            \"creation_date\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/dev/users/update-user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"dev",
+								"users",
+								"update-user",
+								"1"
 							]
 						}
 					},
