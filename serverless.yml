@@ -119,6 +119,13 @@ functions:
           path: /users/add-user/
           method: post
           private: true  
+  updateUser:
+    handler: src/controllers/users/updateUser.handler
+    events:
+      - http:
+          path: /users/update-user/{id}
+          method: put
+          private: true            
 
 resources:
   - ${file(src/resources/api-gateway.yml)}
