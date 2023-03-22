@@ -12,19 +12,21 @@ let checkDbConn;
 
 
 /**
- * @description add user to database
+ * @description update a user from the database according to his id
+ * @param {Integer} id Integer type
  * @param {String} nickname String type
  * @param {String} firstName String type
  * @param {String} lastName String type
  * @param {String} email String type
  * @param {String} identificationType String type
  * @param {String} identificatioNumber String type  
- * @param {String} countryId String type  
- * @returns a json object with the new user
+ * @param {String} countryId String type 
+ * @param {String} creationDate String type  
+ * @returns a json object with the transaction performed
  * @example
  * {"id":null,"nickname":"JUANROMAN","first_name":"Juan","last_name":"Roman","email":"juan_roman@gmail.com","identification_type":"DNI","identification_number":"2221233",.....}
  */
-const updateUser = async function (id, nickname, firstName, lastName, email, identificationType, identificationNumber, countryId, creation_date) {
+const updateUser = async function (id, nickname, firstName, lastName, email, identificationType, identificationNumber, countryId, creationDate) {
     try {
         user = null;
         dateNow = await currentDateTime();
@@ -41,7 +43,7 @@ const updateUser = async function (id, nickname, firstName, lastName, email, ide
                 identification_type: identificationType,
                 identification_number: identificationNumber,
                 country_id: countryId,
-                creation_date: creation_date,
+                creation_date: creationDate,
                 update_date: dateNow,
             },
             {

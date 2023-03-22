@@ -20,7 +20,7 @@ let checkDbConn;
  * @param {String} identificationType String type
  * @param {String} identificatioNumber String type  
  * @param {String} countryId String type  
- * @returns a json object with the new user
+ * @returns a json object with the transaction performed
  * @example
  * {"id":null,"nickname":"JUANROMAN","first_name":"Juan","last_name":"Roman","email":"juan_roman@gmail.com","identification_type":"DNI","identification_number":"2221233",.....}
  */
