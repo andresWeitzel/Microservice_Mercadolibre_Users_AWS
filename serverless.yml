@@ -12,9 +12,24 @@ provider:
   environment: ${file(./serverless_ssm.yml)}
   apiGateway:
     apiKeys:
-      - name : xApiKey
-        value : ${file(./serverless_ssm.yml):X_API_KEY}
-      
+      - name: xApiKey
+        value: ${file(./serverless_ssm.yml):X_API_KEY}
+  logs:
+    restApi:
+      # Enables HTTP access logs (default: true)
+      accessLogging: true
+      # Log format to use for access logs
+      format: "requestId: $context.requestId"
+      # Enable execution logging (default: true)
+      executionLogging: true
+      # Log level to use for execution logging: INFO or ERROR
+      level: INFO
+      # Log full requests/responses for execution logging (default: true)
+      fullExecutionData: true
+      # Existing IAM role to use for API Gateway when writing CloudWatch Logs (default: automatically created)
+      role: arn:aws:iam::123456:role
+      # Whether the API Gateway CloudWatch Logs role setting is not managed by Serverless (default: false)
+      roleManagedExternally: false
 
 plugins:
   - serverless-offline-ssm
@@ -55,77 +70,84 @@ functions:
       - http:
           path: /users/nickname/{nickname}
           method: get
-          private: true            
+          private: true
   getLikeFirstNameUsers:
     handler: src/controllers/users/getLikeFirstName.handler
     events:
       - http:
           path: /users/first-name/{firstName}
           method: get
-          private: true          
+          private: true
   getLikeLastNameUsers:
     handler: src/controllers/users/getLikeLastName.handler
     events:
       - http:
           path: /users/last-name/{lastName}
           method: get
-          private: true  
+          private: true
   getLikeIdentificationTypeUsers:
     handler: src/controllers/users/getLikeIdentificationType.handler
     events:
       - http:
           path: /users/identification-type/{identificationType}
           method: get
-          private: true  
+          private: true
   getLikeIdentificationNumberUsers:
     handler: src/controllers/users/getLikeIdentificationNumber.handler
     events:
       - http:
           path: /users/identification-number/{identificationNumber}
           method: get
-          private: true            
+          private: true
   getLikeCountryIdUsers:
     handler: src/controllers/users/getLikeCountryId.handler
     events:
       - http:
           path: /users/country-id/{countryId}
           method: get
-          private: true 
+          private: true
   getLikeEmailUsers:
     handler: src/controllers/users/getLikeEmail.handler
     events:
       - http:
           path: /users/email/{email}
           method: get
-          private: true 
+          private: true
   getLikeCreationDateUsers:
     handler: src/controllers/users/getLikeCreationDate.handler
     events:
       - http:
           path: /users/creation-date/{creationDate}
           method: get
-          private: true 
+          private: true
   getLikeUpdateDateUsers:
     handler: src/controllers/users/getLikeUpdateDate.handler
     events:
       - http:
           path: /users/update-date/{updateDate}
           method: get
-          private: true                                     
+          private: true
   addUser:
     handler: src/controllers/users/addUser.handler
     events:
       - http:
           path: /users/add-user/
           method: post
-          private: true  
+          private: true
   updateUser:
     handler: src/controllers/users/updateUser.handler
     events:
       - http:
           path: /users/update-user/{id}
           method: put
-          private: true            
+          private: true
+  deleteUser:
+    handler: src/controllers/users/deleteUser.handler
+    events:
+      - http:
+          path: /users/delete-user/{id}
+          method: delete
+          private: true
 
 resources:
   - ${file(src/resources/api-gateway.yml)}
@@ -137,5 +159,4 @@ custom:
   serverless-offline-ssm:
     stages:
       - dev
-    ssm: 
-      ${file(./serverless_ssm.yml)}
+    ssm: ${file(./serverless_ssm.yml)}
