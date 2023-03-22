@@ -15,20 +15,14 @@ provider:
       - name: xApiKey
         value: ${file(./serverless_ssm.yml):X_API_KEY}
   logs:
+    # Enable REST API logs
     restApi:
-      # Enables HTTP access logs (default: true)
       accessLogging: true
-      # Log format to use for access logs
       format: "requestId: $context.requestId"
-      # Enable execution logging (default: true)
       executionLogging: true
-      # Log level to use for execution logging: INFO or ERROR
       level: INFO
-      # Log full requests/responses for execution logging (default: true)
       fullExecutionData: true
-      # Existing IAM role to use for API Gateway when writing CloudWatch Logs (default: automatically created)
-      role: arn:aws:iam::123456:role
-      # Whether the API Gateway CloudWatch Logs role setting is not managed by Serverless (default: false)
+      role: arn:aws:iam::xxxx:role
       roleManagedExternally: false
 
 plugins:
@@ -38,6 +32,7 @@ plugins:
 functions:
   helloTest:
     handler: src/controllers/test/hello.handler
+    description: Function in charge of checking ssm variables 
     events:
       - http:
           path: /test
@@ -45,6 +40,7 @@ functions:
           private: true
   databaseTest:
     handler: src/controllers/db/connection.handler
+    description: Function in charge of checking the connection to the db
     events:
       - http:
           path: /db-connection
@@ -52,6 +48,7 @@ functions:
           private: true
   getAllUsers:
     handler: src/controllers/users/getAll.handler
+    description: Function in charge of obtaining the paginated list of users of the db
     events:
       - http:
           path: /users/list
@@ -59,6 +56,7 @@ functions:
           private: true
   getByIdUsers:
     handler: src/controllers/users/getById.handler
+    description: Function in charge of obtaining a user according to his id of the db
     events:
       - http:
           path: /users/id/{id}
@@ -66,6 +64,7 @@ functions:
           private: true
   getLikeNicknameUsers:
     handler: src/controllers/users/getLikeNickname.handler
+    description: Function in charge of obtaining a paginated list of users according to their nickname of the db
     events:
       - http:
           path: /users/nickname/{nickname}
@@ -73,6 +72,7 @@ functions:
           private: true
   getLikeFirstNameUsers:
     handler: src/controllers/users/getLikeFirstName.handler
+    description: Function in charge of obtaining a paginated list of users according to their firstname of the db
     events:
       - http:
           path: /users/first-name/{firstName}
@@ -80,6 +80,7 @@ functions:
           private: true
   getLikeLastNameUsers:
     handler: src/controllers/users/getLikeLastName.handler
+    description: Function in charge of obtaining a paginated list of users according to their lastname of the db
     events:
       - http:
           path: /users/last-name/{lastName}
@@ -87,6 +88,7 @@ functions:
           private: true
   getLikeIdentificationTypeUsers:
     handler: src/controllers/users/getLikeIdentificationType.handler
+    description: Function in charge of obtaining a paginated list of users according to their identification type of the db
     events:
       - http:
           path: /users/identification-type/{identificationType}
@@ -94,6 +96,7 @@ functions:
           private: true
   getLikeIdentificationNumberUsers:
     handler: src/controllers/users/getLikeIdentificationNumber.handler
+    description: Function in charge of obtaining a paginated list of users according to their identification number of the db
     events:
       - http:
           path: /users/identification-number/{identificationNumber}
@@ -101,6 +104,7 @@ functions:
           private: true
   getLikeCountryIdUsers:
     handler: src/controllers/users/getLikeCountryId.handler
+    description: Function in charge of obtaining a paginated list of users according to their country id of the db
     events:
       - http:
           path: /users/country-id/{countryId}
@@ -108,6 +112,7 @@ functions:
           private: true
   getLikeEmailUsers:
     handler: src/controllers/users/getLikeEmail.handler
+    description: Function in charge of obtaining a paginated list of users according to their email of the db
     events:
       - http:
           path: /users/email/{email}
@@ -115,6 +120,7 @@ functions:
           private: true
   getLikeCreationDateUsers:
     handler: src/controllers/users/getLikeCreationDate.handler
+    description: Function in charge of obtaining a paginated list of users according to their creation date of the db
     events:
       - http:
           path: /users/creation-date/{creationDate}
@@ -122,6 +128,7 @@ functions:
           private: true
   getLikeUpdateDateUsers:
     handler: src/controllers/users/getLikeUpdateDate.handler
+    description: Function in charge of obtaining a paginated list of users according to their update date of the db
     events:
       - http:
           path: /users/update-date/{updateDate}
@@ -129,6 +136,7 @@ functions:
           private: true
   addUser:
     handler: src/controllers/users/addUser.handler
+    description: Function in charge of adding a user to the db
     events:
       - http:
           path: /users/add-user/
@@ -136,6 +144,7 @@ functions:
           private: true
   updateUser:
     handler: src/controllers/users/updateUser.handler
+    description: Function in charge of update a user to the db
     events:
       - http:
           path: /users/update-user/{id}
@@ -143,6 +152,7 @@ functions:
           private: true
   deleteUser:
     handler: src/controllers/users/deleteUser.handler
+    description: Function in charge of eliminate a user to the db
     events:
       - http:
           path: /users/delete-user/{id}
