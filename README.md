@@ -242,8 +242,8 @@ sls offline start
 * http://localhost:4000/dev/users/country-id/{country-id}
 * http://localhost:4000/dev/users/email/{email}
 * http://localhost:4000/dev/users/first-name/{first-name}
-* http://localhost:4000/dev/users/identification-number/ {ident-number}
-* http://localhost:4000/dev/users/identification-type/ {ident-type}
+* http://localhost:4000/dev/users/identification-number/{ident-number}
+* http://localhost:4000/dev/users/identification-type/{ident-type}
 * http://localhost:4000/dev/users/last-name/{last-name}
 * http://localhost:4000/dev/users/nickname/{nickname}
 * http://localhost:4000/dev/users/creation-date/{creation-date}
@@ -275,6 +275,7 @@ sls offline start
 ### Obtener Usuarios paginados
 
 #### Request
+``` postman
 * Método : GET
 * Url : http://localhost:4000/dev/users/list?page=0&limit=10
 * Headers: 
@@ -282,6 +283,7 @@ sls offline start
   * Authorization : Bearer {value}
   * x-api-key : {value}
 * Body : null
+```
 
 #### Response
 ``` postman
