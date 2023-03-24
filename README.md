@@ -15,13 +15,23 @@ Microservicio para la gestión de usuarios replicando y modificando parte de la 
  
  <br>
  
-### Sección 1) Descripción, Tecnologías y Referencias
+### Sección 1) Descripción, configuración y tecnologías.
 
  - [1.0) Descripción del Proyecto.](#10-descripción-)
  - [1.1) Ejecución del Proyecto.](#11-ejecución-del-proyecto-)
  - [1.2) Configuración del proyecto desde cero](#12-configuración-del-proyecto-desde-cero-)
  - [1.3) Tecnologías.](#13-tecnologías-)
- - [1.4) Referencias.](#14-referencias-)
+
+### Sección 2) Endpoints y Recursos 
+ 
+ - [2.0) EndPoints.](#20-endpoints-)
+ - [2.1) Recursos por Endpoints.](#21-recursos-por-endpoints-)
+ 
+### Sección 3) Prueba de Funcionalidad y Referencias
+ 
+ - [3.0) Prueba de Funcionalidad.](#30-prueba-de-funcionalidad-)
+ - [3.1) Referencias.](#31-referencias-)
+	 
 
 <br>
 
@@ -31,13 +41,17 @@ Microservicio para la gestión de usuarios replicando y modificando parte de la 
 
 <br>
 
-## Sección 1) Descripción, Tecnologías y Dependencias 
+## Sección 1) Descripción, configuración y tecnologías. 
 
 
 ### 1.0) Descripción [🔝](#índice-) 
 
 <details>
   <summary>Ver</summary>
+
+  El Microservicio está diseñado bajo la arquitectura MVC. Dicha arquitectura consta y está dividida en la capa de modelo (definición de la tabla user), la capa de servicio (la conexión y transacciones hacia la db con sequelize) y la capa controller (las lambdas implementadas). 
+  Cada lambda realiza la comprobación de autenticación de token, las que esperan un evento de tipo body comprueban dichos campos y toda la lógica a realizar se abstrae de la misma para desacoplar funcionalidades junto con bajo acoplamiento.
+  Los endpoints que permiten la devolución de más de un objeto según lógica de búsqueda aplicada se manejan con paginados caso de ser requerido. Se aplica paginación por defecto. 
  
  <br>
 
@@ -182,10 +196,7 @@ sls offline start
 | [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Símbolo del Sistema para linea de comandos | 
 | [Git](https://git-scm.com/downloads) | 2.29.1  | Control de Versiones |
 
-
-
 </br>
-
 
 ### Plugins Implementados.
 
@@ -193,8 +204,6 @@ sls offline start
 | -------------  | ------------- |
 | serverless-offline |  https://www.serverless.com/plugins/serverless-offline |
 | serverless-offline-ssm |  https://www.npmjs.com/package/serverless-offline-ssm |
-
-
 
 </br>
 
@@ -205,10 +214,90 @@ sls offline start
 | Prettier - Code formatter |
 | YAML - Autoformatter .yml (alt+shift+f) |
 
+<br>
+
+</details>
+
+
+<br>
+
+## Sección 2) Endpoints y Recursos. 
+
+
+### 2.0) Endpoints [🔝](#índice-) 
+
+<details>
+  <summary>Ver</summary>
+
+### Operaciones de tipo GET:
+* http://localhost:4000/dev/test
+* http://localhost:4000/dev/db-connection
+* http://localhost:4000/dev/users/list (paginado o no)
+* http://localhost:4000/dev/users/id/{user-id} (no paginado)
+* http://localhost:4000/dev/users/country-id/AR?page=0&limit=1 
+ 
+ <br>
 
 <br>
 
 </details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### 1.4) Referencias [🔝](#índice-)

@@ -1,7 +1,6 @@
 //Models
 const { User } = require('../../models/user');
 //Hepers
-const { currentDateTime } = require('../../helpers/dates/date');
 const { checkDbAuthentication } = require("../../helpers/db/authenticate");
 //Const/Vars
 let user;
