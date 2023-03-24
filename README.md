@@ -22,14 +22,14 @@ Microservicio para la gestión de usuarios replicando y modificando parte de la 
  - [1.2) Configuración del proyecto desde cero](#12-configuración-del-proyecto-desde-cero-)
  - [1.3) Tecnologías.](#13-tecnologías-)
 
-### Sección 2) Endpoints y Recursos 
+### Sección 2) Endpoints y Ejemplos 
  
- - [2.0) EndPoints.](#20-endpoints-)
- - [2.1) Recursos por Endpoints.](#21-recursos-por-endpoints-)
+ - [2.0) EndPoints y recursos.](#20-endpoints-y-recursos-)
+ - [2.1) Ejemplos.](#21-ejemplos-)
  
-### Sección 3) Prueba de Funcionalidad y Referencias
+### Sección 3) Prueba de funcionalidad y Referencias
  
- - [3.0) Prueba de Funcionalidad.](#30-prueba-de-funcionalidad-)
+ - [3.0) Prueba de funcionalidad.](#30-prueba-de-funcionalidad-)
  - [3.1) Referencias.](#31-referencias-)
 	 
 
@@ -265,7 +265,6 @@ sls offline start
 </details>
 
 
-<br>
 
 
 ### 2.1) Ejemplos [🔝](#índice-) 
@@ -472,68 +471,25 @@ sls offline start
 </details>
 
 
+
+
 <br>
 
 
+## Sección 3) Prueba de funcionalidad y Referencias. 
 
 
+### 3.0) Prueba de funcionalidad [🔝](#índice-) 
+
+<details>
+  <summary>Ver</summary>
+
+<br>
+
+</details>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### 1.4) Referencias [🔝](#índice-)
+### 3.1) Referencias [🔝](#índice-)
 
 <details>
   <summary>Ver</summary>
