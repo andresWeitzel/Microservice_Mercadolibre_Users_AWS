@@ -96,12 +96,18 @@ module.exports.handler = async (event) => {
         } else if (delUser == null) {
             return await requestResult(
                 statusCode.INTERNAL_SERVER_ERROR,
-                "Bad request, could not add user.Check the values of each attribute and try again",
+                "Bad request, could not delete a user. Check the user id and try again.",
+                event
+            );
+        } else if (delUser == 0) {
+            return await requestResult(
+                statusCode.BAD_REQUEST,
+                "Bad request, a non-existent user cannot be deleted. Operation not allowed.",
                 event
             );
         } else {
 
-            return await requestResult(statusCode.OK, 'Se ha eliminado el usuario correctamente', event);
+            return await requestResult(statusCode.OK, 'User has been deleted successfully.', event);
         }
 
         //-- end with db query  ---

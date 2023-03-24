@@ -440,6 +440,32 @@ sls offline start
 ```
 
 
+### 2.1.3) Operaciones de tipo DELETE
+
+#### Eliminar un Usuario
+
+#### Request
+``` postman
+- Método : DELETE
+
+- Url : http://localhost:4000/dev/users/delete-user/{user-id}
+
+- Headers: 
+  - Content-Type : application/json
+  - Authorization : Bearer {value}
+  - x-api-key : {value}
+
+- Body  : null
+```
+
+#### Response
+``` postman
+{
+    "message": "User has been deleted successfully."
+}
+```
+
+
 
 <br>
 
