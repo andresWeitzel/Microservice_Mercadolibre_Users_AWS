@@ -184,7 +184,6 @@ sls offline start
 | ------------- | ------------- | ------------- |
 | [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Inyección Automática de Módulos para Lambdas |
 | [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | Core Servicios AWS |
-| [Serverless Plugin](https://www.serverless.com/plugins/) | 6.2.2  | Librerías para la Definición Modular |
 | [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Manejo de Variables de Entorno |
 | [Amazon Api Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) | 2.0 | Gestor, Autenticación, Control y Procesamiento de la Api | 
 | [NodeJS](https://nodejs.org/en/) | 14.18.1  | Librería JS |
@@ -202,8 +201,9 @@ sls offline start
 
 | **Plugin** | **Descarga** |               
 | -------------  | ------------- |
-| serverless-offline |  https://www.serverless.com/plugins/serverless-offline |
-| serverless-offline-ssm |  https://www.npmjs.com/package/serverless-offline-ssm |
+| [Serverless Plugin](https://www.serverless.com/plugins/) | 6.2.2  | Librerías para la Definición Modular |
+| [serverless-offline](https://www.npmjs.com/package/serverless-offline) |  https://www.serverless.com/plugins/serverless-offline |
+| [serverless-offline-ssm](https://www.npmjs.com/package/serverless-offline-ssm) |  https://www.npmjs.com/package/serverless-offline-ssm |
 
 </br>
 
