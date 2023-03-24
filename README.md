@@ -221,7 +221,7 @@ sls offline start
 
 <br>
 
-## Sección 2) Endpoints y Recursos. 
+## Sección 2) Endpoints y Ejemplos. 
 
 
 ### 2.0) Endpoints y recursos [🔝](#índice-) 
@@ -261,9 +261,28 @@ sls offline start
 
 <br>
 
+</details>
+
+
+<br>
+
+
+### 2.1) Ejemplos [🔝](#índice-) 
+
+<details>
+  <summary>Ver</summary>
+
+### Obtener Usuarios paginados
+
+$${\color{green} GET }http://localhost:4000/dev/users/list?page=0&limit=10$$
+
 <br>
 
 </details>
+
+
+<br>
+
 
 
 
