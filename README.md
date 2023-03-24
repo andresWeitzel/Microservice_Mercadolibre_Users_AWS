@@ -274,9 +274,8 @@ sls offline start
 
 ### Obtener Usuarios paginados
 
-# ${{\color{green}GET}}\ $
+#### ${{\color{green}GET}}\ $ http://localhost:4000/dev/users/list?page=0&limit=10
 
-# ${{\color{red}Big}}\ Title$
 
 <br>
 
