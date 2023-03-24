@@ -49,9 +49,9 @@ Microservicio para la gestión de usuarios replicando y modificando parte de la 
 <details>
   <summary>Ver</summary>
 
-  El Microservicio está diseñado bajo la arquitectura MVC. Dicha arquitectura consta y está dividida en la capa de modelo (definición de la tabla user), la capa de servicio (la conexión y transacciones hacia la db con sequelize) y la capa controller (las lambdas implementadas). 
-  Cada lambda realiza la comprobación de autenticación de token, las que esperan un evento de tipo body comprueban dichos campos y toda la lógica a realizar se abstrae de la misma para desacoplar funcionalidades junto con bajo acoplamiento.
-  Los endpoints que permiten la devolución de más de un objeto según lógica de búsqueda aplicada se manejan con paginados caso de ser requerido. Se aplica paginación por defecto. 
+  * El Microservicio está diseñado bajo la arquitectura MVC. Dicha arquitectura consta y está dividida en la capa de modelo (definición de la tabla user), la capa de servicio (la conexión y transacciones hacia la db con sequelize) y la capa controller (las lambdas implementadas). 
+  * Cada lambda realiza la comprobación de autenticación de token, las que esperan un evento de tipo body comprueban dichos campos y toda la lógica a realizar se abstrae de la misma para desacoplar funcionalidades junto con bajo acoplamiento.
+  * Los endpoints que permiten la devolución de más de un objeto según lógica de búsqueda aplicada se manejan con paginados caso de ser requerido. Se aplica paginación por defecto. 
  
  <br>
 
@@ -229,11 +229,6 @@ sls offline start
 <details>
   <summary>Ver</summary>
 
-### Aclaraciones
-* {valor-requerido}
-* Paginado por defecto : ?page=0&limit=5
-* Paginado opcional : ?page={nro}&limit={nro}
-
 ### Operaciones de tipo GET:
 * http://localhost:4000/dev/test
 * http://localhost:4000/dev/db-connection
@@ -259,6 +254,12 @@ sls offline start
 ### Operaciones de tipo DELETE:
 * http://localhost:4000/dev/users/delete-user/{user-id}
 
+### Aclaraciones
+* {valor-requerido}
+* Paginado por defecto : ?page=0&limit=5
+* Paginado opcional : ?page={nro}&limit={nro}
+
+
 <br>
 
 </details>
@@ -276,13 +277,16 @@ sls offline start
 
 #### Request
 ``` postman
-* Método : GET
-* Url : http://localhost:4000/dev/users/list?page=0&limit=10
-* Headers: 
-  * Content-Type : application/json
-  * Authorization : Bearer {value}
-  * x-api-key : {value}
-* Body : null
+- Método : GET
+
+- Url : http://localhost:4000/dev/users/list?page=0&limit=10
+
+- Headers: 
+  - Content-Type : application/json
+  - Authorization : Bearer {value}
+  - x-api-key : {value}
+
+- Body : null
 ```
 
 #### Response
