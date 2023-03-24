@@ -274,9 +274,35 @@ sls offline start
 
 ### Obtener Usuarios paginados
 
-#### ${{\color{green}GET} {\color{white}http://localhost:4000/dev/users/list?page=0&limit=10}}\$ 
+#### Request
+* Método : GET
+* Url : http://localhost:4000/dev/users/list?page=0&limit=10
+* Headers: 
+  * Content-Type : application/json
+  * Authorization : Bearer {value}
+  * x-api-key : {value}
+* Body : null
 
-$\mathcal{\color{green}{GET} \ \color{white}{http://localhost:4000/dev/users/list?page=0&limit=10}}$
+#### Response
+``` postman
+{
+    "message": [
+        {
+            "id": 2,
+            "nickname": "JAVIER GONZALEZ",
+            "first_name": "Javier",
+            "last_name": "Gonzalez",
+            "email": "javiBoquita@gmail.com",
+            "identification_type": "DNI",
+            "identification_number": "2672268765",
+            "country_id": "AR",
+            "creation_date": "2023-03-20 21:02:33",
+            "update_date": "2023-03-20 21:02:33"
+        }
+    ]
+}
+```
+
 
 <br>
 
