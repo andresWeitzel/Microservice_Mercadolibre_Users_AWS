@@ -224,19 +224,42 @@ sls offline start
 ## Sección 2) Endpoints y Recursos. 
 
 
-### 2.0) Endpoints [🔝](#índice-) 
+### 2.0) Endpoints y recursos [🔝](#índice-) 
 
 <details>
   <summary>Ver</summary>
 
+### Aclaraciones
+* {valor-requerido}
+* Paginado por defecto : ?page=0&limit=5
+* Paginado opcional : ?page={nro}&limit={nro}
+
 ### Operaciones de tipo GET:
 * http://localhost:4000/dev/test
 * http://localhost:4000/dev/db-connection
-* http://localhost:4000/dev/users/list (paginado o no)
-* http://localhost:4000/dev/users/id/{user-id} (no paginado)
-* http://localhost:4000/dev/users/country-id/AR?page=0&limit=1 
- 
- <br>
+* http://localhost:4000/dev/users/list
+* http://localhost:4000/dev/users/id/{user-id}
+* http://localhost:4000/dev/users/country-id/{country-id}
+* http://localhost:4000/dev/users/email/{email}
+* http://localhost:4000/dev/users/first-name/{first-name}
+* http://localhost:4000/dev/users/identification-number/ {ident-number}
+* http://localhost:4000/dev/users/identification-type/ {ident-type}
+* http://localhost:4000/dev/users/last-name/{last-name}
+* http://localhost:4000/dev/users/nickname/{nickname}
+* http://localhost:4000/dev/users/creation-date/{creation-date}
+* http://localhost:4000/dev/users/update-date/{update-date}
+* `Todos los endpoints son paginados opcionales menos el /test, /db-connection y /id/{user-id}`
+
+### Operaciones de tipo POST:
+* http://localhost:4000/dev/users/add-user/
+
+### Operaciones de tipo PUT:
+* http://localhost:4000/dev/users/update-user/{user-id}
+
+### Operaciones de tipo DELETE:
+* http://localhost:4000/dev/users/delete-user/{user-id}
+
+<br>
 
 <br>
 
