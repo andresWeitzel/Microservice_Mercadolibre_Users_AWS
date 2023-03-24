@@ -178,7 +178,6 @@ sls offline start
 
  <br>
  
-### Tecnologías Implementadas
 
 | **Tecnologías** | **Versión** | **Finalidad** |               
 | ------------- | ------------- | ------------- |
@@ -197,7 +196,6 @@ sls offline start
 
 </br>
 
-### Plugins Implementados.
 
 | **Plugin** | **Descarga** |               
 | -------------  | ------------- |
@@ -206,8 +204,6 @@ sls offline start
 | [serverless-offline-ssm](https://www.npmjs.com/package/serverless-offline-ssm) |  https://www.npmjs.com/package/serverless-offline-ssm |
 
 </br>
-
-### Extensiones VSC Implementados.
 
 | **Extensión** |              
 | -------------  | 
