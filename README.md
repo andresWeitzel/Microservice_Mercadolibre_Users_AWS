@@ -273,7 +273,9 @@ sls offline start
 <details>
   <summary>Ver</summary>
 
-### Obtener Usuarios paginados
+### 2.1.0) Operaciones de tipo GET
+
+#### Obtener Usuarios paginados
 
 #### Request
 ``` postman
@@ -292,22 +294,151 @@ sls offline start
 #### Response
 ``` postman
 {
-    "message": [
-        {
-            "id": 2,
-            "nickname": "JAVIER GONZALEZ",
-            "first_name": "Javier",
-            "last_name": "Gonzalez",
-            "email": "javiBoquita@gmail.com",
-            "identification_type": "DNI",
-            "identification_number": "2672268765",
-            "country_id": "AR",
-            "creation_date": "2023-03-20 21:02:33",
-            "update_date": "2023-03-20 21:02:33"
-        }
-    ]
+    "message": {
+        "id": 3,
+        "nickname": "HECTOR SS G",
+        "first_name": "Hector",
+        "last_name": "Gomez",
+        "email": "hectorGomez78@gmail.com",
+        "identification_type": "DNI",
+        "identification_number": "2172265827",
+        "country_id": "AR",
+        "creation_date": "2023-03-20 21:02:33",
+        "update_date": "2023-03-20 21:02:33"
+    }
 }
 ```
+
+#### Obtener un Usuario según su id
+
+#### Request
+``` postman
+- Método : GET
+
+- Url : http://localhost:4000/dev/users/id/2
+
+- Headers: 
+  - Content-Type : application/json
+  - Authorization : Bearer {value}
+  - x-api-key : {value}
+
+- Body : null
+```
+
+#### Response
+``` postman
+{
+    "message": {
+        "id": 3,
+        "nickname": "HECTOR SS G",
+        "first_name": "Hector",
+        "last_name": "Gomez",
+        "email": "hectorGomez78@gmail.com",
+        "identification_type": "DNI",
+        "identification_number": "2172265827",
+        "country_id": "AR",
+        "creation_date": "2023-03-20 21:02:33",
+        "update_date": "2023-03-20 21:02:33"
+    }
+}
+```
+<br>
+* ETC.
+
+
+### 2.1.1) Operaciones de tipo POST
+
+#### Agregar un Usuario
+
+#### Request
+``` postman
+- Método : POST
+
+- Url : http://localhost:4000/dev/users/add-user/
+
+- Headers: 
+  - Content-Type : application/json
+  - Authorization : Bearer {value}
+  - x-api-key : {value}
+
+- Body : 
+
+   {
+            "nickname": "TEST011212",
+            "first_name": "TEST1212",
+            "last_name": "TEST1212",
+            "email": "TEST@gmail.com",
+            "identification_type": "DNI",
+            "identification_number": "445938822",
+            "country_id": "AR12"
+        }
+```
+
+#### Response
+``` postman
+{
+    "message": {
+        "id": null,
+        "nickname": "TEST011212",
+        "first_name": "TEST1212",
+        "last_name": "TEST1212",
+        "email": "TEST@gmail.com",
+        "identification_type": "DNI",
+        "identification_number": "445938822",
+        "country_id": "AR12",
+        "creation_date": "2023-03-24T21:33:49.000Z",
+        "update_date": "2023-03-24T21:33:49.000Z"
+    }
+}
+```
+
+### 2.1.2) Operaciones de tipo PUT
+
+#### Editar un Usuario
+
+#### Request
+``` postman
+- Método : PUT
+
+- Url : http://localhost:4000/dev/users/update-user/{user-id}
+
+- Headers: 
+  - Content-Type : application/json
+  - Authorization : Bearer {value}
+  - x-api-key : {value}
+
+- Body (optionals fields) : 
+
+  {
+            "nickname": "TEST_UPDATED",
+            "first_name": "TEST_UPDATED",
+            "last_name": "TEST_UPDATED",
+            "email": "TEST_UPDATED@gmail.com",
+            "identification_type": "DNI",
+            "identification_number": "445938822",
+            "country_id": "AR12",
+            "creation_date": "2023-03-24 21:33:49"
+}
+```
+
+#### Response
+``` postman
+{
+    "message": {
+        "id": 14,
+        "nickname": "TEST_UPDATED",
+        "first_name": "TEST_UPDATED",
+        "last_name": "TEST_UPDATED",
+        "email": "TEST_UPDATED@gmail.com",
+        "identification_type": "DNI",
+        "identification_number": "445938822",
+        "country_id": "AR12",
+        "creation_date": "2023-03-25 00:33:49",
+        "update_date": "2023-03-24 21:38:50"
+    }
+}
+```
+
 
 
 <br>

@@ -815,6 +815,56 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "delete-user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n            \"nickname\": \"TEST\",\r\n            \"first_name\": \"TEST\",\r\n            \"last_name\": \"TEST\",\r\n            \"email\": \"prueba@gmail.com\",\r\n            \"identification_type\": \"\",\r\n            \"identification_number\": \"2672268765\",\r\n            \"country_id\": \"ASD\",\r\n            \"creation_date\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/dev/users/delete-user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"dev",
+								"users",
+								"delete-user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
