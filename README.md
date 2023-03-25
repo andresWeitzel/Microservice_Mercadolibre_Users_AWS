@@ -49,11 +49,20 @@ Microservicio para la gestión de usuarios replicando y modificando parte de la 
 <details>
   <summary>Ver</summary>
 
+ <br>
+
+#### 1.0.0) Descripción General
+
   * El Microservicio está diseñado bajo la arquitectura MVC. Dicha arquitectura consta y está dividida en la capa de modelo (definición de la tabla user), la capa de servicio (la conexión y transacciones hacia la db con sequelize) y la capa controller (las lambdas implementadas). 
   * Cada lambda realiza la comprobación de autenticación de token, las que esperan un evento de tipo body comprueban dichos campos y toda la lógica a realizar se abstrae de la misma para desacoplar funcionalidades junto con bajo acoplamiento.
   * Los endpoints que permiten la devolución de más de un objeto según lógica de búsqueda aplicada se manejan con paginados caso de ser requerido. Se aplica paginación por defecto. 
  
- <br>
+ #### 1.0.0) Descripción Arquitectura y Funcionamiento
+ 
+ * La imagen de la arquitectura de aws empleada describe el flujo de funcionamiento del microservicio de forma general. Cualquier petición hacia el microservicio parte desde un cliente (Postman, servidor, etc). Se emula dicho funcionamiento dentro de la misma red. 
+ * Paso 0 : Dicha solicitud es recibida por el api-gateway y solamente se validará si es que dentro de los encabezados de dicha solicitud se encuentra la x-api-key correcta.
+ * Paso 1A, 1B, etc: Todos estos pasos corresponden a un endpoint con su recurso especifico. Por ej. para getAllUsers (1A) es http://localhost:4000/dev/users/list ....revisar dichos endpoints en [sección endpoints](# Sección 2) Endpoints y Ejemplos). 
+
 
 <br>
 
@@ -479,6 +488,11 @@ sls offline start
 
 <details>
   <summary>Ver</summary>
+
+<br>
+
+#### Tipos de Operaciones 
+![Index app](./doc/assets/playlist.png)
 
 <br>
 
