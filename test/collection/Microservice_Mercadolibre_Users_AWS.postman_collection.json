@@ -10,7 +10,7 @@
 			"name": "GET",
 			"item": [
 				{
-					"name": "test",
+					"name": "test-ssm",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -22,7 +22,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -32,7 +32,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -41,12 +41,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/test",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/test",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"test"
@@ -68,7 +66,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -78,7 +76,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -87,12 +85,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/db-connection",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/db-connection",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"db-connection"
@@ -114,7 +110,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -124,7 +120,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -133,12 +129,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/list?page=0&limit=1",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/list?page=0&limit=2",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
@@ -151,7 +145,7 @@
 								},
 								{
 									"key": "limit",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -171,7 +165,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -181,7 +175,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -191,22 +185,21 @@
 								{
 									"key": "ss",
 									"type": "file",
-									"src": "/C:/Users/andre/Downloads/CRUD_Bucket_s3.drawio.png"
+									"src": [],
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/id/2",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/id/4",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
 								"id",
-								"2"
+								"4"
 							]
 						}
 					},
@@ -225,7 +218,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -235,7 +228,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -244,12 +237,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/country-id/AR?page=0&limit=1",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/country-id/AR?page=0&limit=3",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
@@ -263,7 +254,7 @@
 								},
 								{
 									"key": "limit",
-									"value": "1"
+									"value": "3"
 								}
 							]
 						}
@@ -283,7 +274,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -293,7 +284,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -302,12 +293,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/email/a?page=0&limit=2",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/email/a?page=0&limit=2",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
@@ -341,7 +330,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -351,7 +340,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -360,12 +349,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/first-name/J?page=0&limit=2",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/first-name/J?page=0&limit=2",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
@@ -399,7 +386,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -409,7 +396,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -418,12 +405,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/identification-number/2?page=0&limit=4",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/identification-number/2?page=0&limit=4",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
@@ -457,7 +442,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -467,7 +452,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -476,12 +461,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/identification-type/dni?page=0&limit=4",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/identification-type/dni?page=0&limit=4",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
@@ -515,7 +498,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -525,7 +508,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -534,12 +517,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/last-name/as?page=0&limit=1",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/last-name/as?page=0&limit=1",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
@@ -573,7 +554,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -583,7 +564,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -592,12 +573,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/nickname/gabriela?page=0&limit=1",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/nickname/gabriela?page=0&limit=1",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
@@ -631,7 +610,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -641,7 +620,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -650,17 +629,15 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/creation-date/2023-02-22",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/creation-date/2023-03-20",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
 								"creation-date",
-								"2023-02-22"
+								"2023-03-20"
 							]
 						}
 					},
@@ -679,7 +656,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -689,7 +666,7 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
@@ -698,17 +675,15 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/creation-date/2023-02-22",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/creation-date/2023-03-20",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
 								"creation-date",
-								"2023-02-22"
+								"2023-03-20"
 							]
 						}
 					},
@@ -729,7 +704,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -739,21 +714,19 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "   {\r\n            \"nickname\": \"TEST011212\",\r\n            \"first_name\": \"TEST1212\",\r\n            \"last_name\": \"TEST1212\",\r\n            \"email\": \"TEST@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"445938822\",\r\n            \"country_id\": \"AR12\"\r\n        }"
+							"raw": "   {\r\n            \"nickname\": \"MARTIN-SUAREZ\",\r\n            \"first_name\": \"Martin\",\r\n            \"last_name\": \"Suarez\",\r\n            \"email\": \"martin_electro_todo@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"4459388222\",\r\n            \"country_id\": \"AR12\"\r\n        }"
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/add-user/",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/add-user/",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
@@ -779,7 +752,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -789,26 +762,24 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "  {\r\n            \"nickname\": \"TEST\",\r\n            \"first_name\": \"TEST\",\r\n            \"last_name\": \"TEST\",\r\n            \"email\": \"prueba@gmail.com\",\r\n            \"identification_type\": \"\",\r\n            \"identification_number\": \"2672268765\",\r\n            \"country_id\": \"ASD\",\r\n            \"creation_date\": \"\"\r\n}"
+							"raw": "   {\r\n            \"nickname\": \"MARTIN-SUAREZ-EDITED\",\r\n            \"first_name\": \"Martin EDITED\",\r\n            \"last_name\": \"Suarez EDITED\",\r\n            \"email\": \"martin_electro_todo_EDITED@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"4459388222\",\r\n            \"country_id\": \"AR12\"\r\n        }"
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/update-user/1",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/update-user/18",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
 								"update-user",
-								"1"
+								"18"
 							]
 						}
 					},
@@ -829,7 +800,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+								"value": "{{bearer_token}}",
 								"type": "text"
 							},
 							{
@@ -839,32 +810,44 @@
 							},
 							{
 								"key": "x-api-key",
-								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"value": "{{x-api-key}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "  {\r\n            \"nickname\": \"TEST\",\r\n            \"first_name\": \"TEST\",\r\n            \"last_name\": \"TEST\",\r\n            \"email\": \"prueba@gmail.com\",\r\n            \"identification_type\": \"\",\r\n            \"identification_number\": \"2672268765\",\r\n            \"country_id\": \"ASD\",\r\n            \"creation_date\": \"\"\r\n}"
+							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:4000/dev/users/delete-user/1",
-							"protocol": "http",
+							"raw": "{{base_url}}/dev/users/delete-user/18",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "4000",
 							"path": [
 								"dev",
 								"users",
 								"delete-user",
-								"1"
+								"18"
 							]
 						}
 					},
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:4000"
+		},
+		{
+			"key": "x-api-key",
+			"value": "f98d8cd98h73s204e3456998ecl9427j"
+		},
+		{
+			"key": "bearer_token",
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 		}
 	]
 }

@@ -51,13 +51,13 @@ Microservicio para la gestión de usuarios replicando y modificando parte de la 
 
  <br>
 
-#### 1.0.0) Descripción General
+### 1.0.0) Descripción General
 
   * El Microservicio está diseñado bajo la arquitectura MVC. Dicha arquitectura consta y está dividida en la capa de modelo (definición de la tabla user), la capa de servicio (la conexión y transacciones hacia la db con sequelize) y la capa controller (las lambdas implementadas). 
   * Cada lambda realiza la comprobación de autenticación de token, las que esperan un evento de tipo body comprueban dichos campos y toda la lógica a realizar se abstrae de la misma para desacoplar funcionalidades junto con bajo acoplamiento.
   * Los endpoints que permiten la devolución de más de un objeto según lógica de búsqueda aplicada se manejan con paginados caso de ser requerido. Se aplica paginación por defecto. 
  
- #### 1.0.1) Descripción Arquitectura y Funcionamiento
+ ### 1.0.1) Descripción Arquitectura y Funcionamiento
  
  * La imagen de la arquitectura de aws empleada describe el flujo de funcionamiento del microservicio de forma general. Cualquier petición hacia el microservicio parte desde un cliente (Postman, servidor, etc). 
  * `Paso 0` : Dicha solicitud es recibida por el api-gateway y solamente se validará si es que dentro de los encabezados de dicha solicitud se encuentra la x-api-key correcta.
@@ -76,7 +76,7 @@ Microservicio para la gestión de usuarios replicando y modificando parte de la 
 
 <details>
   <summary>Ver</summary>
- 
+<br>
  
 * Una vez creado un entorno de trabajo a través de algún ide, clonamos el proyecto
 ```git
@@ -133,7 +133,7 @@ sls offline start
 <br>
 
 </details>
-
+ <br>
 
 ### 1.2) Configuración del proyecto desde cero [🔝](#índice-)
 
@@ -209,18 +209,18 @@ sls offline start
 </br>
 
 
-| **Plugin** | **Descarga** |               
-| -------------  | ------------- |
-| [Serverless Plugin](https://www.serverless.com/plugins/) | 6.2.2  | Librerías para la Definición Modular |
-| [serverless-offline](https://www.npmjs.com/package/serverless-offline) |  https://www.serverless.com/plugins/serverless-offline |
-| [serverless-offline-ssm](https://www.npmjs.com/package/serverless-offline-ssm) |  https://www.npmjs.com/package/serverless-offline-ssm |
+| **Plugin** | 
+| -------------  |
+| [Serverless Plugin](https://www.serverless.com/plugins/) |
+| [serverless-offline](https://www.npmjs.com/package/serverless-offline) |
+| [serverless-offline-ssm](https://www.npmjs.com/package/serverless-offline-ssm) |
 
 </br>
 
 | **Extensión** |              
 | -------------  | 
 | Prettier - Code formatter |
-| YAML - Autoformatter .yml (alt+shift+f) |
+| YAML - Autoformatter .yml |
 
 <br>
 
@@ -279,21 +279,32 @@ sls offline start
 
 <details>
   <summary>Ver</summary>
+<br>
 
-### 2.1.0) Operaciones de tipo GET
+### 2.1.0) Variables en Postman
 
-#### Obtener Usuarios paginados
+| **Variable** | **Initial value** | **Current value** |               
+| ------------- | ------------- | ------------- |
+| base_url | http://localhost:4000  | http://localhost:4000 |
+| x-api-key | f98d8cd98h73s204e3456998ecl9427j  | f98d8cd98h73s204e3456998ecl9427j |
+| bearer_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c  | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c |
+
+<br>
+
+### 2.1.1) Operaciones de tipo GET
+
+### Conexión base de datos
 
 #### Request
 ``` postman
 - Método : GET
 
-- Url : http://localhost:4000/dev/users/list?page=0&limit=10
+- Url : {{base_url}}/dev/db-connection
 
 - Headers: 
   - Content-Type : application/json
-  - Authorization : Bearer {value}
-  - x-api-key : {value}
+  - Authorization : {{bearer_token}}
+  - x-api-key : {{x-api-key}}
 
 - Body : null
 ```
@@ -301,33 +312,74 @@ sls offline start
 #### Response
 ``` postman
 {
-    "message": {
-        "id": 3,
-        "nickname": "HECTOR SS G",
-        "first_name": "Hector",
-        "last_name": "Gomez",
-        "email": "hectorGomez78@gmail.com",
-        "identification_type": "DNI",
-        "identification_number": "2172265827",
-        "country_id": "AR",
-        "creation_date": "2023-03-20 21:02:33",
-        "update_date": "2023-03-20 21:02:33"
-    }
+    "message": "Connection has been established successfully."
 }
 ```
 
-#### Obtener un Usuario según su id
+<br>
+
+### Obtener Usuarios paginados
 
 #### Request
 ``` postman
 - Método : GET
 
-- Url : http://localhost:4000/dev/users/id/2
+- Url : {{base_url}}/dev/users/list?page=0&limit=2
 
 - Headers: 
   - Content-Type : application/json
-  - Authorization : Bearer {value}
-  - x-api-key : {value}
+  - Authorization : {{bearer_token}}
+  - x-api-key : {{x-api-key}}
+
+- Body : null
+```
+
+#### Response
+``` postman
+{
+    "message": [
+        {
+            "id": 3,
+            "nickname": "HECTOR SS G",
+            "first_name": "Hector",
+            "last_name": "Gomez",
+            "email": "hectorGomez78@gmail.com",
+            "identification_type": "DNI",
+            "identification_number": "2172265827",
+            "country_id": "AR",
+            "creation_date": "2023-03-20 21:02:33",
+            "update_date": "2023-03-20 21:02:33"
+        },
+        {
+            "id": 4,
+            "nickname": "GABRIELA JIMENEZ",
+            "first_name": "Gabriela",
+            "last_name": "Jimenez",
+            "email": "gabriela.consultas@hotmail.com",
+            "identification_type": "DNI",
+            "identification_number": "410871223",
+            "country_id": "AR",
+            "creation_date": "2023-03-20 21:02:33",
+            "update_date": "2023-03-20 21:02:33"
+        }
+    ]
+}
+```
+
+<br>
+
+### Obtener un Usuario según su id
+
+#### Request
+``` postman
+- Método : GET
+
+- Url : {{base_url}}/dev/users/id/4
+
+- Headers: 
+  - Content-Type : application/json
+  - Authorization : {{bearer_token}}
+  - x-api-key : {{x-api-key}}
 
 - Body : null
 ```
@@ -336,13 +388,13 @@ sls offline start
 ``` postman
 {
     "message": {
-        "id": 3,
-        "nickname": "HECTOR SS G",
-        "first_name": "Hector",
-        "last_name": "Gomez",
-        "email": "hectorGomez78@gmail.com",
+        "id": 4,
+        "nickname": "GABRIELA JIMENEZ",
+        "first_name": "Gabriela",
+        "last_name": "Jimenez",
+        "email": "gabriela.consultas@hotmail.com",
         "identification_type": "DNI",
-        "identification_number": "2172265827",
+        "identification_number": "410871223",
         "country_id": "AR",
         "creation_date": "2023-03-20 21:02:33",
         "update_date": "2023-03-20 21:02:33"
@@ -350,33 +402,95 @@ sls offline start
 }
 ```
 <br>
+
+
+### Obtener listado paginado de Usuarios según su country-id
+
+#### Request
+``` postman
+- Método : GET
+
+- Url : {{base_url}}/dev/users/id/4
+
+- Headers: 
+  - Content-Type : application/json
+  - Authorization : {{bearer_token}}
+  - x-api-key : {{x-api-key}}
+
+- Body : null
+```
+
+#### Response
+``` postman
+{
+    "message": [
+        {
+            "id": 3,
+            "nickname": "HECTOR SS G",
+            "first_name": "Hector",
+            "last_name": "Gomez",
+            "email": "hectorGomez78@gmail.com",
+            "identification_type": "DNI",
+            "identification_number": "2172265827",
+            "country_id": "AR",
+            "creation_date": "2023-03-20 21:02:33",
+            "update_date": "2023-03-20 21:02:33"
+        },
+        {
+            "id": 4,
+            "nickname": "GABRIELA JIMENEZ",
+            "first_name": "Gabriela",
+            "last_name": "Jimenez",
+            "email": "gabriela.consultas@hotmail.com",
+            "identification_type": "DNI",
+            "identification_number": "410871223",
+            "country_id": "AR",
+            "creation_date": "2023-03-20 21:02:33",
+            "update_date": "2023-03-20 21:02:33"
+        },
+        {
+            "id": 5,
+            "nickname": "GUSTA G K",
+            "first_name": "Gustavo",
+            "last_name": "Gomez",
+            "email": "gustavo_andaluz@gmail.com",
+            "identification_type": "PASAPORTE",
+            "identification_number": "748000221",
+            "country_id": "AR",
+            "creation_date": "2023-03-20 21:02:33",
+            "update_date": "2023-03-20 21:02:33"
+        }
+    ]
+}
+```
+<br>
 * ETC.
 
 
-### 2.1.1) Operaciones de tipo POST
+### 2.1.2) Operaciones de tipo POST
 
-#### Agregar un Usuario
+### Agregar un Usuario
 
 #### Request
 ``` postman
 - Método : POST
 
-- Url : http://localhost:4000/dev/users/add-user/
+- Url : {{base_url}}/dev/users/add-user/
 
 - Headers: 
   - Content-Type : application/json
-  - Authorization : Bearer {value}
-  - x-api-key : {value}
+  - Authorization : {{bearer_token}}
+  - x-api-key : {{x-api-key}}
 
 - Body : 
 
    {
-            "nickname": "TEST011212",
-            "first_name": "TEST1212",
-            "last_name": "TEST1212",
-            "email": "TEST@gmail.com",
+            "nickname": "MARTIN-SUAREZ",
+            "first_name": "Martin",
+            "last_name": "Suarez",
+            "email": "martin_electro_todo@gmail.com",
             "identification_type": "DNI",
-            "identification_number": "445938822",
+            "identification_number": "4459388222",
             "country_id": "AR12"
         }
 ```
@@ -386,81 +500,82 @@ sls offline start
 {
     "message": {
         "id": null,
-        "nickname": "TEST011212",
-        "first_name": "TEST1212",
-        "last_name": "TEST1212",
-        "email": "TEST@gmail.com",
+        "nickname": "MARTIN-SUAREZ",
+        "first_name": "Martin",
+        "last_name": "Suarez",
+        "email": "martin_electro_todo@gmail.com",
         "identification_type": "DNI",
-        "identification_number": "445938822",
+        "identification_number": "4459388222",
         "country_id": "AR12",
-        "creation_date": "2023-03-24T21:33:49.000Z",
-        "update_date": "2023-03-24T21:33:49.000Z"
+        "creation_date": "2023-04-07T14:31:45.000Z",
+        "update_date": "2023-04-07T14:31:45.000Z"
     }
 }
 ```
 
-### 2.1.2) Operaciones de tipo PUT
+<br>
 
-#### Editar un Usuario
+### 2.1.3) Operaciones de tipo PUT
+
+### Editar un Usuario
 
 #### Request
 ``` postman
 - Método : PUT
 
-- Url : http://localhost:4000/dev/users/update-user/{user-id}
+- Url : {{base_url}}/dev/users/update-user/{user-id}
 
 - Headers: 
   - Content-Type : application/json
-  - Authorization : Bearer {value}
-  - x-api-key : {value}
+  - Authorization : {{bearer_token}}
+  - x-api-key : {{x-api-key}}
 
 - Body (optionals fields) : 
-
-  {
-            "nickname": "TEST_UPDATED",
-            "first_name": "TEST_UPDATED",
-            "last_name": "TEST_UPDATED",
-            "email": "TEST_UPDATED@gmail.com",
+   {
+            "nickname": "MARTIN-SUAREZ-EDITED",
+            "first_name": "Martin EDITED",
+            "last_name": "Suarez EDITED",
+            "email": "martin_electro_todo_EDITED@gmail.com",
             "identification_type": "DNI",
-            "identification_number": "445938822",
-            "country_id": "AR12",
-            "creation_date": "2023-03-24 21:33:49"
-}
+            "identification_number": "4459388222",
+            "country_id": "AR12"
+        }
 ```
 
 #### Response
 ``` postman
 {
     "message": {
-        "id": 14,
-        "nickname": "TEST_UPDATED",
-        "first_name": "TEST_UPDATED",
-        "last_name": "TEST_UPDATED",
-        "email": "TEST_UPDATED@gmail.com",
+        "id": 18,
+        "nickname": "MARTIN-SUAREZ-EDITED",
+        "first_name": "Martin EDITED",
+        "last_name": "Suarez EDITED",
+        "email": "martin_electro_todo_EDITED@gmail.com",
         "identification_type": "DNI",
-        "identification_number": "445938822",
+        "identification_number": "4459388222",
         "country_id": "AR12",
-        "creation_date": "2023-03-25 00:33:49",
-        "update_date": "2023-03-24 21:38:50"
+        "creation_date": "2023-04-07 17:31:45",
+        "update_date": "2023-04-07 14:34:44"
     }
 }
 ```
 
+<br>
 
-### 2.1.3) Operaciones de tipo DELETE
+### 2.1.4) Operaciones de tipo DELETE
 
-#### Eliminar un Usuario
+### Eliminar un Usuario
 
 #### Request
 ``` postman
 - Método : DELETE
 
-- Url : http://localhost:4000/dev/users/delete-user/{user-id}
+- Url : {{base_url}}/dev/users/delete-user/{user-id}
 
 - Headers: 
   - Content-Type : application/json
-  - Authorization : Bearer {value}
-  - x-api-key : {value}
+  - Authorization : {{bearer_token}}
+  - x-api-key : {{x-api-key}}
 
 - Body  : null
 ```
@@ -472,12 +587,9 @@ sls offline start
 }
 ```
 
-
-
 <br>
 
 </details>
-
 
 
 
