@@ -30,14 +30,6 @@ plugins:
   - serverless-offline
 
 functions:
-  helloTest:
-    handler: src/controllers/test/hello.handler
-    description: Function in charge of checking ssm variables 
-    events:
-      - http:
-          path: /test
-          method: get
-          private: true
   databaseTest:
     handler: src/controllers/db/connection.handler
     description: Function in charge of checking the connection to the db

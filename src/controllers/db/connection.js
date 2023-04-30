@@ -42,11 +42,10 @@ module.exports.handler = async (event) => {
       .then(() => {
         msg = 'Connection has been established successfully.';
         code = statusCode.OK;
-
         console.log(msg);
 
       }).catch((error) => {
-        msg = 'Unable to connect to the database: ', JSON.stringify(error);
+        msg = `Unable to connect to the database. Caused by ${error}`;
         code = statusCode.INTERNAL_SERVER_ERROR;
         console.log(error);
 
@@ -56,7 +55,11 @@ module.exports.handler = async (event) => {
     //-- end with db query  ---
 
   } catch (error) {
-    console.log(error);
+    msg = `Unable to connect to the database. Caused by ${error}`;
+    code = statusCode.INTERNAL_SERVER_ERROR;
+    console.error(`${msg}. Stack error type : ${error.stack}`);
+ 
+    return await requestResult(code, msg, event);
   }
 
 

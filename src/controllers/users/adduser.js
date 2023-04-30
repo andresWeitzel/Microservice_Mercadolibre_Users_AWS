@@ -113,7 +113,7 @@ module.exports.handler = async (event) => {
     else if (newUser == null) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
-        "Bad request, could not add user.Check the values of each attribute and try again",
+        "Bad request, could not add user. Check the values of each attribute and try again",
         event
       );
     }else{
@@ -122,11 +122,10 @@ module.exports.handler = async (event) => {
 
     //-- end with db query  ---
   } catch (error) {
-    console.log(error);
-    return await requestResult(
-      statusCode.INTERNAL_SERVER_ERROR,
-      "The following error has been thrown" + error,
-      event
-    );
+    msg = `Error in addUser lambda. Caused by ${error}`;
+    code = statusCode.INTERNAL_SERVER_ERROR;
+    console.error(`${msg}. Stack error type : ${error.stack}`);
+
+    return await requestResult(code, msg, event);
   }
 };
