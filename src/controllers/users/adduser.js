@@ -3,6 +3,7 @@
 const { addUser } = require("../../services/users/addUser");
 //Enums
 const { statusCode } = require("../../enums/http/statusCode");
+const { statusName } = require("../../enums/connection/statusName");
 //Helpers
 const { requestResult } = require("../../helpers/http/bodyResponse");
 const {
@@ -12,6 +13,7 @@ const {
   validateBodyAddUserParams,
 } = require("../../helpers/http/users/requestBodyAddUserParams");
 const { validateAuthHeaders } = require("../../helpers/auth/headers");
+
 
 //Const/Vars
 let newUser;
@@ -96,14 +98,14 @@ module.exports.handler = async (event) => {
       identNumber,
       countryId
     );
-    if (newUser == "ECONNREFUSED") {
+    if (newUser == statusName.CONNECTION_REFUSED) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
         "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
         event
       );
     }
-    else if (newUser == "ERROR") {
+    else if (newUser == statusName.CONNECTION_ERROR) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
         "ERROR. An error has occurred in the process operations and queries with the database. Try again",

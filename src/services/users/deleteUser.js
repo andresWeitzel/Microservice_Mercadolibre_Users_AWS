@@ -1,6 +1,8 @@
 //Models
 const { User } = require('../../models/user');
-//Hepers
+//Enums
+const {statusName} = require('../../enums/connection/statusName');
+//Helpers
 const { checkDbAuthentication } = require("../../helpers/db/authenticate");
 //Const/Vars
 let user;
@@ -30,17 +32,18 @@ const deleteUser = async function (id) {
         )
             .then(userItem => {
                 user = userItem;
-                console.log(user);
             })
             .catch(error => {
-                console.log(error);
+                msg = `Error in delete User model. Caused by ${error}`;
+                console.error(`${msg}. Stack error type : ${error.stack}`);
             })
         } else {
-            user = "ECONNREFUSED";
+            user = statusName.CONNECTION_REFUSED;
           }
     } catch (error) {
-        console.log(error);
-        user = "ERROR";
+        msg = `Error in deleteUser function. Caused by ${error}`;
+        console.error(`${msg}. Stack error type : ${error.stack}`);
+        user = statusName.ERROR;
     }
     console.log(user);
     return user;

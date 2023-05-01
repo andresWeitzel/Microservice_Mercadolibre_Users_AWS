@@ -109,22 +109,19 @@ npm i
     X_API_KEY : 'f98d8cd98h73s204e3456998ecl9427j'
 
     BEARER_TOKEN : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-
-    # Test
-    HELLO_TEST : 'HELLO_SSM_TEST'
-
+    
     # Database
     DATABASE_NAME : 'microdb_mercadolibre'
     DATABASE_USER : 'root'
     DATABASE_PASSWORD : ''
-    DATABASE_HOST : 'localhost'
+    DATABASE_HOST : '127.0.0.1'
     DATABASE_DIALECT : 'mysql'
     DATABASE_POOL_MAX : 5
     DATABASE_POOL_MIN : 0
     DATABASE_POOL_ACQUIRE : 30000
     DATABASE_POOL_IDLE : 10000
 
-  ```  
+  ```    
 * Ejecutamos el proyecto
 ```git
 sls offline start
@@ -636,6 +633,7 @@ sls offline start
 #### Api Gateway
  * [Buenas Prácticas Api-Gateway](https://docs.aws.amazon.com/whitepapers/latest/best-practices-api-gateway-private-apis-integration/rest-api.html)
  * [Creación de Api-keys personalizadas](https://towardsaws.com/protect-your-apis-by-creating-api-keys-using-serverless-framework-fe662ad37447)
+ * [Configuración propiedades Api Gateway](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml)
 
  #### Librerías
  * [Validación de campos](https://www.npmjs.com/package/node-input-validator)

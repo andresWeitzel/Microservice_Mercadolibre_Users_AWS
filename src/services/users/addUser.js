@@ -1,12 +1,13 @@
-//Externals
-const { Sequelize, Op } = require("sequelize");
 //Models
 const { User } = require('../../models/user');
-//Hepers
+//Enums
+const {statusName} = require('../../enums/connection/statusName');
+//Helpers
 const { currentDateTime } = require('../../helpers/dates/date');
 const { checkDbAuthentication } = require("../../helpers/db/authenticate");
 //Const/Vars
 let user;
+let msg;
 let dateNow;
 let checkDbConn;
 
@@ -27,6 +28,7 @@ let checkDbConn;
 const addUser = async function (nickname, firstName, lastName, email, identificationType, identificationNumber, countryId) {
     try {
         user = null;
+        msg = null;
         dateNow = await currentDateTime();
 
         checkDbConn = await checkDbAuthentication();
@@ -47,17 +49,18 @@ const addUser = async function (nickname, firstName, lastName, email, identifica
         )
             .then(userItem => {
                 user = userItem;
-                console.log(user);
             })
             .catch(error => {
-                console.log(error);
+                msg = `Error in create User model. Caused by ${error}`;
+                console.error(`${msg}. Stack error type : ${error.stack}`);
             })
         } else {
-            user = "ECONNREFUSED";
+            user = statusName.CONNECTION_REFUSED;
           }
     } catch (error) {
-        console.log(error);
-        user = "ERROR";
+        msg = `Error in addUser function. Caused by ${error}`;
+        console.error(`${msg}. Stack error type : ${error.stack}`);
+        user = statusName.CONNECTION_ERROR;
     }
     console.log(user);
     return user;
@@ -66,8 +69,6 @@ const addUser = async function (nickname, firstName, lastName, email, identifica
 
 
 
-
 module.exports = {
     addUser
-
 };

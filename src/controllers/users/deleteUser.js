@@ -10,6 +10,7 @@ const {
 const {
     statusCode
 } = require("../../enums/http/statusCode");
+const { statusName } = require("../../enums/connection/statusName");
 //Helpers
 const {
     requestResult
@@ -81,13 +82,13 @@ module.exports.handler = async (event) => {
 
         delUser = await deleteUser(userId);
 
-        if (delUser == "ECONNREFUSED") {
+        if (delUser == statusName.CONNECTION_REFUSED) {
             return await requestResult(
                 statusCode.INTERNAL_SERVER_ERROR,
                 "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
                 event
             );
-        } else if (delUser == "ERROR") {
+        } else if (delUser == statusName.ERROR) {
             return await requestResult(
                 statusCode.INTERNAL_SERVER_ERROR,
                 "ERROR. An error has occurred in the process operations and queries with the database. Try again",
@@ -112,11 +113,10 @@ module.exports.handler = async (event) => {
 
         //-- end with db query  ---
     } catch (error) {
-        console.log(error);
-        return await requestResult(
-            statusCode.INTERNAL_SERVER_ERROR,
-            "The following error has been thrown" + error,
-            event
-        );
+        msg = `Error in deleteUser lambda. Caused by ${error}`;
+        code = statusCode.INTERNAL_SERVER_ERROR;
+        console.error(`${msg}. Stack error type : ${error.stack}`);
+    
+        return await requestResult(code, msg, event);
     }
 };

@@ -11,6 +11,15 @@ provider:
   timeout: 10
   environment: ${file(./serverless_ssm.yml)}
   apiGateway:
+    description: Api gateway for managing requests between lambdas
+    restApiId: xxxx
+    restApiRootResourceId: xxxx
+    resourcePolicy:
+      - Effect: Allow
+        Principal: '*'
+        Action: execute-api:Invoke
+        Resource:
+          - execute-api:/*/*/*
     apiKeys:
       - name: xApiKey
         value: ${file(./serverless_ssm.yml):X_API_KEY}
