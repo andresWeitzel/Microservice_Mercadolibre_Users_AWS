@@ -237,29 +237,29 @@ sls offline start
   <summary>Ver</summary>
 
 ### Operaciones de tipo GET:
-* http://localhost:4000/dev/test
-* http://localhost:4000/dev/db-connection
-* http://localhost:4000/dev/users/list
-* http://localhost:4000/dev/users/id/{user-id}
-* http://localhost:4000/dev/users/country-id/{country-id}
-* http://localhost:4000/dev/users/email/{email}
-* http://localhost:4000/dev/users/first-name/{first-name}
-* http://localhost:4000/dev/users/identification-number/{ident-number}
-* http://localhost:4000/dev/users/identification-type/{ident-type}
-* http://localhost:4000/dev/users/last-name/{last-name}
-* http://localhost:4000/dev/users/nickname/{nickname}
-* http://localhost:4000/dev/users/creation-date/{creation-date}
-* http://localhost:4000/dev/users/update-date/{update-date}
+* http://localhost:4000/dev/v1/test
+* http://localhost:4000/dev/v1/db-connection
+* http://localhost:4000/dev/v1/users/list
+* http://localhost:4000/dev/v1/users/id/{user-id}
+* http://localhost:4000/dev/v1/users/country-id/{country-id}
+* http://localhost:4000/dev/v1/users/email/{email}
+* http://localhost:4000/dev/v1/users/first-name/{first-name}
+* http://localhost:4000/dev/v1/users/identification-number/{ident-number}
+* http://localhost:4000/dev/v1/users/identification-type/{ident-type}
+* http://localhost:4000/dev/v1/users/last-name/{last-name}
+* http://localhost:4000/dev/v1/users/nickname/{nickname}
+* http://localhost:4000/dev/v1/users/creation-date/{creation-date}
+* http://localhost:4000/dev/v1/users/update-date/{update-date}
 * `Todos los endpoints son paginados opcionales menos el /test, /db-connection y /id/{user-id}`
 
 ### Operaciones de tipo POST:
-* http://localhost:4000/dev/users/add-user/
+* http://localhost:4000/dev/v1/users/add-user/
 
 ### Operaciones de tipo PUT:
-* http://localhost:4000/dev/users/update-user/{user-id}
+* http://localhost:4000/dev/v1/users/update-user/{user-id}
 
 ### Operaciones de tipo DELETE:
-* http://localhost:4000/dev/users/delete-user/{user-id}
+* http://localhost:4000/dev/v1/users/delete-user/{user-id}
 
 ### Aclaraciones
 * {valor-requerido}
@@ -284,7 +284,7 @@ sls offline start
 
 | **Variable** | **Initial value** | **Current value** |               
 | ------------- | ------------- | ------------- |
-| base_url | http://localhost:4000  | http://localhost:4000 |
+| base_url | http://localhost:4000/v1/  | http://localhost:4000/v1/ |
 | x-api-key | f98d8cd98h73s204e3456998ecl9427j  | f98d8cd98h73s204e3456998ecl9427j |
 | bearer_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c  | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c |
 
@@ -298,7 +298,7 @@ sls offline start
 ``` postman
 - Método : GET
 
-- Url : {{base_url}}/dev/db-connection
+- Url : {{base_url}}/v1/db-connection
 
 - Headers: 
   - Content-Type : application/json
@@ -323,7 +323,7 @@ sls offline start
 ``` postman
 - Método : GET
 
-- Url : {{base_url}}/dev/users/list?page=0&limit=2
+- Url : {{base_url}}/v1/users/list?page=0&limit=2
 
 - Headers: 
   - Content-Type : application/json
@@ -373,7 +373,7 @@ sls offline start
 ``` postman
 - Método : GET
 
-- Url : {{base_url}}/dev/users/id/4
+- Url : {{base_url}}/v1/users/id/4
 
 - Headers: 
   - Content-Type : application/json
@@ -409,7 +409,7 @@ sls offline start
 ``` postman
 - Método : GET
 
-- Url : {{base_url}}/dev/users/id/4
+- Url : {{base_url}}/v1/users/id/4
 
 - Headers: 
   - Content-Type : application/json
@@ -474,7 +474,7 @@ sls offline start
 ``` postman
 - Método : POST
 
-- Url : {{base_url}}/dev/users/add-user/
+- Url : {{base_url}}/v1/users/add-user/
 
 - Headers: 
   - Content-Type : application/json
@@ -522,7 +522,7 @@ sls offline start
 ``` postman
 - Método : PUT
 
-- Url : {{base_url}}/dev/users/update-user/{user-id}
+- Url : {{base_url}}/v1/users/update-user/{user-id}
 
 - Headers: 
   - Content-Type : application/json
@@ -569,7 +569,7 @@ sls offline start
 ``` postman
 - Método : DELETE
 
-- Url : {{base_url}}/dev/users/delete-user/{user-id}
+- Url : {{base_url}}/v1/users/delete-user/{user-id}
 
 - Headers: 
   - Content-Type : application/json
