@@ -4,6 +4,9 @@ const { Sequelize } = require("sequelize");
 const { User } = require("../../models/user");
 //Helpers
 const { checkDbAuthentication } = require("../../helpers/db/authenticate");
+const { getDateFormat } = require("../../helpers/sequelize/format/dateFormat");
+//Enums
+const { statusName } = require("../../enums/connection/statusName");
 //Const/Vars
 let usersList;
 let checkDbConn;
@@ -26,22 +29,7 @@ const getAll = async function (pageSizeNro, pageNro, orderBy) {
       await User.findAll({
         attributes: {
           include: [
-            [
-              Sequelize.fn(
-                "DATE_FORMAT",
-                Sequelize.col("creation_date"),
-                "%Y-%m-%d %H:%i:%s"
-              ),
-              "creation_date",
-            ],
-            [
-              Sequelize.fn(
-                "DATE_FORMAT",
-                Sequelize.col("update_date"),
-                "%Y-%m-%d %H:%i:%s"
-              ),
-              "update_date",
-            ],
+            (await getDateFormat()).include
           ],
         },
         limit: pageSizeNro,
@@ -52,14 +40,18 @@ const getAll = async function (pageSizeNro, pageNro, orderBy) {
           usersList = users;
         })
         .catch((error) => {
-          console.log(error);
+          msg = `Error in getAll User model. Caused by ${error}`;
+          console.error(`${msg}. Stack error type : ${error.stack}`);
+          usersList = statusName.CONNECTION_ERROR;
+
         });
     } else {
-      usersList = "ECONNREFUSED";
+      usersList = statusName.CONNECTION_REFUSED;
     }
   } catch (error) {
-    console.log(error);
-    usersList = "ERROR";
+    msg = `Error in getAll function. Caused by ${error}`;
+    console.error(`${msg}. Stack error type : ${error.stack}`);
+    usersList = statusName.CONNECTION_ERROR;
   }
 
   console.log(usersList);
@@ -93,14 +85,18 @@ const getAllWithoutDate = async function (pageSizeNro, pageNro, orderBy) {
           usersList = users;
         })
         .catch((error) => {
-          console.log(error);
+          msg = `Error in getAllWithoutDate User model. Caused by ${error}`;
+          console.error(`${msg}. Stack error type : ${error.stack}`);
+          usersList = statusName.CONNECTION_ERROR;
         });
     } else {
-      usersList = "ECONNREFUSED";
+      
+      usersList = statusName.CONNECTION_REFUSED;
     }
   } catch (error) {
-    console.log(error);
-    usersList = "ERROR";
+    msg = `Error in getAllWithoutDate function. Caused by ${error}`;
+    console.error(`${msg}. Stack error type : ${error.stack}`);
+    usersList = statusName.CONNECTION_ERROR;
   }
 
   console.log(usersList);

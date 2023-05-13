@@ -44,7 +44,7 @@ functions:
     description: Function in charge of checking the connection to the db
     events:
       - http:
-          path: /db-connection
+          path: /v1/db-connection
           method: get
           private: true
   getAllUsers:
@@ -52,7 +52,7 @@ functions:
     description: Function in charge of obtaining the paginated list of users of the db
     events:
       - http:
-          path: /users/list
+          path: /v1/users/list
           method: get
           private: true
   getByIdUsers:
@@ -60,7 +60,7 @@ functions:
     description: Function in charge of obtaining a user according to his id of the db
     events:
       - http:
-          path: /users/id/{id}
+          path: /v1/users/id/{id}
           method: get
           private: true
   getLikeNicknameUsers:
@@ -68,7 +68,7 @@ functions:
     description: Function in charge of obtaining a paginated list of users according to their nickname of the db
     events:
       - http:
-          path: /users/nickname/{nickname}
+          path: /v1/users/nickname/{nickname}
           method: get
           private: true
   getLikeFirstNameUsers:
@@ -76,7 +76,7 @@ functions:
     description: Function in charge of obtaining a paginated list of users according to their firstname of the db
     events:
       - http:
-          path: /users/first-name/{firstName}
+          path: /v1/users/first-name/{firstName}
           method: get
           private: true
   getLikeLastNameUsers:
@@ -84,7 +84,7 @@ functions:
     description: Function in charge of obtaining a paginated list of users according to their lastname of the db
     events:
       - http:
-          path: /users/last-name/{lastName}
+          path: /v1/users/last-name/{lastName}
           method: get
           private: true
   getLikeIdentificationTypeUsers:
@@ -92,7 +92,7 @@ functions:
     description: Function in charge of obtaining a paginated list of users according to their identification type of the db
     events:
       - http:
-          path: /users/identification-type/{identificationType}
+          path: /v1/users/identification-type/{identificationType}
           method: get
           private: true
   getLikeIdentificationNumberUsers:
@@ -100,7 +100,7 @@ functions:
     description: Function in charge of obtaining a paginated list of users according to their identification number of the db
     events:
       - http:
-          path: /users/identification-number/{identificationNumber}
+          path: /v1/users/identification-number/{identificationNumber}
           method: get
           private: true
   getLikeCountryIdUsers:
@@ -108,7 +108,7 @@ functions:
     description: Function in charge of obtaining a paginated list of users according to their country id of the db
     events:
       - http:
-          path: /users/country-id/{countryId}
+          path: /v1/users/country-id/{countryId}
           method: get
           private: true
   getLikeEmailUsers:
@@ -116,7 +116,7 @@ functions:
     description: Function in charge of obtaining a paginated list of users according to their email of the db
     events:
       - http:
-          path: /users/email/{email}
+          path: /v1/users/email/{email}
           method: get
           private: true
   getLikeCreationDateUsers:
@@ -124,7 +124,7 @@ functions:
     description: Function in charge of obtaining a paginated list of users according to their creation date of the db
     events:
       - http:
-          path: /users/creation-date/{creationDate}
+          path: /v1/users/creation-date/{creationDate}
           method: get
           private: true
   getLikeUpdateDateUsers:
@@ -132,7 +132,7 @@ functions:
     description: Function in charge of obtaining a paginated list of users according to their update date of the db
     events:
       - http:
-          path: /users/update-date/{updateDate}
+          path: /v1/users/update-date/{updateDate}
           method: get
           private: true
   addUser:
@@ -140,7 +140,7 @@ functions:
     description: Function in charge of adding a user to the db
     events:
       - http:
-          path: /users/add-user/
+          path: /v1/users/add-user/
           method: post
           private: true
   updateUser:
@@ -148,7 +148,7 @@ functions:
     description: Function in charge of update a user to the db
     events:
       - http:
-          path: /users/update-user/{id}
+          path: /v1/users/update-user/{id}
           method: put
           private: true
   deleteUser:
@@ -156,7 +156,7 @@ functions:
     description: Function in charge of eliminate a user to the db
     events:
       - http:
-          path: /users/delete-user/{id}
+          path: /v1/users/delete-user/{id}
           method: delete
           private: true
 
