@@ -7,691 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "GET",
-			"item": [
-				{
-					"name": "test-ssm",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/test",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"test"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "db-connection",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/db-connection",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"db-connection"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "list",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/users/list?page=0&limit=2",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"users",
-								"list"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "2"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "id",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "ss",
-									"type": "file",
-									"src": [],
-									"disabled": true
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/users/id/4",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"users",
-								"id",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "country-id",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/users/country-id/AR?page=0&limit=3",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"users",
-								"country-id",
-								"AR"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "3"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "email",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/users/email/a?page=0&limit=2",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"users",
-								"email",
-								"a"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "2"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "first-name",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/users/first-name/J?page=0&limit=2",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"users",
-								"first-name",
-								"J"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "2"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "identification-number",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/users/identification-number/2?page=0&limit=4",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"users",
-								"identification-number",
-								"2"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "4"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "identification-type",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/users/identification-type/dni?page=0&limit=4",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"users",
-								"identification-type",
-								"dni"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "4"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "last-name",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/users/last-name/as?page=0&limit=1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"users",
-								"last-name",
-								"as"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "nickname",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/users/nickname/gabriela?page=0&limit=1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"users",
-								"nickname",
-								"gabriela"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "creation-date",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/users/creation-date/2023-03-20",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"users",
-								"creation-date",
-								"2023-03-20"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update-date",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{bearer_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{base_url}}/dev/users/creation-date/2023-03-20",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dev",
-								"users",
-								"creation-date",
-								"2023-03-20"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "POST",
 			"item": [
 				{
@@ -723,12 +38,12 @@
 							"raw": "   {\r\n            \"nickname\": \"MARTIN-SUAREZ\",\r\n            \"first_name\": \"Martin\",\r\n            \"last_name\": \"Suarez\",\r\n            \"email\": \"martin_electro_todo@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"4459388222\",\r\n            \"country_id\": \"AR12\"\r\n        }"
 						},
 						"url": {
-							"raw": "{{base_url}}/dev/users/add-user/",
+							"raw": "{{base_url}}/v1/users/add-user/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"dev",
+								"v1",
 								"users",
 								"add-user",
 								""
@@ -771,12 +86,12 @@
 							"raw": "   {\r\n            \"nickname\": \"MARTIN-SUAREZ-EDITED\",\r\n            \"first_name\": \"Martin EDITED\",\r\n            \"last_name\": \"Suarez EDITED\",\r\n            \"email\": \"martin_electro_todo_EDITED@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"4459388222\",\r\n            \"country_id\": \"AR12\"\r\n        }"
 						},
 						"url": {
-							"raw": "{{base_url}}/dev/users/update-user/18",
+							"raw": "{{base_url}}/v1/users/update-user/18",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"dev",
+								"v1",
 								"users",
 								"update-user",
 								"18"
@@ -819,12 +134,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}/dev/users/delete-user/18",
+							"raw": "{{base_url}}/v1/users/delete-user/18",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"dev",
+								"v1",
 								"users",
 								"delete-user",
 								"18"
@@ -834,12 +149,673 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "test-db-connection",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/db-connection",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"db-connection"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/list?page=0&limit=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-by-id-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "ss",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/id/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"id",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-like-country-id-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/country-id/AR?page=0&limit=3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"country-id",
+								"AR"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-like-email-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/email/a?page=0&limit=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"email",
+								"a"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-like-first-name-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/first-name/J?page=0&limit=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"first-name",
+								"J"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-like-identification-number-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/identification-number/2?page=0&limit=4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"identification-number",
+								"2"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-like-identification-type-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/identification-type/dni?page=0&limit=4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"identification-type",
+								"dni"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-like-last-name-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/last-name/as?page=0&limit=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"last-name",
+								"as"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-like-nickname-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/nickname/gabriela?page=0&limit=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"nickname",
+								"gabriela"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-like-creation-date-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/creation-date/2023-03-20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"creation-date",
+								"2023-03-20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-like-update-date-users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/creation-date/2023-03-20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"creation-date",
+								"2023-03-20"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "http://localhost:4000"
+			"value": "http://localhost:4000/dev"
 		},
 		{
 			"key": "x-api-key",
