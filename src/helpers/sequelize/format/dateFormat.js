@@ -2,32 +2,27 @@
 const {
     Sequelize
 } = require("sequelize");
+//Const-vars
+let dateFormat;
 
 /**
- * @description get a json object with dates format YYYY-MM-DD hh:mm:ss with sequelize functions for cretion_date and update_date
+ * @description get a json object with dates format YYYY-MM-DD hh:mm:ss with sequelize functions according to input field
+ * @param {String} field String type
  * @returns a json with sequelize date format
  */
-const getDateFormat = async () => {
-    return {
-        include: [
-            [
-              Sequelize.fn(
-                "DATE_FORMAT",
-                Sequelize.col("creation_date"),
-                "%Y-%m-%d %H:%i:%s"
-              ),
-              "creation_date",
-            ],
-            [
-                Sequelize.fn(
-                  "DATE_FORMAT",
-                  Sequelize.col("update_date"),
-                  "%Y-%m-%d %H:%i:%s"
-                ),
-                "update_date",
-              ],
-        ]
-    };
+const getDateFormat = async (field) => {
+  dateFormat =  { include: [
+    [
+      Sequelize.fn(
+        "DATE_FORMAT",
+        Sequelize.col(field),
+        "%Y-%m-%d %H:%i:%s"
+      ),
+      field,
+    ]
+  ]
+}
+    return dateFormat.include[0];
 }
 
 module.exports = {

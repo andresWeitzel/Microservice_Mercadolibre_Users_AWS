@@ -29,7 +29,8 @@ const getAll = async function (pageSizeNro, pageNro, orderBy) {
       await User.findAll({
         attributes: {
           include: [
-            (await getDateFormat()).include
+            await getDateFormat("creation_date"),
+            await getDateFormat("update_date")
           ],
         },
         limit: pageSizeNro,
