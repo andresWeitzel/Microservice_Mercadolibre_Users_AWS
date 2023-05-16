@@ -1,9 +1,10 @@
-//Externals
-const { Sequelize } = require("sequelize");
 //Models
 const { User } = require("../../models/user");
+//Enums
+const { statusName } = require("../../enums/connection/statusName");
 //Helpers
 const { checkDbAuthentication } = require("../../helpers/db/authenticate");
+const { getDateFormat } = require("../../helpers/sequelize/format/dateFormat");
 //Const/Vars
 let user;
 let checkDbConn;
@@ -24,22 +25,8 @@ const getById = async function (id) {
       await User.findByPk(id, {
         attributes: {
           include: [
-            [
-              Sequelize.fn(
-                "DATE_FORMAT",
-                Sequelize.col("creation_date"),
-                "%Y-%m-%d %H:%i:%s"
-              ),
-              "creation_date",
-            ],
-            [
-              Sequelize.fn(
-                "DATE_FORMAT",
-                Sequelize.col("update_date"),
-                "%Y-%m-%d %H:%i:%s"
-              ),
-              "update_date",
-            ],
+            await getDateFormat("creation_date"),
+            await getDateFormat("update_date")
           ],
         },
       })
@@ -47,14 +34,17 @@ const getById = async function (id) {
           user = findUser;
         })
         .catch((error) => {
-          console.log(error);
+          msg = `Error in getById User model. Caused by ${error}`;
+          console.error(`${msg}. Stack error type : ${error.stack}`);
+          user = statusName.CONNECTION_ERROR;
         });
     } else {
-      user = "ECONNREFUSED";
+      user = statusName.CONNECTION_REFUSED;
     }
   } catch (error) {
-    console.log(error);
-    user = "ERROR";
+    msg = `Error in getById function. Caused by ${error}`;
+    console.error(`${msg}. Stack error type : ${error.stack}`);
+    user = statusName.CONNECTION_ERROR;
   }
   console.log(user);
   return user;
@@ -82,14 +72,17 @@ const getByIdLimit = async function (id) {
           user = findUser;
         })
         .catch((error) => {
-          console.log(error);
+          msg = `Error in getByIdLimit User model. Caused by ${error}`;
+          console.error(`${msg}. Stack error type : ${error.stack}`);
+          user = statusName.CONNECTION_ERROR;
         });
     } else {
-      user = "ECONNREFUSED";
+      user = statusName.CONNECTION_REFUSED;
     }
   } catch (error) {
-    console.log(error);
-    user = "ERROR";
+    msg = `Error in getByIdLimit function. Caused by ${error}`;
+    console.error(`${msg}. Stack error type : ${error.stack}`);
+    user = statusName.CONNECTION_ERROR;
   }
   console.log(user);
   return user;

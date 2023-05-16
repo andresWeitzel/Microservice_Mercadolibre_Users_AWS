@@ -1,14 +1,26 @@
 "use strict";
 //Services
-const { getAll, getAllWithoutDate } = require("../../services/users/getAll");
+const {
+  getAll,
+  getAllWithoutDate
+} = require("../../services/users/getAll");
 //Enums
-const { statusCode } = require("../../enums/http/statusCode");
+const {
+  statusCode
+} = require("../../enums/http/statusCode");
+const {
+  statusName
+} = require("../../enums/connection/statusName");
 //Helpers
-const { requestResult } = require("../../helpers/http/bodyResponse");
+const {
+  requestResult
+} = require("../../helpers/http/bodyResponse");
 const {
   validateHeadersParams,
 } = require("../../helpers/http/requestHeadersParams");
-const { validateAuthHeaders } = require("../../helpers/auth/headers");
+const {
+  validateAuthHeaders
+} = require("../../helpers/auth/headers");
 //Const/Vars
 let userList;
 let eventHeaders;
@@ -17,7 +29,9 @@ let validateAuth;
 let queryStrParams;
 let pageSizeNro;
 let pageNro;
-const orderBy = [["id", "ASC"]];
+const orderBy = [
+  ["id", "ASC"]
+];
 
 /**
  * @description gets all paged users
@@ -28,8 +42,8 @@ module.exports.handler = async (event) => {
   try {
     //Init
     userList = null;
-    pageSizeNro=5;
-    pageNro=0;
+    pageSizeNro = 5;
+    pageNro = 0;
 
     //-- start with validation Headers  ---
 
@@ -69,24 +83,29 @@ module.exports.handler = async (event) => {
     userList = await getAll(pageSizeNro, pageNro, orderBy);
     // userList = await getAllWithoutDate(pageSizeNro, pageNro, orderBy);
 
-    if (userList == "ECONNREFUSED") {
+    if (userList == statusName.CONNECTION_REFUSED) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
         "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
         event
       );
-    }else if (userList == "ERROR") {
+    } else if (userList == statusName.ERROR) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
         "ERROR. An error has occurred in the process operations and queries with the database. Try again",
         event
-      );  
-    }else{
+      );
+    } else if (userList == 0 || userList == null) {
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "Bad request, could not get the paginated list of users.",
+        event
+      );
+    } else {
       return await requestResult(statusCode.OK, userList, event);
     }
     //-- end with db query  ---
 
-    
   } catch (error) {
     console.log(error);
     return await requestResult(

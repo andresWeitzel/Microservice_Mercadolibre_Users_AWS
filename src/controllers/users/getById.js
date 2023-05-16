@@ -3,6 +3,7 @@
 const { getById, getByIdLimit } = require("../../services/users/getById");
 //Enums
 const { statusCode } = require("../../enums/http/statusCode");
+const { statusName } = require("../../enums/connection/statusName");
 //Helpers
 const { requestResult } = require("../../helpers/http/bodyResponse");
 const {
@@ -12,6 +13,7 @@ const { validateAuthHeaders } = require("../../helpers/auth/headers");
 const {
   validatePathParameters,
 } = require("../../helpers/http/queryStringParams");
+
 //Const/Vars
 let user;
 let userId;
@@ -66,19 +68,25 @@ module.exports.handler = async (event) => {
       user = await getById(userId);
       //user = await getByIdLimit(userId);
 
-      if (user == "ECONNREFUSED") {
+      if (user == statusName.CONNECTION_REFUSED) {
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
           "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
           event
         );
       }
-      else if (user == "ERROR") {
+      else if (user == statusName.ERROR) {
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
           "ERROR. An error has occurred in the process operations and queries with the database. Try again",
           event
         );  
+      } else if (user == 0 || user == null) {
+        return await requestResult(
+          statusCode.BAD_REQUEST,
+          "Bad request, could not fetch user based on id.",
+          event
+        );
       }else{
       return await requestResult(statusCode.OK, user, event);
       }

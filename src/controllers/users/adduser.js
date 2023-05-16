@@ -4,6 +4,7 @@ const { addUser } = require("../../services/users/addUser");
 //Enums
 const { statusCode } = require("../../enums/http/statusCode");
 const { statusName } = require("../../enums/connection/statusName");
+const { value } = require("../../enums/general/value");
 //Helpers
 const { requestResult } = require("../../helpers/http/bodyResponse");
 const {
@@ -29,6 +30,8 @@ let email;
 let identType;
 let identNumber;
 let countryId;
+let msg;
+let code;
 
 /**
  * @description add a user according to the parameters passed in the request body
@@ -38,7 +41,10 @@ let countryId;
 module.exports.handler = async (event) => {
   try {
     //Init
-    newUser = null;
+ 
+    newUser = value.IS_NULL;
+    msg = value.IS_NULL;
+    code = value.IS_NULL;
 
     //-- start with validation Headers  ---
     eventHeaders = await event.headers;
@@ -112,7 +118,7 @@ module.exports.handler = async (event) => {
         event
       );
     }
-    else if (newUser == null) {
+    else if (newUser == value.IS_NULL) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
         "Bad request, could not add user. Check the values of each attribute and try again",

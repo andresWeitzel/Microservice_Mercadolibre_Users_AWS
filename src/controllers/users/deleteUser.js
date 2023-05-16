@@ -47,7 +47,7 @@ let creationDate;
 module.exports.handler = async (event) => {
     try {
         //Init
-        delUser = null;
+        delUser = value.IS_NULL;
 
         //-- start with validation Headers  ---
         eventHeaders = await event.headers;
@@ -94,7 +94,7 @@ module.exports.handler = async (event) => {
                 "ERROR. An error has occurred in the process operations and queries with the database. Try again",
                 event
             );
-        } else if (delUser == null) {
+        } else if (delUser == IS_NULL) {
             return await requestResult(
                 statusCode.INTERNAL_SERVER_ERROR,
                 "Bad request, could not delete a user. Check the user id and try again.",
@@ -107,7 +107,6 @@ module.exports.handler = async (event) => {
                 event
             );
         } else {
-
             return await requestResult(statusCode.OK, 'User has been deleted successfully.', event);
         }
 
