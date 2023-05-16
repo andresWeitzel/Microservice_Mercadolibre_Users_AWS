@@ -284,7 +284,7 @@ sls offline start
 
 | **Variable** | **Initial value** | **Current value** |               
 | ------------- | ------------- | ------------- |
-| base_url | http://localhost:4000/v1/  | http://localhost:4000/v1/ |
+| base_url | http://localhost:4000/dev/  | http://localhost:4000/dev/ |
 | x-api-key | f98d8cd98h73s204e3456998ecl9427j  | f98d8cd98h73s204e3456998ecl9427j |
 | bearer_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c  | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c |
 
@@ -409,7 +409,7 @@ sls offline start
 ``` postman
 - Método : GET
 
-- Url : {{base_url}}/v1/users/id/4
+- Url : {{base_url}}/v1/users/country-id/AR?page=0&limit=3
 
 - Headers: 
   - Content-Type : application/json
