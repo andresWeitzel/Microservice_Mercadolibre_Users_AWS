@@ -3,14 +3,12 @@
 const {
     deleteUser
 } = require("../../services/users/deleteUser");
-const {
-    getById
-} = require("../../services/users/getById");
 //Enums
 const {
     statusCode
 } = require("../../enums/http/statusCode");
 const { statusName } = require("../../enums/connection/statusName");
+const { value } = require("../../enums/general/value");
 //Helpers
 const {
     requestResult
@@ -31,13 +29,15 @@ let validateReqParams;
 let validateReqBodyParams;
 let nickname;
 let firstName;
-let delUser;
+let checkDeleteUser;
 let userId;
 let email;
 let identType;
 let identNumber;
 let countryId;
 let creationDate;
+let msg;
+let code;
 
 /**
  * @description delete a user according to the parameters passed in the request body
@@ -47,7 +47,9 @@ let creationDate;
 module.exports.handler = async (event) => {
     try {
         //Init
-        delUser = value.IS_NULL;
+        checkDeleteUser = value.IS_NULL;
+        msg = value.IS_NULL;
+        code = value.IS_NULL;
 
         //-- start with validation Headers  ---
         eventHeaders = await event.headers;
@@ -80,27 +82,27 @@ module.exports.handler = async (event) => {
         userId = await event.pathParameters.id;
 
 
-        delUser = await deleteUser(userId);
+        checkDeleteUser = await deleteUser(userId);
 
-        if (delUser == statusName.CONNECTION_REFUSED) {
+        if (checkDeleteUser == statusName.CONNECTION_REFUSED) {
             return await requestResult(
                 statusCode.INTERNAL_SERVER_ERROR,
                 "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
                 event
             );
-        } else if (delUser == statusName.ERROR) {
+        } else if (checkDeleteUser == statusName.ERROR) {
             return await requestResult(
                 statusCode.INTERNAL_SERVER_ERROR,
                 "ERROR. An error has occurred in the process operations and queries with the database. Try again",
                 event
             );
-        } else if (delUser == IS_NULL) {
+        } else if (checkDeleteUser == value.IS_NULL) {
             return await requestResult(
                 statusCode.INTERNAL_SERVER_ERROR,
                 "Bad request, could not delete a user. Check the user id and try again.",
                 event
             );
-        } else if (delUser == 0) {
+        } else if (checkDeleteUser == value.IS_ZERO_NUMBER) {
             return await requestResult(
                 statusCode.BAD_REQUEST,
                 "Bad request, a non-existent user cannot be deleted. Operation not allowed.",
