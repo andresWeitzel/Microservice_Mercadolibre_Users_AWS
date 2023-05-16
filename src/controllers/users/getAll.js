@@ -11,7 +11,9 @@ const {
 const {
   statusName
 } = require("../../enums/connection/statusName");
-const { value } = require("../../enums/general/value");
+const {
+  value
+} = require("../../enums/general/value");
 //Helpers
 const {
   requestResult

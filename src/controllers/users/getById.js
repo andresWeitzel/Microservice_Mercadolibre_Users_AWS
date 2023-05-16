@@ -1,17 +1,29 @@
 "use strict";
 //Services
-const { getById, getByIdLimit } = require("../../services/users/getById");
+const {
+  getById,
+  getByIdLimit
+} = require("../../services/users/getById");
 //Enums
-const { statusCode } = require("../../enums/http/statusCode");
-const { statusName } = require("../../enums/connection/statusName");
-
-const { value } = require("../../enums/general/value");
+const {
+  statusCode
+} = require("../../enums/http/statusCode");
+const {
+  statusName
+} = require("../../enums/connection/statusName");
+const {
+  value
+} = require("../../enums/general/value");
 //Helpers
-const { requestResult } = require("../../helpers/http/bodyResponse");
+const {
+  requestResult
+} = require("../../helpers/http/bodyResponse");
 const {
   validateHeadersParams,
 } = require("../../helpers/http/requestHeadersParams");
-const { validateAuthHeaders } = require("../../helpers/auth/headers");
+const {
+  validateAuthHeaders
+} = require("../../helpers/auth/headers");
 const {
   validatePathParameters,
 } = require("../../helpers/http/queryStringParams");
@@ -23,6 +35,8 @@ let eventHeaders;
 let validateHeaders;
 let validateReqParams;
 let validatePathParam;
+let msg;
+let code;
 
 /**
  * @description gets a user with all its attributes whose id matches the one passed as a parameter
@@ -31,8 +45,10 @@ let validatePathParam;
  */
 module.exports.handler = async (event) => {
   try {
-    user = null;
-    userId = null;
+    user = value.IS_NULL;
+    userId = value.IS_NULL;
+    msg = value.IS_NULL;
+    code = value.IS_NULL;
 
     //-- start with validation Headers  ---
 
@@ -76,21 +92,20 @@ module.exports.handler = async (event) => {
           "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
           event
         );
-      }
-      else if (user == statusName.ERROR) {
+      } else if (user == statusName.ERROR) {
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
           "ERROR. An error has occurred in the process operations and queries with the database. Try again",
           event
-        );  
+        );
       } else if (user == value.IS_ZERO_NUMBER || user == value.IS_UNDEFINED) {
         return await requestResult(
           statusCode.BAD_REQUEST,
           "Bad request, could not fetch user based on id.",
           event
         );
-      }else{
-      return await requestResult(statusCode.OK, user, event);
+      } else {
+        return await requestResult(statusCode.OK, user, event);
       }
       //-- end with db query  ---
     } else {
@@ -101,11 +116,11 @@ module.exports.handler = async (event) => {
       );
     }
   } catch (error) {
-    console.log(error);
-    return await requestResult(
-      statusCode.INTERNAL_SERVER_ERROR,
-      "The following error has been thrown" + error,
-      event
-    );
+    msg = `Error in getById lambda. Caused by ${error}`;
+    code = statusCode.INTERNAL_SERVER_ERROR;
+    console.error(`${msg}. Stack error type : ${error.stack}`);
+
+    return await requestResult(code, msg, event);
+
   }
 };

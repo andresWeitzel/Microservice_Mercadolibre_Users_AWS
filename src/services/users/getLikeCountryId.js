@@ -11,9 +11,13 @@ const {
 const {
     checkDbAuthentication
 } = require("../../helpers/db/authenticate");
+const {
+    getDateFormat
+} = require("../../helpers/sequelize/format/dateFormat");
 //Const/Vars
 let usersList;
 let checkDbConn;
+let msg;
 
 
 /**
@@ -29,43 +33,41 @@ let checkDbConn;
 const getLikeCountryId = async function (countryId, pageSizeNro, pageNro, orderBy) {
     try {
         usersList = null;
+        msg = null;
         checkDbConn = await checkDbAuthentication();
 
         if (checkDbConn && User != null) {
             await User.findAll({
-                        attributes: {
-                            include: [
-                                [Sequelize.fn("DATE_FORMAT", Sequelize.col("creation_date"),
-                                    "%Y-%m-%d %H:%i:%s"), 'creation_date'],
-                                [Sequelize.fn("DATE_FORMAT", Sequelize.col("update_date"),
-                                        "%Y-%m-%d %H:%i:%s"),
-                                    'update_date'
-                                ]
-                            ],
-                        },
-                        where: {
-                            country_id: {
-                                [Op.like]: `%${countryId}%` //containing what is entered, less strictmatch 
-                            }
-                        },
-                        limit: pageSizeNro,
-                        offset: pageNro,
-                        order: orderBy,
+                    attributes: {
+                        include: [
+                            await getDateFormat("creation_date"),
+                            await getDateFormat("update_date")
+                        ],
                     },
-                )
+                    where: {
+                        country_id: {
+                            [Op.like]: `%${countryId}%` //containing what is entered, less strictmatch 
+                        }
+                    },
+                    limit: pageSizeNro,
+                    offset: pageNro,
+                    order: orderBy,
+                }, )
                 .then(users => {
                     usersList = users;
-                    console.log(usersList);
                 })
                 .catch(error => {
-                    console.log(error);
+                    msg = `Error in getLikeCountryId User model. Caused by ${error}`;
+                    console.error(`${msg}. Stack error type : ${error.stack}`);
+                    usersList = statusName.CONNECTION_ERROR;
                 })
         } else {
-            usersList = "ECONNREFUSED";
+            usersList = statusName.CONNECTION_REFUSED;
         }
     } catch (error) {
-        console.log(error);
-        usersList = "ERROR";
+        msg = `Error in getLikeCountryId function. Caused by ${error}`;
+        console.error(`${msg}. Stack error type : ${error.stack}`);
+        usersList = statusName.CONNECTION_ERROR;
     }
 
     console.log(usersList);

@@ -8,6 +8,7 @@ const { getDateFormat } = require("../../helpers/sequelize/format/dateFormat");
 //Const/Vars
 let user;
 let checkDbConn;
+let msg;
 
 /**
  * @description gets a user with all its attributes whose id matches the one passed as a parameter
@@ -19,6 +20,7 @@ let checkDbConn;
 const getById = async function (id) {
   try {
     user = null;
+    msg=null;
     checkDbConn = await checkDbAuthentication();
 
     if (checkDbConn && User != null) {
@@ -60,6 +62,7 @@ const getById = async function (id) {
 const getByIdLimit = async function (id) {
   try {
     user = null;
+    msg=null;
     checkDbConn = await checkDbAuthentication();
 
     if (checkDbConn && User != null) {

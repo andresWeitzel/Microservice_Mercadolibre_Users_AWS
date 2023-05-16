@@ -8,6 +8,7 @@ const { checkDbAuthentication } = require("../../helpers/db/authenticate");
 let user;
 let dateNow;
 let checkDbConn;
+let msg;
 
 
 /**
@@ -20,6 +21,7 @@ let checkDbConn;
 const deleteUser = async function (id) {
     try {
         user = null;
+        msg=null;
         checkDbConn = await checkDbAuthentication();
 
         if (checkDbConn && User != null) {

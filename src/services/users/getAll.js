@@ -1,13 +1,22 @@
 //Models
-const { User } = require("../../models/user");
+const {
+  User
+} = require("../../models/user");
 //Helpers
-const { checkDbAuthentication } = require("../../helpers/db/authenticate");
-const { getDateFormat } = require("../../helpers/sequelize/format/dateFormat");
+const {
+  checkDbAuthentication
+} = require("../../helpers/db/authenticate");
+const {
+  getDateFormat
+} = require("../../helpers/sequelize/format/dateFormat");
 //Enums
-const { statusName } = require("../../enums/connection/statusName");
+const {
+  statusName
+} = require("../../enums/connection/statusName");
 //Const/Vars
 let usersList;
 let checkDbConn;
+let msg;
 
 /**
  * @description gets all paged users with all their attributes
@@ -21,20 +30,21 @@ let checkDbConn;
 const getAll = async function (pageSizeNro, pageNro, orderBy) {
   try {
     usersList = null;
+    msg = null;
     checkDbConn = await checkDbAuthentication();
 
     if (checkDbConn && User != null) {
       await User.findAll({
-        attributes: {
-          include: [
-            await getDateFormat("creation_date"),
-            await getDateFormat("update_date")
-          ],
-        },
-        limit: pageSizeNro,
-        offset: pageNro,
-        order: orderBy,
-      })
+          attributes: {
+            include: [
+              await getDateFormat("creation_date"),
+              await getDateFormat("update_date")
+            ],
+          },
+          limit: pageSizeNro,
+          offset: pageNro,
+          order: orderBy,
+        })
         .then((users) => {
           usersList = users;
         })
@@ -69,17 +79,18 @@ const getAll = async function (pageSizeNro, pageNro, orderBy) {
 const getAllWithoutDate = async function (pageSizeNro, pageNro, orderBy) {
   try {
     usersList = null;
+    msg = null;
     checkDbConn = await checkDbAuthentication();
 
     if (checkDbConn && User != null) {
       await User.findAll({
-        attributes: {
-          exclude: ["creation_date", "update_date"],
-        },
-        limit: pageSizeNro,
-        offset: pageNro,
-        order: orderBy,
-      })
+          attributes: {
+            exclude: ["creation_date", "update_date"],
+          },
+          limit: pageSizeNro,
+          offset: pageNro,
+          order: orderBy,
+        })
         .then((users) => {
           usersList = users;
         })
@@ -89,7 +100,7 @@ const getAllWithoutDate = async function (pageSizeNro, pageNro, orderBy) {
           usersList = statusName.CONNECTION_ERROR;
         });
     } else {
-      
+
       usersList = statusName.CONNECTION_REFUSED;
     }
   } catch (error) {
