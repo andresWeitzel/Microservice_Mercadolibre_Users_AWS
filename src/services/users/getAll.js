@@ -1,5 +1,3 @@
-//Externals
-const { Sequelize } = require("sequelize");
 //Models
 const { User } = require("../../models/user");
 //Helpers

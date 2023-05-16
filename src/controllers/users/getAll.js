@@ -11,6 +11,7 @@ const {
 const {
   statusName
 } = require("../../enums/connection/statusName");
+const { value } = require("../../enums/general/value");
 //Helpers
 const {
   requestResult
@@ -29,6 +30,8 @@ let validateAuth;
 let queryStrParams;
 let pageSizeNro;
 let pageNro;
+let msg;
+let code;
 const orderBy = [
   ["id", "ASC"]
 ];
@@ -41,9 +44,12 @@ const orderBy = [
 module.exports.handler = async (event) => {
   try {
     //Init
-    userList = null;
+    userList = value.IS_NULL;
+    msg = value.IS_NULL;
+    code = value.IS_NULL;
     pageSizeNro = 5;
-    pageNro = 0;
+    pageNro = value.IS_ZERO_NUMBER;
+
 
     //-- start with validation Headers  ---
 
@@ -73,7 +79,7 @@ module.exports.handler = async (event) => {
     //-- start with pagination  ---
     queryStrParams = event.queryStringParameters;
 
-    if (queryStrParams != null) {
+    if (queryStrParams != value.IS_NULL) {
       pageSizeNro = parseInt(await event.queryStringParameters.limit);
       pageNro = parseInt(await event.queryStringParameters.page);
     }
@@ -95,7 +101,7 @@ module.exports.handler = async (event) => {
         "ERROR. An error has occurred in the process operations and queries with the database. Try again",
         event
       );
-    } else if (userList == 0 || userList == null) {
+    } else if (userList == value.IS_ZERO_NUMBER || userList == value.IS_NULL) {
       return await requestResult(
         statusCode.BAD_REQUEST,
         "Bad request, could not get the paginated list of users.",
@@ -107,11 +113,12 @@ module.exports.handler = async (event) => {
     //-- end with db query  ---
 
   } catch (error) {
-    console.log(error);
-    return await requestResult(
-      statusCode.INTERNAL_SERVER_ERROR,
-      "The following error has been thrown" + error,
-      event
-    );
+
+    msg = `Error in getAll lambda. Caused by ${error}`;
+    code = statusCode.INTERNAL_SERVER_ERROR;
+    console.error(`${msg}. Stack error type : ${error.stack}`);
+
+    return await requestResult(code, msg, event);
+
   }
 };

@@ -4,6 +4,8 @@ const { getById, getByIdLimit } = require("../../services/users/getById");
 //Enums
 const { statusCode } = require("../../enums/http/statusCode");
 const { statusName } = require("../../enums/connection/statusName");
+
+const { value } = require("../../enums/general/value");
 //Helpers
 const { requestResult } = require("../../helpers/http/bodyResponse");
 const {
@@ -81,7 +83,7 @@ module.exports.handler = async (event) => {
           "ERROR. An error has occurred in the process operations and queries with the database. Try again",
           event
         );  
-      } else if (user == 0 || user == null) {
+      } else if (user == value.IS_ZERO_NUMBER || user == value.IS_UNDEFINED) {
         return await requestResult(
           statusCode.BAD_REQUEST,
           "Bad request, could not fetch user based on id.",
