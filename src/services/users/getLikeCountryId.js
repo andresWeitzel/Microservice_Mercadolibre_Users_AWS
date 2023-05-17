@@ -7,6 +7,8 @@ const {
 const {
     User
 } = require('../../models/user');
+//Enums
+const { statusName } = require("../../enums/connection/statusName");
 //Helpers
 const {
     checkDbAuthentication
