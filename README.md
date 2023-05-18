@@ -220,6 +220,7 @@ sls offline start
 | -------------  | 
 | Prettier - Code formatter |
 | YAML - Autoformatter .yml |
+| Error Lens - Identificador de errores |
 
 <br>
 

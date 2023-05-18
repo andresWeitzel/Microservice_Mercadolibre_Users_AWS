@@ -7,14 +7,21 @@ const {
 const {
     User
 } = require('../../models/user');
+//Enums
+const {
+    statusName
+} = require("../../enums/connection/statusName");
 //Helpers
 const {
     checkDbAuthentication
 } = require("../../helpers/db/authenticate");
+const {
+    getDateFormat
+} = require("../../helpers/sequelize/format/dateFormat");
 //Const/Vars
 let usersList;
 let checkDbConn;
-
+let msg;
 
 
 /**
@@ -30,6 +37,7 @@ let checkDbConn;
 const getLikeFirstName = async function (firstName, pageSizeNro, pageNro, orderBy) {
     try {
         usersList = null;
+        msg = null;
         checkDbConn = await checkDbAuthentication();
 
         if (checkDbConn && User != null) {
@@ -37,12 +45,8 @@ const getLikeFirstName = async function (firstName, pageSizeNro, pageNro, orderB
             await User.findAll({
                         attributes: {
                             include: [
-                                [Sequelize.fn("DATE_FORMAT", Sequelize.col("creation_date"),
-                                    "%Y-%m-%d %H:%i:%s"), 'creation_date'],
-                                [Sequelize.fn("DATE_FORMAT", Sequelize.col("update_date"),
-                                        "%Y-%m-%d %H:%i:%s"),
-                                    'update_date'
-                                ]
+                                await getDateFormat("creation_date"),
+                                await getDateFormat("update_date")
                             ],
                         },
                         where: {
@@ -58,17 +62,19 @@ const getLikeFirstName = async function (firstName, pageSizeNro, pageNro, orderB
                 )
                 .then(users => {
                     usersList = users;
-                    console.log(usersList);
                 })
                 .catch(error => {
-                    console.log(error);
+                    msg = `Error in getLikeFirstName User model. Caused by ${error}`;
+                    console.error(`${msg}. Stack error type : ${error.stack}`);
+                    usersList = statusName.CONNECTION_ERROR;
                 })
         } else {
-            usersList = "ECONNREFUSED";
+            usersList = statusName.CONNECTION_REFUSED;
         }
     } catch (error) {
-        console.log(error);
-        usersList = "ERROR";
+        msg = `Error in getLikeFirstName function. Caused by ${error}`;
+        console.error(`${msg}. Stack error type : ${error.stack}`);
+        usersList = statusName.CONNECTION_ERROR;
     }
     console.log(usersList);
     return usersList;
