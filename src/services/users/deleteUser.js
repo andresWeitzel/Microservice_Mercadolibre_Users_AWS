@@ -2,12 +2,8 @@
 const { User } = require('../../models/user');
 //Enums
 const {statusName} = require('../../enums/connection/statusName');
-//Helpers
-const { checkDbAuthentication } = require("../../helpers/db/authenticate");
 //Const/Vars
 let user;
-let dateNow;
-let checkDbConn;
 let msg;
 
 
@@ -22,9 +18,8 @@ const deleteUser = async function (id) {
     try {
         user = null;
         msg=null;
-        checkDbConn = await checkDbAuthentication();
 
-        if (checkDbConn && User != null) {
+        if (User != null) {
         await User.destroy(
             {
                 where:{

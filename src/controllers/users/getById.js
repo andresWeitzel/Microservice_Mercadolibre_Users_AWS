@@ -79,10 +79,15 @@ module.exports.handler = async (event) => {
     userId = await event.pathParameters.id;
 
     validatePathParam = await validatePathParameters(userId);
+
+    if (!validatePathParam) {
+      return await requestResult(
+          statusCode.BAD_REQUEST,
+          "Bad request, the id passed as a parameter is not valid"
+      );
+  }
     //-- end with path parameters  ---
 
-    if (validatePathParam) {
-      //-- start with db query  ---
       user = await getById(userId);
       //user = await getByIdLimit(userId);
 
@@ -95,10 +100,10 @@ module.exports.handler = async (event) => {
       } else if (user == statusName.ERROR) {
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          "ERROR. An error has occurred in the process operations and queries with the database. Try again",
+          "ERROR. An error has occurred in the process operations and queries with the database. Check user id and try again",
           event
         );
-      } else if (user == value.IS_ZERO_NUMBER || user == value.IS_UNDEFINED) {
+      } else if (user == value.IS_ZERO_NUMBER || user == value.IS_UNDEFINED || user == value.IS_NULL) {
         return await requestResult(
           statusCode.BAD_REQUEST,
           "Bad request, could not fetch user based on id.",
@@ -108,13 +113,6 @@ module.exports.handler = async (event) => {
         return await requestResult(statusCode.OK, user, event);
       }
       //-- end with db query  ---
-    } else {
-      return await requestResult(
-        statusCode.BAD_REQUEST,
-        "Wrong request, check user id passed as parameter",
-        event
-      );
-    }
   } catch (error) {
     msg = `Error in getById lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;

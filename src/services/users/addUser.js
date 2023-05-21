@@ -4,12 +4,10 @@ const { User } = require('../../models/user');
 const {statusName} = require('../../enums/connection/statusName');
 //Helpers
 const { currentDateTime } = require('../../helpers/dates/date');
-const { checkDbAuthentication } = require("../../helpers/db/authenticate");
 //Const/Vars
 let user;
 let msg;
 let dateNow;
-let checkDbConn;
 
 
 /**
@@ -31,9 +29,7 @@ const addUser = async function (nickname, firstName, lastName, email, identifica
         msg = null;
         dateNow = await currentDateTime();
 
-        checkDbConn = await checkDbAuthentication();
-
-        if (checkDbConn && User != null) {
+        if (User != null) {
         await User.create(
             {
                 nickname: nickname,

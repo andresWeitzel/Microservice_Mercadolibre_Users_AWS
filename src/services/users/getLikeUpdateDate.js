@@ -13,7 +13,6 @@ const {
 } = require("../../helpers/db/authenticate");
 //Const/Vars
 let usersList;
-let checkDbConn;
 
 
 
@@ -30,9 +29,8 @@ let checkDbConn;
 const getLikeUpdateDate = async function (updateDate, pageSizeNro, pageNro, orderBy) {
     try {
         usersList = null;
-        checkDbConn = await checkDbAuthentication();
 
-        if (checkDbConn && User != null) {
+        if (User != null) {
 
             await User.findAll({
                         attributes: {

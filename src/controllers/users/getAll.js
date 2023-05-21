@@ -103,7 +103,7 @@ module.exports.handler = async (event) => {
         "ERROR. An error has occurred in the process operations and queries with the database. Try again",
         event
       );
-    } else if (userList == value.IS_ZERO_NUMBER || userList == value.IS_NULL) {
+    } else if (userList == value.IS_ZERO_NUMBER || userList == value.IS_UNDEFINED || userList == value.IS_NULL) {
       return await requestResult(
         statusCode.BAD_REQUEST,
         "Bad request, could not get the paginated list of users.",

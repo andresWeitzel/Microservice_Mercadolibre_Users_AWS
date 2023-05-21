@@ -4,9 +4,6 @@ const {
 } = require("../../models/user");
 //Helpers
 const {
-  checkDbAuthentication
-} = require("../../helpers/db/authenticate");
-const {
   getDateFormat
 } = require("../../helpers/sequelize/format/dateFormat");
 //Enums
@@ -15,7 +12,6 @@ const {
 } = require("../../enums/connection/statusName");
 //Const/Vars
 let usersList;
-let checkDbConn;
 let msg;
 
 /**
@@ -31,9 +27,8 @@ const getAll = async function (pageSizeNro, pageNro, orderBy) {
   try {
     usersList = null;
     msg = null;
-    checkDbConn = await checkDbAuthentication();
 
-    if (checkDbConn && User != null) {
+    if (User != null) {
       await User.findAll({
           attributes: {
             include: [
@@ -80,9 +75,8 @@ const getAllWithoutDate = async function (pageSizeNro, pageNro, orderBy) {
   try {
     usersList = null;
     msg = null;
-    checkDbConn = await checkDbAuthentication();
 
-    if (checkDbConn && User != null) {
+    if (User != null) {
       await User.findAll({
           attributes: {
             exclude: ["creation_date", "update_date"],

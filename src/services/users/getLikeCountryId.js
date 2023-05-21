@@ -11,14 +11,10 @@ const {
 const { statusName } = require("../../enums/connection/statusName");
 //Helpers
 const {
-    checkDbAuthentication
-} = require("../../helpers/db/authenticate");
-const {
     getDateFormat
 } = require("../../helpers/sequelize/format/dateFormat");
 //Const/Vars
 let usersList;
-let checkDbConn;
 let msg;
 
 
@@ -36,9 +32,8 @@ const getLikeCountryId = async function (countryId, pageSizeNro, pageNro, orderB
     try {
         usersList = null;
         msg = null;
-        checkDbConn = await checkDbAuthentication();
 
-        if (checkDbConn && User != null) {
+        if (User != null) {
             await User.findAll({
                     attributes: {
                         include: [

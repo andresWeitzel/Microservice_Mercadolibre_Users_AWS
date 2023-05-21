@@ -13,7 +13,6 @@ const {
 } = require("../../helpers/db/authenticate");
 //Const/Vars
 let usersList;
-let checkDbConn;
 
 
 
@@ -31,9 +30,8 @@ let checkDbConn;
 const getLikeNickname = async function (nickName, pageSizeNro, pageNro, orderBy) {
     try {
         usersList = null;
-        checkDbConn = await checkDbAuthentication();
 
-        if (checkDbConn && User != null) {
+        if (User != null) {
 
             await User.findAll({
                         attributes: {

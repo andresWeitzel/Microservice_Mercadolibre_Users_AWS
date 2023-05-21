@@ -7,6 +7,8 @@ const {
 const {
   statusCode
 } = require('../../enums/http/statusCode');
+const { value } = require('../../enums/general/value');
+const { statusName } = require('../../enums/connection/statusName');
 //Helpers
 const {
   requestResult
@@ -41,10 +43,10 @@ const orderBy = [
  */
 module.exports.handler = async (event) => {
   try {
-    userList = null;
-    identificationNumber = null;
+    userList = value.IS_NULL;
+    identificationNumber = value.IS_NULL;
     pageSizeNro=5;
-    pageNro=0;
+    pageNro=value.IS_ZERO_NUMBER;
 
     //-- start with validation Headers  ---
     eventHeaders = await event.headers;
@@ -73,7 +75,7 @@ module.exports.handler = async (event) => {
       //-- start with pagination  ---
       queryStrParams = event.queryStringParameters;
 
-      if (queryStrParams != null) {
+      if (queryStrParams != value.IS_NULL) {
         pageSizeNro = parseInt(await event.queryStringParameters.limit);
         pageNro = parseInt(await event.queryStringParameters.page);
       }
@@ -83,13 +85,13 @@ module.exports.handler = async (event) => {
       userList = await getLikeIdentificationNumber(identificationNumber, pageSizeNro, pageNro, orderBy);
 
 
-      if (userList == "ECONNREFUSED") {
+      if (userList == statusName.CONNECTION_REFUSED) {
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
           "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
           event
         );
-      } else if (userList == "ERROR") {
+      } else if (userList == statusName.CONNECTION_ERROR) {
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
           "ERROR. An error has occurred in the process operations and queries with the database. Try again",

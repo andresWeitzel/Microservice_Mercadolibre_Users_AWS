@@ -8,7 +8,6 @@ const { checkDbAuthentication } = require("../../helpers/db/authenticate");
 //Const/Vars
 let user;
 let dateNow;
-let checkDbConn;
 
 
 /**
@@ -29,11 +28,10 @@ let checkDbConn;
 const updateUser = async function (id, nickname, firstName, lastName, email, identificationType, identificationNumber, countryId, creationDate) {
     try {
         user = null;
+
         dateNow = await currentDateTime();
 
-        checkDbConn = await checkDbAuthentication();
-
-        if (checkDbConn && User != null) {
+        if (User != null) {
         await User.update(
             {
                 nickname: nickname,

@@ -3,11 +3,9 @@ const { User } = require("../../models/user");
 //Enums
 const { statusName } = require("../../enums/connection/statusName");
 //Helpers
-const { checkDbAuthentication } = require("../../helpers/db/authenticate");
 const { getDateFormat } = require("../../helpers/sequelize/format/dateFormat");
 //Const/Vars
 let user;
-let checkDbConn;
 let msg;
 
 /**
@@ -21,9 +19,8 @@ const getById = async function (id) {
   try {
     user = null;
     msg=null;
-    checkDbConn = await checkDbAuthentication();
 
-    if (checkDbConn && User != null) {
+    if (User != null) {
       await User.findByPk(id, {
         attributes: {
           include: [
@@ -63,9 +60,8 @@ const getByIdLimit = async function (id) {
   try {
     user = null;
     msg=null;
-    checkDbConn = await checkDbAuthentication();
 
-    if (checkDbConn && User != null) {
+    if (User != null) {
       await User.findByPk(id, {
         attributes: {
           exclude: ["first_name", "last_name", "creation_date", "update_date"],

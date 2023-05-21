@@ -7,14 +7,8 @@ const {
 const {
     User
 } = require('../../models/user');
-//Helpers
-const {
-    checkDbAuthentication
-} = require("../../helpers/db/authenticate");
 //Const/Vars
 let usersList;
-let checkDbConn;
-
 
 /**
  * @description get all paged users whose identification type matches the passed as parameter
@@ -29,9 +23,8 @@ let checkDbConn;
 const getLikeIdentificationType = async function (identificationType, pageSizeNro, pageNro, orderBy) {
     try {
         usersList = null;
-        checkDbConn = await checkDbAuthentication();
 
-        if (checkDbConn && User != null) {
+        if (User != null) {
 
             await User.findAll({
                         attributes: {
