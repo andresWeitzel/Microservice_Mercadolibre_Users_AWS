@@ -9,7 +9,13 @@ const {
 //Enums
 const {
   statusCode
-} = require("../../enums/http/statusCode");
+} = require('../../enums/http/statusCode');
+const {
+  value
+} = require('../../enums/general/value');
+const {
+  statusName
+} = require('../../enums/connection/statusName');
 //Helpers
 const {
   requestResult
@@ -41,6 +47,8 @@ let identType;
 let identNumber;
 let countryId;
 let creationDate;
+let msg;
+let code;
 
 /**
  * @description update a user according to the parameters passed in the request body
@@ -50,7 +58,9 @@ let creationDate;
 module.exports.handler = async (event) => {
   try {
     //Init
-    newUser = null;
+    newUser = value.IS_NULL;
+    msg = value.IS_NULL;
+    code = value.IS_NULL;
 
     //-- start with validation Headers  ---
     eventHeaders = await event.headers;
@@ -97,21 +107,29 @@ module.exports.handler = async (event) => {
 
     oldUser = await getById(userId);
 
-    nickname = (eventBody.nickname == null || (!eventBody.nickname.length)) ? oldUser.nickname : eventBody.nickname;
-    
-    firstName = (eventBody.first_name == null || (!eventBody.first_name.length)) ? oldUser.first_name : eventBody.first_name;
-    
-    lastName = (eventBody.last_name == null || (!eventBody.last_name.length)) ? oldUser.last_name : eventBody.last_name;
-    
-    email = (eventBody.email == null || (!eventBody.email.length)) ? oldUser.email : eventBody.email;
-    
-    identType = (eventBody.identification_type == null || (!eventBody.identification_type.length)) ? oldUser.identification_type : eventBody.identification_type;
+    if (oldUser == value.IS_ZERO_NUMBER || oldUser == value.IS_UNDEFINED || oldUser == value.IS_NULL) {
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "Bad request, could not update an inexistent user.Check the user id and try again",
+        event
+      );
+    }
 
-    identNumber = (eventBody.identification_number == null || (!eventBody.identification_number.length)) ? oldUser.identification_number : eventBody.identification_number;
+    nickname = (eventBody.nickname == value.IS_NULL || (!eventBody.nickname.length)) ? oldUser.nickname : eventBody.nickname;
+    
+    firstName = (eventBody.first_name == value.IS_NULL || (!eventBody.first_name.length)) ? oldUser.first_name : eventBody.first_name;
+    
+    lastName = (eventBody.last_name == value.IS_NULL || (!eventBody.last_name.length)) ? oldUser.last_name : eventBody.last_name;
+    
+    email = (eventBody.email == value.IS_NULL || (!eventBody.email.length)) ? oldUser.email : eventBody.email;
+    
+    identType = (eventBody.identification_type == value.IS_NULL || (!eventBody.identification_type.length)) ? oldUser.identification_type : eventBody.identification_type;
 
-    countryId = (eventBody.country_id == null || (!eventBody.country_id.length)) ? oldUser.country_id : eventBody.country_id;
+    identNumber = (eventBody.identification_number == value.IS_NULL || (!eventBody.identification_number.length)) ? oldUser.identification_number : eventBody.identification_number;
 
-    creationDate = (eventBody.creation_date == null || (!eventBody.creation_date.length)) ? oldUser.creation_date : eventBody.creation_date;
+    countryId = (eventBody.country_id == value.IS_NULL || (!eventBody.country_id.length)) ? oldUser.country_id : eventBody.country_id;
+
+    creationDate = (eventBody.creation_date == value.IS_NULL || (!eventBody.creation_date.length)) ? oldUser.creation_date : eventBody.creation_date;
 
     
     newUser = await updateUser(
@@ -126,25 +144,25 @@ module.exports.handler = async (event) => {
       creationDate
     );
 
-    if (newUser == "ECONNREFUSED") {
+    if (newUser == statusName.CONNECTION_REFUSED) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
         "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
         event
       );
-    } else if (newUser == "ERROR") {
+    } else if (newUser == statusName.CONNECTION_ERROR) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
         "ERROR. An error has occurred in the process operations and queries with the database. Try again",
         event
       );
-    } else if (newUser == null) {
+    } else if (newUser == value.IS_ZERO_NUMBER || newUser == value.IS_UNDEFINED || newUser == value.IS_NULL) {
       return await requestResult(
-        statusCode.INTERNAL_SERVER_ERROR,
-        "Bad request, could not add user.Check the values of each attribute and try again",
+        statusCode.BAD_REQUEST,
+        "Bad request, could not update an user.Check the values of each attribute and try again",
         event
       );
-    } else {
+    }  else {
       newUser = await getById(userId);
 
       return await requestResult(statusCode.OK, newUser, event);
@@ -152,11 +170,10 @@ module.exports.handler = async (event) => {
 
     //-- end with db query  ---
   } catch (error) {
-    console.log(error);
-    return await requestResult(
-      statusCode.INTERNAL_SERVER_ERROR,
-      "The following error has been thrown" + error,
-      event
-    );
+    msg = `Error in updateUser lambda. Caused by ${error}`;
+    code = statusCode.INTERNAL_SERVER_ERROR;
+    console.error(`${msg}. Stack error type : ${error.stack}`);
+
+    return await requestResult(code, msg, event);
   }
 };

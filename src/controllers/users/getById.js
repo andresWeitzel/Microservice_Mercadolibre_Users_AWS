@@ -82,37 +82,37 @@ module.exports.handler = async (event) => {
 
     if (!validatePathParam) {
       return await requestResult(
-          statusCode.BAD_REQUEST,
-          "Bad request, the id passed as a parameter is not valid"
+        statusCode.BAD_REQUEST,
+        "Bad request, the id passed as a parameter is not valid"
       );
-  }
+    }
     //-- end with path parameters  ---
 
-      user = await getById(userId);
-      //user = await getByIdLimit(userId);
+    user = await getById(userId);
+    //user = await getByIdLimit(userId);
 
-      if (user == statusName.CONNECTION_REFUSED) {
-        return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
-          event
-        );
-      } else if (user == statusName.ERROR) {
-        return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          "ERROR. An error has occurred in the process operations and queries with the database. Check user id and try again",
-          event
-        );
-      } else if (user == value.IS_ZERO_NUMBER || user == value.IS_UNDEFINED || user == value.IS_NULL) {
-        return await requestResult(
-          statusCode.BAD_REQUEST,
-          "Bad request, could not fetch user based on id.",
-          event
-        );
-      } else {
-        return await requestResult(statusCode.OK, user, event);
-      }
-      //-- end with db query  ---
+    if (user == statusName.CONNECTION_REFUSED) {
+      return await requestResult(
+        statusCode.INTERNAL_SERVER_ERROR,
+        "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
+        event
+      );
+    } else if (user == statusName.ERROR) {
+      return await requestResult(
+        statusCode.INTERNAL_SERVER_ERROR,
+        "ERROR. An error has occurred in the process operations and queries with the database. Check user id and try again",
+        event
+      );
+    } else if (user == value.IS_ZERO_NUMBER || user == value.IS_UNDEFINED || user == value.IS_NULL) {
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "Bad request, could not fetch user based on id.",
+        event
+      );
+    } else {
+      return await requestResult(statusCode.OK, user, event);
+    }
+    //-- end with db query  ---
   } catch (error) {
     msg = `Error in getById lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;

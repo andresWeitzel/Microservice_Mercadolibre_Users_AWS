@@ -86,10 +86,10 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "   {\r\n            \"nickname\": \"MARTIN-SUAREZ-EDITED\",\r\n            \"first_name\": \"Martin EDITED\",\r\n            \"last_name\": \"Suarez EDITED\",\r\n            \"email\": \"martin_electro_todo_EDITED@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"4459388222\",\r\n            \"country_id\": \"AR12\"\r\n        }"
+									"raw": "   {\r\n            \"nickname\": \"MARTIN-SUAREZ-EDITED\",\r\n            \"first_name\": \"Martin EDITED\",\r\n            \"last_name\": \"Suarez EDITED\",\r\n            \"email\": \"martin_electro_todo_EDITED@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"4459388222\",\r\n            \"country_id\": \"AR12\",\r\n            \"creation_date\": \"\"\r\n        }"
 								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/update-user/18",
+									"raw": "{{base_url}}/v1/users/update-user/20",
 									"host": [
 										"{{base_url}}"
 									],
@@ -97,7 +97,7 @@
 										"v1",
 										"users",
 										"update-user",
-										"18"
+										"20"
 									]
 								}
 							},
@@ -688,7 +688,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/creation-date/2023-03-20",
+									"raw": "{{base_url}}/v1/users/creation-date/2023-04-30?page=0&limit=1",
 									"host": [
 										"{{base_url}}"
 									],
@@ -696,7 +696,17 @@
 										"v1",
 										"users",
 										"creation-date",
-										"2023-03-20"
+										"2023-04-30"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -734,7 +744,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/creation-date/2023-03-20",
+									"raw": "{{base_url}}/v1/users/creation-date/2023-04-30?page=0&limit=1",
 									"host": [
 										"{{base_url}}"
 									],
@@ -742,7 +752,17 @@
 										"v1",
 										"users",
 										"creation-date",
-										"2023-03-20"
+										"2023-04-30"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										}
 									]
 								}
 							},

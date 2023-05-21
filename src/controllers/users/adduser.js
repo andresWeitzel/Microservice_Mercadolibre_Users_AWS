@@ -1,19 +1,31 @@
 "use strict";
 //Services
-const { addUser } = require("../../services/users/addUser");
+const {
+  addUser
+} = require("../../services/users/addUser");
 //Enums
-const { statusCode } = require("../../enums/http/statusCode");
-const { statusName } = require("../../enums/connection/statusName");
-const { value } = require("../../enums/general/value");
+const {
+  statusCode
+} = require("../../enums/http/statusCode");
+const {
+  statusName
+} = require("../../enums/connection/statusName");
+const {
+  value
+} = require("../../enums/general/value");
 //Helpers
-const { requestResult } = require("../../helpers/http/bodyResponse");
+const {
+  requestResult
+} = require("../../helpers/http/bodyResponse");
 const {
   validateHeadersParams,
 } = require("../../helpers/http/requestHeadersParams");
 const {
   validateBodyAddUserParams,
 } = require("../../helpers/http/users/requestBodyAddUserParams");
-const { validateAuthHeaders } = require("../../helpers/auth/headers");
+const {
+  validateAuthHeaders
+} = require("../../helpers/auth/headers");
 
 
 //Const/Vars
@@ -41,7 +53,7 @@ let code;
 module.exports.handler = async (event) => {
   try {
     //Init
- 
+
     newUser = value.IS_NULL;
     msg = value.IS_NULL;
     code = value.IS_NULL;
@@ -110,23 +122,21 @@ module.exports.handler = async (event) => {
         "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
         event
       );
-    }
-    else if (newUser == statusName.CONNECTION_ERROR) {
+    } else if (newUser == statusName.CONNECTION_ERROR) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
-        "ERROR. An error has occurred in the process operations and queries with the database. Try again",
+        "ERROR. An error has occurred in the process operations and queries with the database. Check the values of each attributes and try again",
         event
       );
-    }
-    else if (newUser == value.IS_NULL) {
+    } else if (newUser == value.IS_ZERO_NUMBER || newUser == value.IS_UNDEFINED || newUser == value.IS_NULL) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
         "Bad request, could not add user. Check the values of each attribute and try again",
         event
       );
-    }else{
-    return await requestResult(statusCode.OK, newUser, event);
-  }
+    } else {
+      return await requestResult(statusCode.OK, newUser, event);
+    }
 
     //-- end with db query  ---
   } catch (error) {

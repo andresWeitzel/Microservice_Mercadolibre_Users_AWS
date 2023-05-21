@@ -33,7 +33,7 @@ let userName;
 let validate;
 let eventHeaders;
 let validateReqParams;
-let validatePathParams;
+let validatePathParam;
 let queryStrParams;
 let pageSizeNro;
 let pageNro;
@@ -76,43 +76,51 @@ module.exports.handler = async (event) => {
     //-- start with path parameters  ---
     userName = await event.pathParameters.firstName;
 
-    validatePathParams = await validatePathParameters(userName);
+    validatePathParam = await validatePathParameters(userName);
+
+    if (!validatePathParam) {
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "Bad request, the first name passed as a parameter is not valid"
+      );
+    }
     //-- end with path parameters  ---
 
-    if (validatePathParams) {
+    //-- start with pagination  ---
+    queryStrParams = event.queryStringParameters;
 
-      //-- start with pagination  ---
-      queryStrParams = event.queryStringParameters;
-
-      if (queryStrParams != value.IS_NULL) {
-        pageSizeNro = parseInt(await event.queryStringParameters.limit);
-        pageNro = parseInt(await event.queryStringParameters.page);
-      }
-      //-- end with pagination  ---
-
-      //-- start with db query  ---
-      userList = await getLikeFirstName(userName, pageSizeNro, pageNro, orderBy);
-
-      if (userList == statusName.CONNECTION_REFUSED) {
-        return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
-          event
-        );
-      } else if (userList == statusName.CONNECTION_ERROR) {
-        return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          "ERROR. An error has occurred in the process operations and queries with the database. Try again",
-          event
-        );
-      } else {
-        return await requestResult(statusCode.OK, userList, event);
-      }
-      //-- end with db query  ---
-
-    } else {
-      return await requestResult(statusCode.BAD_REQUEST, 'Wrong request, verify first name passed as parameter', event);
+    if (queryStrParams != value.IS_NULL) {
+      pageSizeNro = parseInt(await event.queryStringParameters.limit);
+      pageNro = parseInt(await event.queryStringParameters.page);
     }
+    //-- end with pagination  ---
+
+    //-- start with db query  ---
+    userList = await getLikeFirstName(userName, pageSizeNro, pageNro, orderBy);
+
+    if (userList == statusName.CONNECTION_REFUSED) {
+      return await requestResult(
+        statusCode.INTERNAL_SERVER_ERROR,
+        "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
+        event
+      );
+    } else if (userList == statusName.CONNECTION_ERROR) {
+      return await requestResult(
+        statusCode.INTERNAL_SERVER_ERROR,
+        "ERROR. An error has occurred in the process operations and queries with the database. Try again",
+        event
+      );
+    } else if (userList == value.IS_ZERO_NUMBER || userList == value.IS_UNDEFINED || userList == value.IS_NULL) {
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "Bad request, could not get paginated list of users according to first name. Try again",
+        event
+      );
+    } else {
+      return await requestResult(statusCode.OK, userList, event);
+    }
+    //-- end with db query  ---
+
   } catch (error) {
     msg = `Error in getLikeFirstName lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;

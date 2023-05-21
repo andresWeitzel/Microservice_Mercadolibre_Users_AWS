@@ -2,10 +2,14 @@
 const { Sequelize, Op } = require("sequelize");
 //Models
 const { User } = require('../../models/user');
-//Hepers
+//Enums
+const {
+    statusName
+} = require("../../enums/connection/statusName");
+//Helpers
 const { currentDateTime } = require('../../helpers/dates/date');
-const { checkDbAuthentication } = require("../../helpers/db/authenticate");
 //Const/Vars
+let msg;
 let user;
 let dateNow;
 
@@ -53,17 +57,19 @@ const updateUser = async function (id, nickname, firstName, lastName, email, ide
         )
             .then(userItem => {
                 user = userItem;
-                console.log(user);
             })
             .catch(error => {
-                console.log(error);
+                msg = `Error in updateUser User model. Caused by ${error}`;
+                console.error(`${msg}. Stack error type : ${error.stack}`);
+                user = statusName.CONNECTION_ERROR;
             })
         } else {
-            user = "ECONNREFUSED";
+            user = statusName.CONNECTION_REFUSED;
           }
     } catch (error) {
-        console.log(error);
-        user = "ERROR";
+        msg = `Error in updateUser function. Caused by ${error}`;
+        console.error(`${msg}. Stack error type : ${error.stack}`);
+        user = statusName.CONNECTION_ERROR;
     }
     console.log(user);
     return user;

@@ -7,8 +7,12 @@ const {
 const {
   statusCode
 } = require('../../enums/http/statusCode');
-const { value } = require('../../enums/general/value');
-const { statusName } = require('../../enums/connection/statusName');
+const {
+  value
+} = require('../../enums/general/value');
+const {
+  statusName
+} = require('../../enums/connection/statusName');
 //Helpers
 const {
   requestResult
@@ -29,6 +33,8 @@ let validate;
 let eventHeaders;
 let validateReqParams;
 let validatePathParams;
+let msg;
+let code;
 let queryStrParams;
 let pageSizeNro;
 let pageNro;
@@ -45,8 +51,10 @@ module.exports.handler = async (event) => {
   try {
     userList = value.IS_NULL;
     identificationNumber = value.IS_NULL;
-    pageSizeNro=5;
-    pageNro=value.IS_ZERO_NUMBER;
+    pageSizeNro = 5;
+    pageNro = value.IS_ZERO_NUMBER;
+    msg = value.IS_NULL;
+    code = value.IS_NULL;
 
     //-- start with validation Headers  ---
     eventHeaders = await event.headers;
@@ -96,8 +104,14 @@ module.exports.handler = async (event) => {
           statusCode.INTERNAL_SERVER_ERROR,
           "ERROR. An error has occurred in the process operations and queries with the database. Try again",
           event
-        );  
-      }else {
+        );
+      } else if (userList == value.IS_ZERO_NUMBER || userList == value.IS_UNDEFINED || userList == value.IS_NULL) {
+        return await requestResult(
+          statusCode.BAD_REQUEST,
+          "Bad request, could not get paginated list of users according to identification number. Try again",
+          event
+        );
+      } else {
         return await requestResult(statusCode.OK, userList, event);
       }
       //-- end with db query  ---
@@ -107,12 +121,11 @@ module.exports.handler = async (event) => {
     }
 
   } catch (error) {
-    console.log(error);
-    return await requestResult(
-      statusCode.INTERNAL_SERVER_ERROR,
-      "The following error has been thrown" + error,
-      event
-    );
+    msg = `Error in getLikeIdentificationNumber lambda. Caused by ${error}`;
+    code = statusCode.INTERNAL_SERVER_ERROR;
+    console.error(`${msg}. Stack error type : ${error.stack}`);
+
+    return await requestResult(code, msg, event);
   }
 
 };

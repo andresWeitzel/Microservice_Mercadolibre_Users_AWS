@@ -7,7 +7,9 @@ const {
 const {
   statusCode
 } = require('../../enums/http/statusCode');
-const { value } = require('../../enums/general/value');
+const {
+  value
+} = require('../../enums/general/value');
 //Helpers
 const {
   requestResult
@@ -21,14 +23,16 @@ const {
 const {
   validatePathParameters
 } = require('../../helpers/http/queryStringParams');
-const { statusName } = require('../../enums/connection/statusName');
+const {
+  statusName
+} = require('../../enums/connection/statusName');
 //Const/Vars
 let userList;
 let creationDate;
 let eventHeaders;
 let validate;
 let validateReqParams;
-let validatePathParams;
+let validatePathParam;
 let queryStrParams;
 let pageSizeNro;
 let pageNro;
@@ -47,8 +51,8 @@ module.exports.handler = async (event) => {
   try {
     userList = value.IS_NULL;
     creationDate = value.IS_NULL;
-    pageSizeNro=5;
-    pageNro=value.IS_ZERO_NUMBER;
+    pageSizeNro = 5;
+    pageNro = value.IS_ZERO_NUMBER;
     msg = value.IS_NULL;
     code = value.IS_NULL;
 
@@ -71,44 +75,51 @@ module.exports.handler = async (event) => {
     //-- start with path parameters  ---
     creationDate = await event.pathParameters.creationDate;
 
-    validatePathParams = await validatePathParameters(creationDate);
+    validatePathParam = await validatePathParameters(creationDate);
+
+    if (!validatePathParam) {
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "Bad request, the creation date passed as a parameter is not valid"
+      );
+    }
     //-- end with path parameters  ---
 
-    if (validatePathParams) {
+    //-- start with pagination  ---
+    queryStrParams = event.queryStringParameters;
 
-      //-- start with pagination  ---
-      queryStrParams = event.queryStringParameters;
-
-      if (queryStrParams != value.IS_NULL) {
-        pageSizeNro = parseInt(await event.queryStringParameters.limit);
-        pageNro = parseInt(await event.queryStringParameters.page);
-      }
-      //-- end with pagination  ---
-
-      //-- start with db query  ---
-      userList = await getLikeCreationDate(creationDate, pageSizeNro, pageNro, orderBy);
-
-      if (userList == statusName.CONNECTION_REFUSED) {
-        return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
-          event
-        );
-      }else if (userList == statusName.CONNECTION_ERROR) {
-        return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          "ERROR. An error has occurred in the process operations and queries with the database. Try again",
-          event
-        );  
-      } else {
-        return await requestResult(statusCode.OK, userList, event);
-      }
-
-      //-- end with db query  ---
-
-    } else {
-      return await requestResult(statusCode.BAD_REQUEST, 'Wrong request, verify creation date passed as parameter', event);
+    if (queryStrParams != value.IS_NULL) {
+      pageSizeNro = parseInt(await event.queryStringParameters.limit);
+      pageNro = parseInt(await event.queryStringParameters.page);
     }
+    //-- end with pagination  ---
+
+    //-- start with db query  ---
+    userList = await getLikeCreationDate(creationDate, pageSizeNro, pageNro, orderBy);
+
+    if (userList == statusName.CONNECTION_REFUSED) {
+      return await requestResult(
+        statusCode.INTERNAL_SERVER_ERROR,
+        "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
+        event
+      );
+    } else if (userList == statusName.CONNECTION_ERROR) {
+      return await requestResult(
+        statusCode.INTERNAL_SERVER_ERROR,
+        "ERROR. An error has occurred in the process operations and queries with the database. Try again",
+        event
+      );
+    } else if (userList == value.IS_ZERO_NUMBER || userList == value.IS_UNDEFINED || userList == value.IS_NULL) {
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "Bad request, could not get paginated list of users according to creation date. Try again",
+        event
+      );
+    } else {
+      return await requestResult(statusCode.OK, userList, event);
+    }
+
+    //-- end with db query  ---
 
   } catch (error) {
     msg = `Error in getLikeCountryId lambda. Caused by ${error}`;
