@@ -110,8 +110,7 @@ module.exports.handler = async (event) => {
     if (oldUser == value.IS_ZERO_NUMBER || oldUser == value.IS_UNDEFINED || oldUser == value.IS_NULL) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, could not update an inexistent user.Check the user id and try again",
-        event
+        "Bad request, check request attributes. Missing or incorrect. CHECK: nickname, first_name and last_name (required|string|minLength:4|maxLength:50), email (required|string|minLength:10|maxLength:100), identification_type and identification_number (required|string|minLength:6|maxLength:20), country_id (required|string|minLength:2|maxLength:5), creation_date (string|minLength:2|maxLength:30) "
       );
     }
 

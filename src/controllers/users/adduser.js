@@ -91,8 +91,7 @@ module.exports.handler = async (event) => {
     if (!validateReqBodyParams) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, check request attributes. Missing or incorrect",
-        event
+        "Bad request, check request attributes. Missing or incorrect. CHECK: nickname, first_name and last_name (required|string|minLength:4|maxLength:50), email (required|string|minLength:10|maxLength:100), identification_type and identification_number (required|string|minLength:6|maxLength:20), country_id (required|string|minLength:2|maxLength:5)"
       );
     }
     //-- end with validation Body  ---
