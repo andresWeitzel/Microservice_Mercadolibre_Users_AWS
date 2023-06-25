@@ -99,32 +99,23 @@ sls -v
 ```git
 npm i
 ```
-* Creamos un archivo para almacenar las variables ssm utilizadas en el proyecto (Más allá que sea un proyecto con fines no comerciales es una buena práctica utilizar variables de entorno).
-  * Click der sobre la raíz del proyecto
-  * New file
-  * Creamos el archivo con el name `serverless_ssm.yml`. Este deberá estar a la misma altura que el serverless.yml
-  * Añadimos las ssm necesarias dentro del archivo.
-  ```git
-    # Keys
-    X_API_KEY : 'f98d8cd98h73s204e3456998ecl9427j'
-
-    BEARER_TOKEN : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-    
-    # Database
-    DATABASE_NAME : 'microdb_mercadolibre'
-    DATABASE_USER : 'root'
-    DATABASE_PASSWORD : ''
-    DATABASE_HOST : '127.0.0.1'
-    DATABASE_DIALECT : 'mysql'
-    DATABASE_POOL_MAX : 5
-    DATABASE_POOL_MIN : 0
-    DATABASE_POOL_ACQUIRE : 30000
-    DATABASE_POOL_IDLE : 10000
-
-  ```    
-* Ejecutamos el proyecto
+* Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless_ssm.yml) al .gitignore.
+* El siguiente script configurado en el package.json del proyecto es el encargado de
+   * Levantar serverless-offline (serverless-offline)
+ ```git
+  "scripts": {
+    "serverless-offline": "sls offline start",
+    "start": "npm run serverless-offline"
+  },
+```
+* Ejecutamos la app desde terminal.
 ```git
-sls offline start
+npm start
+```
+* Si se presenta algún mensaje indicando qué el puerto 4000 ya está en uso, podemos terminar todos los procesos dependientes y volver a ejecutar la app
+```git
+npx kill-port 4000
+npm start
 ```
  
  
@@ -170,9 +161,23 @@ npm i serverless-offline --save-dev
 ```git
 npm i serverless-offline-ssm --save-dev
 ```
-* Ejecutamos el proyecto
+* Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless_ssm.yml) al .gitignore.
+* El siguiente script configurado en el package.json del proyecto es el encargado de
+   * Levantar serverless-offline (serverless-offline)
+ ```git
+  "scripts": {
+    "serverless-offline": "sls offline start",
+    "start": "npm run serverless-offline"
+  },
+```
+* Ejecutamos la app desde terminal.
 ```git
-sls offline start
+npm start
+```
+* Si se presenta algún mensaje indicando qué el puerto 4000 ya está en uso, podemos terminar todos los procesos dependientes y volver a ejecutar la app
+```git
+npx kill-port 4000
+npm start
 ```
 
 
