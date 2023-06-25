@@ -147,19 +147,19 @@ module.exports.handler = async (event) => {
     if (newUser == statusName.CONNECTION_REFUSED) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
-        "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
+        "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.",
         event
       );
     } else if (newUser == statusName.CONNECTION_ERROR) {
       return await requestResult(
         statusCode.INTERNAL_SERVER_ERROR,
-        "ERROR. An error has occurred in the process operations and queries with the database. Try again",
+        "ERROR. An error has occurred in the process operations and queries with the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.",
         event
       );
     } else if (newUser == value.IS_ZERO_NUMBER || newUser == value.IS_UNDEFINED || newUser == value.IS_NULL) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, could not update an user.Check the values of each attribute and try again",
+        "Bad request, could not update an user. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.",
         event
       );
     }  else {
