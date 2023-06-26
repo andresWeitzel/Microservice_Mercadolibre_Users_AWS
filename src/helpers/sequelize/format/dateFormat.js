@@ -1,7 +1,6 @@
-//Externals
-const {
-    Sequelize
-} = require("sequelize");
+"use strict";
+//External
+const { Sequelize } = require("sequelize");
 //Const-vars
 let dateFormat;
 
@@ -11,20 +10,27 @@ let dateFormat;
  * @returns a json with sequelize date format
  */
 const getDateFormat = async (field) => {
-  dateFormat =  { include: [
-    [
-      Sequelize.fn(
-        "DATE_FORMAT",
-        Sequelize.col(field),
-        "%Y-%m-%d %H:%i:%s"
-      ),
-      field,
-    ]
-  ]
-}
+  try {
+    dateFormat = {
+      include: [
+        [
+          Sequelize.fn(
+            "DATE_FORMAT",
+            Sequelize.col(field),
+            "%Y-%m-%d %H:%i:%s"
+          ),
+          field,
+        ],
+      ],
+    };
     return dateFormat.include[0];
-}
+  } catch (error) {
+    console.error(
+      `Error in getDateFormat() function. Caused by ${error}. Specific stack is ${error.stack}`
+    );
+  }
+};
 
 module.exports = {
-    getDateFormat
-}
+  getDateFormat,
+};

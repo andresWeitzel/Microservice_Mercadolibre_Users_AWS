@@ -1,3 +1,4 @@
+"use strict";
 //Const/vars
 let validate;
 
@@ -7,18 +8,25 @@ let validate;
  * @returns a boolean
  */
 const validatePathParameters = async (object) => {
-  validate = true;
+  try {
+    validate =
+      object == null ||
+      object == undefined ||
+      object.length < 0 ||
+      object.length > 255 ||
+      Object.keys(object).length === 0
+        ? false
+        : true;
 
-  if (object == null 
-    || object == undefined 
-    || object.length < 0
-    || object.length > 255
-    || Object.keys(object).length === 0) {
+  } catch (error) {
     validate = false;
+    console.error(
+      `Error in validatePathParameters() function. Caused by ${error}. Specific stack is ${error.stack}`
+    );
   }
   return validate;
-}
+};
 
 module.exports = {
-    validatePathParameters,
-  }
+  validatePathParameters,
+};

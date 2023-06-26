@@ -1,4 +1,5 @@
-//External Imports
+"use strict";
+//External
 const { Validator } = require("node-input-validator");
 //Const/vars
 let validateCheck;
@@ -12,11 +13,12 @@ let eventHeadersObj;
  * @example Content-Type, Authorization, etc
  */
 const validateHeadersParams = async (eventHeaders) => {
-  eventHeadersObj = null;
-  validatorObj= null;
-  validateCheck = false;
-
   try{
+
+    eventHeadersObj = null;
+    validatorObj= null;
+    validateCheck = false;
+  
     if(eventHeaders != null){
 
       eventHeadersObj ={
@@ -40,7 +42,9 @@ const validateHeadersParams = async (eventHeaders) => {
     }
 
   } catch (error) {
-    console.log(error);
+    console.error(
+      `Error in validateHeadersParams() function. Caused by ${error}. Specific stack is ${error.stack}`
+    );
   }
 
   return validateCheck;

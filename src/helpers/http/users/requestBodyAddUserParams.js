@@ -10,11 +10,12 @@ let eventBodyObj;
  * @returns a boolean
  */
 const validateBodyAddUserParams = async (eventBody) => {
-  eventBodyObj = null;
-  validatorObj= null;
-  validateCheck = false;
-  
   try{
+  
+    eventBodyObj = null;
+    validatorObj= null;
+    validateCheck = false;
+  
     if(eventBody!=null){
 
       eventBodyObj ={
@@ -49,7 +50,9 @@ const validateBodyAddUserParams = async (eventBody) => {
     }
 
   } catch (error) {
-    console.log(error);
+    console.error(
+      `Error in validateBodyAddUserParams() function. Caused by ${error}. Specific stack is ${error.stack}`
+    );
   }
 
   return validateCheck;
