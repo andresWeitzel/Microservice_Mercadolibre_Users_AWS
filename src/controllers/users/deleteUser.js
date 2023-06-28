@@ -84,39 +84,33 @@ module.exports.handler = async (event) => {
 
         checkDeleteUser = await deleteUser(userId);
 
-        if (checkDeleteUser == statusName.CONNECTION_REFUSED) {
-            return await requestResult(
+
+        switch (checkDeleteUser) {
+            case statusName.CONNECTION_REFUSED:
+              return await requestResult(
                 statusCode.INTERNAL_SERVER_ERROR,
-                "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
-                event
-            );
-        } else if (checkDeleteUser == statusName.CONNECTION_ERROR) {
-            return await requestResult(
+                "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+              );
+            case statusName.CONNECTION_ERROR:
+              return await requestResult(
                 statusCode.INTERNAL_SERVER_ERROR,
-                "ERROR. An error has occurred in the process operations and queries with the database. Try again",
-                event
-            );
-        } else if (checkDeleteUser == value.IS_NULL) {
-            return await requestResult(
-                statusCode.INTERNAL_SERVER_ERROR,
-                "Bad request, could not delete a user. Check the user id and try again.",
-                event
-            );
-        } else if (checkDeleteUser == value.IS_ZERO_NUMBER) {
-            return await requestResult(
+                "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+              );
+            case value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL:
+              return await requestResult(
                 statusCode.BAD_REQUEST,
-                "Bad request, a non-existent user cannot be deleted. Operation not allowed.",
-                event
-            );
-        } else {
-            return await requestResult(statusCode.OK, 'User has been deleted successfully.', event);
-        }
+                "Bad request, a non-existent user cannot be deleted. Operation not allowed"
+              );
+            default:
+
+              return await requestResult(statusCode.OK, 'User has been deleted successfully.');
+          }
 
         //-- end with db query  ---
     } catch (error) {
         msg = `Error in deleteUser lambda. Caused by ${error}`;
         code = statusCode.INTERNAL_SERVER_ERROR;
-        console.error(`${msg}. Stack error type : ${error.stack}`);
+        console.error(msg);
     
         return await requestResult(code, msg, event);
     }

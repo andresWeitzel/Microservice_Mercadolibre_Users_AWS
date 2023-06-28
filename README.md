@@ -577,8 +577,6 @@ curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3
 }
 ```
 
-
-
 #### Response (400 Bad Request)
 ``` postman
 {
@@ -641,45 +639,90 @@ curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3
 
 #### Request (POST) | Code snippet
 ``` postman
-- Método : POST
-
-- Url : {{base_url}}/v1/users/add-user/
-
-- Headers: 
-  - Content-Type : application/json
-  - Authorization : {{bearer_token}}
-  - x-api-key : {{x-api-key}}
-
-- Body : 
-
-   {
-            "nickname": "MARTIN-SUAREZ",
-            "first_name": "Martin",
-            "last_name": "Suarez",
-            "email": "martin_electro_todo@gmail.com",
+curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--data-raw '   {
+            "nickname": "VALE18BNX",
+            "first_name": "Valeria",
+            "last_name": "Castro",
+            "email": "vale_18_nnbs@gmail.com",
             "identification_type": "DNI",
-            "identification_number": "4459388222",
+            "identification_number": "3987261233",
             "country_id": "AR12"
-        }
+        }'
 ```
 
-#### Response
+#### Response (200 OK)
 ``` postman
 {
     "message": {
         "id": null,
-        "nickname": "MARTIN-SUAREZ",
-        "first_name": "Martin",
-        "last_name": "Suarez",
-        "email": "martin_electro_todo@gmail.com",
+        "nickname": "VALE18BNX",
+        "first_name": "Valeria",
+        "last_name": "Castro",
+        "email": "vale_18_nnbs@gmail.com",
         "identification_type": "DNI",
-        "identification_number": "4459388222",
+        "identification_number": "3987261233",
         "country_id": "AR12",
-        "creation_date": "2023-04-07T14:31:45.000Z",
-        "update_date": "2023-04-07T14:31:45.000Z"
+        "creation_date": "2023-06-28T16:46:31.000Z",
+        "update_date": "2023-06-28T16:46:31.000Z"
     }
 }
 ```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, check request attributes. Missing or incorrect. CHECK: nickname, first_name and last_name (required|string|minLength:4|maxLength:50), email (required|string|minLength:10|maxLength:100), identification_type and identification_number (required|string|minLength:6|maxLength:20), country_id (required|string|minLength:2|maxLength:5)"
+}
+```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+}
+```
+
+#### Response (401 Unauthorized)
+``` postman
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+}
+```
+
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "Error in addUser lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
+}
+```
+
+#### Other responses
 
 <br>
 
@@ -687,44 +730,90 @@ curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3
 
 ### Editar un Usuario
 
-#### Request
+#### Request (PUT) | Code
 ``` postman
-- Método : PUT
-
-- Url : {{base_url}}/v1/users/update-user/{user-id}
-
-- Headers: 
-  - Content-Type : application/json
-  - Authorization : {{bearer_token}}
-  - x-api-key : {{x-api-key}}
-
-- Body (optionals fields) : 
-   {
-            "nickname": "MARTIN-SUAREZ-EDITED",
-            "first_name": "Martin EDITED",
-            "last_name": "Suarez EDITED",
-            "email": "martin_electro_todo_EDITED@gmail.com",
+curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/26' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--data-raw '     {
+            "nickname": "VALE18BNX EDITED",
+            "first_name": "Valeria EDITED",
+            "last_name": "Castro",
+            "email": "vale_18_nnbs@gmail.com",
             "identification_type": "DNI",
-            "identification_number": "4459388222",
-            "country_id": "AR12"
-        }
+            "identification_number": "3987261233",
+            "country_id": "AR12",
+            "creation_date": "2023-06-28 16:46:31",
+            "update_date": "2023-06-28 16:46:31"
+        }'
 ```
 
-#### Response
+#### Response (200 OK)
 ``` postman
 {
     "message": {
-        "id": 18,
-        "nickname": "MARTIN-SUAREZ-EDITED",
-        "first_name": "Martin EDITED",
-        "last_name": "Suarez EDITED",
-        "email": "martin_electro_todo_EDITED@gmail.com",
+        "id": 26,
+        "nickname": "VALE18BNX EDITED",
+        "first_name": "Valeria EDITED",
+        "last_name": "Castro",
+        "email": "vale_18_nnbs@gmail.com",
         "identification_type": "DNI",
-        "identification_number": "4459388222",
+        "identification_number": "3987261233",
         "country_id": "AR12",
-        "creation_date": "2023-04-07 17:31:45",
-        "update_date": "2023-04-07 14:34:44"
+        "creation_date": "2023-06-28 19:46:31",
+        "update_date": "2023-06-28 16:53:17"
     }
+}
+```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, check request attributes and object to update"
+}
+```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+}
+```
+
+#### Response (401 Unauthorized)
+``` postman
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+}
+```
+
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "Error in updateUser lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
 }
 ```
 
@@ -734,24 +823,63 @@ curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3
 
 ### Eliminar un Usuario
 
-#### Request
+#### Request (DELETE) | Code snippet
 ``` postman
-- Método : DELETE
-
-- Url : {{base_url}}/v1/users/delete-user/{user-id}
-
-- Headers: 
-  - Content-Type : application/json
-  - Authorization : {{bearer_token}}
-  - x-api-key : {{x-api-key}}
-
-- Body  : null
+curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user/26' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--data ''
 ```
 
-#### Response
+#### Response (200 OK)
 ``` postman
 {
     "message": "User has been deleted successfully."
+}
+```
+
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, a non-existent user cannot be deleted. Operation not allowed"
+}
+```
+
+#### Response (401 Unauthorized)
+``` postman
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+}
+```
+
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "Error in deleteUser lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
 }
 ```
 

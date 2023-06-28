@@ -115,33 +115,31 @@ module.exports.handler = async (event) => {
       identNumber,
       countryId
     );
-    if (newUser == statusName.CONNECTION_REFUSED) {
-      return await requestResult(
-        statusCode.INTERNAL_SERVER_ERROR,
-        "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.",
-        event
-      );
-    } else if (newUser == statusName.CONNECTION_ERROR) {
-      return await requestResult(
-        statusCode.INTERNAL_SERVER_ERROR,
-        "ERROR. An error has occurred in the process operations and queries with the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.",
-        event
-      );
-    } else if (newUser == value.IS_ZERO_NUMBER || newUser == value.IS_UNDEFINED || newUser == value.IS_NULL) {
-      return await requestResult(
-        statusCode.INTERNAL_SERVER_ERROR,
-        "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.",
-        event
-      );
-    } else {
-      return await requestResult(statusCode.OK, newUser, event);
+    
+    switch (newUser) {
+      case statusName.CONNECTION_REFUSED:
+        return await requestResult(
+          statusCode.INTERNAL_SERVER_ERROR,
+          "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+        );
+      case statusName.CONNECTION_ERROR:
+        return await requestResult(
+          statusCode.INTERNAL_SERVER_ERROR,
+          "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+        );
+      case value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL:
+        return await requestResult(
+          statusCode.BAD_REQUEST,
+          "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+        );
+      default:
+        return await requestResult(statusCode.OK, newUser);
     }
-
     //-- end with db query  ---
   } catch (error) {
     msg = `Error in addUser lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
-    console.error(`${msg}. Stack error type : ${error.stack}`);
+    console.error(msg);
 
     return await requestResult(code, msg, event);
   }
