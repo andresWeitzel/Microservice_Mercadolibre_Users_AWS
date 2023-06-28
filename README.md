@@ -300,26 +300,37 @@ npm start
 
 ### Conexión base de datos
 
-#### Request
+#### Request | Code snippet
 ``` postman
-- Método : GET
-
-- Url : {{base_url}}/v1/db-connection
-
-- Headers: 
-  - Content-Type : application/json
-  - Authorization : {{bearer_token}}
-  - x-api-key : {{x-api-key}}
-
-- Body : null
+curl --location 'http://localhost:4000/dev/v1/db-connection' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--data ''
 ```
 
-#### Response
+#### Response (200 OK)
 ``` postman
 {
     "message": "Connection has been established successfully."
 }
 ```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "Unable to connect to the database. Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306"
+}
+```
+
+#### Otros
 
 <br>
 
