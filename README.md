@@ -344,7 +344,7 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
 }
 ```
 
-#### Otros
+#### Other responses
 
 
 <br>
@@ -435,6 +435,8 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 }
 ```
 
+#### Other responses
+
 <br>
 
 ### Obtener un Usuario según su id
@@ -480,6 +482,13 @@ curl --location 'http://localhost:4000/dev/v1/users/id/4' \
 }
 ```
 
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, the id passed as a parameter is not valid."
+}
+```
+
 #### Response (401 Unauthorized)
 ``` postman
 {
@@ -507,6 +516,8 @@ curl --location 'http://localhost:4000/dev/v1/users/id/4' \
     "message": "Error in getById lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
 }
 ```
+
+#### Other responses
 
 <br>
 
@@ -582,6 +593,13 @@ curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3
 }
 ```
 
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, the country id passed as a parameter is not valid."
+}
+```
+
 #### Response (401 Unauthorized)
 ``` postman
 {
@@ -609,16 +627,19 @@ curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3
     "message": "Error in getLikeCountryId lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
 }
 ```
+
+#### Other responses
+
 <br>
 
-* ETC.
+* OTHER GET OPERATIONS (SEE POSTMAN COLLECTION)
 
 
 ### 2.1.2) Operaciones de tipo POST
 
 ### Agregar un Usuario
 
-#### Request
+#### Request (POST) | Code snippet
 ``` postman
 - Método : POST
 

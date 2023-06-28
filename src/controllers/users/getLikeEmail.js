@@ -1,31 +1,19 @@
-'use strict';
+"use strict";
 //Services
-const {
-  getLikeEmail
-} = require('../../services/users/getLikeEmail');
+const { getLikeEmail } = require("../../services/users/getLikeEmail");
 //Enums
-const {
-  statusCode
-} = require('../../enums/http/statusCode');
-const {
-  value
-} = require('../../enums/general/value');
-const {
-  statusName
-} = require('../../enums/connection/statusName');
+const { statusCode } = require("../../enums/http/statusCode");
+const { value } = require("../../enums/general/value");
+const { statusName } = require("../../enums/connection/statusName");
 //Helpers
+const { requestResult } = require("../../helpers/http/bodyResponse");
 const {
-  requestResult
-} = require('../../helpers/http/bodyResponse');
+  validateHeadersParams,
+} = require("../../helpers/http/requestHeadersParams");
+const { validateAuthHeaders } = require("../../helpers/auth/headers");
 const {
-  validateHeadersParams
-} = require('../../helpers/http/requestHeadersParams');
-const {
-  validateAuthHeaders
-} = require('../../helpers/auth/headers');
-const {
-  validatePathParameters
-} = require('../../helpers/http/queryStringParams');
+  validatePathParameters,
+} = require("../../helpers/http/queryStringParams");
 //Const/Vars
 let userList;
 let email;
@@ -38,9 +26,7 @@ let pageSizeNro;
 let pageNro;
 let msg;
 let code;
-const orderBy = [
-  ['id', 'ASC']
-];
+const orderBy = [["id", "ASC"]];
 
 /**
  * @description get all paged users whose email matches the passed as parameter
@@ -61,15 +47,22 @@ module.exports.handler = async (event) => {
 
     validateReqParams = await validateHeadersParams(eventHeaders);
 
-
     if (!validateReqParams) {
-      return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers', event);
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "Bad request, check missing or malformed headers",
+        event
+      );
     }
 
     validate = await validateAuthHeaders(eventHeaders);
 
     if (!validate) {
-      return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
+      return await requestResult(
+        statusCode.UNAUTHORIZED,
+        "Not authenticated, check x_api_key and Authorization",
+        event
+      );
     }
     //-- end with validation Headers  ---
 
@@ -98,37 +91,31 @@ module.exports.handler = async (event) => {
     //-- start with db query  ---
     userList = await getLikeEmail(email, pageSizeNro, pageNro, orderBy);
 
-    if (userList == statusName.CONNECTION_REFUSED) {
-      return await requestResult(
-        statusCode.INTERNAL_SERVER_ERROR,
-        "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available",
-        event
-      );
-    } else if (userList == statusName.CONNECTION_ERROR) {
-      return await requestResult(
-        statusCode.INTERNAL_SERVER_ERROR,
-        "ERROR. An error has occurred in the process operations and queries with the database. Try again",
-        event
-      );
-    } else if (userList == value.IS_ZERO_NUMBER || userList == value.IS_UNDEFINED || userList == value.IS_NULL) {
-      return await requestResult(
-        statusCode.BAD_REQUEST,
-        "Bad request, could not get paginated list of users according to email. Try again",
-        event
-      );
-    } else {
-      return await requestResult(statusCode.OK, userList, event);
+    switch (userList) {
+      case statusName.CONNECTION_REFUSED:
+        return await requestResult(
+          statusCode.INTERNAL_SERVER_ERROR,
+          "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+        );
+      case statusName.CONNECTION_ERROR:
+        return await requestResult(
+          statusCode.INTERNAL_SERVER_ERROR,
+          "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+        );
+      case value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL:
+        return await requestResult(
+          statusCode.BAD_REQUEST,
+          "Bad request, could not get paginated list of users according to email. Try again."
+        );
+      default:
+        return await requestResult(statusCode.OK, userList);
     }
-
     //-- end with db query  ---
-
   } catch (error) {
     msg = `Error in getLikeEmail lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
-    console.error(`${msg}. Stack error type : ${error.stack}`);
+    console.error(msg);
 
     return await requestResult(code, msg, event);
-
   }
-
 };
