@@ -323,14 +323,43 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
 }
 ```
 
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, could not get the paginated list of users."
+}
+```
+
+#### Response (401 Unauthorized)
+``` postman
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
+}
+```
+
 #### Response (500 Internal Server Error)
 ``` postman
 {
-    "message": "Unable to connect to the database. Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306"
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "Error in getAll lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
 }
 ```
 
 #### Otros
+
 
 <br>
 
@@ -350,7 +379,7 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
 - Body : null
 ```
 
-#### Response
+#### Response (200 OK)
 ``` postman
 {
     "message": [
@@ -379,6 +408,28 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
             "update_date": "2023-03-20 21:02:33"
         }
     ]
+}
+```
+
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+#### Response (401 Unauthorized)
+``` postman
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "Unable to connect to the database. Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306"
 }
 ```
 
