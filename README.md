@@ -300,7 +300,7 @@ npm start
 
 ### Conexión base de datos
 
-#### Request | Code snippet
+#### Request (GET) | Code Snippet
 ``` postman
 curl --location 'http://localhost:4000/dev/v1/db-connection' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
@@ -315,6 +315,83 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
     "message": "Connection has been established successfully."
 }
 ```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, could not get the paginated list of users."
+}
+```
+
+#### Response (401 Unauthorized)
+``` postman
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "Error in connection lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
+}
+```
+
+#### Otros
+
+
+<br>
+
+### Obtener Usuarios paginados
+
+#### Request (GET) | Code Snippet
+``` postman
+curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--data ''
+```
+
+#### Response (200 OK)
+``` postman
+{
+    "message": [
+        {
+            "id": 3,
+            "nickname": "HECTOR SS G",
+            "first_name": "Hector",
+            "last_name": "Gomez",
+            "email": "hectorGomez78@gmail.com",
+            "identification_type": "DNI",
+            "identification_number": "2172265827",
+            "country_id": "AR",
+            "creation_date": "2023-03-20 21:02:33",
+            "update_date": "2023-03-20 21:02:33"
+        },
+        {
+            "id": 4,
+            "nickname": "GABRIELA JIMENEZ",
+            "first_name": "Gabriela",
+            "last_name": "Jimenez",
+            "email": "gabriela.consultas@hotmail.com",
+            "identification_type": "DNI",
+            "identification_number": "410871223",
+            "country_id": "AR",
+            "creation_date": "2023-03-20 21:02:33",
+            "update_date": "2023-03-20 21:02:33"
+        }
+    ]
+}
+```
+
 
 #### Response (400 Bad Request)
 ``` postman
@@ -358,100 +435,19 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
 }
 ```
 
-#### Otros
-
-
-<br>
-
-### Obtener Usuarios paginados
-
-#### Request
-``` postman
-- Método : GET
-
-- Url : {{base_url}}/v1/users/list?page=0&limit=2
-
-- Headers: 
-  - Content-Type : application/json
-  - Authorization : {{bearer_token}}
-  - x-api-key : {{x-api-key}}
-
-- Body : null
-```
-
-#### Response (200 OK)
-``` postman
-{
-    "message": [
-        {
-            "id": 3,
-            "nickname": "HECTOR SS G",
-            "first_name": "Hector",
-            "last_name": "Gomez",
-            "email": "hectorGomez78@gmail.com",
-            "identification_type": "DNI",
-            "identification_number": "2172265827",
-            "country_id": "AR",
-            "creation_date": "2023-03-20 21:02:33",
-            "update_date": "2023-03-20 21:02:33"
-        },
-        {
-            "id": 4,
-            "nickname": "GABRIELA JIMENEZ",
-            "first_name": "Gabriela",
-            "last_name": "Jimenez",
-            "email": "gabriela.consultas@hotmail.com",
-            "identification_type": "DNI",
-            "identification_number": "410871223",
-            "country_id": "AR",
-            "creation_date": "2023-03-20 21:02:33",
-            "update_date": "2023-03-20 21:02:33"
-        }
-    ]
-}
-```
-
-
-#### Response (400 Bad Request)
-``` postman
-{
-    "message": "Bad request, check missing or malformed headers"
-}
-```
-
-#### Response (401 Unauthorized)
-``` postman
-{
-    "message": "Not authenticated, check x_api_key and Authorization"
-}
-```
-
-#### Response (500 Internal Server Error)
-``` postman
-{
-    "message": "Unable to connect to the database. Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306"
-}
-```
-
 <br>
 
 ### Obtener un Usuario según su id
 
-#### Request
+#### Request (GET) | Code Snippet
 ``` postman
-- Método : GET
-
-- Url : {{base_url}}/v1/users/id/4
-
-- Headers: 
-  - Content-Type : application/json
-  - Authorization : {{bearer_token}}
-  - x-api-key : {{x-api-key}}
-
-- Body : null
+curl --location 'http://localhost:4000/dev/v1/users/id/4' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j'
 ```
 
-#### Response
+#### Response (200 OK)
 ``` postman
 {
     "message": {
@@ -468,23 +464,62 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
     }
 }
 ```
+
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, could not fetch user based on id."
+}
+```
+
+#### Response (401 Unauthorized)
+``` postman
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "Error in getById lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
+}
+```
+
 <br>
 
 
 ### Obtener listado paginado de Usuarios según su country-id
 
-#### Request
+#### Request (GET) | Code Snippet
 ``` postman
-- Método : GET
-
-- Url : {{base_url}}/v1/users/country-id/AR?page=0&limit=3
-
-- Headers: 
-  - Content-Type : application/json
-  - Authorization : {{bearer_token}}
-  - x-api-key : {{x-api-key}}
-
-- Body : null
+curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--data ''
 ```
 
 #### Response
@@ -530,7 +565,52 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
     ]
 }
 ```
+
+
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+#### Response (400 Bad Request)
+``` postman
+{
+    "message": "Bad request, could not get paginated list of users according to country id. Try again."
+}
+```
+
+#### Response (401 Unauthorized)
+``` postman
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+}
+```
+
+#### Response (500 Internal Server Error)
+``` postman
+{
+    "message": "Error in getLikeCountryId lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
+}
+```
 <br>
+
 * ETC.
 
 

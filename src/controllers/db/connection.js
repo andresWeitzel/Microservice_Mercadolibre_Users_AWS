@@ -55,9 +55,9 @@ module.exports.handler = async (event) => {
     //-- end with db query  ---
 
   } catch (error) {
-    msg = `Unable to connect to the database. Caused by ${error}`;
+    msg = `Error in connection lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
-    console.error(`${msg}. Stack error type : ${error.stack}`);
+    console.error(msg);
  
     return await requestResult(code, msg, event);
   }
