@@ -1,7 +1,7 @@
 ![Index app](./doc/assets/MicroService_Users_ML.drawio.png)
 
 # Microservice_Mercadolibre_Users_AWS
-Microservicio para la gestión de usuarios replicando y modificando parte de la arquitectura de desarrollo de ML  implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.
+Microservicio para la gestión de usuarios replicando y modificando parte de la arquitectura de desarrollo de ML  implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Swagger, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.
 * [Repositorio base de datos](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 * [Api Doc ML Usuarios](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
 * [Playlist prueba de funcionalidad](https://www.youtube.com/watch?v=oLSrmqMq0Zs&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
@@ -160,6 +160,10 @@ npm i serverless-offline --save-dev
 * Instalamos serverless ssm 
 ```git
 npm i serverless-offline-ssm --save-dev
+```
+* Instalamos autoswagger
+```git
+npm i serverless-auto-swagger
 ```
 * Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless_ssm.yml) al .gitignore.
 * El siguiente script configurado en el package.json del proyecto es el encargado de
@@ -926,6 +930,9 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 #### Sequelize
  * [Modelos y Operadores](https://sequelize.org/docs/v6/core-concepts/model-querying-basics/)
+
+#### Swagger con Serverless
+* [Autoswagger](https://www.npmjs.com/package/serverless-auto-swagger)
 
 #### Api Gateway
  * [Buenas Prácticas Api-Gateway](https://docs.aws.amazon.com/whitepapers/latest/best-practices-api-gateway-private-apis-integration/rest-api.html)

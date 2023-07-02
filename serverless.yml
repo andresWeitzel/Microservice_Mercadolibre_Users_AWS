@@ -35,6 +35,7 @@ provider:
       roleManagedExternally: false
 
 plugins:
+  - serverless-auto-swagger
   - serverless-offline-ssm
   - serverless-offline
 
@@ -171,3 +172,18 @@ custom:
     stages:
       - dev
     ssm: ${file(./serverless_ssm.yml)}
+  autoswagger:
+    title: 'string'
+    apiType: 'http'
+    generateSwaggerOnDeploy: true
+    typefiles: ['./src/utils/swagger/definition.ts']
+    #swaggerFiles: ['./doc/endpointFromPlugin.json', './doc/iCannotPutThisInHttpEvent.json', './doc/aDefinitionWithoutTypescript.json']
+    #swaggerPath: 'v1/api-docs/'
+    #apiKeyHeaders: ['Authorization', 'anyOtherName']
+    #useStage: true
+    basePath: 'swagger/'
+    host: ${file(./serverless_ssm.yml):APP_LOCALHOST}
+    schemes: ['http', 'https', 'ws', 'wss']
+    #excludeStages: ['production', 'anyOtherStage']
+    #lambdaAuthorizer: ${self:custom.myAuthorizer}
+    useRedirectUI: true

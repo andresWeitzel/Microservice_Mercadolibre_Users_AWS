@@ -1,5 +1,12 @@
-
+//External
 const { Sequelize } = require('sequelize');
+//Enums
+const {
+  statusCode
+} = require("../enums/http/statusCode");
+//Const-vars
+let msg;
+let code;
 
 
 const dbConnection = new Sequelize(
@@ -18,6 +25,18 @@ const dbConnection = new Sequelize(
 
   }
 );
+
+dbConnection.authenticate()
+.then(() => {
+  msg = 'Connection has been established successfully.';
+  code = statusCode.OK;
+  console.log(msg);
+
+}).catch((error) => {
+  msg = `Unable to connect to the database. Caused by ${error}`;
+  code = statusCode.INTERNAL_SERVER_ERROR;
+  console.log(msg);
+});
 
 
 module.exports = {
