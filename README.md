@@ -933,6 +933,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 #### Swagger con Serverless
 * [Autoswagger](https://www.npmjs.com/package/serverless-auto-swagger)
+* [Documentation serverless api](https://levelup.gitconnected.com/documenting-your-serverless-solutions-509f1928564b)
 
 #### Api Gateway
  * [Buenas Prácticas Api-Gateway](https://docs.aws.amazon.com/whitepapers/latest/best-practices-api-gateway-private-apis-integration/rest-api.html)
