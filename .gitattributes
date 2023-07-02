@@ -2,5 +2,3 @@
 *.ts linguist-language=typescript
 *.py linguist-language=python
 *.sql linguist-language=sql
-
-./* linguist-vendored=true
