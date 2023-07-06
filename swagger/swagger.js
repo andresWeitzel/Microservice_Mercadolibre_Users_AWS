@@ -2,7 +2,7 @@
             module.exports = {
   "swagger": "2.0",
   "info": {
-    "title": "string",
+    "title": "Microservice_Mercadolibre_Users_AWS",
     "version": "1"
   },
   "paths": {
@@ -378,7 +378,7 @@
   },
   "definitions": {},
   "securityDefinitions": {},
-  "basePath": "swagger/",
+  "basePath": "/swagger/",
   "host": "http://127.0.0.1",
   "schemes": [
     "http",

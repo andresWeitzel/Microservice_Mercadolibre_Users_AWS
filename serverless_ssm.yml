@@ -16,3 +16,7 @@ DATABASE_POOL_IDLE : 10000
 
 # Generic
 APP_LOCALHOST: 'http://127.0.0.1'
+
+# SWAGGER
+#SWAGGER_BASE_PATH_CORS: 'http://http://127.0.0.1/swagger/'
+SWAGGER_BASE_PATH_CORS: '*'

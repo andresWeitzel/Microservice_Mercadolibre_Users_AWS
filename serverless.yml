@@ -56,6 +56,8 @@ functions:
           path: /v1/users/list
           method: get
           private: true
+          cors:
+            origin: ${file(./serverless_ssm.yml):SWAGGER_BASE_PATH_CORS}
   getByIdUsers:
     handler: src/controllers/users/getById.handler
     description: Function in charge of obtaining a user according to his id of the db
@@ -173,17 +175,11 @@ custom:
       - dev
     ssm: ${file(./serverless_ssm.yml)}
   autoswagger:
-    title: 'string'
+    title: 'Microservice_Mercadolibre_Users_AWS'
     apiType: 'http'
     generateSwaggerOnDeploy: true
     typefiles: ['./src/utils/swagger/definition.ts']
-    #swaggerFiles: ['./doc/endpointFromPlugin.json', './doc/iCannotPutThisInHttpEvent.json', './doc/aDefinitionWithoutTypescript.json']
-    #swaggerPath: 'v1/api-docs/'
-    #apiKeyHeaders: ['Authorization', 'anyOtherName']
-    #useStage: true
-    basePath: 'swagger/'
+    basePath: '/swagger/'
     host: ${file(./serverless_ssm.yml):APP_LOCALHOST}
     schemes: ['http', 'https', 'ws', 'wss']
-    #excludeStages: ['production', 'anyOtherStage']
-    #lambdaAuthorizer: ${self:custom.myAuthorizer}
     useRedirectUI: true
