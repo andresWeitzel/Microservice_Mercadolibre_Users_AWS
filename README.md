@@ -931,17 +931,29 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 #### Sequelize
  * [Modelos y Operadores](https://sequelize.org/docs/v6/core-concepts/model-querying-basics/)
 
+#### Mercadolibre
+* [Usuarios y aplicaciones](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
+* [Descripción de usuarios](https://developers.mercadolibre.com.ar/es_ar/producto-consulta-usuarios)
+   
 #### Swagger con Serverless
 * [Autoswagger](https://www.npmjs.com/package/serverless-auto-swagger)
 * [Documentation serverless api](https://levelup.gitconnected.com/documenting-your-serverless-solutions-509f1928564b)
+
+#### Open Apiv3 con Serverless
+* [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
 
 #### Api Gateway
  * [Buenas Prácticas Api-Gateway](https://docs.aws.amazon.com/whitepapers/latest/best-practices-api-gateway-private-apis-integration/rest-api.html)
  * [Creación de Api-keys personalizadas](https://towardsaws.com/protect-your-apis-by-creating-api-keys-using-serverless-framework-fe662ad37447)
  * [Configuración propiedades Api Gateway](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml)
 
- #### Librerías
+#### Serverless frameworks
+ * [Plugins](https://www.serverless.com/plugins)
+
+ #### Librerías/Plugins
  * [Validación de campos](https://www.npmjs.com/package/node-input-validator)
+ * [serverless-offline-ssm](https://www.serverless.com/plugins/serverless-offline-ssm)
+ * [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
 
 <br>
 
