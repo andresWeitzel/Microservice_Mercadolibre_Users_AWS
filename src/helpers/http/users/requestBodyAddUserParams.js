@@ -20,13 +20,13 @@ const validateBodyAddUserParams = async (eventBody) => {
 
       eventBodyObj ={
         data:{
-          nickname: await eventBody["nickname"],
-          firstName: await eventBody["first_name"],
-          lastName: await eventBody["last_name"],
-          email: await eventBody["email"],
-          identificationType: await eventBody["identification_type"],
-          identificationNumber: await eventBody["identification_number"],
-          countryId: await eventBody["country_id"],
+          nickname: await eventBody.nickname,
+          firstName: await eventBody.first_name,
+          lastName: await eventBody.last_name,
+          email: await eventBody.email,
+          identificationType: await eventBody.identification_type,
+          identificationNumber: await eventBody.identification_number,
+          countryId: await eventBody.country_id,
         }
       }
 
