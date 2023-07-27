@@ -74,7 +74,7 @@ const getLikeNickname = async function (nickName, pageSizeNro, pageNro, orderBy)
     console.log(usersList);
     return usersList;
 
-}
+};
 
 module.exports = {
     getLikeNickname,

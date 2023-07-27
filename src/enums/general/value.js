@@ -7,6 +7,6 @@ const value = {
     IS_NULL:null,
     IS_UNDEFINED:undefined,
     IS_ZERO_NUMBER:0
-}
+};
 
-module.exports = { value }
+module.exports = { value };

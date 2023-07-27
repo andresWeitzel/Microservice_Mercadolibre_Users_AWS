@@ -74,7 +74,7 @@ const getLikeEmail = async function (email, pageSizeNro, pageNro, orderBy) {
     console.log(usersList);
     return usersList;
 
-}
+};
 
 
 

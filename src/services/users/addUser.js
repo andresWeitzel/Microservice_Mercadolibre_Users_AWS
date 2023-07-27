@@ -62,7 +62,7 @@ const addUser = async function (nickname, firstName, lastName, email, identifica
     console.log(user);
     return user;
 
-}
+};
 
 
 

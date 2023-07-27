@@ -79,7 +79,7 @@ const getLikeCreationDate = async function (creationDate, pageSizeNro, pageNro, 
     console.log(usersList);
     return usersList;
 
-}
+};
 
 
 

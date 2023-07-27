@@ -74,7 +74,7 @@ const updateUser = async function (id, nickname, firstName, lastName, email, ide
     console.log(user);
     return user;
 
-}
+};
 
 
 

@@ -71,7 +71,7 @@ const getLikeIdentificationNumber = async function (identificationNumber, pageSi
     console.log(usersList);
     return usersList;
 
-}
+};
 
 
 

@@ -9,6 +9,6 @@ const statusName = {
     CONNECTION_REFUSED: "ECCONNREFUSED",
     CONNECTION_RESET: "ECCONNRESET",
     CONNECTION_ERROR: "ERROR",
-}
+};
 
-module.exports = { statusName }
+module.exports = { statusName };

@@ -71,7 +71,7 @@ const getLikeLastName = async function (lastName, pageSizeNro, pageNro, orderBy)
     }
     console.log(usersList);
     return usersList;
-}
+};
 
 
 

@@ -70,7 +70,7 @@ const getLikeCountryId = async function (countryId, pageSizeNro, pageNro, orderB
     console.log(usersList);
     return usersList;
 
-}
+};
 
 
 

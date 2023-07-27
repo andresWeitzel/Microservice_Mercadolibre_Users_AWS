@@ -48,8 +48,8 @@ const validateHeadersParams = async (eventHeaders) => {
   }
 
   return validateCheck;
-}
+};
 
 module.exports = {
   validateHeadersParams
-}
+};

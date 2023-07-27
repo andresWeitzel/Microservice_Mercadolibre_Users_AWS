@@ -24,8 +24,8 @@ const currentDateTime = async () => {
           );
     }
     return dateNow;
-}
+};
 
 module.exports = {
     currentDateTime,
-}
+};

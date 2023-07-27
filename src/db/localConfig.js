@@ -41,4 +41,4 @@ dbConnection.authenticate()
 
 module.exports = {
   dbConnection
-}
+};

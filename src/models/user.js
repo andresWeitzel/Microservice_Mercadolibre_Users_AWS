@@ -59,5 +59,5 @@ const User = dbConnection.define('users', {
 
 
 
-module.exports = { User }
+module.exports = { User };
 

@@ -46,7 +46,7 @@ const deleteUser = async function (id) {
     console.log(user);
     return user;
 
-}
+};
 
 
 

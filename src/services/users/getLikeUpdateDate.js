@@ -78,7 +78,7 @@ const getLikeUpdateDate = async function (updateDate, pageSizeNro, pageNro, orde
     console.log(usersList);
     return usersList;
 
-}
+};
 
 
 

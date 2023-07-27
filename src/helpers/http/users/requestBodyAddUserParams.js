@@ -56,8 +56,8 @@ const validateBodyAddUserParams = async (eventBody) => {
   }
 
   return validateCheck;
-}
+};
 
 module.exports = {
     validateBodyAddUserParams
-}
+};

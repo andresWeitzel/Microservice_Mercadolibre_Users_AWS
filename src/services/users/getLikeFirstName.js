@@ -74,7 +74,7 @@ const getLikeFirstName = async function (firstName, pageSizeNro, pageNro, orderB
     console.log(usersList);
     return usersList;
 
-}
+};
 
 
 
