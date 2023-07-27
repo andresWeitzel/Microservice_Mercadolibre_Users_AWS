@@ -8,7 +8,7 @@ const { dbConnection } = require('../db/localConfig');
 /**
  * @description database user model with their respective fields and constraints
  */
-const User = dbConnection.define("user", {
+const User = dbConnection.define('users', {
     id: {
         type: DataTypes.INTEGER
         , allowNull: true
@@ -52,7 +52,9 @@ const User = dbConnection.define("user", {
     }
 },
     {
-        timestamps: false
+        timestamps: false,
+        
+    tableName: 'users'
     });
 
 
