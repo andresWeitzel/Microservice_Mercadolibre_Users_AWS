@@ -28,7 +28,7 @@ const validateBodyAddUserParams = async (eventBody) => {
           identificationNumber: await eventBody.identification_number,
           countryId: await eventBody.country_id,
         }
-      }
+      };
 
 
       validatorObj = new Validator(

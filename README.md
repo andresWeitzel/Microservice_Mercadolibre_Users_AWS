@@ -250,8 +250,9 @@ npm install remark-lint-table-cell-padding --save-dev
       "strong": "*"
     },
     "plugins": [
-      "remark-preset-lint-consistent",
+       "remark-preset-lint-consistent",
       "remark-preset-lint-recommended",
+      "remark-lint",
       "remark-lint-table-cell-padding",
       [
         "remark-lint-list-item-indent",

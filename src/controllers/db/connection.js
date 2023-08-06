@@ -43,12 +43,10 @@ module.exports.handler = async (event) => {
         msg = 'Connection has been established successfully.';
         code = statusCode.OK;
         console.log(msg);
-
       }).catch((error) => {
         msg = `Unable to connect to the database. Caused by ${error}`;
         code = statusCode.INTERNAL_SERVER_ERROR;
         console.log(error);
-
       });
 
     return await requestResult(code, msg, event);

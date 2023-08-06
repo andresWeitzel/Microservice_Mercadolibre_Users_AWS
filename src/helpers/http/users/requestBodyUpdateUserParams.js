@@ -29,7 +29,7 @@ const validateBodyUpdateUserParams = async (eventBody) => {
           countryId: await eventBody.country_id,
           creationDate: await eventBody.creation_date,
         }
-      }
+      };
 
 
       validatorObj = new Validator(
