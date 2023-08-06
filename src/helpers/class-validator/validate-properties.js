@@ -16,7 +16,6 @@ let stackFieldsErrors;
    */
 const validateClass = async (objProduct) => {
   stackFieldsErrors = [];
-
   try {
     await validate(objProduct).then((errors) => {
       errors.map((e) => {

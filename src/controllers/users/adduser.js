@@ -1,25 +1,24 @@
-"use strict";
-//Services
-const { addUser } = require("../../services/users/addUser");
+//"use strict";
+// //Services
+// const { addUser } = require("../../services/users/addUser");
 //Models
-const { UserDto } = require("../../models/dto/user-dto");
+import UserDto from "../../models/dto/userDto.ts";
+//import { UserDto } from "../../models/dto/user-dto";
 //Enums
-const { statusCode } = require("../../enums/http/statusCode");
-const { statusName } = require("../../enums/connection/statusName");
-const { value } = require("../../enums/general/value");
+import { statusCode } from "../../enums/http/statusCode";
+// const { statusName } = require("../../enums/connection/statusName");
+import { value } from "../../enums/general/value";
 //Helpers
-const { requestResult } = require("../../helpers/http/bodyResponse");
-const {
-  validateHeadersParams,
-} = require("../../helpers/http/requestHeadersParams");
-const {
-  validateClass,
-} = require("../../helpers/class-validator/validate-properties");
-const {
-  validateBodyAddUserParams,
-} = require("../../helpers/http/users/requestBodyAddUserParams");
-const { validateAuthHeaders } = require("../../helpers/auth/headers");
-const { currentDateTime } = require("../../helpers/dates/date");
+import { requestResult } from "../../helpers/http/bodyResponse";
+import { validateHeadersParams } from "../../helpers/http/requestHeadersParams";
+// const {
+//   validateClass,
+// } = require("../../helpers/class-validator/validate-properties");
+// const {
+//   validateBodyAddUserParams,
+// } = require("../../helpers/http/users/requestBodyAddUserParams");
+import { validateAuthHeaders } from "../../helpers/auth/headers";
+import { currentDateTime } from "../../helpers/dates/date";
 
 //Const/Vars
 let newUser;
@@ -28,6 +27,7 @@ let eventHeaders;
 let validateAuth;
 let validateReqParams;
 let validateReqBodyParams;
+let validateObject;
 let nickname;
 let firstName;
 let lastName;
@@ -44,7 +44,7 @@ let code;
  * @param {Object} event Object type
  * @returns the result of the transaction carried out in the database
  */
-module.exports.handler = async (event) => {
+export async function handler(event) {
   try {
     //Init
 
@@ -100,11 +100,8 @@ module.exports.handler = async (event) => {
     identNumber = eventBody?.identification_number;
     countryId = eventBody?.country_id;
     dateNow = await currentDateTime();
-    creationDate=dateNow;
-    updateDate=dateNow;
-
-
-    UserDto;
+    creationDate = dateNow;
+    updateDate = dateNow;
 
     newUser = new UserDto(
       nickname,
@@ -118,19 +115,21 @@ module.exports.handler = async (event) => {
       updateDate
     );
 
-    //-- start with validation object  ---
-    validateObject = await validateClass(newUser);
+    return await requestResult(statusCode.OK, newUser);
 
-    if (validateObject.length) {
-      return await requestResult(
-        statusCode.BAD_REQUEST,
-        `Bad request, check request attributes. Validate the following : ${validateObject}`
-      );
-    }
-    return await requestResult(
-      statusCode.OK,
-      newUser
-    );
+    // //-- start with validation object  ---
+    // validateObject = await validateClass(newUser);
+
+    // if (validateObject.length) {
+    //   return await requestResult(
+    //     statusCode.BAD_REQUEST,
+    //     `Bad request, check request attributes. Validate the following : ${validateObject}`
+    //   );
+    // }
+    // return await requestResult(
+    //   statusCode.OK,
+    //   newUser
+    // );
     //-- end with validation object  ---
 
     // switch (newUser) {
@@ -160,4 +159,4 @@ module.exports.handler = async (event) => {
 
     return await requestResult(code, msg, event);
   }
-};
+}
