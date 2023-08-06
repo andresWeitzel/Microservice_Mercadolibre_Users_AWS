@@ -1,15 +1,9 @@
 //Models
-const {
-  User
-} = require("../../models/user");
+const { User } = require("../../models/sequelize/user");
 //Helpers
-const {
-  getDateFormat
-} = require("../../helpers/sequelize/format/dateFormat");
+const { getDateFormat } = require("../../helpers/sequelize/format/dateFormat");
 //Enums
-const {
-  statusName
-} = require("../../enums/connection/statusName");
+const { statusName } = require("../../enums/connection/statusName");
 //Const/Vars
 let usersList;
 let msg;
@@ -30,16 +24,16 @@ const getAll = async function (pageSizeNro, pageNro, orderBy) {
 
     if (User != null) {
       await User.findAll({
-          attributes: {
-            include: [
-              await getDateFormat("creation_date"),
-              await getDateFormat("update_date")
-            ],
-          },
-          limit: pageSizeNro,
-          offset: pageNro,
-          order: orderBy,
-        })
+        attributes: {
+          include: [
+            await getDateFormat("creation_date"),
+            await getDateFormat("update_date"),
+          ],
+        },
+        limit: pageSizeNro,
+        offset: pageNro,
+        order: orderBy,
+      })
         .then((users) => {
           usersList = users;
         })
@@ -47,7 +41,6 @@ const getAll = async function (pageSizeNro, pageNro, orderBy) {
           msg = `Error in getAll User model. Caused by ${error}`;
           console.error(`${msg}. Stack error type : ${error.stack}`);
           usersList = statusName.CONNECTION_ERROR;
-
         });
     } else {
       usersList = statusName.CONNECTION_REFUSED;
@@ -78,13 +71,13 @@ const getAllWithoutDate = async function (pageSizeNro, pageNro, orderBy) {
 
     if (User != null) {
       await User.findAll({
-          attributes: {
-            exclude: ["creation_date", "update_date"],
-          },
-          limit: pageSizeNro,
-          offset: pageNro,
-          order: orderBy,
-        })
+        attributes: {
+          exclude: ["creation_date", "update_date"],
+        },
+        limit: pageSizeNro,
+        offset: pageNro,
+        order: orderBy,
+      })
         .then((users) => {
           usersList = users;
         })
@@ -94,7 +87,6 @@ const getAllWithoutDate = async function (pageSizeNro, pageNro, orderBy) {
           usersList = statusName.CONNECTION_ERROR;
         });
     } else {
-
       usersList = statusName.CONNECTION_REFUSED;
     }
   } catch (error) {

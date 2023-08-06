@@ -188,26 +188,11 @@ npm i serverless-offline --save-dev
 npm i serverless-offline-ssm --save-dev
 ```
 
-*   Instalamos autoswagger
-
-```git
-npm i serverless-auto-swagger
-```
-
-*   Agregamos los plugins de serverless al .yml
-
 ```yml
 plugins:
-   - serverless-auto-swagger
   - serverless-offline-ssm
   - serverless-offline
 
-```
-
-*   Descargamos el plugin para la ejecución de scripts de forma concurrente ([concurrently](https://www.npmjs.com/package/concurrently))
-
-```git
-npm i concurrently
 ```
 
 *   Configuraremos un formato estándar de archivos markdown para el proyecto a través de [remark-lint](https://github.com/remarkjs/remark-lint#example-check-markdown-on-the-api)

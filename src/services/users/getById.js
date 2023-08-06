@@ -1,6 +1,5 @@
-
 //Models
-const { User } = require("../../models/user");
+const { User } = require("../../models/sequelize/user");
 //Enums
 const { statusName } = require("../../enums/connection/statusName");
 //Helpers
@@ -19,14 +18,14 @@ let msg;
 const getById = async function (id) {
   try {
     user = null;
-    msg=null;
+    msg = null;
 
     if (User != null) {
       await User.findByPk(id, {
         attributes: {
           include: [
             await getDateFormat("creation_date"),
-            await getDateFormat("update_date")
+            await getDateFormat("update_date"),
           ],
         },
       })
@@ -60,7 +59,7 @@ const getById = async function (id) {
 const getByIdLimit = async function (id) {
   try {
     user = null;
-    msg=null;
+    msg = null;
 
     if (User != null) {
       await User.findByPk(id, {
