@@ -35,7 +35,6 @@ provider:
       roleManagedExternally: false
 
 plugins:
-  - serverless-auto-swagger
   - serverless-offline-ssm
   - serverless-offline
 
@@ -56,8 +55,6 @@ functions:
           path: /v1/users/list
           method: get
           private: true
-          cors:
-            origin: ${file(./serverless_ssm.yml):SWAGGER_BASE_PATH_CORS}
   getByIdUsers:
     handler: src/controllers/users/getById.handler
     description: Function in charge of obtaining a user according to his id of the db
@@ -174,12 +171,3 @@ custom:
     stages:
       - dev
     ssm: ${file(./serverless_ssm.yml)}
-  autoswagger:
-    title: 'Microservice_Mercadolibre_Users_AWS'
-    apiType: 'http'
-    generateSwaggerOnDeploy: true
-    typefiles: ['./src/utils/swagger/definition.ts']
-    basePath: '/swagger/'
-    host: ${file(./serverless_ssm.yml):APP_LOCALHOST}
-    schemes: ['http', 'https', 'ws', 'wss']
-    useRedirectUI: true
