@@ -61,7 +61,7 @@ const getLikeEmail = async function (email, pageSizeNro, pageNro, orderBy) {
                     msg = `Error in getLikeEmail User model. Caused by ${error}`;
                     console.error(`${msg}. Stack error type : ${error.stack}`);
                     usersList = statusName.CONNECTION_ERROR;
-                })
+                });
         } else {
             usersList = statusName.CONNECTION_REFUSED;
         }

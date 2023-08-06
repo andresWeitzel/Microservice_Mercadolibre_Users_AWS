@@ -34,7 +34,7 @@ const deleteUser = async function (id) {
                 msg = `Error in delete User model. Caused by ${error}`;
                 console.error(`${msg}. Stack error type : ${error.stack}`);
                 user = statusName.CONNECTION_ERROR;
-            })
+            });
         } else {
             user = statusName.CONNECTION_REFUSED;
           }

@@ -62,7 +62,7 @@ const updateUser = async function (id, nickname, firstName, lastName, email, ide
                 msg = `Error in updateUser User model. Caused by ${error}`;
                 console.error(`${msg}. Stack error type : ${error.stack}`);
                 user = statusName.CONNECTION_ERROR;
-            })
+            });
         } else {
             user = statusName.CONNECTION_REFUSED;
           }

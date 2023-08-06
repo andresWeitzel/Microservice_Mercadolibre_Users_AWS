@@ -62,7 +62,7 @@ const getLikeNickname = async function (nickName, pageSizeNro, pageNro, orderBy)
                     msg = `Error in getLikeNickname User model. Caused by ${error}`;
                     console.error(`${msg}. Stack error type : ${error.stack}`);
                     usersList = statusName.CONNECTION_ERROR;
-                })
+                });
         } else {
             usersList = statusName.CONNECTION_REFUSED;
         }

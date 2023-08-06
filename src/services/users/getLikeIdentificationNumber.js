@@ -59,7 +59,7 @@ const getLikeIdentificationNumber = async function (identificationNumber, pageSi
                     msg = `Error in getLikeIdentificationNumber User model. Caused by ${error}`;
                     console.error(`${msg}. Stack error type : ${error.stack}`);
                     usersList = statusName.CONNECTION_ERROR;
-                })
+                });
         } else {
             usersList = statusName.CONNECTION_REFUSED;
         }

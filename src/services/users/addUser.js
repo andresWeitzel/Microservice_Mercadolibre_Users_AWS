@@ -50,7 +50,7 @@ const addUser = async function (nickname, firstName, lastName, email, identifica
                 msg = `Error in create User model. Caused by ${error}`;
                 console.error(`${msg}. Stack error type : ${error.stack}`);
                 user = statusName.CONNECTION_ERROR;
-            })
+            });
         } else {
             user = statusName.CONNECTION_REFUSED;
           }

@@ -62,7 +62,7 @@ const getLikeFirstName = async function (firstName, pageSizeNro, pageNro, orderB
                     msg = `Error in getLikeFirstName User model. Caused by ${error}`;
                     console.error(`${msg}. Stack error type : ${error.stack}`);
                     usersList = statusName.CONNECTION_ERROR;
-                })
+                });
         } else {
             usersList = statusName.CONNECTION_REFUSED;
         }
