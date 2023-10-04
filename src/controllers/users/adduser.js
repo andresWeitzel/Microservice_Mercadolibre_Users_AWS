@@ -2,7 +2,7 @@
 //Services
 const {
   addUser
-} = require("../../services/users/addUser");
+} = require("../../services/users/add-user");
 //Enums
 const {
   statusCode
