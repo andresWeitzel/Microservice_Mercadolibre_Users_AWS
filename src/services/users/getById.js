@@ -45,7 +45,6 @@ const getById = async function (id) {
     console.error(`${msg}. Stack error type : ${error.stack}`);
     user = statusName.CONNECTION_ERROR;
   }
-  console.log(user);
   return user;
 };
 
@@ -83,7 +82,6 @@ const getByIdLimit = async function (id) {
     console.error(`${msg}. Stack error type : ${error.stack}`);
     user = statusName.CONNECTION_ERROR;
   }
-  console.log(user);
   return user;
 };
 

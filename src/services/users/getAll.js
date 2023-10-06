@@ -50,8 +50,6 @@ const getAll = async function (pageSizeNro, pageNro, orderBy) {
     console.error(`${msg}. Stack error type : ${error.stack}`);
     usersList = statusName.CONNECTION_ERROR;
   }
-
-  console.log(usersList);
   return usersList;
 };
 
@@ -95,7 +93,6 @@ const getAllWithoutDate = async function (pageSizeNro, pageNro, orderBy) {
     usersList = statusName.CONNECTION_ERROR;
   }
 
-  console.log(usersList);
   return usersList;
 };
 

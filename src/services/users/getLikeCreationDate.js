@@ -70,7 +70,6 @@ const getLikeCreationDate = async function (
     usersList = statusName.CONNECTION_ERROR;
   }
 
-  console.log(usersList);
   return usersList;
 };
 

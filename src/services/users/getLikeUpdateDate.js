@@ -68,7 +68,6 @@ const getLikeUpdateDate = async function (
     console.error(`${msg}. Stack error type : ${error.stack}`);
     usersList = statusName.CONNECTION_ERROR;
   }
-  console.log(usersList);
   return usersList;
 };
 

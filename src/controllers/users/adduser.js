@@ -2,23 +2,25 @@
 // //Services
 // const { addUser } = require("../../services/users/addUser");
 //Models
-import UserDto from "../../models/dto/userDto.ts";
-//import { UserDto } from "../../models/dto/user-dto";
+//import * as UserDto from "../../models/dto/userDto";
+//const UserDto  = require( "../../models/dto/userDto");
+//const UserDto = import("../../models/dto/userDto")
 //Enums
-import { statusCode } from "../../enums/http/statusCode";
+const { statusCode } = require("../../enums/http/statusCode");
+const { value } = require("../../enums/general/value");
 // const { statusName } = require("../../enums/connection/statusName");
-import { value } from "../../enums/general/value";
 //Helpers
-import { requestResult } from "../../helpers/http/bodyResponse";
-import { validateHeadersParams } from "../../helpers/http/requestHeadersParams";
+const { requestResult } = require( "../../helpers/http/bodyResponse");
+const { validateHeadersParams } = require( "../../helpers/http/requestHeadersParams");
 // const {
 //   validateClass,
 // } = require("../../helpers/class-validator/validate-properties");
 // const {
 //   validateBodyAddUserParams,
 // } = require("../../helpers/http/users/requestBodyAddUserParams");
-import { validateAuthHeaders } from "../../helpers/auth/headers";
-import { currentDateTime } from "../../helpers/dates/date";
+const { validateAuthHeaders } = require( "../../helpers/auth/headers");
+const { default: UserDto } = require("../../models/dto/userDto");
+// const { currentDateTime } = require( "../../helpers/dates/date");
 
 //Const/Vars
 let newUser;
@@ -44,10 +46,9 @@ let code;
  * @param {Object} event Object type
  * @returns the result of the transaction carried out in the database
  */
-export async function handler(event) {
+module.exports.handler = async (event) => {
   try {
     //Init
-
     newUser = value.IS_NULL;
     msg = value.IS_NULL;
     code = value.IS_NULL;
@@ -74,13 +75,17 @@ export async function handler(event) {
         event
       );
     }
+
     //-- end with validation Headers  ---
 
-    // //-- start with validation Body  ---
+    //-- start with validation Body  ---
 
     eventBody = JSON.parse(await event.body);
 
+
     // validateReqBodyParams = await validateBodyAddUserParams(eventBody);
+
+    // console.log(validateReqBodyParams);
 
     // if (!validateReqBodyParams) {
     //   return await requestResult(
@@ -117,7 +122,7 @@ export async function handler(event) {
 
     return await requestResult(statusCode.OK, newUser);
 
-    // //-- start with validation object  ---
+    //-- start with validation object  ---
     // validateObject = await validateClass(newUser);
 
     // if (validateObject.length) {

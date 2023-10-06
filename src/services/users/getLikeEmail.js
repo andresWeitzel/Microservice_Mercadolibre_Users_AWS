@@ -59,7 +59,6 @@ const getLikeEmail = async function (email, pageSizeNro, pageNro, orderBy) {
     usersList = statusName.CONNECTION_ERROR;
   }
 
-  console.log(usersList);
   return usersList;
 };
 
