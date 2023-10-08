@@ -19,7 +19,8 @@ Microservicio para la gestión de usuarios ejemplificando parte de la arquitectu
 
 *   [Repositorio base de datos](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 *   [Api Doc ML Usuarios](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
-*   [Playlist prueba de funcionalidad](https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
+*   [Playlist prueba de funcionalidad](https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank">
+    <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/social-networks/yt.png" width="5%" height="5%" />
 
 <br>
 
