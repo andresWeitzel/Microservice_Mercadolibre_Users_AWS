@@ -2,7 +2,7 @@
 //Services
 const {
   getLikeCountryId
-} = require('../../services/users/getLikeCountryId');
+} = require('../../services/users/get-like-country-id');
 //Enums
 const {
   statusCode

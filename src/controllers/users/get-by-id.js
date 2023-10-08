@@ -3,7 +3,7 @@
 const {
   getById,
   getByIdLimit
-} = require("../../services/users/getById");
+} = require("../../services/users/get-by-id");
 //Enums
 const {
   statusCode
@@ -104,7 +104,9 @@ module.exports.handler = async (event) => {
           statusCode.INTERNAL_SERVER_ERROR,
           "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
         );
-      case value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL:
+      case value.IS_ZERO_NUMBER: 
+      case value.IS_UNDEFINED:
+      case value.IS_NULL:
         return await requestResult(
           statusCode.BAD_REQUEST,
           "Bad request, could not fetch user based on id."
@@ -115,7 +117,7 @@ module.exports.handler = async (event) => {
     //-- end with db query  ---
 
   } catch (error) {
-    msg = `Error in getById lambda. Caused by ${error}`;
+    msg = `Error in get-by-id lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
     console.error(msg);
 

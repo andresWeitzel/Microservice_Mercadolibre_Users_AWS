@@ -1,6 +1,6 @@
 "use strict";
 //Services
-const { getAll, getAllWithoutDate } = require("../../services/users/getAll");
+const { getAll, getAllWithoutDate } = require("../../services/users/get-all");
 //Enums
 const { statusCode } = require("../../enums/http/statusCode");
 const { statusName } = require("../../enums/connection/statusName");
@@ -8,7 +8,7 @@ const { value } = require("../../enums/general/value");
 //Helpers
 const { requestResult } = require("../../helpers/http/bodyResponse");
 const {
-  validateHeadersParams,
+  validateHeadersParams
 } = require("../../helpers/http/requestHeadersParams");
 const { validateAuthHeaders } = require("../../helpers/auth/headers");
 //Const/Vars
@@ -21,7 +21,9 @@ let pageSizeNro;
 let pageNro;
 let msg;
 let code;
-const orderBy = [["id", "ASC"]];
+let orderBy;
+let orderAt;
+let order;
 
 /**
  * @description gets all paged users
@@ -35,7 +37,9 @@ module.exports.handler = async (event) => {
     msg = value.IS_NULL;
     code = value.IS_NULL;
     pageSizeNro = 5;
-    pageNro = value.IS_ZERO_NUMBER;
+    pageNro = 0;
+    orderBy = "id";
+    orderAt = "ASC";
 
     //-- start with validation Headers  ---
 
@@ -66,14 +70,85 @@ module.exports.handler = async (event) => {
     queryStrParams = event.queryStringParameters;
 
     if (queryStrParams != value.IS_NULL) {
-      pageSizeNro = parseInt(await event.queryStringParameters.limit);
-      pageNro = parseInt(await event.queryStringParameters.page);
+      pageSizeNro = event.queryStringParameters.limit
+        ? parseInt(await event.queryStringParameters.limit)
+        : pageSizeNro;
+      pageNro = event.queryStringParameters.page
+        ? parseInt(await event.queryStringParameters.page)
+        : pageNro;
+      orderBy = event.queryStringParameters.orderBy
+        ? event.queryStringParameters.orderBy
+        : orderBy;
+      orderAt = event.queryStringParameters.orderAt
+        ? event.queryStringParameters.orderAt
+        : orderAt;
     }
+    switch (orderBy.toLowerCase()) {
+      case "id":
+        orderBy = "id";
+        break;
+      case "nickname":
+        orderBy = "nickname";
+        break;
+      case "first_name":
+      case "firstname":
+        orderBy = "first_name";
+        break;
+      case "last_name":
+      case "lastname":
+        orderBy = "last_name";
+        break;
+      case "email":
+        orderBy = "email";
+        break;
+      case "identification_type":
+      case "identificationtype":
+        orderBy = "identification_type";
+        break;
+      case "identification_number":
+      case "identificationnumber":
+        orderBy = "identification_number";
+        break;
+      case "country_id":
+      case "countryid":
+        orderBy = "country_id";
+        break;
+      case "creation_date":
+      case "creationdate":
+        orderBy = "creation_date";
+        break;
+      case "update_date":
+      case "updatedate":
+        orderBy = "update_date";
+        break;
+      default:
+        return await requestResult(
+          statusCode.BAD_REQUEST,
+          "It is not possible to apply sorting based on the requested orderBy value. Invalid field",
+          event
+        );
+    }
+    switch (orderAt.toLowerCase()) {
+      case "asc":
+        orderAt = "ASC";
+        break;
+      case "desc":
+        orderAt = "DESC";
+        break;
+      default:
+        return await requestResult(
+          statusCode.BAD_REQUEST,
+          "It is not possible to apply sorting based on the requested orderAt value. Invalid field",
+          event
+        );
+    }
+
+    order = [[orderBy, orderAt]];
     //-- end with pagination  ---
 
     //-- start with db query  ---
-    userList = await getAll(pageSizeNro, pageNro, orderBy);
-    // userList = await getAllWithoutDate(pageSizeNro, pageNro, orderBy);
+    userList = await getAll(pageSizeNro, pageNro, order);
+    // userList = await getAllWithoutDate(pageSizeNro, pageNro, order);
 
     switch (userList) {
       case statusName.CONNECTION_REFUSED:
@@ -86,7 +161,9 @@ module.exports.handler = async (event) => {
           statusCode.INTERNAL_SERVER_ERROR,
           "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
         );
-      case value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL:
+      case value.IS_ZERO_NUMBER:
+      case value.IS_UNDEFINED:
+      case value.IS_NULL:
         return await requestResult(
           statusCode.BAD_REQUEST,
           "Bad request, could not get the paginated list of users."
@@ -96,7 +173,7 @@ module.exports.handler = async (event) => {
     }
     //-- end with db query  ---
   } catch (error) {
-    msg = `Error in getAll lambda. Caused by ${error}`;
+    msg = `Error in get-all lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
     console.error(msg);
 

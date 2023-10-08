@@ -48,7 +48,7 @@ functions:
           method: get
           private: true
   getAllUsers:
-    handler: src/controllers/users/getAll.handler
+    handler: src/controllers/users/get-all.handler
     description: Function in charge of obtaining the paginated list of users of the db
     events:
       - http:
@@ -56,7 +56,7 @@ functions:
           method: get
           private: true
   getByIdUsers:
-    handler: src/controllers/users/getById.handler
+    handler: src/controllers/users/get-by-id.handler
     description: Function in charge of obtaining a user according to his id of the db
     events:
       - http:
@@ -104,7 +104,7 @@ functions:
           method: get
           private: true
   getLikeCountryIdUsers:
-    handler: src/controllers/users/getLikeCountryId.handler
+    handler: src/controllers/users/get-like-country-id.handler
     description: Function in charge of obtaining a paginated list of users according to their country id of the db
     events:
       - http:
