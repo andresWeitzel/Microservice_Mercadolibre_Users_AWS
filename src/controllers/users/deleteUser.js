@@ -108,7 +108,7 @@ module.exports.handler = async (event) => {
 
         //-- end with db query  ---
     } catch (error) {
-        msg = `Error in deleteUser lambda. Caused by ${error}`;
+        msg = `ERROR in delete-user lambda. Caused by ${error}`;
         code = statusCode.INTERNAL_SERVER_ERROR;
         console.error(msg);
     

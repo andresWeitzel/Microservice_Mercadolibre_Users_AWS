@@ -117,7 +117,7 @@ module.exports.handler = async (event) => {
     //-- end with db query  ---
 
   } catch (error) {
-    msg = `Error in get-by-id lambda. Caused by ${error}`;
+    msg = `ERROR in get-by-id lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
     console.error(msg);
 

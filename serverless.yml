@@ -120,7 +120,7 @@ functions:
           method: get
           private: true
   getLikeCreationDateUsers:
-    handler: src/controllers/users/getLikeCreationDate.handler
+    handler: src/controllers/users/get-like-creation-date.handler
     description: Function in charge of obtaining a paginated list of users according to their creation date of the db
     events:
       - http:

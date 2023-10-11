@@ -41,7 +41,7 @@ const getById = async function (id) {
       user = statusName.CONNECTION_REFUSED;
     }
   } catch (error) {
-    msg = `Error in getById function. Caused by ${error}`;
+    msg = `ERROR in getById service function. Caused by ${error}`;
     console.error(`${msg}. Stack error type : ${error.stack}`);
     user = statusName.CONNECTION_ERROR;
   }
@@ -78,7 +78,7 @@ const getByIdLimit = async function (id) {
       user = statusName.CONNECTION_REFUSED;
     }
   } catch (error) {
-    msg = `Error in getByIdLimit function. Caused by ${error}`;
+    msg = `ERROR in getByIdLimit service function. Caused by ${error}`;
     console.error(`${msg}. Stack error type : ${error.stack}`);
     user = statusName.CONNECTION_ERROR;
   }

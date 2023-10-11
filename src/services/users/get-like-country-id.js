@@ -15,7 +15,7 @@ let msg;
  * @param {String} countryId String type
  * @param {Number} pageSizeNro Number type
  * @param {Number} pageNro Number type
- * @param {Object} orderBy Array Object type
+ * @param {Object} order Array Object type
  * @returns a list of paginated users
  * @example
  * [{"id":1,"nickname":"RAFA-CON","first_name":"Rafael","last_name":"Castro","email":"rafael_castro88@gmail.com","identification_type":"DNI","identification_number":"445938822","country_id":"AR","creation_date":"2023-02-12 21:18:11","update_date":"2023-02-12 21:18:11"},{"id".....]
@@ -24,7 +24,7 @@ const getLikeCountryId = async function (
   countryId,
   pageSizeNro,
   pageNro,
-  orderBy
+  order
 ) {
   try {
     usersList = null;
@@ -45,7 +45,7 @@ const getLikeCountryId = async function (
         },
         limit: pageSizeNro,
         offset: pageNro,
-        order: orderBy,
+        order: order,
       })
         .then((users) => {
           usersList = users;
@@ -59,7 +59,7 @@ const getLikeCountryId = async function (
       usersList = statusName.CONNECTION_REFUSED;
     }
   } catch (error) {
-    msg = `Error in getLikeCountryId function. Caused by ${error}`;
+    msg = `ERROR in getLikeCountryId service function. Caused by ${error}`;
     console.error(`${msg}. Stack error type : ${error.stack}`);
     usersList = statusName.CONNECTION_ERROR;
   }

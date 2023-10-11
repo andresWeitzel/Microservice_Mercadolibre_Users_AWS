@@ -89,7 +89,7 @@ const getAllWithoutDate = async function (pageSizeNro, pageNro, order) {
       usersList = statusName.CONNECTION_REFUSED;
     }
   } catch (error) {
-    msg = `Error in getAllWithoutDate function for get-all lambda. Caused by ${error}`;
+    msg = `ERROR in getAllWithoutDate service function. Caused by ${error}`;
     console.error(`${msg}. Stack error type : ${error.stack}`);
     usersList = statusName.CONNECTION_ERROR;
   }
