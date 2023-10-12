@@ -2,12 +2,12 @@
 //Services
 const {
     deleteUser
-} = require("../../services/users/deleteUser");
+} = require("../../services/users/delete-user");
 //Enums
 const {
     statusCode
-} = require("../../enums/http/statusCode");
-const { statusName } = require("../../enums/connection/statusName");
+} = require("../../enums/http/status-code");
+const { statusName } = require("../../enums/connection/status-name");
 const { value } = require("../../enums/general/value");
 //Helpers
 const {

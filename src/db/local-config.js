@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 //Enums
 const {
   statusCode
-} = require("../enums/http/statusCode");
+} = require("../enums/http/status-code");
 //Const-vars
 let msg;
 let code;

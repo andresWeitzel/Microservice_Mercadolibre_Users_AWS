@@ -1,7 +1,7 @@
 //Models
 const { User } = require("../../models/sequelize/user");
 //Enums
-const { statusName } = require("../../enums/connection/statusName");
+const { statusName } = require("../../enums/connection/status-name");
 //Const/Vars
 let user;
 let msg;

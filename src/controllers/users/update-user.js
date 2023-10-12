@@ -2,20 +2,20 @@
 //Services
 const {
   updateUser
-} = require("../../services/users/updateUser");
+} = require("../../services/users/update-user");
 const {
   getById
-} = require("../../services/users/getById");
+} = require("../../services/users/get-by-id");
 //Enums
 const {
   statusCode
-} = require('../../enums/http/statusCode');
+} = require('../../enums/http/status-code');
 const {
   value
 } = require('../../enums/general/value');
 const {
   statusName
-} = require('../../enums/connection/statusName');
+} = require('../../enums/connection/status-name');
 //Helpers
 const {
   requestResult

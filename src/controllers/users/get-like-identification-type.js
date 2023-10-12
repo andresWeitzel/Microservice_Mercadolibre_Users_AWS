@@ -1,8 +1,8 @@
 'use strict';
 //Services
 const {
-  getLikeUpdateDate
-} = require('../../services/users/getLikeUpdateDate');
+  getLikeIdentificationType
+} = require('../../services/users/get-like-identification-type');
 //Enums
 const {
   statusCode
@@ -26,33 +26,36 @@ const {
 const {
   validatePathParameters
 } = require('../../helpers/http/queryStringParams');
+const { checkOrderAt, checkOrderBy } = require('../../helpers/pagination/users/order');
 //Const/Vars
 let userList;
-let updateDate;
-let validate;
+let identificationType;
 let eventHeaders;
+let validate;
 let validateReqParams;
 let validatePathParam;
-let queryStrParams;
 let msg;
 let code;
+let queryStrParams;
 let pageSizeNro;
 let pageNro;
-const orderBy = [
-  ['id', 'ASC']
-];
+let orderAt;
+let orderBy;
+let order;
 
 /**
- * @description get all paged users whose updateDate matches the passed as parameter
+ * @description get all paged users whose IdentificationType matches the passed as parameter
  * @param {Object} event Object type
  * @returns a list of paginated users
  */
 module.exports.handler = async (event) => {
   try {
     userList = value.IS_NULL;
-    updateDate = value.IS_NULL;
+    identificationType = value.IS_NULL;
     pageSizeNro = 5;
-    pageNro = value.IS_ZERO_NUMBER;
+    pageNro = 0;
+    orderBy = "id";
+    orderAt = "ASC";
     msg = value.IS_NULL;
     code = value.IS_NULL;
 
@@ -60,7 +63,6 @@ module.exports.handler = async (event) => {
     eventHeaders = await event.headers;
 
     validateReqParams = await validateHeadersParams(eventHeaders);
-
 
     if (!validateReqParams) {
       return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers', event);
@@ -74,31 +76,61 @@ module.exports.handler = async (event) => {
     //-- end with validation Headers  ---
 
     //-- start with path parameters  ---
-    updateDate = await event.pathParameters.updateDate;
+    identificationType = await event.pathParameters.identificationType;
 
-    validatePathParam = await validatePathParameters(updateDate);
+    validatePathParam = await validatePathParameters(identificationType);
 
     if (!validatePathParam) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, the update date passed as a parameter is not valid"
+        "Bad request, the identification type passed as a parameter is not valid"
       );
     }
     //-- end with path parameters  ---
 
-      //-- start with pagination  ---
-      queryStrParams = event.queryStringParameters;
+    //-- start with pagination  ---
+    queryStrParams = event.queryStringParameters;
 
-      if (queryStrParams != value.IS_NULL) {
-        pageSizeNro = parseInt(await event.queryStringParameters.limit);
-        pageNro = parseInt(await event.queryStringParameters.page);
-      }
-      //-- end with pagination  ---
+    if (queryStrParams != value.IS_NULL) {
+      pageSizeNro = parseInt(await event.queryStringParameters.limit);
+      pageNro = parseInt(await event.queryStringParameters.page);
+      pageNro = event.queryStringParameters.page
+      ? parseInt(await event.queryStringParameters.page)
+      : pageNro;
+    orderBy = event.queryStringParameters.orderBy
+      ? event.queryStringParameters.orderBy
+      : orderBy;
+    orderAt = event.queryStringParameters.orderAt
+      ? event.queryStringParameters.orderAt
+      : orderAt;
+    }
+    
+    orderBy = await checkOrderBy(orderBy);
 
-      //-- start with db query  ---
-      userList = await getLikeUpdateDate(updateDate, pageSizeNro, pageNro, orderBy);
+    if(orderBy == (null || undefined)){
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "It is not possible to apply sorting based on the requested orderBy value. Invalid field",
+        event
+      );
+    }
 
-      
+    orderAt = await checkOrderAt(orderAt);
+
+    if(orderAt == (undefined || null)){
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "It is not possible to apply sorting based on the requested orderAt value. Invalid field",
+        event
+      );
+    }
+    
+    order = [[orderBy, orderAt]];
+    //-- end with pagination  ---
+
+    //-- start with db query  ---
+    userList = await getLikeIdentificationType(identificationType, pageSizeNro, pageNro, order);
+
     switch (userList) {
       case statusName.CONNECTION_REFUSED:
         return await requestResult(
@@ -113,15 +145,15 @@ module.exports.handler = async (event) => {
       case value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL:
         return await requestResult(
           statusCode.BAD_REQUEST,
-          "Bad request, could not get paginated list of users according to update date. Try again."
+          "Bad request, could not get paginated list of users according to identification type. Try again."
         );
       default:
         return await requestResult(statusCode.OK, userList);
     }
-      //-- end with db query  ---
+    //-- end with db query  ---
 
   } catch (error) {
-    msg = `Error in getLikeUpdateDate lambda. Caused by ${error}`;
+    msg = `Error in getLikeIdentificationType lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
     console.error(msg);
 

@@ -2,7 +2,7 @@
 //Services
 const {
   getLikeNickname
-} = require('../../services/users/getLikeNickname');
+} = require('../../services/users/get-like-nickname');
 //Enums
 const {
   statusCode
@@ -26,6 +26,7 @@ const {
 const {
   validatePathParameters
 } = require('../../helpers/http/queryStringParams');
+const { checkOrderBy, checkOrderAt } = require('../../helpers/pagination/users/order');
 //Const/Vars
 let userList;
 let nickname;
@@ -38,9 +39,9 @@ let msg;
 let code;
 let pageSizeNro;
 let pageNro;
-const orderBy = [
-  ['id', 'ASC']
-];
+let orderAt;
+let orderBy;
+let order;
 
 /**
  * @description get all paged users whose nickname matches the passed as parameter
@@ -52,7 +53,9 @@ module.exports.handler = async (event) => {
     userList = value.IS_NULL;
     nickname = value.IS_NULL;
     pageSizeNro = 5;
-    pageNro = value.IS_ZERO_NUMBER;
+    pageNro = 0;
+    orderBy = "id";
+    orderAt = "ASC";
     msg = value.IS_NULL;
     code = value.IS_NULL;
 
@@ -92,11 +95,42 @@ module.exports.handler = async (event) => {
     if (queryStrParams != value.IS_NULL) {
       pageSizeNro = parseInt(await event.queryStringParameters.limit);
       pageNro = parseInt(await event.queryStringParameters.page);
+      pageNro = event.queryStringParameters.page
+      ? parseInt(await event.queryStringParameters.page)
+      : pageNro;
+    orderBy = event.queryStringParameters.orderBy
+      ? event.queryStringParameters.orderBy
+      : orderBy;
+    orderAt = event.queryStringParameters.orderAt
+      ? event.queryStringParameters.orderAt
+      : orderAt;
     }
+
+    orderBy = await checkOrderBy(orderBy);
+
+    if(orderBy == (null || undefined)){
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "It is not possible to apply sorting based on the requested orderBy value. Invalid field",
+        event
+      );
+    }
+
+    orderAt = await checkOrderAt(orderAt);
+
+    if(orderAt == (undefined || null)){
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "It is not possible to apply sorting based on the requested orderAt value. Invalid field",
+        event
+      );
+    }
+    
+    order = [[orderBy, orderAt]];
     //-- end with pagination  ---
 
     //-- start with db query  ---
-    userList = await getLikeNickname(nickname, pageSizeNro, pageNro, orderBy);
+    userList = await getLikeNickname(nickname, pageSizeNro, pageNro, order);
 
     switch (userList) {
       case statusName.CONNECTION_REFUSED:

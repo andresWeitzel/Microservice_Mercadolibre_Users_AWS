@@ -64,7 +64,7 @@ functions:
           method: get
           private: true
   getLikeNicknameUsers:
-    handler: src/controllers/users/getLikeNickname.handler
+    handler: src/controllers/users/get-like-nickname.handler
     description: Function in charge of obtaining a paginated list of users according to their nickname of the db
     events:
       - http:
@@ -72,7 +72,7 @@ functions:
           method: get
           private: true
   getLikeFirstNameUsers:
-    handler: src/controllers/users/getLikeFirstName.handler
+    handler: src/controllers/users/get-like-first-name.handler
     description: Function in charge of obtaining a paginated list of users according to their firstname of the db
     events:
       - http:
@@ -80,7 +80,7 @@ functions:
           method: get
           private: true
   getLikeLastNameUsers:
-    handler: src/controllers/users/getLikeLastName.handler
+    handler: src/controllers/users/get-like-last-name.handler
     description: Function in charge of obtaining a paginated list of users according to their lastname of the db
     events:
       - http:
@@ -88,7 +88,7 @@ functions:
           method: get
           private: true
   getLikeIdentificationTypeUsers:
-    handler: src/controllers/users/getLikeIdentificationType.handler
+    handler: src/controllers/users/get-like-identification-type.handler
     description: Function in charge of obtaining a paginated list of users according to their identification type of the db
     events:
       - http:
@@ -96,7 +96,7 @@ functions:
           method: get
           private: true
   getLikeIdentificationNumberUsers:
-    handler: src/controllers/users/getLikeIdentificationNumber.handler
+    handler: src/controllers/users/get-like-identification-number.handler
     description: Function in charge of obtaining a paginated list of users according to their identification number of the db
     events:
       - http:
@@ -112,7 +112,7 @@ functions:
           method: get
           private: true
   getLikeEmailUsers:
-    handler: src/controllers/users/getLikeEmail.handler
+    handler: src/controllers/users/get-like-email.handler
     description: Function in charge of obtaining a paginated list of users according to their email of the db
     events:
       - http:
@@ -128,7 +128,7 @@ functions:
           method: get
           private: true
   getLikeUpdateDateUsers:
-    handler: src/controllers/users/getLikeUpdateDate.handler
+    handler: src/controllers/users/get-like-update-date.handler
     description: Function in charge of obtaining a paginated list of users according to their update date of the db
     events:
       - http:
@@ -136,7 +136,7 @@ functions:
           method: get
           private: true
   addUser:
-    handler: src/controllers/users/addUser.handler
+    handler: src/controllers/users/add-user.handler
     description: Function in charge of adding a user to the db
     events:
       - http:
@@ -144,7 +144,7 @@ functions:
           method: post
           private: true
   updateUser:
-    handler: src/controllers/users/updateUser.handler
+    handler: src/controllers/users/update-user.handler
     description: Function in charge of update a user to the db
     events:
       - http:
@@ -152,7 +152,7 @@ functions:
           method: put
           private: true
   deleteUser:
-    handler: src/controllers/users/deleteUser.handler
+    handler: src/controllers/users/delete-user.handler
     description: Function in charge of eliminate a user to the db
     events:
       - http:

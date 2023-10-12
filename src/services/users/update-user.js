@@ -3,7 +3,7 @@ const { Op } = require("sequelize");
 //Models
 const { User } = require("../../models/sequelize/user");
 //Enums
-const { statusName } = require("../../enums/connection/statusName");
+const { statusName } = require("../../enums/connection/status-name");
 //Helpers
 const { currentDateTime } = require("../../helpers/dates/date");
 //Const/Vars

@@ -2,7 +2,7 @@
 //Services
 const {
   getLikeIdentificationNumber,
-} = require("../../services/users/getLikeIdentificationNumber");
+} = require("../../services/users/get-like-identification-number");
 //Enums
 const { statusCode } = require("../../enums/http/statusCode");
 const { value } = require("../../enums/general/value");
@@ -16,6 +16,7 @@ const { validateAuthHeaders } = require("../../helpers/auth/headers");
 const {
   validatePathParameters,
 } = require("../../helpers/http/queryStringParams");
+const { checkOrderBy, checkOrderAt } = require("../../helpers/pagination/users/order");
 //Const/Vars
 let userList;
 let identificationNumber;
@@ -28,7 +29,9 @@ let code;
 let queryStrParams;
 let pageSizeNro;
 let pageNro;
-const orderBy = [["id", "ASC"]];
+let orderAt;
+let orderBy;
+let order;
 
 /**
  * @description get all paged users whose IdentificationNumber matches the passed as parameter
@@ -40,7 +43,9 @@ module.exports.handler = async (event) => {
     userList = value.IS_NULL;
     identificationNumber = value.IS_NULL;
     pageSizeNro = 5;
-    pageNro = value.IS_ZERO_NUMBER;
+    pageNro = 0;
+    orderBy = "id";
+    orderAt = "ASC";
     validatePathParams = value.IS_NULL;
     msg = value.IS_NULL;
     code = value.IS_NULL;
@@ -88,7 +93,38 @@ module.exports.handler = async (event) => {
     if (queryStrParams != value.IS_NULL) {
       pageSizeNro = parseInt(await event.queryStringParameters.limit);
       pageNro = parseInt(await event.queryStringParameters.page);
+      pageNro = event.queryStringParameters.page
+      ? parseInt(await event.queryStringParameters.page)
+      : pageNro;
+    orderBy = event.queryStringParameters.orderBy
+      ? event.queryStringParameters.orderBy
+      : orderBy;
+    orderAt = event.queryStringParameters.orderAt
+      ? event.queryStringParameters.orderAt
+      : orderAt;
     }
+
+    orderBy = await checkOrderBy(orderBy);
+
+    if(orderBy == (null || undefined)){
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "It is not possible to apply sorting based on the requested orderBy value. Invalid field",
+        event
+      );
+    }
+
+    orderAt = await checkOrderAt(orderAt);
+
+    if(orderAt == (undefined || null)){
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "It is not possible to apply sorting based on the requested orderAt value. Invalid field",
+        event
+      );
+    }
+    
+    order = [[orderBy, orderAt]];
     //-- end with pagination  ---
 
     //-- start with db query  ---
@@ -96,7 +132,7 @@ module.exports.handler = async (event) => {
       identificationNumber,
       pageSizeNro,
       pageNro,
-      orderBy
+      order
     );
 
     switch (userList) {

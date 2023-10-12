@@ -1,8 +1,8 @@
 'use strict';
 //dbConfig
-const { dbConnection } = require('../../db/localConfig');
+const { dbConnection } = require('../../db/local-config');
 //Enums
-const { statusCode } = require('../../enums/http/statusCode');
+const { statusCode } = require('../../enums/http/status-code');
 //Helpers
 const { requestResult } = require('../../helpers/http/bodyResponse');
 const { validateHeadersParams } = require('../../helpers/http/requestHeadersParams');

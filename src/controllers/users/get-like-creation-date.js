@@ -26,6 +26,7 @@ const {
 const {
   statusName
 } = require('../../enums/connection/statusName');
+const { checkOrderBy, checkOrderAt } = require('../../helpers/pagination/users/order');
 //Const/Vars
 let userList;
 let creationDate;
@@ -104,64 +105,25 @@ module.exports.handler = async (event) => {
       : orderAt;
     }
 
-    switch (orderBy.toLowerCase()) {
-      case "id":
-        orderBy = "id";
-        break;
-      case "nickname":
-        orderBy = "nickname";
-        break;
-      case "first_name":
-      case "firstname":
-        orderBy = "first_name";
-        break;
-      case "last_name":
-      case "lastname":
-        orderBy = "last_name";
-        break;
-      case "email":
-        orderBy = "email";
-        break;
-      case "identification_type":
-      case "identificationtype":
-        orderBy = "identification_type";
-        break;
-      case "identification_number":
-      case "identificationnumber":
-        orderBy = "identification_number";
-        break;
-      case "country_id":
-      case "countryid":
-        orderBy = "country_id";
-        break;
-      case "creation_date":
-      case "creationdate":
-        orderBy = "creation_date";
-        break;
-      case "update_date":
-      case "updatedate":
-        orderBy = "update_date";
-        break;
-      default:
-        return await requestResult(
-          statusCode.BAD_REQUEST,
-          "It is not possible to apply sorting based on the requested orderBy value. Invalid field",
-          event
-        );
+
+    orderBy = await checkOrderBy(orderBy);
+
+    if(orderBy == (null || undefined)){
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "It is not possible to apply sorting based on the requested orderBy value. Invalid field",
+        event
+      );
     }
-    switch (orderAt.toLowerCase()) {
-      case "asc":
-        orderAt = "ASC";
-        break;
-      case "desc":
-        orderAt = "DESC";
-        break;
-      default:
-        return await requestResult(
-          statusCode.BAD_REQUEST,
-          "It is not possible to apply sorting based on the requested orderAt value. Invalid field",
-          event
-        );
+
+    orderAt = await checkOrderAt(orderAt);
+
+    if(orderAt == (undefined || null)){
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        "It is not possible to apply sorting based on the requested orderAt value. Invalid field",
+        event
+      );
     }
     
     order = [[orderBy, orderAt]];
