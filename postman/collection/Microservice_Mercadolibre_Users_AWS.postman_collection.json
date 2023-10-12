@@ -86,10 +86,10 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "   {\r\n            \"nickname\": \"MARTIN-SUAREZ-EDITED\",\r\n            \"first_name\": \"Martin EDITED\",\r\n            \"last_name\": \"Suarez EDITED\",\r\n            \"email\": \"martin_electro_todo_EDITED@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"4459388222\",\r\n            \"country_id\": \"AR12\",\r\n            \"creation_date\": \"\"\r\n        }"
+									"raw": "     {\r\n            \"id\": 32,\r\n            \"nickname\": \"MARTIN-SUAREZ2221\",\r\n            \"first_name\": \"Martin2221\",\r\n            \"last_name\": \"Suarez2221\",\r\n            \"email\": \"martin_electro_todo@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"445938812313222\",\r\n            \"country_id\": \"AR12\",\r\n            \"creation_date\": \"2023-10-11 21:18:29\",\r\n            \"update_date\": \"2023-10-11 21:18:29\"\r\n        }"
 								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/update-user/20",
+									"raw": "{{base_url}}/v1/users/update-user/32",
 									"host": [
 										"{{base_url}}"
 									],
@@ -97,7 +97,7 @@
 										"v1",
 										"users",
 										"update-user",
-										"20"
+										"32"
 									]
 								}
 							},
@@ -157,10 +157,7 @@
 					"name": "GET",
 					"item": [
 						{
-							"name": "get-all-users",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "get all",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -183,12 +180,8 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/list?page=0&limit=2",
+									"raw": "{{base_url}}/v1/users/list?page=0&limit=200&orderBy=id&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -204,7 +197,15 @@
 										},
 										{
 											"key": "limit",
-											"value": "2"
+											"value": "200"
+										},
+										{
+											"key": "orderBy",
+											"value": "id"
+										},
+										{
+											"key": "orderAt",
+											"value": "asc"
 										}
 									]
 								}
@@ -212,10 +213,7 @@
 							"response": []
 						},
 						{
-							"name": "get-by-id-users",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "get by id",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -238,17 +236,6 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "ss",
-											"type": "file",
-											"src": [],
-											"disabled": true
-										}
-									]
-								},
 								"url": {
 									"raw": "{{base_url}}/v1/users/id/4",
 									"host": [
@@ -265,10 +252,7 @@
 							"response": []
 						},
 						{
-							"name": "get-like-country-id-users",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "get like country id",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -291,12 +275,8 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/country-id/AR?page=0&limit=3",
+									"raw": "{{base_url}}/v1/users/country-id/AR?page=0&limit=100&orderBy=firstName&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -313,7 +293,15 @@
 										},
 										{
 											"key": "limit",
-											"value": "3"
+											"value": "100"
+										},
+										{
+											"key": "orderBy",
+											"value": "firstName"
+										},
+										{
+											"key": "orderAt",
+											"value": "asc"
 										}
 									]
 								}
@@ -321,10 +309,7 @@
 							"response": []
 						},
 						{
-							"name": "get-like-email-users",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "get like creation date",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -347,12 +332,65 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/email/a?page=0&limit=2",
+									"raw": "{{base_url}}/v1/users/creation-date/2023-04-30?page=0&limit=100&orderBy=firstName&orderAt=asc",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"users",
+										"creation-date",
+										"2023-04-30"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "100"
+										},
+										{
+											"key": "orderBy",
+											"value": "firstName"
+										},
+										{
+											"key": "orderAt",
+											"value": "asc"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get like email",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{x-api-key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/v1/users/email/a?page=0&limit=100&orderBy=email&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -369,7 +407,15 @@
 										},
 										{
 											"key": "limit",
-											"value": "2"
+											"value": "100"
+										},
+										{
+											"key": "orderBy",
+											"value": "email"
+										},
+										{
+											"key": "orderAt",
+											"value": "asc"
 										}
 									]
 								}
@@ -377,10 +423,7 @@
 							"response": []
 						},
 						{
-							"name": "get-like-first-name-users",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "get like first name",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -403,12 +446,8 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/first-name/J?page=0&limit=2",
+									"raw": "{{base_url}}/v1/users/first-name/J?page=0&limit=100&orderBy=email&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -425,7 +464,15 @@
 										},
 										{
 											"key": "limit",
-											"value": "2"
+											"value": "100"
+										},
+										{
+											"key": "orderBy",
+											"value": "email"
+										},
+										{
+											"key": "orderAt",
+											"value": "asc"
 										}
 									]
 								}
@@ -433,10 +480,7 @@
 							"response": []
 						},
 						{
-							"name": "get-like-identification-number-users",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "get like ident number",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -459,12 +503,8 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/identification-number/2?page=0&limit=4",
+									"raw": "{{base_url}}/v1/users/identification-number/2?page=0&limit=100&orderBy=email&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -481,7 +521,15 @@
 										},
 										{
 											"key": "limit",
-											"value": "4"
+											"value": "100"
+										},
+										{
+											"key": "orderBy",
+											"value": "email"
+										},
+										{
+											"key": "orderAt",
+											"value": "asc"
 										}
 									]
 								}
@@ -489,10 +537,7 @@
 							"response": []
 						},
 						{
-							"name": "get-like-identification-type-users",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "get like ident type",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -515,12 +560,8 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/identification-type/dni?page=0&limit=4",
+									"raw": "{{base_url}}/v1/users/identification-type/dni?page=0&limit=100&orderBy=identification_type&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -537,7 +578,15 @@
 										},
 										{
 											"key": "limit",
-											"value": "4"
+											"value": "100"
+										},
+										{
+											"key": "orderBy",
+											"value": "identification_type"
+										},
+										{
+											"key": "orderAt",
+											"value": "asc"
 										}
 									]
 								}
@@ -545,10 +594,7 @@
 							"response": []
 						},
 						{
-							"name": "get-like-last-name-users",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "get like last name",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -571,12 +617,8 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/last-name/as?page=0&limit=1",
+									"raw": "{{base_url}}/v1/users/last-name/as?page=0&limit=100&orderBy=identification_number&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -593,7 +635,15 @@
 										},
 										{
 											"key": "limit",
-											"value": "1"
+											"value": "100"
+										},
+										{
+											"key": "orderBy",
+											"value": "identification_number"
+										},
+										{
+											"key": "orderAt",
+											"value": "asc"
 										}
 									]
 								}
@@ -601,10 +651,7 @@
 							"response": []
 						},
 						{
-							"name": "get-like-nickname-users",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "get like nickname",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -627,12 +674,8 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/nickname/gabriela?page=0&limit=1",
+									"raw": "{{base_url}}/v1/users/nickname/gabriela?page=0&limit=100&orderBy=country_id&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -649,7 +692,15 @@
 										},
 										{
 											"key": "limit",
-											"value": "1"
+											"value": "100"
+										},
+										{
+											"key": "orderBy",
+											"value": "country_id"
+										},
+										{
+											"key": "orderAt",
+											"value": "asc"
 										}
 									]
 								}
@@ -657,10 +708,7 @@
 							"response": []
 						},
 						{
-							"name": "get-like-creation-date-users",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "get like update date",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -683,12 +731,8 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
-									"raw": "{{base_url}}/v1/users/creation-date/2023-04-30?page=0&limit=1",
+									"raw": "{{base_url}}/v1/users/creation-date/2023-04-30?page=0&limit=100&orderBy=creation_date&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -705,63 +749,15 @@
 										},
 										{
 											"key": "limit",
-											"value": "1"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get-like-update-date-users",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{bearer_token}}",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "x-api-key",
-										"value": "{{x-api-key}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{base_url}}/v1/users/creation-date/2023-04-30?page=0&limit=1",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"v1",
-										"users",
-										"creation-date",
-										"2023-04-30"
-									],
-									"query": [
-										{
-											"key": "page",
-											"value": "0"
+											"value": "100"
 										},
 										{
-											"key": "limit",
-											"value": "1"
+											"key": "orderBy",
+											"value": "creation_date"
+										},
+										{
+											"key": "orderAt",
+											"value": "asc"
 										}
 									]
 								}
@@ -779,7 +775,7 @@
 					"name": "GET",
 					"item": [
 						{
-							"name": "test-db-connection",
+							"name": "test-connection",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
