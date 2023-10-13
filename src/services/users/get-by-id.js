@@ -3,7 +3,7 @@ const { User } = require("../../models/sequelize/user");
 //Enums
 const { statusName } = require("../../enums/connection/status-name");
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/dateFormat");
+const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
 //Const/Vars
 let user;
 let msg;

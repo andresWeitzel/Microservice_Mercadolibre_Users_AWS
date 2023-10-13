@@ -2,14 +2,14 @@
 //Services
 const { getAll, getAllWithoutDate } = require("../../services/users/get-all");
 //Enums
-const { statusCode } = require("../../enums/http/statusCode");
-const { statusName } = require("../../enums/connection/statusName");
+const { statusCode } = require("../../enums/http/status-code");
+const { statusName } = require("../../enums/connection/status-name");
 const { value } = require("../../enums/general/value");
 //Helpers
-const { requestResult } = require("../../helpers/http/bodyResponse");
+const { requestResult } = require("../../helpers/http/body-response");
 const {
   validateHeadersParams
-} = require("../../helpers/http/requestHeadersParams");
+} = require("../../helpers/http/request-headers-params");
 const { validateAuthHeaders } = require("../../helpers/auth/headers");
 const { checkOrderBy, checkOrderAt } = require("../../helpers/pagination/users/order");
 //Const/Vars

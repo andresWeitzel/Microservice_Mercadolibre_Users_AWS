@@ -4,8 +4,8 @@ const { dbConnection } = require('../../db/local-config');
 //Enums
 const { statusCode } = require('../../enums/http/status-code');
 //Helpers
-const { requestResult } = require('../../helpers/http/bodyResponse');
-const { validateHeadersParams } = require('../../helpers/http/requestHeadersParams');
+const { requestResult } = require('../../helpers/http/body-response');
+const { validateHeadersParams } = require('../../helpers/http/request-headers-params');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
 //Const/Vars
 let msg;

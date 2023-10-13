@@ -1,9 +1,9 @@
 //Models
 const { User } = require("../../models/sequelize/user");
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/dateFormat");
+const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
 //Enums
-const { statusName } = require("../../enums/connection/statusName");
+const { statusName } = require("../../enums/connection/status-name");
 //Const/Vars
 let usersList;
 let msg;
