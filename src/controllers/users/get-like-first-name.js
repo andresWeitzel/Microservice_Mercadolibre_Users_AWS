@@ -2,18 +2,18 @@
 //Services
 const { getLikeFirstName } = require("../../services/users/get-like-first-name");
 //Enums
-const { statusCode } = require("../../enums/http/statusCode");
+const { statusCode } = require("../../enums/http/status-code");
 const { value } = require("../../enums/general/value");
-const { statusName } = require("../../enums/connection/statusName");
+const { statusName } = require("../../enums/connection/status-name");
 //Helpers
-const { requestResult } = require("../../helpers/http/bodyResponse");
+const { requestResult } = require("../../helpers/http/body-response");
 const {
   validateHeadersParams,
-} = require("../../helpers/http/requestHeadersParams");
+} = require("../../helpers/http/request-headers-params");
 const { validateAuthHeaders } = require("../../helpers/auth/headers");
 const {
   validatePathParameters,
-} = require("../../helpers/http/queryStringParams");
+} = require("../../helpers/http/query-string-params");
 const { checkOrderBy, checkOrderAt } = require("../../helpers/pagination/users/order");
 
 //Const/Vars

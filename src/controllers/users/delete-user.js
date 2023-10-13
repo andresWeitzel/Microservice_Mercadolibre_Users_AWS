@@ -12,30 +12,20 @@ const { value } = require("../../enums/general/value");
 //Helpers
 const {
     requestResult
-} = require("../../helpers/http/bodyResponse");
+} = require("../../helpers/http/body-response");
 const {
     validateHeadersParams,
-} = require("../../helpers/http/requestHeadersParams");
+} = require("../../helpers/http/request-headers-params");
 const {
     validateAuthHeaders
 } = require("../../helpers/auth/headers");
 
 //Const/Vars
-let newUser;
-let eventBody;
 let eventHeaders;
 let validateAuth;
 let validateReqParams;
-let validateReqBodyParams;
-let nickname;
-let firstName;
 let checkDeleteUser;
 let userId;
-let email;
-let identType;
-let identNumber;
-let countryId;
-let creationDate;
 let msg;
 let code;
 

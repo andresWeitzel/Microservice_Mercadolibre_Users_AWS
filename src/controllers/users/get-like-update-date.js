@@ -16,16 +16,16 @@ const {
 //Helpers
 const {
   requestResult
-} = require('../../helpers/http/bodyResponse');
+} = require('../../helpers/http/body-response');
 const {
   validateHeadersParams
-} = require('../../helpers/http/requestHeadersParams');
+} = require('../../helpers/http/request-headers-params');
 const {
   validateAuthHeaders
 } = require('../../helpers/auth/headers');
 const {
   validatePathParameters
-} = require('../../helpers/http/queryStringParams');
+} = require('../../helpers/http/query-string-params');
 const { checkOrderBy, checkOrderAt } = require('../../helpers/pagination/users/order');
 //Const/Vars
 let userList;

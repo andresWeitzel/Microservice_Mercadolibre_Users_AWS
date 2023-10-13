@@ -19,13 +19,13 @@ const {
 //Helpers
 const {
   requestResult
-} = require("../../helpers/http/bodyResponse");
+} = require("../../helpers/http/body-response");
 const {
-  validateHeadersParams,
-} = require("../../helpers/http/requestHeadersParams");
+  validateHeadersParams
+} = require('../../helpers/http/request-headers-params');
 const {
   validateBodyUpdateUserParams,
-} = require("../../helpers/http/users/requestBodyUpdateUserParams");
+} = require("../../helpers/http/users/request-body-update-user-params");
 const {
   validateAuthHeaders
 } = require("../../helpers/auth/headers");

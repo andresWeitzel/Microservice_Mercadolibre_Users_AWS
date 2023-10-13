@@ -7,26 +7,26 @@ const {
 //Enums
 const {
   statusCode
-} = require("../../enums/http/statusCode");
+} = require("../../enums/http/status-code");
 const {
   statusName
-} = require("../../enums/connection/statusName");
+} = require("../../enums/connection/status-name");
 const {
   value
 } = require("../../enums/general/value");
 //Helpers
 const {
   requestResult
-} = require("../../helpers/http/bodyResponse");
+} = require("../../helpers/http/body-response");
 const {
   validateHeadersParams,
-} = require("../../helpers/http/requestHeadersParams");
+} = require("../../helpers/http/request-headers-params");
 const {
   validateAuthHeaders
 } = require("../../helpers/auth/headers");
 const {
   validatePathParameters,
-} = require("../../helpers/http/queryStringParams");
+} = require("../../helpers/http/query-string-params");
 
 //Const/Vars
 let user;
