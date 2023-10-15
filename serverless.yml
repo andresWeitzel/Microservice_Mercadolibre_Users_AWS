@@ -39,15 +39,15 @@ plugins:
   - serverless-offline
 
 functions:
-  databaseTest:
-    handler: src/controllers/db/connection.handler
+  connectionTest:
+    handler: src/controllers/db/connection-test.handler
     description: Function in charge of checking the connection to the db
     events:
       - http:
           path: /v1/db-connection
           method: get
           private: true
-  getAllUsers:
+  getAll:
     handler: src/controllers/users/get-all.handler
     description: Function in charge of obtaining the paginated list of users of the db
     events:
@@ -55,7 +55,7 @@ functions:
           path: /v1/users/list
           method: get
           private: true
-  getByIdUsers:
+  getById:
     handler: src/controllers/users/get-by-id.handler
     description: Function in charge of obtaining a user according to his id of the db
     events:
@@ -63,7 +63,7 @@ functions:
           path: /v1/users/id/{id}
           method: get
           private: true
-  getLikeNicknameUsers:
+  getLikeNickname:
     handler: src/controllers/users/get-like-nickname.handler
     description: Function in charge of obtaining a paginated list of users according to their nickname of the db
     events:
@@ -71,7 +71,7 @@ functions:
           path: /v1/users/nickname/{nickname}
           method: get
           private: true
-  getLikeFirstNameUsers:
+  getLikeFirstName:
     handler: src/controllers/users/get-like-first-name.handler
     description: Function in charge of obtaining a paginated list of users according to their firstname of the db
     events:
@@ -79,7 +79,7 @@ functions:
           path: /v1/users/first-name/{firstName}
           method: get
           private: true
-  getLikeLastNameUsers:
+  getLikeLastName:
     handler: src/controllers/users/get-like-last-name.handler
     description: Function in charge of obtaining a paginated list of users according to their lastname of the db
     events:
@@ -87,7 +87,7 @@ functions:
           path: /v1/users/last-name/{lastName}
           method: get
           private: true
-  getLikeIdentificationTypeUsers:
+  getLikeIdentificationType:
     handler: src/controllers/users/get-like-identification-type.handler
     description: Function in charge of obtaining a paginated list of users according to their identification type of the db
     events:
@@ -95,7 +95,7 @@ functions:
           path: /v1/users/identification-type/{identificationType}
           method: get
           private: true
-  getLikeIdentificationNumberUsers:
+  getLikeIdentificationNumber:
     handler: src/controllers/users/get-like-identification-number.handler
     description: Function in charge of obtaining a paginated list of users according to their identification number of the db
     events:
@@ -103,7 +103,7 @@ functions:
           path: /v1/users/identification-number/{identificationNumber}
           method: get
           private: true
-  getLikeCountryIdUsers:
+  getLikeCountryId:
     handler: src/controllers/users/get-like-country-id.handler
     description: Function in charge of obtaining a paginated list of users according to their country id of the db
     events:
@@ -111,7 +111,7 @@ functions:
           path: /v1/users/country-id/{countryId}
           method: get
           private: true
-  getLikeEmailUsers:
+  getLikeEmail:
     handler: src/controllers/users/get-like-email.handler
     description: Function in charge of obtaining a paginated list of users according to their email of the db
     events:
@@ -119,7 +119,7 @@ functions:
           path: /v1/users/email/{email}
           method: get
           private: true
-  getLikeCreationDateUsers:
+  getLikeCreationDate:
     handler: src/controllers/users/get-like-creation-date.handler
     description: Function in charge of obtaining a paginated list of users according to their creation date of the db
     events:
@@ -127,7 +127,7 @@ functions:
           path: /v1/users/creation-date/{creationDate}
           method: get
           private: true
-  getLikeUpdateDateUsers:
+  getLikeUpdateDate:
     handler: src/controllers/users/get-like-update-date.handler
     description: Function in charge of obtaining a paginated list of users according to their update date of the db
     events:
@@ -135,24 +135,24 @@ functions:
           path: /v1/users/update-date/{updateDate}
           method: get
           private: true
-  addUser:
-    handler: src/controllers/users/add-user.handler
+  add:
+    handler: src/controllers/users/add.handler
     description: Function in charge of adding a user to the db
     events:
       - http:
           path: /v1/users/add-user/
           method: post
           private: true
-  updateUser:
-    handler: src/controllers/users/update-user.handler
+  update:
+    handler: src/controllers/users/update.handler
     description: Function in charge of update a user to the db
     events:
       - http:
           path: /v1/users/update-user/{id}
           method: put
           private: true
-  deleteUser:
-    handler: src/controllers/users/delete-user.handler
+  delete:
+    handler: src/controllers/users/delete.handler
     description: Function in charge of eliminate a user to the db
     events:
       - http:
