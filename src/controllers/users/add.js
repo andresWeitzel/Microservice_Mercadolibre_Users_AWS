@@ -1,34 +1,32 @@
 "use strict";
 //Services
 const {
-  updateUser
-} = require("../../services/users/update-user");
-const {
-  getById
-} = require("../../services/users/get-by-id");
+  addUser
+} = require("../../services/users/add");
 //Enums
 const {
   statusCode
-} = require('../../enums/http/status-code');
-const {
-  value
-} = require('../../enums/general/value');
+} = require("../../enums/http/status-code");
 const {
   statusName
-} = require('../../enums/connection/status-name');
+} = require("../../enums/connection/status-name");
+const {
+  value
+} = require("../../enums/general/value");
 //Helpers
 const {
   requestResult
 } = require("../../helpers/http/body-response");
 const {
-  validateHeadersParams
-} = require('../../helpers/http/request-headers-params');
+  validateHeadersParams,
+} = require("../../helpers/http/request-headers-params");
 const {
-  validateBodyUpdateUserParams,
-} = require("../../helpers/http/users/request-body-update-user-params");
+  validateBodyAddUserParams,
+} = require("../../helpers/http/users/request-body-add-user-params");
 const {
   validateAuthHeaders
 } = require("../../helpers/auth/headers");
+
 
 //Const/Vars
 let newUser;
@@ -40,24 +38,22 @@ let validateReqBodyParams;
 let nickname;
 let firstName;
 let lastName;
-let oldUser;
-let userId;
 let email;
 let identType;
 let identNumber;
 let countryId;
-let creationDate;
 let msg;
 let code;
 
 /**
- * @description update a user according to the parameters passed in the request body
+ * @description add a user according to the parameters passed in the request body
  * @param {Object} event Object type
  * @returns the result of the transaction carried out in the database
  */
 module.exports.handler = async (event) => {
   try {
     //Init
+
     newUser = value.IS_NULL;
     msg = value.IS_NULL;
     code = value.IS_NULL;
@@ -90,57 +86,34 @@ module.exports.handler = async (event) => {
 
     eventBody = JSON.parse(await event.body);
 
-    validateReqBodyParams = await validateBodyUpdateUserParams(eventBody);
+    validateReqBodyParams = await validateBodyAddUserParams(eventBody);
 
     if (!validateReqBodyParams) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, check request attributes. Missing or incorrect",
-        event
+        "Bad request, check request attributes. Missing or incorrect. CHECK: nickname, first_name and last_name (required|string|minLength:4|maxLength:50), email (required|string|minLength:10|maxLength:100), identification_type and identification_number (required|string|minLength:6|maxLength:20), country_id (required|string|minLength:2|maxLength:5)"
       );
     }
     //-- end with validation Body  ---
 
     //-- start with db query  ---
 
-    userId = await event.pathParameters.id;
+    nickname = eventBody.nickname;
+    firstName = eventBody.first_name;
+    lastName = eventBody.last_name;
+    email = eventBody.email;
+    identType = eventBody.identification_type;
+    identNumber = eventBody.identification_number;
+    countryId = eventBody.country_id;
 
-    oldUser = await getById(userId);
-
-    if (oldUser == (value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL)) {
-      return await requestResult(
-        statusCode.BAD_REQUEST,
-        "Bad request, check request attributes and object to update"
-      );
-    }
-
-    nickname = (eventBody.nickname == value.IS_NULL || (!eventBody.nickname.length)) ? oldUser.nickname : eventBody.nickname;
-    
-    firstName = (eventBody.first_name == value.IS_NULL || (!eventBody.first_name.length)) ? oldUser.first_name : eventBody.first_name;
-    
-    lastName = (eventBody.last_name == value.IS_NULL || (!eventBody.last_name.length)) ? oldUser.last_name : eventBody.last_name;
-    
-    email = (eventBody.email == value.IS_NULL || (!eventBody.email.length)) ? oldUser.email : eventBody.email;
-    
-    identType = (eventBody.identification_type == value.IS_NULL || (!eventBody.identification_type.length)) ? oldUser.identification_type : eventBody.identification_type;
-
-    identNumber = (eventBody.identification_number == value.IS_NULL || (!eventBody.identification_number.length)) ? oldUser.identification_number : eventBody.identification_number;
-
-    countryId = (eventBody.country_id == value.IS_NULL || (!eventBody.country_id.length)) ? oldUser.country_id : eventBody.country_id;
-
-    creationDate = (eventBody.creation_date == value.IS_NULL || (!eventBody.creation_date.length)) ? oldUser.creation_date : eventBody.creation_date;
-
-    
-    newUser = await updateUser(
-      userId,
+    newUser = await addUser(
       nickname,
       firstName,
       lastName,
       email,
-      identType ,
+      identType,
       identNumber,
-      countryId,
-      creationDate
+      countryId
     );
     
     switch (newUser) {
@@ -160,13 +133,11 @@ module.exports.handler = async (event) => {
           "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
         );
       default:
-        newUser = await getById(userId);
-
         return await requestResult(statusCode.OK, newUser);
     }
     //-- end with db query  ---
   } catch (error) {
-    msg = `Error in updateUser lambda. Caused by ${error}`;
+    msg = `ERROR in add-user lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
     console.error(msg);
 

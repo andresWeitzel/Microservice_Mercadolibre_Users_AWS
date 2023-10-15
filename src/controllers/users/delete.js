@@ -2,7 +2,7 @@
 //Services
 const {
     deleteUser
-} = require("../../services/users/delete-user");
+} = require("../../services/users/delete");
 //Enums
 const {
     statusCode
