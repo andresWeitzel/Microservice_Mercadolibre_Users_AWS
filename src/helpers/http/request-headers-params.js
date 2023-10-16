@@ -23,9 +23,9 @@ const validateHeadersParams = async (eventHeaders) => {
 
       eventHeadersObj ={
         headers:{
-          contentType: await eventHeaders["Content-Type"],
-          authorization: await eventHeaders["Authorization"],
-          xApiKey: await eventHeaders["x-api-key"],
+          contentType: await eventHeaders['Content-Type'],
+          authorization: await eventHeaders['Authorization'],
+          xApiKey: await eventHeaders['x-api-key'],
         }
       };
       validatorObj = new Validator(
