@@ -1,4 +1,3 @@
-
 ![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/MicroService_Users_ML.drawio.png)
 
 <div align="right">
@@ -10,10 +9,9 @@
   </a>
 </div>
 
-
 <div align="center">
 
-# Microservice Mercadolibre Users AWS   
+# Microservice Mercadolibre Users AWS
 
 </div>  
 
@@ -21,9 +19,8 @@ Microservice for user management exemplifying part of the ML development archite
 
 *   [Database repository](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 *   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
-*   [Playlist functionality test](https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank">
-    <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/social-networks/yt.png" width="5%" height="5%" />
-</a>
+*   [Playlist functionality test](https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/social-networks/yt.png" width="5%" height="5%" />
+    </a>
 
 <br>
 
@@ -68,18 +65,18 @@ Microservice for user management exemplifying part of the ML development archite
 
 ### 1.0.0) General description
 
-* The Microservice is designed under the MVC architecture. This architecture consists of and is divided into the model layer (definition of the user table), the service layer (the connection and transactions to the db with sequelize) and the controller layer (the implemented lambdas).
-* Each lambda performs the token authentication check, those that wait for a body type event check these fields and all the logic to be performed is abstracted from it to decouple functionalities together with low coupling.
-* Endpoints that allow the return of more than one object according to the applied search logic are handled with pagination if required. Default pagination is applied.
+*   The Microservice is designed under the MVC architecture. This architecture consists of and is divided into the model layer (definition of the user table), the service layer (the connection and transactions to the db with sequelize) and the controller layer (the implemented lambdas).
+*   Each lambda performs the token authentication check, those that wait for a body type event check these fields and all the logic to be performed is abstracted from it to decouple functionalities together with low coupling.
+*   Endpoints that allow the return of more than one object according to the applied search logic are handled with pagination if required. Default pagination is applied.
 
 ### 1.0.1) Description Architecture and Operation
 
-* The image of the AWS architecture used describes the operating flow of the microservice in a general way. Any request to the microservice starts from a client (Postman, server, etc.).
-* `Step 0`: This request is received by the api-gateway and will only be validated if the correct x-api-key is found within the headers of said request.
-* `Steps 1A, 1B, etc`: All these steps correspond to an endpoint with its specific resource. For ex. for getAllUsers (1A) it is http://localhost:4000/dev/users/list ....check those endpoints in [endpoints section](#section-2-endpoints-and-examples). Each lambda performs x-api-key and token checking.
-* `Steps 2`: The lambdas perform the validations of the corresponding ssm with the System Manager Paramater Store... they validate token, connection values with the db, etc.
-* `Steps 3`: The lambdas perform the necessary transactions and operations with the db (Mysql).
-* `Clarifications`: This operation is emulated within the same network and in a local environment with the corresponding serverless plugins.
+*   The image of the AWS architecture used describes the operating flow of the microservice in a general way. Any request to the microservice starts from a client (Postman, server, etc.).
+*   `Step 0`: This request is received by the api-gateway and will only be validated if the correct x-api-key is found within the headers of said request.
+*   `Steps 1A, 1B, etc`: All these steps correspond to an endpoint with its specific resource. For ex. for getAllUsers (1A) it is http://localhost:4000/dev/users/list ....check those endpoints in [endpoints section](#section-2-endpoints-and-examples). Each lambda performs x-api-key and token checking.
+*   `Steps 2`: The lambdas perform the validations of the corresponding ssm with the System Manager Paramater Store... they validate token, connection values with the db, etc.
+*   `Steps 3`: The lambdas perform the necessary transactions and operations with the db (Mysql).
+*   `Clarifications`: This operation is emulated within the same network and in a local environment with the corresponding serverless plugins.
 
 <br>
 
@@ -91,41 +88,41 @@ Microservice for user management exemplifying part of the ML development archite
   <summary>See</summary>
 <br>
 
-* Once a work environment has been created through some IDE, we clone the project
+*   Once a work environment has been created through some IDE, we clone the project
 
 ```git
 git clone https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS
 ```
 
-* We position ourselves on the project
+*   We position ourselves on the project
 
 ```git
 cd 'projectName'
 ```
 
-* We install the latest LTS version of [Nodejs(v18)](https://nodejs.org/en/download)
-* We install the Serverless Framework globally if we have not already done so
+*   We install the latest LTS version of [Nodejs(v18)](https://nodejs.org/en/download)
+*   We install the Serverless Framework globally if we have not already done so
 
 ```git
 npm install -g serverless
 ```
 
-* We verify the version of Serverless installed
+*   We verify the version of Serverless installed
 
 ```git
 sls -v
 ```
 
-* We install all the necessary packages
+*   We install all the necessary packages
 
 ```git
 npm i
 ```
 
-* The ssm variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding file (serverless\_ssm.yml) to the .gitignore.
-* The start script configured in the project's package.json is responsible for launching
-     * The serverless-offline plugin
-     * The remark-lint plugin for .md files (only --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
+*   The ssm variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding file (serverless\_ssm.yml) to the .gitignore.
+*   The start script configured in the project's package.json is responsible for launching
+    *   The serverless-offline plugin
+    *   The remark-lint plugin for .md files (only --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
 
 ```json
    "scripts": {
@@ -137,13 +134,13 @@ npm i
    },
 ```
 
-* We run the app from terminal.
+*   We run the app from terminal.
 
 ```git
 npm start
 ```
 
-* If a message appears indicating that port 4000 is already in use, we can terminate all dependent processes and run the app again
+*   If a message appears indicating that port 4000 is already in use, we can terminate all dependent processes and run the app again
 
 ```git
 npx kill-port 4000
@@ -162,44 +159,44 @@ npm start
 
  <br>
 
-* We create a work environment through some ide, after creating a folder we position ourselves on it
+*   We create a work environment through some ide, after creating a folder we position ourselves on it
 
 ```git
 cd 'projectName'
 ```
 
-* We install the latest LTS version of [Nodejs(v18)](https://nodejs.org/en/download)
-* We install the Serverless Framework globally if we have not already done so
+*   We install the latest LTS version of [Nodejs(v18)](https://nodejs.org/en/download)
+*   We install the Serverless Framework globally if we have not already done so
 
 ```git
 npm install -g serverless
 ```
 
-* We verify the version of Serverless installed
+*   We verify the version of Serverless installed
 
 ```git
 sls -v
 ```
 
-* We initialize a serverles template
+*   We initialize a serverles template
 
 ```git
 serverless create --template aws-nodejs
 ```
 
-* We initialize an npm project
+*   We initialize an npm project
 
 ```git
 npm init -y
 ```
 
-* We install serverless offline
+*   We install serverless offline
 
 ```git
 npm i serverless-offline --save-dev
 ```
 
-* We install serverless ssm
+*   We install serverless ssm
 
 ```git
 npm i serverless-offline-ssm --save-dev
@@ -212,7 +209,7 @@ plugins:
 
 ```
 
-* We will configure a standard markdown file format for the project via [remark-lint](https://github.com/remarkjs/remark-lint#example-check-markdown-on-the-api)
+*   We will configure a standard markdown file format for the project via [remark-lint](https://github.com/remarkjs/remark-lint#example-check-markdown-on-the-api)
 
 ```git
 npm install remark-cli remark-preset-lint-consistent remark-preset-lint-recommended remark-lint-list-item-indent --save-dev
@@ -222,7 +219,7 @@ npm install remark-lint-emphasis-marker remark-lint-strong-marker --save-dev
 npm install remark-lint-table-cell-padding --save-dev
 ```
 
-* Then we add the configuration for the scripts from the package.json
+*   Then we add the configuration for the scripts from the package.json
 
 ```json
    "scripts": {
@@ -231,7 +228,7 @@ npm install remark-lint-table-cell-padding --save-dev
    },
 ```
 
-* In my case, I want an autoformat to be applied for each execution, we execute the scripts together (only the --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
+*   In my case, I want an autoformat to be applied for each execution, we execute the scripts together (only the --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
 
 ```json
    "scripts": {
@@ -243,7 +240,7 @@ npm install remark-lint-table-cell-padding --save-dev
    },
 ```
 
-* Then we add the remark configs, at the end, in the package.json
+*   Then we add the remark configs, at the end, in the package.json
 
 ```json
   "remarkConfig": {
@@ -272,13 +269,13 @@ npm install remark-lint-table-cell-padding --save-dev
    }
 ```
 
-* For more information about it, visit the [official page](https://github.com/remarkjs/remark-lint#example-check-markdown-on-the-api)
+*   For more information about it, visit the [official page](https://github.com/remarkjs/remark-lint#example-check-markdown-on-the-api)
 
-* The ssm variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding file (serverless\_ssm.yml) to the .gitignore.
+*   The ssm variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding file (serverless\_ssm.yml) to the .gitignore.
 
-* The following script (start), configured in the project's package.json, is responsible for executing
-     * The serverless-offline plugin
-     * The remark-lint plugin for .md files
+*   The following script (start), configured in the project's package.json, is responsible for executing
+    *   The serverless-offline plugin
+    *   The remark-lint plugin for .md files
 
 ```json
    "scripts": {
@@ -290,13 +287,13 @@ npm install remark-lint-table-cell-padding --save-dev
    },
 ```
 
-* We run the app from terminal.
+*   We run the app from terminal.
 
 ```git
 npm start
 ```
 
-* If a message appears indicating that port 4000 is already in use, we can terminate all dependent processes and run the app again
+*   If a message appears indicating that port 4000 is already in use, we can terminate all dependent processes and run the app again
 
 ```git
 npx kill-port 4000
@@ -389,9 +386,9 @@ npm start
 
 ### Clarifications
 
-* {required-value}
-* Default pagination: ?page=0\&limit=5
-* Optional pagination: ?page={nro}\&limit={nro}
+*   {required-value}
+*   Default pagination: ?page=0\&limit=5
+*   Optional pagination: ?page={nro}\&limit={nro}
 
 <br>
 
@@ -407,9 +404,9 @@ npm start
 
 | **Variable** | **Initial value** | **Current value** |\
 | ------------- | ------------- | ------------- |
-| base_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
+| base\_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
 | x-api-key | f98d8cd98h73s204e3456998ecl9427j  | f98d8cd98h73s204e3456998ecl9427j |
-| bearer_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c  | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c |
+| bearer\_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV\_adQssw5c  | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV\_adQssw5c |
 
 <br>
 
@@ -1081,46 +1078,46 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 #### Configuration
 
-* [How to use Sequelize with Node.js and MySQL](https://jasonwatmore.com/post/2022/06/26/nodejs-mysql-connect-to-mysql-database-with-sequelize-mysql2)
-* [Recommended Video Tutorial](https://www.youtube.com/watch?v=im7THL67z0c)
+*   [How to use Sequelize with Node.js and MySQL](https://jasonwatmore.com/post/2022/06/26/nodejs-mysql-connect-to-mysql-database-with-sequelize-mysql2)
+*   [Recommended Video Tutorial](https://www.youtube.com/watch?v=im7THL67z0c)
 
 #### Tools
 
-* [AWS Design Tool app.diagrams.net](https://app.diagrams.net/?splash=0\&libs=aws4)
+*   [AWS Design Tool app.diagrams.net](https://app.diagrams.net/?splash=0\&libs=aws4)
 
 #### Sequelize
 
-* [Models and Operators](https://sequelize.org/docs/v6/core-concepts/model-querying-basics/)
+*   [Models and Operators](https://sequelize.org/docs/v6/core-concepts/model-querying-basics/)
 
 #### Free market
 
-* [Users and applications](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
-* [Description of users](https://developers.mercadolibre.com.ar/es_ar/producto-consulta-usuarios)
+*   [Users and applications](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
+*   [Description of users](https://developers.mercadolibre.com.ar/es_ar/producto-consulta-usuarios)
 
 #### Swagger with Serverless
 
-* [Autoswagger](https://www.npmjs.com/package/serverless-auto-swagger)
-* [Documentation serverless api](https://levelup.gitconnected.com/documenting-your-serverless-solutions-509f1928564b)
+*   [Autoswagger](https://www.npmjs.com/package/serverless-auto-swagger)
+*   [Documentation serverless api](https://levelup.gitconnected.com/documenting-your-serverless-solutions-509f1928564b)
 
 #### Open Apiv3 with Serverless
 
-* [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
+*   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
 
 #### API Gateway
 
-* [Best Api-Gateway Practices](https://docs.aws.amazon.com/whitepapers/latest/best-practices-api-gateway-private-apis-integration/rest-api.html)
-* [Creating Custom Api-keys](https://towardsaws.com/protect-your-apis-by-creating-api-keys-using-serverless-framework-fe662ad37447)
-* [Gateway Api properties configuration](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml)
+*   [Best Api-Gateway Practices](https://docs.aws.amazon.com/whitepapers/latest/best-practices-api-gateway-private-apis-integration/rest-api.html)
+*   [Creating Custom Api-keys](https://towardsaws.com/protect-your-apis-by-creating-api-keys-using-serverless-framework-fe662ad37447)
+*   [Gateway Api properties configuration](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml)
 
 #### Serverless frameworks
 
-* [Plugins](https://www.serverless.com/plugins)
+*   [Plugins](https://www.serverless.com/plugins)
 
 #### Libraries/Plugins
 
-* [Field validation](https://www.npmjs.com/package/node-input-validator)
-* [serverless-offline-ssm](https://www.serverless.com/plugins/serverless-offline-ssm)
-* [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
+*   [Field validation](https://www.npmjs.com/package/node-input-validator)
+*   [serverless-offline-ssm](https://www.serverless.com/plugins/serverless-offline-ssm)
+*   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
 
 <br>
 
