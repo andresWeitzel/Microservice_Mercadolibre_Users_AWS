@@ -10,9 +10,6 @@ const {
 const {
   statusName
 } = require("../../enums/connection/status-name");
-const {
-  value
-} = require("../../enums/general/value");
 //Helpers
 const {
   requestResult
@@ -27,15 +24,13 @@ const {
   validateAuthHeaders
 } = require("../../helpers/auth/headers");
 
-//For check
-
 //Const/Vars
 let newUser;
 let eventBody;
 let eventHeaders;
 let validateAuth;
 let validateReqParams;
-let validateReqBodyParams;
+let validateReqBodyParams;s
 let nickname;
 let firstName;
 let lastName;
@@ -43,8 +38,9 @@ let email;
 let identType;
 let identNumber;
 let countryId;
-let msg;
 let code;
+let msgResponse;
+let msgLog;
 
 /**
  * @description add a user according to the parameters passed in the request body
@@ -54,10 +50,10 @@ let code;
 module.exports.handler = async (event) => {
   try {
     //Init
-
-    newUser = value.IS_NULL;
-    msg = value.IS_NULL;
-    code = value.IS_NULL;
+    newUser = null;
+    code = null;
+    msgResponse = null;
+    msgLog = null;
 
     //-- start with validation Headers  ---
     eventHeaders = await event.headers;
@@ -67,8 +63,7 @@ module.exports.handler = async (event) => {
     if (!validateReqParams) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, check missing or malformed headers",
-        event
+        "Bad request, check missing or malformed headers"
       );
     }
 
@@ -77,8 +72,7 @@ module.exports.handler = async (event) => {
     if (!validateAuth) {
       return await requestResult(
         statusCode.UNAUTHORIZED,
-        "Not authenticated, check x_api_key and Authorization",
-        event
+        "Not authenticated, check x_api_key and Authorization"
       );
     }
     //-- end with validation Headers  ---
@@ -128,7 +122,9 @@ module.exports.handler = async (event) => {
           statusCode.INTERNAL_SERVER_ERROR,
           "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
         );
-      case value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL:
+      case 0 : 
+      case undefined :  
+      case null:
         return await requestResult(
           statusCode.BAD_REQUEST,
           "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
@@ -138,10 +134,11 @@ module.exports.handler = async (event) => {
     }
     //-- end with db query  ---
   } catch (error) {
-    msg = `ERROR in add-user lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
-    console.error(msg);
+    msgResponse = 'ERROR in add-user lambda function.';
+    msgLog = msgResponse + `Caused by ${error}`;
+    console.log(msgLog);
 
-    return await requestResult(code, msg, event);
+    return await requestResult(code, msgResponse);
   }
 };

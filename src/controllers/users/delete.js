@@ -8,7 +8,6 @@ const {
     statusCode
 } = require("../../enums/http/status-code");
 const { statusName } = require("../../enums/connection/status-name");
-const { value } = require("../../enums/general/value");
 //Helpers
 const {
     requestResult
@@ -26,8 +25,9 @@ let validateAuth;
 let validateReqParams;
 let checkDeleteUser;
 let userId;
-let msg;
 let code;
+let msgResponse;
+let msgLog;
 
 /**
  * @description delete a user according to the parameters passed in the request body
@@ -37,9 +37,10 @@ let code;
 module.exports.handler = async (event) => {
     try {
         //Init
-        checkDeleteUser = value.IS_NULL;
-        msg = value.IS_NULL;
-        code = value.IS_NULL;
+        checkDeleteUser = null;
+        code = null;
+        msgResponse = null;
+        msgLog = null;
 
         //-- start with validation Headers  ---
         eventHeaders = await event.headers;
@@ -49,8 +50,7 @@ module.exports.handler = async (event) => {
         if (!validateReqParams) {
             return await requestResult(
                 statusCode.BAD_REQUEST,
-                "Bad request, check missing or malformed headers",
-                event
+                "Bad request, check missing or malformed headers"
             );
         }
 
@@ -59,8 +59,7 @@ module.exports.handler = async (event) => {
         if (!validateAuth) {
             return await requestResult(
                 statusCode.UNAUTHORIZED,
-                "Not authenticated, check x_api_key and Authorization",
-                event
+                "Not authenticated, check x_api_key and Authorization"
             );
         }
         //-- end with validation Headers  ---
@@ -86,22 +85,24 @@ module.exports.handler = async (event) => {
                 statusCode.INTERNAL_SERVER_ERROR,
                 "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
               );
-            case value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL:
+            case 0 :
+            case undefined :
+            case null :
               return await requestResult(
                 statusCode.BAD_REQUEST,
                 "Bad request, a non-existent user cannot be deleted. Operation not allowed"
               );
             default:
-
               return await requestResult(statusCode.OK, 'User has been deleted successfully.');
           }
 
         //-- end with db query  ---
     } catch (error) {
-        msg = `ERROR in delete-user lambda. Caused by ${error}`;
         code = statusCode.INTERNAL_SERVER_ERROR;
-        console.error(msg);
+        msgResponse = 'ERROR in delete-user lambda function.';
+        msgLog = msgResponse + `Caused by ${error}`;
+        console.log(msgLog);
     
-        return await requestResult(code, msg, event);
+        return await requestResult(code, msgResponse);
     }
 };

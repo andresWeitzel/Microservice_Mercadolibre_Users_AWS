@@ -8,17 +8,24 @@ const { requestResult } = require('../../helpers/http/body-response');
 const { validateHeadersParams } = require('../../helpers/http/request-headers-params');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
 //Const/Vars
-let msg;
-let code;
 let validate;
 let eventHeaders;
 let validateReqParams;
+let code;
+let msgResponse;
+let msgLog;
 
+/**
+ * @description test database connection
+ * @param {Object} event Object type
+ * @returns a message status whit the database connection
+ */
 module.exports.handler = async (event) => {
 
   try {
-    msg = null;
     code = null;
+    msgResponse = null;
+    msgLog = null;
 
     //-- start with validation Headers  ---
 
@@ -27,37 +34,39 @@ module.exports.handler = async (event) => {
     validateReqParams = await validateHeadersParams(eventHeaders);
 
     if (!validateReqParams) {
-      return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers', event);
+      return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers');
     }
 
     validate = await validateAuthHeaders(eventHeaders);
 
     if (!validate) {
-      return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
+      return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization');
     }
     //-- end with validation Headers  ---
 
     //-- start with db query  ---
     await dbConnection.authenticate()
       .then(() => {
-        msg = 'Connection has been established successfully.';
+        msgResponse = 'Connection has been established successfully.';
         code = statusCode.OK;
-        console.log(msg);
+        console.log(msgResponse);
       }).catch((error) => {
-        msg = `Unable to connect to the database. Caused by ${error}`;
+        msgResponse = `Unable to connect to the database. Caused by ${error}`;
         code = statusCode.INTERNAL_SERVER_ERROR;
         console.log(error);
       });
 
-    return await requestResult(code, msg, event);
+    return await requestResult(code, msgResponse);
     //-- end with db query  ---
 
   } catch (error) {
-    msg = `Error in connection lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
-    console.error(msg);
- 
-    return await requestResult(code, msg, event);
+    msgResponse = 'ERROR in connection-test lambda function.';
+    msgLog = msgResponse + `Caused by ${error}`;
+    console.log(msgLog);
+
+    return await requestResult(code, msgResponse);
+
   }
 
 
