@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 //Const/vars
 let validate;
 
@@ -17,11 +17,10 @@ const validatePathParameters = async (object) => {
       Object.keys(object).length === 0
         ? false
         : true;
-
   } catch (error) {
     validate = false;
     console.error(
-      `Error in validatePathParameters() function. Caused by ${error}. Specific stack is ${error.stack}`
+      `Error in validatePathParameters() function. Caused by ${error}. Specific stack is ${error.stack}`,
     );
   }
   return validate;

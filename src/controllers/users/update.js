@@ -1,34 +1,20 @@
-"use strict";
+'use strict';
 //Services
-const {
-  updateUser
-} = require("../../services/users/update");
-const {
-  getById
-} = require("../../services/users/get-by-id");
+const { updateUser } = require('../../services/users/update');
+const { getById } = require('../../services/users/get-by-id');
 //Enums
-const {
-  statusCode
-} = require('../../enums/http/status-code');
-const {
-  value
-} = require('../../enums/general/value');
-const {
-  statusName
-} = require('../../enums/connection/status-name');
+const { statusCode } = require('../../enums/http/status-code');
+const { value } = require('../../enums/general/value');
+const { statusName } = require('../../enums/connection/status-name');
 //Helpers
+const { requestResult } = require('../../helpers/http/body-response');
 const {
-  requestResult
-} = require("../../helpers/http/body-response");
-const {
-  validateHeadersParams
+  validateHeadersParams,
 } = require('../../helpers/http/request-headers-params');
 const {
   validateBodyUpdateUserParams,
-} = require("../../helpers/http/users/request-body-update-user-params");
-const {
-  validateAuthHeaders
-} = require("../../helpers/auth/headers");
+} = require('../../helpers/http/users/request-body-update-user-params');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
 
 //Const/Vars
 let newUser;
@@ -70,8 +56,8 @@ module.exports.handler = async (event) => {
     if (!validateReqParams) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, check missing or malformed headers",
-        event
+        'Bad request, check missing or malformed headers',
+        event,
       );
     }
 
@@ -80,8 +66,8 @@ module.exports.handler = async (event) => {
     if (!validateAuth) {
       return await requestResult(
         statusCode.UNAUTHORIZED,
-        "Not authenticated, check x_api_key and Authorization",
-        event
+        'Not authenticated, check x_api_key and Authorization',
+        event,
       );
     }
     //-- end with validation Headers  ---
@@ -95,8 +81,8 @@ module.exports.handler = async (event) => {
     if (!validateReqBodyParams) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, check request attributes. Missing or incorrect",
-        event
+        'Bad request, check request attributes. Missing or incorrect',
+        event,
       );
     }
     //-- end with validation Body  ---
@@ -107,57 +93,85 @@ module.exports.handler = async (event) => {
 
     oldUser = await getById(userId);
 
-    if (oldUser == (value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL)) {
+    if (
+      oldUser == (value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL)
+    ) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, check request attributes and object to update"
+        'Bad request, check request attributes and object to update',
       );
     }
 
-    nickname = (eventBody.nickname == value.IS_NULL || (!eventBody.nickname.length)) ? oldUser.nickname : eventBody.nickname;
-    
-    firstName = (eventBody.first_name == value.IS_NULL || (!eventBody.first_name.length)) ? oldUser.first_name : eventBody.first_name;
-    
-    lastName = (eventBody.last_name == value.IS_NULL || (!eventBody.last_name.length)) ? oldUser.last_name : eventBody.last_name;
-    
-    email = (eventBody.email == value.IS_NULL || (!eventBody.email.length)) ? oldUser.email : eventBody.email;
-    
-    identType = (eventBody.identification_type == value.IS_NULL || (!eventBody.identification_type.length)) ? oldUser.identification_type : eventBody.identification_type;
+    nickname =
+      eventBody.nickname == value.IS_NULL || !eventBody.nickname.length
+        ? oldUser.nickname
+        : eventBody.nickname;
 
-    identNumber = (eventBody.identification_number == value.IS_NULL || (!eventBody.identification_number.length)) ? oldUser.identification_number : eventBody.identification_number;
+    firstName =
+      eventBody.first_name == value.IS_NULL || !eventBody.first_name.length
+        ? oldUser.first_name
+        : eventBody.first_name;
 
-    countryId = (eventBody.country_id == value.IS_NULL || (!eventBody.country_id.length)) ? oldUser.country_id : eventBody.country_id;
+    lastName =
+      eventBody.last_name == value.IS_NULL || !eventBody.last_name.length
+        ? oldUser.last_name
+        : eventBody.last_name;
 
-    creationDate = (eventBody.creation_date == value.IS_NULL || (!eventBody.creation_date.length)) ? oldUser.creation_date : eventBody.creation_date;
+    email =
+      eventBody.email == value.IS_NULL || !eventBody.email.length
+        ? oldUser.email
+        : eventBody.email;
 
-    
+    identType =
+      eventBody.identification_type == value.IS_NULL ||
+      !eventBody.identification_type.length
+        ? oldUser.identification_type
+        : eventBody.identification_type;
+
+    identNumber =
+      eventBody.identification_number == value.IS_NULL ||
+      !eventBody.identification_number.length
+        ? oldUser.identification_number
+        : eventBody.identification_number;
+
+    countryId =
+      eventBody.country_id == value.IS_NULL || !eventBody.country_id.length
+        ? oldUser.country_id
+        : eventBody.country_id;
+
+    creationDate =
+      eventBody.creation_date == value.IS_NULL ||
+      !eventBody.creation_date.length
+        ? oldUser.creation_date
+        : eventBody.creation_date;
+
     newUser = await updateUser(
       userId,
       nickname,
       firstName,
       lastName,
       email,
-      identType ,
+      identType,
       identNumber,
       countryId,
-      creationDate
+      creationDate,
     );
-    
+
     switch (newUser) {
       case statusName.CONNECTION_REFUSED:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+          'ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
         );
       case statusName.CONNECTION_ERROR:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+          'ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306.',
         );
       case value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL:
         return await requestResult(
           statusCode.BAD_REQUEST,
-          "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+          'Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
         );
       default:
         newUser = await getById(userId);

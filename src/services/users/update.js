@@ -1,11 +1,11 @@
 //Externals
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { statusName } = require("../../enums/connection/status-name");
+const { statusName } = require('../../enums/connection/status-name');
 //Helpers
-const { currentDateTime } = require("../../helpers/dates/date");
+const { currentDateTime } = require('../../helpers/dates/date');
 //Const/Vars
 let msg;
 let user;
@@ -35,7 +35,7 @@ const updateUser = async function (
   identificationType,
   identificationNumber,
   countryId,
-  creationDate
+  creationDate,
 ) {
   try {
     user = null;
@@ -59,7 +59,7 @@ const updateUser = async function (
           where: {
             id: id,
           },
-        }
+        },
       )
         .then((userItem) => {
           user = userItem;

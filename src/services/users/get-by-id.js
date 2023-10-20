@@ -1,9 +1,9 @@
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { statusName } = require("../../enums/connection/status-name");
+const { statusName } = require('../../enums/connection/status-name');
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
+const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
 //Const/Vars
 let user;
 let msg;
@@ -24,8 +24,8 @@ const getById = async function (id) {
       await User.findByPk(id, {
         attributes: {
           include: [
-            await getDateFormat("creation_date"),
-            await getDateFormat("update_date"),
+            await getDateFormat('creation_date'),
+            await getDateFormat('update_date'),
           ],
         },
       })
@@ -63,7 +63,7 @@ const getByIdLimit = async function (id) {
     if (User != null) {
       await User.findByPk(id, {
         attributes: {
-          exclude: ["first_name", "last_name", "creation_date", "update_date"],
+          exclude: ['first_name', 'last_name', 'creation_date', 'update_date'],
         },
       })
         .then((findUser) => {

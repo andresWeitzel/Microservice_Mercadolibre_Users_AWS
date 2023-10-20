@@ -1,32 +1,25 @@
 'use strict';
 //Services
 const {
-  getLikeCreationDate
+  getLikeCreationDate,
 } = require('../../services/users/get-like-creation-date');
 //Enums
-const {
-  statusCode
-} = require('../../enums/http/status-code');
-const {
-  value
-} = require('../../enums/general/value');
+const { statusCode } = require('../../enums/http/status-code');
+const { value } = require('../../enums/general/value');
 //Helpers
+const { requestResult } = require('../../helpers/http/body-response');
 const {
-  requestResult
-} = require('../../helpers/http/body-response');
-const {
-  validateHeadersParams
+  validateHeadersParams,
 } = require('../../helpers/http/request-headers-params');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
 const {
-  validateAuthHeaders
-} = require('../../helpers/auth/headers');
-const {
-  validatePathParameters
+  validatePathParameters,
 } = require('../../helpers/http/query-string-params');
+const { statusName } = require('../../enums/connection/status-name');
 const {
-  statusName
-} = require('../../enums/connection/status-name');
-const { checkOrderBy, checkOrderAt } = require('../../helpers/pagination/users/order');
+  checkOrderBy,
+  checkOrderAt,
+} = require('../../helpers/pagination/users/order');
 //Const/Vars
 let userList;
 let creationDate;
@@ -37,7 +30,8 @@ let validatePathParam;
 let queryStrParams;
 let pageSizeNro;
 let pageNro;
-let msg;
+let msgResponse;
+let msgLog;
 let code;
 let orderAt;
 let orderBy;
@@ -50,14 +44,15 @@ let order;
  */
 module.exports.handler = async (event) => {
   try {
-    userList = value.IS_NULL;
-    creationDate = value.IS_NULL;
+    userList = null;
+    creationDate = null;
     pageSizeNro = 5;
     pageNro = 0;
-    orderBy = "id";
-    orderAt = "ASC";
-    msg = value.IS_NULL;
-    code = value.IS_NULL;
+    orderBy = 'id';
+    orderAt = 'ASC';
+    msgResponse = null;
+    msgLog = null;
+    code = null;
 
     //-- start with validation Headers  ---
     eventHeaders = await event.headers;
@@ -65,13 +60,21 @@ module.exports.handler = async (event) => {
     validateReqParams = await validateHeadersParams(eventHeaders);
 
     if (!validateReqParams) {
-      return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers', event);
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        'Bad request, check missing or malformed headers',
+        event,
+      );
     }
 
     validate = await validateAuthHeaders(eventHeaders);
 
     if (!validate) {
-      return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
+      return await requestResult(
+        statusCode.UNAUTHORIZED,
+        'Not authenticated, check x_api_key and Authorization',
+        event,
+      );
     }
     //-- end with validation Headers  ---
 
@@ -83,7 +86,7 @@ module.exports.handler = async (event) => {
     if (!validatePathParam) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, the creation date passed as a parameter is not valid"
+        'Bad request, the creation date passed as a parameter is not valid',
       );
     }
     //-- end with path parameters  ---
@@ -91,74 +94,79 @@ module.exports.handler = async (event) => {
     //-- start with pagination  ---
     queryStrParams = event.queryStringParameters;
 
-    if (queryStrParams != value.IS_NULL) {
+    if (queryStrParams != null) {
       pageSizeNro = parseInt(await event.queryStringParameters.limit);
       pageNro = parseInt(await event.queryStringParameters.page);
       pageNro = event.queryStringParameters.page
-      ? parseInt(await event.queryStringParameters.page)
-      : pageNro;
-    orderBy = event.queryStringParameters.orderBy
-      ? event.queryStringParameters.orderBy
-      : orderBy;
-    orderAt = event.queryStringParameters.orderAt
-      ? event.queryStringParameters.orderAt
-      : orderAt;
+        ? parseInt(await event.queryStringParameters.page)
+        : pageNro;
+      orderBy = event.queryStringParameters.orderBy
+        ? event.queryStringParameters.orderBy
+        : orderBy;
+      orderAt = event.queryStringParameters.orderAt
+        ? event.queryStringParameters.orderAt
+        : orderAt;
     }
-
 
     orderBy = await checkOrderBy(orderBy);
 
-    if(orderBy == (null || undefined)){
+    if (orderBy == (null || undefined)) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "It is not possible to apply sorting based on the requested orderBy value. Invalid field",
-        event
+        'It is not possible to apply sorting based on the requested orderBy value. Invalid field',
+        event,
       );
     }
 
     orderAt = await checkOrderAt(orderAt);
 
-    if(orderAt == (undefined || null)){
+    if (orderAt == (null || undefined)) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "It is not possible to apply sorting based on the requested orderAt value. Invalid field",
-        event
+        'It is not possible to apply sorting based on the requested orderAt value. Invalid field',
+        event,
       );
     }
-    
+
     order = [[orderBy, orderAt]];
     //-- end with pagination  ---
 
     //-- start with db query  ---
-    userList = await getLikeCreationDate(creationDate, pageSizeNro, pageNro, order);
+    userList = await getLikeCreationDate(
+      creationDate,
+      pageSizeNro,
+      pageNro,
+      order,
+    );
 
     switch (userList) {
       case statusName.CONNECTION_REFUSED:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+          'ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available',
         );
       case statusName.CONNECTION_ERROR:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+          'ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306.',
         );
-      case value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL:
+      case 0:
+      case undefined:
+      case null:
         return await requestResult(
           statusCode.BAD_REQUEST,
-          "Bad request, could not get paginated list of users according to creation date. Try again."
+          'Bad request, could not get paginated list of users according to creation date. Try again.',
         );
       default:
         return await requestResult(statusCode.OK, userList);
     }
     //-- end with db query  ---
-
   } catch (error) {
-    msg = `ERROR in get-like-creation-date lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
-    console.error(msg);
+    msgResponse = 'ERROR in get-like-creation-date lambda function.';
+    msgLog = msgResponse + `Caused by ${error}`;
+    console.log(msgLog);
 
-    return await requestResult(code, msg, event);
+    return await requestResult(code, msgResponse);
   }
-
 };

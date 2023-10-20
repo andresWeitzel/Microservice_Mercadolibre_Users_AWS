@@ -1,9 +1,9 @@
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { statusName } = require("../../enums/connection/status-name");
+const { statusName } = require('../../enums/connection/status-name');
 //Helpers
-const { currentDateTime } = require("../../helpers/dates/date");
+const { currentDateTime } = require('../../helpers/dates/date');
 //Const/Vars
 let user;
 let msg;
@@ -29,7 +29,7 @@ const addUser = async function (
   email,
   identificationType,
   identificationNumber,
-  countryId
+  countryId,
 ) {
   try {
     user = null;

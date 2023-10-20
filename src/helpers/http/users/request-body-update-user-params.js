@@ -1,5 +1,5 @@
 //External Imports
-const { Validator } = require("node-input-validator");
+const { Validator } = require('node-input-validator');
 //Const/vars
 let validateCheck;
 let validatorObj;
@@ -10,16 +10,14 @@ let eventBodyObj;
  * @returns a boolean
  */
 const validateBodyUpdateUserParams = async (eventBody) => {
-  try{
-  
+  try {
     eventBodyObj = null;
-    validatorObj= null;
+    validatorObj = null;
     validateCheck = false;
-    
-    if(eventBody!=null){
 
-      eventBodyObj ={
-        data:{
+    if (eventBody != null) {
+      eventBodyObj = {
+        data: {
           nickname: await eventBody.nickname,
           firstName: await eventBody.first_name,
           lastName: await eventBody.last_name,
@@ -28,32 +26,31 @@ const validateBodyUpdateUserParams = async (eventBody) => {
           identificationNumber: await eventBody.identification_number,
           countryId: await eventBody.country_id,
           creationDate: await eventBody.creation_date,
-        }
+        },
       };
-
 
       validatorObj = new Validator(
         {
           eventBodyObj,
         },
         {
-          "eventBodyObj.data.nickname": "string|minLength:4|maxLength:50",
-          "eventBodyObj.data.firstName": "string|minLength:4|maxLength:50",
-          "eventBodyObj.data.lastName": "string|minLength:4|maxLength:50",
-          "eventBodyObj.data.email": "string|minLength:10|maxLength:100",
-          "eventBodyObj.data.identificationType": "string|minLength:2|maxLength:20",
-          "eventBodyObj.data.identificationNumber": "string|minLength:6|maxLength:20",
-          "eventBodyObj.data.countryId": "string|minLength:2|maxLength:5",
-          "eventBodyObj.data.creationDate": "string|minLength:2|maxLength:30",
-        }
+          'eventBodyObj.data.nickname': 'string|minLength:4|maxLength:50',
+          'eventBodyObj.data.firstName': 'string|minLength:4|maxLength:50',
+          'eventBodyObj.data.lastName': 'string|minLength:4|maxLength:50',
+          'eventBodyObj.data.email': 'string|minLength:10|maxLength:100',
+          'eventBodyObj.data.identificationType':
+            'string|minLength:2|maxLength:20',
+          'eventBodyObj.data.identificationNumber':
+            'string|minLength:6|maxLength:20',
+          'eventBodyObj.data.countryId': 'string|minLength:2|maxLength:5',
+          'eventBodyObj.data.creationDate': 'string|minLength:2|maxLength:30',
+        },
       );
       validateCheck = await validatorObj.check();
-
     }
-
   } catch (error) {
     console.error(
-      `Error in validateBodyUpdateUserParams() function. Caused by ${error}. Specific stack is ${error.stack}`
+      `Error in validateBodyUpdateUserParams() function. Caused by ${error}. Specific stack is ${error.stack}`,
     );
   }
 
@@ -61,5 +58,5 @@ const validateBodyUpdateUserParams = async (eventBody) => {
 };
 
 module.exports = {
-    validateBodyUpdateUserParams
+  validateBodyUpdateUserParams,
 };

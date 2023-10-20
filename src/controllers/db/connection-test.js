@@ -5,7 +5,9 @@ const { dbConnection } = require('../../db/local-config');
 const { statusCode } = require('../../enums/http/status-code');
 //Helpers
 const { requestResult } = require('../../helpers/http/body-response');
-const { validateHeadersParams } = require('../../helpers/http/request-headers-params');
+const {
+  validateHeadersParams,
+} = require('../../helpers/http/request-headers-params');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
 //Const/Vars
 let validate;
@@ -21,7 +23,6 @@ let msgLog;
  * @returns a message status whit the database connection
  */
 module.exports.handler = async (event) => {
-
   try {
     code = null;
     msgResponse = null;
@@ -34,23 +35,31 @@ module.exports.handler = async (event) => {
     validateReqParams = await validateHeadersParams(eventHeaders);
 
     if (!validateReqParams) {
-      return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers');
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        'Bad request, check missing or malformed headers',
+      );
     }
 
     validate = await validateAuthHeaders(eventHeaders);
 
     if (!validate) {
-      return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization');
+      return await requestResult(
+        statusCode.UNAUTHORIZED,
+        'Not authenticated, check x_api_key and Authorization',
+      );
     }
     //-- end with validation Headers  ---
 
     //-- start with db query  ---
-    await dbConnection.authenticate()
+    await dbConnection
+      .authenticate()
       .then(() => {
         msgResponse = 'Connection has been established successfully.';
         code = statusCode.OK;
         console.log(msgResponse);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         msgResponse = `Unable to connect to the database. Caused by ${error}`;
         code = statusCode.INTERNAL_SERVER_ERROR;
         console.log(error);
@@ -58,7 +67,6 @@ module.exports.handler = async (event) => {
 
     return await requestResult(code, msgResponse);
     //-- end with db query  ---
-
   } catch (error) {
     code = statusCode.INTERNAL_SERVER_ERROR;
     msgResponse = 'ERROR in connection-test lambda function.';
@@ -66,8 +74,5 @@ module.exports.handler = async (event) => {
     console.log(msgLog);
 
     return await requestResult(code, msgResponse);
-
   }
-
-
 };

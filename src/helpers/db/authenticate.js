@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 //dbConfig
-const { dbConnection } = require("../../db/localConfig");
+const { dbConnection } = require('../../db/localConfig');
 //Const/vars
 let check;
 
@@ -22,7 +22,7 @@ const checkDbAuthentication = async function () {
   } catch (error) {
     check = false;
     console.error(
-      `Error in checkDbAuthentication() function. Caused by ${error}. Specific stack is ${error.stack}`
+      `Error in checkDbAuthentication() function. Caused by ${error}. Specific stack is ${error.stack}`,
     );
   }
 

@@ -1,11 +1,11 @@
 //Externals
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { statusName } = require("../../enums/connection/status-name");
+const { statusName } = require('../../enums/connection/status-name');
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
+const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
 //Const/Vars
 let usersList;
 let msg;
@@ -24,7 +24,7 @@ const getLikeCountryId = async function (
   countryId,
   pageSizeNro,
   pageNro,
-  order
+  order,
 ) {
   try {
     usersList = null;
@@ -34,8 +34,8 @@ const getLikeCountryId = async function (
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat("creation_date"),
-            await getDateFormat("update_date"),
+            await getDateFormat('creation_date'),
+            await getDateFormat('update_date'),
           ],
         },
         where: {

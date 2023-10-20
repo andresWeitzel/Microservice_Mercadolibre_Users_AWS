@@ -14,12 +14,12 @@ const requestResult = async (statusCode, message, input) => {
           message: message,
         },
         null,
-        2
+        2,
       ),
     };
   } catch (error) {
     console.error(
-      `Error in requestResult() function. Caused by ${error}. Specific stack is ${error.stack}`
+      `Error in requestResult() function. Caused by ${error}. Specific stack is ${error.stack}`,
     );
   }
 };

@@ -1,9 +1,9 @@
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
+const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
 //Enums
-const { statusName } = require("../../enums/connection/status-name");
+const { statusName } = require('../../enums/connection/status-name');
 //Const/Vars
 let usersList;
 let msg;
@@ -26,8 +26,8 @@ const getAll = async function (pageSizeNro, pageNro, order) {
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat("creation_date"),
-            await getDateFormat("update_date"),
+            await getDateFormat('creation_date'),
+            await getDateFormat('update_date'),
           ],
         },
         limit: pageSizeNro,
@@ -71,7 +71,7 @@ const getAllWithoutDate = async function (pageSizeNro, pageNro, order) {
     if (User != null) {
       await User.findAll({
         attributes: {
-          exclude: ["creation_date", "update_date"],
+          exclude: ['creation_date', 'update_date'],
         },
         limit: pageSizeNro,
         offset: pageNro,
