@@ -8,61 +8,61 @@ let msgLog;
  * @returns a string with the field value or null
  */
 const checkOrderBy = async (orderBy) => {
-    try {
-      msgResponse = null;
-      msgLog = null;
+  try {
+    msgResponse = null;
+    msgLog = null;
 
-      switch (orderBy.toLowerCase()) {
-        case "id":
-          orderBy = "id";
-          break;
-        case "nickname":
-          orderBy = "nickname";
-          break;
-        case "first_name":
-        case "firstname":
-          orderBy = "first_name";
-          break;
-        case "last_name":
-        case "lastname":
-          orderBy = "last_name";
-          break;
-        case "email":
-          orderBy = "email";
-          break;
-        case "identification_type":
-        case "identificationtype":
-          orderBy = "identification_type";
-          break;
-        case "identification_number":
-        case "identificationnumber":
-          orderBy = "identification_number";
-          break;
-        case "country_id":
-        case "countryid":
-          orderBy = "country_id";
-          break;
-        case "creation_date":
-        case "creationdate":
-          orderBy = "creation_date";
-          break;
-        case "update_date":
-        case "updatedate":
-          orderBy = "update_date";
-          break;
-        default:
+    switch (orderBy.toLowerCase()) {
+      case "id":
+        orderBy = "id";
+        break;
+      case "nickname":
+        orderBy = "nickname";
+        break;
+      case "first_name":
+      case "firstname":
+        orderBy = "first_name";
+        break;
+      case "last_name":
+      case "lastname":
+        orderBy = "last_name";
+        break;
+      case "email":
+        orderBy = "email";
+        break;
+      case "identification_type":
+      case "identificationtype":
+        orderBy = "identification_type";
+        break;
+      case "identification_number":
+      case "identificationnumber":
+        orderBy = "identification_number";
+        break;
+      case "country_id":
+      case "countryid":
+        orderBy = "country_id";
+        break;
+      case "creation_date":
+      case "creationdate":
+        orderBy = "creation_date";
+        break;
+      case "update_date":
+      case "updatedate":
+        orderBy = "update_date";
+        break;
+      default:
         orderBy = null;
-      }
-      return orderBy;
-    } catch (error) {
-      msgResponse = 'ERROR in checkOrderBy() helper function.';
-      msgLog = msgResponse + `Caused by ${error}`;
-      console.log(msgLog);
-      return null;
     }
-  };
-  
-  /**
+    return orderBy;
+  } catch (error) {
+    msgResponse = "ERROR in checkOrderBy() helper function.";
+    msgLog = msgResponse + `Caused by ${error}`;
+    console.log(msgLog);
+    return null;
+  }
+};
+
+/**
  * @description checks the order at value of the query string param to assign a field value
  * @param {String} orderAt String type
  * @returns a string with the field value or null
@@ -80,19 +80,18 @@ const checkOrderAt = async (orderAt) => {
         orderAt = "DESC";
         break;
       default:
-       orderAt = null;
+        orderAt = null;
     }
     return orderAt;
   } catch (error) {
-    msgResponse = 'ERROR in checkOrderAt() helper function.';
+    msgResponse = "ERROR in checkOrderAt() helper function.";
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
     return null;
   }
 };
 
-
-  module.exports = {
-    checkOrderBy,
-    checkOrderAt
-  };
+module.exports = {
+  checkOrderBy,
+  checkOrderAt,
+};

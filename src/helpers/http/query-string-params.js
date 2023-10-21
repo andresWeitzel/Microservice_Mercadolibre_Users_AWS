@@ -1,6 +1,8 @@
 "use strict";
 //Const/vars
 let validate;
+let msgResponse;
+let msgLog;
 
 /**
  * @description validates the path parameters of the event object
@@ -17,12 +19,12 @@ const validatePathParameters = async (object) => {
       Object.keys(object).length === 0
         ? false
         : true;
-
   } catch (error) {
     validate = false;
-    console.error(
-      `Error in validatePathParameters() function. Caused by ${error}. Specific stack is ${error.stack}`
-    );
+
+    msgResponse = "ERROR in validatePathParameters() function.";
+    msgLog = msgResponse + `Caused by ${error}`;
+    console.log(msgLog);
   }
   return validate;
 };

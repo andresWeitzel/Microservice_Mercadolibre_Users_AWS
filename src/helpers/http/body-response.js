@@ -1,11 +1,13 @@
+//Cont-vars
+let msgResponse;
+let msgLog;
 /**
- * @description get a json with the http status code, a message and input
+ * @description get a json with the http status code, a message an
  * @param {Number} statusCode Number type
  * @param {String} message String type
- * @param {Object} input Object type
  * @returns a json for the lambda response
  */
-const requestResult = async (statusCode, message, input) => {
+const requestResult = async (statusCode, message) => {
   try {
     return {
       statusCode: statusCode,
@@ -18,9 +20,9 @@ const requestResult = async (statusCode, message, input) => {
       ),
     };
   } catch (error) {
-    console.error(
-      `Error in requestResult() function. Caused by ${error}. Specific stack is ${error.stack}`
-    );
+    msgResponse = "ERROR in requestResult() function.";
+    msgLog = msgResponse + `Caused by ${error}`;
+    console.log(msgLog);
   }
 };
 

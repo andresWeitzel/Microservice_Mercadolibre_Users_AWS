@@ -1,11 +1,11 @@
 //Externals
-const { Op, Sequelize } = require("sequelize");
+const { Op, Sequelize } = require('sequelize');
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { statusName } = require("../../enums/connection/status-name");
+const { statusName } = require('../../enums/connection/status-name');
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
+const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
 //Const/Vars
 let usersList;
 let msg;
@@ -15,7 +15,7 @@ let msg;
  * @param {String} updateDate String type
  * @param {Number} pageSizeNro Number type
  * @param {Number} pageNro Number type
- * @param {Object} orderBy Array Object type
+ * @param {Object} order Array Object type
  * @returns a list of paginated users
  * @example
  * [{"id":1,"nickname":"RAFA-CON","first_name":"Rafael","last_name":"Castro","email":"rafael_castro88@gmail.com","identification_type":"DNI","identification_number":"445938822","country_id":"AR","creation_date":"2023-02-12 21:18:11","update_date":"2023-02-12 21:18:11"},{"id".....]
@@ -24,7 +24,7 @@ const getLikeUpdateDate = async function (
   updateDate,
   pageSizeNro,
   pageNro,
-  orderBy
+  order,
 ) {
   try {
     usersList = null;
@@ -33,24 +33,24 @@ const getLikeUpdateDate = async function (
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat("creation_date"),
-            await getDateFormat("update_date"),
+            await getDateFormat('creation_date'),
+            await getDateFormat('update_date'),
           ],
         },
         where: {
           [Op.and]: [
             //This case is for DATEONLY format
             Sequelize.where(
-              Sequelize.fn("DATE", Sequelize.col("update_date")),
+              Sequelize.fn('DATE', Sequelize.col('update_date')),
               {
                 [Op.eq]: updateDate,
-              }
+              },
             ),
           ],
         },
         limit: pageSizeNro,
         offset: pageNro,
-        order: orderBy,
+        order: order,
       })
         .then((users) => {
           usersList = users;

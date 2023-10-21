@@ -1,11 +1,11 @@
 //Externals
-const { Sequelize, Op } = require("sequelize");
+const { Sequelize, Op } = require('sequelize');
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { statusName } = require("../../enums/connection/status-name");
+const { statusName } = require('../../enums/connection/status-name');
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
+const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
 //Const/Vars
 let usersList;
 let msg;
@@ -24,7 +24,7 @@ const getLikeCreationDate = async function (
   creationDate,
   pageSizeNro,
   pageNro,
-  order
+  order,
 ) {
   try {
     usersList = null;
@@ -34,18 +34,18 @@ const getLikeCreationDate = async function (
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat("creation_date"),
-            await getDateFormat("update_date"),
+            await getDateFormat('creation_date'),
+            await getDateFormat('update_date'),
           ],
         },
         where: {
           [Op.and]: [
             //This case is for DATEONLY format
             Sequelize.where(
-              Sequelize.fn("DATE", Sequelize.col("creation_date")),
+              Sequelize.fn('DATE', Sequelize.col('creation_date')),
               {
                 [Op.eq]: creationDate,
-              }
+              },
             ),
           ],
         },

@@ -1,32 +1,24 @@
 'use strict';
 //Services
 const {
-  getLikeCountryId
+  getLikeCountryId,
 } = require('../../services/users/get-like-country-id');
 //Enums
-const {
-  statusCode
-} = require('../../enums/http/status-code');
-const {
-  value
-} = require("../../enums/general/value");
-const {
-  statusName
-} = require('../../enums/connection/status-name');
+const { statusCode } = require('../../enums/http/status-code');
+const { statusName } = require('../../enums/connection/status-name');
 //Helpers
+const { requestResult } = require('../../helpers/http/body-response');
 const {
-  requestResult
-} = require('../../helpers/http/body-response');
-const {
-  validateHeadersParams
+  validateHeadersParams,
 } = require('../../helpers/http/request-headers-params');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
 const {
-  validateAuthHeaders
-} = require('../../helpers/auth/headers');
-const {
-  validatePathParameters
+  validatePathParameters,
 } = require('../../helpers/http/query-string-params');
-const { checkOrderBy, checkOrderAt } = require('../../helpers/pagination/users/order');
+const {
+  checkOrderBy,
+  checkOrderAt,
+} = require('../../helpers/pagination/users/order');
 
 //Const/Vars
 let userList;
@@ -38,7 +30,8 @@ let validatePathParam;
 let queryStrParams;
 let pageSizeNro;
 let pageNro;
-let msg;
+let msgResponse;
+let msgLog;
 let code;
 let orderAt;
 let orderBy;
@@ -51,14 +44,15 @@ let order;
  */
 module.exports.handler = async (event) => {
   try {
-    userList = value.IS_NULL;
-    countryid = value.IS_NULL;
+    userList = null;
+    countryid = null;
     pageSizeNro = 5;
     pageNro = 0;
-    orderBy = "id";
-    orderAt = "ASC";
-    msg = value.IS_NULL;
-    code = value.IS_NULL;
+    orderBy = 'id';
+    orderAt = 'ASC';
+    msgResponse = null;
+    msgLog = null;
+    code = null;
 
     //-- start with validation Headers  ---
 
@@ -67,13 +61,19 @@ module.exports.handler = async (event) => {
     validateReqParams = await validateHeadersParams(eventHeaders);
 
     if (!validateReqParams) {
-      return await requestResult(statusCode.BAD_REQUEST, 'Bad request, check missing or malformed headers', event);
+      return await requestResult(
+        statusCode.BAD_REQUEST,
+        'Bad request, check missing or malformed headers',
+      );
     }
 
     validate = await validateAuthHeaders(eventHeaders);
 
     if (!validate) {
-      return await requestResult(statusCode.UNAUTHORIZED, 'Not authenticated, check x_api_key and Authorization', event);
+      return await requestResult(
+        statusCode.UNAUTHORIZED,
+        'Not authenticated, check x_api_key and Authorization',
+      );
     }
     //-- end with validation Headers  ---
 
@@ -85,7 +85,7 @@ module.exports.handler = async (event) => {
     if (!validatePathParam) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, the country id passed as a parameter is not valid"
+        'Bad request, the country id passed as a parameter is not valid',
       );
     }
     //-- end with path parameters  ---
@@ -93,41 +93,39 @@ module.exports.handler = async (event) => {
     //-- start with pagination  ---
     queryStrParams = event.queryStringParameters;
 
-    if (queryStrParams != (value.IS_NULL && value.IS_UNDEFINED)) {
+    if (queryStrParams != (null && undefined)) {
       pageSizeNro = event.queryStringParameters.limit
-      ? parseInt(await event.queryStringParameters.limit)
-      : pageSizeNro;
+        ? parseInt(await event.queryStringParameters.limit)
+        : pageSizeNro;
       pageNro = event.queryStringParameters.page
-      ? parseInt(await event.queryStringParameters.page)
-      : pageNro;
-    orderBy = event.queryStringParameters.orderBy
-      ? event.queryStringParameters.orderBy
-      : orderBy;
-    orderAt = event.queryStringParameters.orderAt
-      ? event.queryStringParameters.orderAt
-      : orderAt;
+        ? parseInt(await event.queryStringParameters.page)
+        : pageNro;
+      orderBy = event.queryStringParameters.orderBy
+        ? event.queryStringParameters.orderBy
+        : orderBy;
+      orderAt = event.queryStringParameters.orderAt
+        ? event.queryStringParameters.orderAt
+        : orderAt;
     }
 
     orderBy = await checkOrderBy(orderBy);
 
-    if(orderBy == (null || undefined)){
+    if (orderBy == (null || undefined)) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "It is not possible to apply sorting based on the requested orderBy value. Invalid field",
-        event
+        'It is not possible to apply sorting based on the requested orderBy value. Invalid field'
       );
     }
 
     orderAt = await checkOrderAt(orderAt);
 
-    if(orderAt == (undefined || null)){
+    if (orderAt == (null || undefined)) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "It is not possible to apply sorting based on the requested orderAt value. Invalid field",
-        event
+        'It is not possible to apply sorting based on the requested orderAt value. Invalid field'
       );
     }
-    
+
     order = [[orderBy, orderAt]];
     //-- end with pagination  ---
 
@@ -138,29 +136,30 @@ module.exports.handler = async (event) => {
       case statusName.CONNECTION_REFUSED:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+          'ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available',
         );
       case statusName.CONNECTION_ERROR:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+          'ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306.',
         );
-      case value.IS_ZERO_NUMBER || value.IS_UNDEFINED || value.IS_NULL:
+      case 0:
+      case undefined:
+      case null:
         return await requestResult(
           statusCode.BAD_REQUEST,
-          "Bad request, could not get paginated list of users according to country id. Try again."
+          'Bad request, could not get paginated list of users according to country id. Try again.',
         );
       default:
-        return await requestResult(statusCode.OK, userList, event);
+        return await requestResult(statusCode.OK, userList);
     }
     //-- end with db query  ---
-
   } catch (error) {
-    msg = `ERROR in get-like-country-id lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
-    console.error(msg);
+    msgResponse = 'ERROR in get-like-country-id lambda function.';
+    msgLog = msgResponse + `Caused by ${error}`;
+    console.log(msgLog);
 
-    return await requestResult(code, msg, event);
+    return await requestResult(code, msgResponse);
   }
-
 };

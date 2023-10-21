@@ -4,22 +4,23 @@ const { Validator } = require("node-input-validator");
 let validateCheck;
 let validatorObj;
 let eventBodyObj;
+let msgResponse;
+let msgLog;
+
 /**
  * @description We validate the request body parameters for update an user
  * @param {object} eventBody event.body type
  * @returns a boolean
  */
 const validateBodyUpdateUserParams = async (eventBody) => {
-  try{
-  
+  try {
     eventBodyObj = null;
-    validatorObj= null;
+    validatorObj = null;
     validateCheck = false;
-    
-    if(eventBody!=null){
 
-      eventBodyObj ={
-        data:{
+    if (eventBody != null) {
+      eventBodyObj = {
+        data: {
           nickname: await eventBody.nickname,
           firstName: await eventBody.first_name,
           lastName: await eventBody.last_name,
@@ -28,9 +29,8 @@ const validateBodyUpdateUserParams = async (eventBody) => {
           identificationNumber: await eventBody.identification_number,
           countryId: await eventBody.country_id,
           creationDate: await eventBody.creation_date,
-        }
+        },
       };
-
 
       validatorObj = new Validator(
         {
@@ -41,25 +41,25 @@ const validateBodyUpdateUserParams = async (eventBody) => {
           "eventBodyObj.data.firstName": "string|minLength:4|maxLength:50",
           "eventBodyObj.data.lastName": "string|minLength:4|maxLength:50",
           "eventBodyObj.data.email": "string|minLength:10|maxLength:100",
-          "eventBodyObj.data.identificationType": "string|minLength:2|maxLength:20",
-          "eventBodyObj.data.identificationNumber": "string|minLength:6|maxLength:20",
+          "eventBodyObj.data.identificationType":
+            "string|minLength:2|maxLength:20",
+          "eventBodyObj.data.identificationNumber":
+            "string|minLength:6|maxLength:20",
           "eventBodyObj.data.countryId": "string|minLength:2|maxLength:5",
           "eventBodyObj.data.creationDate": "string|minLength:2|maxLength:30",
         }
       );
       validateCheck = await validatorObj.check();
-
     }
-
   } catch (error) {
-    console.error(
-      `Error in validateBodyUpdateUserParams() function. Caused by ${error}. Specific stack is ${error.stack}`
-    );
+    msgResponse = "ERROR in validateBodyUpdateUserParams() function.";
+    msgLog = msgResponse + `Caused by ${error}`;
+    console.log(msgLog);
   }
 
   return validateCheck;
 };
 
 module.exports = {
-    validateBodyUpdateUserParams
+  validateBodyUpdateUserParams,
 };

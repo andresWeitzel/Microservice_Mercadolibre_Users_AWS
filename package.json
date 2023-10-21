@@ -4,12 +4,13 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "check": "remark . --quiet --frail",
-    "format": "remark . --quiet --frail --output",
-    "format-md": "remark . --output",
     "serverless-offline": "sls offline start",
     "start": "npm run format-md && npm run serverless-offline",
-    "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\""
+    "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
+    "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
+    "check": "remark . --quiet --frail",
+    "format-remark": "remark . --quiet --frail --output",
+    "format-md": "remark . --output"
   },
   "repository": {
     "type": "git",

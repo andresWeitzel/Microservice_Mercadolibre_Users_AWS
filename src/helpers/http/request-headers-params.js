@@ -5,6 +5,8 @@ const { Validator } = require("node-input-validator");
 let validateCheck;
 let validatorObj;
 let eventHeadersObj;
+let msgResponse;
+let msgLog;
 
 /**
  * @description We validate the request headers parameters
@@ -13,20 +15,18 @@ let eventHeadersObj;
  * @example Content-Type, Authorization, etc
  */
 const validateHeadersParams = async (eventHeaders) => {
-  try{
-
+  try {
     eventHeadersObj = null;
-    validatorObj= null;
+    validatorObj = null;
     validateCheck = false;
-  
-    if(eventHeaders != null){
 
-      eventHeadersObj ={
-        headers:{
-          contentType: await eventHeaders['Content-Type'],
-          authorization: await eventHeaders['Authorization'],
-          xApiKey: await eventHeaders['x-api-key'],
-        }
+    if (eventHeaders != null) {
+      eventHeadersObj = {
+        headers: {
+          contentType: await eventHeaders["Content-Type"],
+          authorization: await eventHeaders["Authorization"],
+          xApiKey: await eventHeaders["x-api-key"],
+        },
       };
       validatorObj = new Validator(
         {
@@ -34,22 +34,23 @@ const validateHeadersParams = async (eventHeaders) => {
         },
         {
           "eventHeadersObj.headers.contentType": "required|string|maxLength:20",
-          "eventHeadersObj.headers.authorization": "required|string|minLength:100|maxLength:400",
-          "eventHeadersObj.headers.xApiKey": "required|string|minLength:30|maxLength:100",
+          "eventHeadersObj.headers.authorization":
+            "required|string|minLength:100|maxLength:400",
+          "eventHeadersObj.headers.xApiKey":
+            "required|string|minLength:30|maxLength:100",
         }
       );
       validateCheck = await validatorObj.check();
     }
-
   } catch (error) {
-    console.error(
-      `Error in validateHeadersParams() function. Caused by ${error}. Specific stack is ${error.stack}`
-    );
+    msgResponse = "ERROR in validateHeadersParams() function.";
+    msgLog = msgResponse + `Caused by ${error}`;
+    console.log(msgLog);
   }
 
   return validateCheck;
 };
 
 module.exports = {
-  validateHeadersParams
+  validateHeadersParams,
 };

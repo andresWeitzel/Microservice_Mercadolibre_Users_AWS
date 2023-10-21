@@ -1,11 +1,11 @@
 //Externals
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { statusName } = require("../../enums/connection/status-name");
+const { statusName } = require('../../enums/connection/status-name');
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
+const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
 //Const/Vars
 let usersList;
 let msg;
@@ -20,12 +20,7 @@ let msg;
  * @example
  * [{"id":1,"nickname":"RAFA-CON","first_name":"Rafael","last_name":"Castro","email":"rafael_castro88@gmail.com","identification_type":"DNI","identification_number":"445938822","country_id":"AR","creation_date":"2023-02-12 21:18:11","update_date":"2023-02-12 21:18:11"},{"id".....]
  */
-const getLikeNickname = async function (
-  nickName,
-  pageSizeNro,
-  pageNro,
-  order
-) {
+const getLikeNickname = async function (nickName, pageSizeNro, pageNro, order) {
   try {
     usersList = null;
 
@@ -33,8 +28,8 @@ const getLikeNickname = async function (
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat("creation_date"),
-            await getDateFormat("update_date"),
+            await getDateFormat('creation_date'),
+            await getDateFormat('update_date'),
           ],
         },
         where: {

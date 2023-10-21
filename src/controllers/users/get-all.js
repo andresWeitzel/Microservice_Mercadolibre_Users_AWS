@@ -1,17 +1,19 @@
-"use strict";
+'use strict';
 //Services
-const { getAll, getAllWithoutDate } = require("../../services/users/get-all");
+const { getAll, getAllWithoutDate } = require('../../services/users/get-all');
 //Enums
-const { statusCode } = require("../../enums/http/status-code");
-const { statusName } = require("../../enums/connection/status-name");
-const { value } = require("../../enums/general/value");
+const { statusCode } = require('../../enums/http/status-code');
+const { statusName } = require('../../enums/connection/status-name');
 //Helpers
-const { requestResult } = require("../../helpers/http/body-response");
+const { requestResult } = require('../../helpers/http/body-response');
 const {
-  validateHeadersParams
-} = require("../../helpers/http/request-headers-params");
-const { validateAuthHeaders } = require("../../helpers/auth/headers");
-const { checkOrderBy, checkOrderAt } = require("../../helpers/pagination/users/order");
+  validateHeadersParams,
+} = require('../../helpers/http/request-headers-params');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
+const {
+  checkOrderBy,
+  checkOrderAt,
+} = require('../../helpers/pagination/users/order');
 //Const/Vars
 let userList;
 let eventHeaders;
@@ -20,11 +22,12 @@ let validateAuth;
 let queryStrParams;
 let pageSizeNro;
 let pageNro;
-let msg;
 let code;
 let orderBy;
 let orderAt;
 let order;
+let msgResponse;
+let msgLog;
 
 /**
  * @description gets all paged users
@@ -33,14 +36,16 @@ let order;
  */
 module.exports.handler = async (event) => {
   try {
-    //Init
-    userList = value.IS_NULL;
-    msg = value.IS_NULL;
-    code = value.IS_NULL;
+    //users
+    userList = null;
+    //pagination
+    code = null;
     pageSizeNro = 5;
     pageNro = 0;
-    orderBy = "id";
-    orderAt = "ASC";
+    orderBy = 'id';
+    orderAt = 'ASC';
+    msgResponse = null;
+    msgLog = null;
 
     //-- start with validation Headers  ---
 
@@ -51,8 +56,7 @@ module.exports.handler = async (event) => {
     if (!validateReqParams) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, check missing or malformed headers",
-        event
+        'Bad request, check missing or malformed headers',
       );
     }
 
@@ -61,8 +65,7 @@ module.exports.handler = async (event) => {
     if (!validateAuth) {
       return await requestResult(
         statusCode.UNAUTHORIZED,
-        "Not authenticated, check x_api_key and Authorization",
-        event
+        'Not authenticated, check x_api_key and Authorization',
       );
     }
     //-- end with validation Headers  ---
@@ -70,7 +73,7 @@ module.exports.handler = async (event) => {
     //-- start with pagination  ---
     queryStrParams = event.queryStringParameters;
 
-    if (queryStrParams != value.IS_NULL) {
+    if (queryStrParams != (null && undefined)) {
       pageSizeNro = event.queryStringParameters.limit
         ? parseInt(await event.queryStringParameters.limit)
         : pageSizeNro;
@@ -87,21 +90,19 @@ module.exports.handler = async (event) => {
 
     orderBy = await checkOrderBy(orderBy);
 
-    if(orderBy == (null || undefined)){
+    if (orderBy == (null || undefined)) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "It is not possible to apply sorting based on the requested orderBy value. Invalid field",
-        event
+        'It is not possible to apply sorting based on the requested orderBy value. Invalid field',
       );
     }
 
     orderAt = await checkOrderAt(orderAt);
 
-    if(orderAt == (undefined || null)){
+    if (orderAt == (null || undefined)) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "It is not possible to apply sorting based on the requested orderAt value. Invalid field",
-        event
+        'It is not possible to apply sorting based on the requested orderAt value. Invalid field',
       );
     }
 
@@ -116,29 +117,30 @@ module.exports.handler = async (event) => {
       case statusName.CONNECTION_REFUSED:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+          'ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available',
         );
       case statusName.CONNECTION_ERROR:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+          'ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306.',
         );
-      case value.IS_ZERO_NUMBER:
-      case value.IS_UNDEFINED:
-      case value.IS_NULL:
+      case 0:
+      case undefined:
+      case null:
         return await requestResult(
           statusCode.BAD_REQUEST,
-          "Bad request, could not get the paginated list of users."
+          'Bad request, could not get the paginated list of users.',
         );
       default:
         return await requestResult(statusCode.OK, userList);
     }
     //-- end with db query  ---
   } catch (error) {
-    msg = `ERROR in get-all lambda. Caused by ${error}`;
     code = statusCode.INTERNAL_SERVER_ERROR;
-    console.error(msg);
+    msgResponse = 'ERROR in get-all lambda function.';
+    msgLog = msgResponse + `Caused by ${error}`;
+    console.log(msgLog);
 
-    return await requestResult(code, msg, event);
+    return await requestResult(code, msgResponse);
   }
 };
