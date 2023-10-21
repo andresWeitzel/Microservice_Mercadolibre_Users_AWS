@@ -62,8 +62,7 @@ module.exports.handler = async (event) => {
     if (!validateReqParams) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        'Bad request, check missing or malformed headers',
-        event,
+        'Bad request, check missing or malformed headers'
       );
     }
 
@@ -72,8 +71,7 @@ module.exports.handler = async (event) => {
     if (!validate) {
       return await requestResult(
         statusCode.UNAUTHORIZED,
-        'Not authenticated, check x_api_key and Authorization',
-        event,
+        'Not authenticated, check x_api_key and Authorization'
       );
     }
     //-- end with validation Headers  ---
@@ -94,7 +92,7 @@ module.exports.handler = async (event) => {
     //-- start with pagination  ---
     queryStrParams = event.queryStringParameters;
 
-    if (queryStrParams != null) {
+    if (queryStrParams != (null && undefined)) {
       pageSizeNro = parseInt(await event.queryStringParameters.limit);
       pageNro = parseInt(await event.queryStringParameters.page);
       pageNro = event.queryStringParameters.page
@@ -113,8 +111,7 @@ module.exports.handler = async (event) => {
     if (orderBy == (null || undefined)) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        'It is not possible to apply sorting based on the requested orderBy value. Invalid field',
-        event,
+        'It is not possible to apply sorting based on the requested orderBy value. Invalid field'
       );
     }
 
@@ -123,8 +120,7 @@ module.exports.handler = async (event) => {
     if (orderAt == (null || undefined)) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        'It is not possible to apply sorting based on the requested orderAt value. Invalid field',
-        event,
+        'It is not possible to apply sorting based on the requested orderAt value. Invalid field'
       );
     }
 
