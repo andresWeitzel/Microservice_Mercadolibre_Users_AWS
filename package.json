@@ -50,12 +50,9 @@
     "plugins": [
       "remark-preset-lint-consistent",
       "remark-preset-lint-recommended",
-      "remark-lint",
       "remark-lint-table-cell-padding",
-      [
-        "remark-lint-list-item-indent",
-        "tab-size"
-      ],
+      "remark-lint",
+      "remark-lint-list-item-indent",
       [
         "remark-lint-emphasis-marker",
         "*"
@@ -63,7 +60,8 @@
       [
         "remark-lint-strong-marker",
         "*"
-      ]
+      ],
+      ["remark-lint-heading-style", "atx" ]
     ]
   }
 }
