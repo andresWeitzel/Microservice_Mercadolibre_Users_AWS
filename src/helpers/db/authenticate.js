@@ -3,6 +3,8 @@
 const { dbConnection } = require("../../db/localConfig");
 //Const/vars
 let check;
+let msgResponse;
+let msgLog;
 
 /**
  * @description Check that a connection to the database can be established.
@@ -21,9 +23,10 @@ const checkDbAuthentication = async function () {
       });
   } catch (error) {
     check = false;
-    console.error(
-      `Error in checkDbAuthentication() function. Caused by ${error}. Specific stack is ${error.stack}`
-    );
+
+    msgResponse = "ERROR in checkDbAuthentication() function.";
+    msgLog = msgResponse + `Caused by ${error}`;
+    console.log(msgLog);
   }
 
   return check;
