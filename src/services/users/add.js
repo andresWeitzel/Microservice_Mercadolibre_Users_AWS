@@ -1,11 +1,17 @@
 //Models
-const { User } = require('../../models/sequelize/user');
+const { User } = require("../../models/sequelize/user");
 //Enums
-const { statusName } = require('../../enums/connection/status-name');
+const { statusName } = require("../../enums/database/status");
 //Helpers
-const { currentDateTime } = require('../../helpers/dates/date');
-//Const/Vars
-let user;
+const { currentDateTime } = require("../../helpers/dates/date");
+const {
+  checkSequelizeErrors,
+} = require("../../helpers/sequelize/errors/checkError");
+// Const
+const CONNECTION_ERROR_STATUS = statusName.CONNECTION_ERROR;
+const CONNECTION_REFUSED_STATUS = statusName.CONNECTION_REFUSED;
+//Vars
+let newUser;
 let msg;
 let dateNow;
 
@@ -29,10 +35,10 @@ const addUser = async function (
   email,
   identificationType,
   identificationNumber,
-  countryId,
+  countryId
 ) {
   try {
-    user = null;
+    newUser = null;
     msg = null;
     dateNow = await currentDateTime();
 
@@ -48,24 +54,23 @@ const addUser = async function (
         creation_date: dateNow,
         update_date: dateNow,
       })
-        .then((userItem) => {
-          user = userItem;
+        .then(async (userItem) => {
+          newUser = userItem.dataValues;
         })
-        .catch((error) => {
+        .catch(async (error) => {
           msg = `Error in create User model. Caused by ${error}`;
           console.error(`${msg}. Stack error type : ${error.stack}`);
-          user = statusName.CONNECTION_ERROR;
+          newUser = await checkSequelizeErrors(error, error.name);
         });
     } else {
-      user = statusName.CONNECTION_REFUSED;
+      newUser = await checkSequelizeErrors(null, CONNECTION_REFUSED_STATUS);
     }
   } catch (error) {
     msg = `Error in addUser function. Caused by ${error}`;
     console.error(`${msg}. Stack error type : ${error.stack}`);
-    user = statusName.CONNECTION_ERROR;
+    newUser = await checkSequelizeErrors(error, CONNECTION_ERROR_STATUS);
   }
-  console.log(user);
-  return user;
+  return newUser;
 };
 
 module.exports = {

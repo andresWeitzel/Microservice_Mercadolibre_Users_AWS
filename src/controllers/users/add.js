@@ -1,20 +1,28 @@
-'use strict';
+"use strict";
 //Services
-const { addUser } = require('../../services/users/add');
+const { addUser } = require("../../services/users/add");
 //Enums
-const { statusCode } = require('../../enums/http/status-code');
-const { statusName } = require('../../enums/connection/status-name');
+const { statusCode } = require("../../enums/http/status-code");
+const { statusDetails, statusName } = require("../../enums/database/status");
 //Helpers
-const { requestResult } = require('../../helpers/http/body-response');
+const { requestResult } = require("../../helpers/http/body-response");
 const {
   validateHeadersParams,
-} = require('../../helpers/http/request-headers-params');
+} = require("../../helpers/http/request-headers-params");
 const {
   validateBodyAddUserParams,
-} = require('../../helpers/http/users/request-body-add-user-params');
-const { validateAuthHeaders } = require('../../helpers/auth/headers');
-
-//Const/Vars
+} = require("../../helpers/http/users/request-body-add-user-params");
+const { validateAuthHeaders } = require("../../helpers/auth/headers");
+// Const
+const INTERNAL_SERVER_ERROR_CODE = statusCode.INTERNAL_SERVER_ERROR;
+const BAD_REQUEST_CODE = statusCode.BAD_REQUEST;
+const OK_CODE = statusCode.OK;
+const CONNECTION_ERROR_STATUS = statusName.CONNECTION_ERROR;
+const CONNECTION_ERROR_DETAIL_STATUS = statusDetails.CONNECTION_ERROR_DETAIL;
+const CONNECTION_REFUSED_STATUS = statusName.CONNECTION_REFUSED;
+const CONNECTION_REFUSED_DETAIL_STATUS =
+  statusDetails.CONNECTION_REFUSED_DETAIL;
+//Vars
 let newUser;
 let eventBody;
 let eventHeaders;
@@ -53,7 +61,7 @@ module.exports.handler = async (event) => {
     if (!validateReqParams) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        'Bad request, check missing or malformed headers',
+        "Bad request, check missing or malformed headers"
       );
     }
 
@@ -62,7 +70,7 @@ module.exports.handler = async (event) => {
     if (!validateAuth) {
       return await requestResult(
         statusCode.UNAUTHORIZED,
-        'Not authenticated, check x_api_key and Authorization',
+        "Not authenticated, check x_api_key and Authorization"
       );
     }
     //-- end with validation Headers  ---
@@ -76,7 +84,7 @@ module.exports.handler = async (event) => {
     if (!validateReqBodyParams) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        'Bad request, check request attributes. Missing or incorrect. CHECK: nickname, first_name and last_name (required|string|minLength:4|maxLength:50), email (required|string|minLength:10|maxLength:100), identification_type and identification_number (required|string|minLength:6|maxLength:20), country_id (required|string|minLength:2|maxLength:5)',
+        "Bad request, check request attributes. Missing or incorrect. CHECK: nickname, first_name and last_name (required|string|minLength:4|maxLength:50), email (required|string|minLength:10|maxLength:100), identification_type and identification_number (required|string|minLength:6|maxLength:20), country_id (required|string|minLength:2|maxLength:5)"
       );
     }
     //-- end with validation Body  ---
@@ -98,34 +106,60 @@ module.exports.handler = async (event) => {
       email,
       identType,
       identNumber,
-      countryId,
+      countryId
     );
 
+    console.log({ "NEW USER": newUser });
+
+    newUser = CONNECTION_ERROR_STATUS;
+
     switch (newUser) {
-      case statusName.CONNECTION_REFUSED:
+      case CONNECTION_ERROR_STATUS:
         return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          'ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
+          CONNECTION_ERROR_STATUS,
+          CONNECTION_ERROR_DETAIL_STATUS
         );
       case statusName.CONNECTION_ERROR:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          'ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306.',
+          "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
         );
       case 0:
       case undefined:
       case null:
         return await requestResult(
           statusCode.BAD_REQUEST,
-          'Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
+          "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
         );
       default:
         return await requestResult(statusCode.OK, newUser);
     }
+
+    // switch (newUser) {
+    //   case statusName.CONNECTION_REFUSED:
+    //     return await requestResult(
+    //       statusCode.INTERNAL_SERVER_ERROR,
+    //       'ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
+    //     );
+    //   case statusName.CONNECTION_ERROR:
+    //     return await requestResult(
+    //       statusCode.INTERNAL_SERVER_ERROR,
+    //       'ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306.',
+    //     );
+    //   case 0:
+    //   case undefined:
+    //   case null:
+    //     return await requestResult(
+    //       statusCode.BAD_REQUEST,
+    //       'Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
+    //     );
+    //   default:
+    //     return await requestResult(statusCode.OK, newUser);
+    // }
     //-- end with db query  ---
   } catch (error) {
     code = statusCode.INTERNAL_SERVER_ERROR;
-    msgResponse = 'ERROR in add-user lambda function.';
+    msgResponse = "ERROR in add-user lambda function.";
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 
