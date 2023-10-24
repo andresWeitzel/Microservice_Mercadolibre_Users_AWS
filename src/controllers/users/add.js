@@ -115,10 +115,12 @@ module.exports.handler = async (event) => {
 
     switch (newUser) {
       case CONNECTION_ERROR_STATUS:
+        console.log({'CHECK':CONNECTION_ERROR_DETAIL_STATUS});
+        console.log(typeof(CONNECTION_ERROR_DETAIL_STATUS));
         return await requestResult(
           CONNECTION_ERROR_STATUS,
-          CONNECTION_ERROR_DETAIL_STATUS
-        );
+          JSON.stringify(CONNECTION_ERROR_DETAIL_STATUS
+        ));
       case statusName.CONNECTION_ERROR:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,

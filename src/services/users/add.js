@@ -58,9 +58,9 @@ const addUser = async function (
           newUser = userItem.dataValues;
         })
         .catch(async (error) => {
-          msg = `Error in create User model. Caused by ${error}`;
-          console.error(`${msg}. Stack error type : ${error.stack}`);
+          msg = `Error in addUser function when trying to add a user. Caused by ${error}`;
           newUser = await checkSequelizeErrors(error, error.name);
+          console.log({'addUser': newUser});
         });
     } else {
       newUser = await checkSequelizeErrors(null, CONNECTION_REFUSED_STATUS);
