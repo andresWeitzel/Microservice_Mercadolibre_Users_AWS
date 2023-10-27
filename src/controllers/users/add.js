@@ -14,9 +14,11 @@ const {
 } = require("../../helpers/http/users/request-body-add-user-params");
 const { validateAuthHeaders } = require("../../helpers/auth/headers");
 // Const
+//codes
 const INTERNAL_SERVER_ERROR_CODE = statusCode.INTERNAL_SERVER_ERROR;
 const BAD_REQUEST_CODE = statusCode.BAD_REQUEST;
 const OK_CODE = statusCode.OK;
+//connection_status
 const CONNECTION_ERROR_STATUS = statusName.CONNECTION_ERROR;
 const CONNECTION_ERROR_DETAIL_STATUS = statusDetails.CONNECTION_ERROR_DETAIL;
 const CONNECTION_REFUSED_STATUS = statusName.CONNECTION_REFUSED;
@@ -111,20 +113,16 @@ module.exports.handler = async (event) => {
 
     console.log({ "NEW USER": newUser });
 
-    newUser = CONNECTION_ERROR_STATUS;
-
     switch (newUser) {
       case CONNECTION_ERROR_STATUS:
-        console.log({'CHECK':CONNECTION_ERROR_DETAIL_STATUS});
-        console.log(typeof(CONNECTION_ERROR_DETAIL_STATUS));
         return await requestResult(
-          CONNECTION_ERROR_STATUS,
-          JSON.stringify(CONNECTION_ERROR_DETAIL_STATUS
-        ));
-      case statusName.CONNECTION_ERROR:
+          INTERNAL_SERVER_ERROR_CODE,
+          CONNECTION_ERROR_DETAIL_STATUS
+        );
+      case CONNECTION_REFUSED_STATUS:
         return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+          INTERNAL_SERVER_ERROR_CODE,
+          CONNECTION_REFUSED_DETAIL_STATUS
         );
       case 0:
       case undefined:

@@ -27,7 +27,9 @@ const checkSequelizeErrors = async (error, msg) => {
         sequelizeConnection.CONNECTION_REFUSED_ERROR.toLowerCase() ||
         sequelizeConnection.INVALID_CONNECTION_ERROR.toLowerCase() ||
         sequelizeConnection.CONNECTION_TIMEOUT_ERROR.toLowerCase()
-          ? `${error.name} : ${error.parent || error.parent?.detail || error.parent?.error}`
+          // ? `${error.name} : ${error.parent || error.parent?.detail || error.parent?.error}`
+          // : msg;
+          ? `${error.name}`
           : msg;
     } else {
       check = msg;

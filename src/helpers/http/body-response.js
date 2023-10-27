@@ -9,8 +9,17 @@ let msgLog;
  */
 const requestResult = async (statusCode, message) => {
   try {
-    // message = typeof(message) === 'string' ? JSON.parse(message) : message;
-    console.log(message);
+    // if(typeof(message) == 'string') {
+    //   return {
+    //     statusCode: statusCode,
+    //     body: JSON.stringify(
+    //       {
+    //         message: message,
+    //       }
+    //     ),
+    //   };
+    // }
+   
     return {
       statusCode: statusCode,
       body: JSON.stringify(
@@ -21,7 +30,6 @@ const requestResult = async (statusCode, message) => {
         2
       ),
     };
-    //return {messag:message};
   } catch (error) {
     msgResponse = "ERROR in requestResult() function.";
     msgLog = msgResponse + `Caused by ${error}`;
