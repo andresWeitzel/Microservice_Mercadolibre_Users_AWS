@@ -3,7 +3,10 @@
 const { addUser } = require("../../services/users/add");
 //Enums
 const { statusCode } = require("../../enums/http/status-code");
-const { statusDetails, statusName } = require("../../enums/database/status");
+const {
+  sequelizeConnection,
+  sequelizeConnectionDetails,
+} = require("../../enums/sequelize/errors");
 //Helpers
 const { requestResult } = require("../../helpers/http/body-response");
 const {
@@ -19,11 +22,22 @@ const INTERNAL_SERVER_ERROR_CODE = statusCode.INTERNAL_SERVER_ERROR;
 const BAD_REQUEST_CODE = statusCode.BAD_REQUEST;
 const OK_CODE = statusCode.OK;
 //connection_status
-const CONNECTION_ERROR_STATUS = statusName.CONNECTION_ERROR;
-const CONNECTION_ERROR_DETAIL_STATUS = statusDetails.CONNECTION_ERROR_DETAIL;
-const CONNECTION_REFUSED_STATUS = statusName.CONNECTION_REFUSED;
-const CONNECTION_REFUSED_DETAIL_STATUS =
-  statusDetails.CONNECTION_REFUSED_DETAIL;
+const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
+const DB_CONNECTION_ERROR_STATUS_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_ERROR_DETAIL;
+const DB_CONNECTION_REFUSED_STATUS =
+  sequelizeConnection.CONNECTION_REFUSED_ERROR;
+const DB_CONNECTION_REFUSED_STATUS_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_REFUSED_DETAIL;
+const DB_INVALID_CONNECTION_ERROR =
+  sequelizeConnection.INVALID_CONNECTION_ERROR;
+const DB_INVALID_CONNECTION_ERROR_DETAILS =
+  sequelizeConnectionDetails.INVALID_CONNECTION_ERROR_DETAIL;
+const DB_CONNECTION_TIMEOUT_ERROR =
+  sequelizeConnection.CONNECTION_TIMEOUT_ERROR;
+const DB_CONNECTION_TIMEOUT_ERROR_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_TIMEOUT_ERROR_DETAIL;
+
 //Vars
 let newUser;
 let eventBody;
@@ -114,15 +128,25 @@ module.exports.handler = async (event) => {
     console.log({ "NEW USER": newUser });
 
     switch (newUser) {
-      case CONNECTION_ERROR_STATUS:
+      case DB_CONNECTION_ERROR_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          CONNECTION_ERROR_DETAIL_STATUS
+          DB_CONNECTION_ERROR_STATUS_DETAILS
         );
-      case CONNECTION_REFUSED_STATUS:
+      case DB_CONNECTION_REFUSED_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          CONNECTION_REFUSED_DETAIL_STATUS
+          DB_CONNECTION_REFUSED_STATUS_DETAILS
+        );
+      case DB_INVALID_CONNECTION_ERROR:
+        return await requestResult(
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_INVALID_CONNECTION_ERROR_DETAILS
+        );
+      case DB_CONNECTION_TIMEOUT_ERROR:
+        return await requestResult(
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_CONNECTION_TIMEOUT_ERROR_DETAILS
         );
       case 0:
       case undefined:
@@ -135,27 +159,6 @@ module.exports.handler = async (event) => {
         return await requestResult(statusCode.OK, newUser);
     }
 
-    // switch (newUser) {
-    //   case statusName.CONNECTION_REFUSED:
-    //     return await requestResult(
-    //       statusCode.INTERNAL_SERVER_ERROR,
-    //       'ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
-    //     );
-    //   case statusName.CONNECTION_ERROR:
-    //     return await requestResult(
-    //       statusCode.INTERNAL_SERVER_ERROR,
-    //       'ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306.',
-    //     );
-    //   case 0:
-    //   case undefined:
-    //   case null:
-    //     return await requestResult(
-    //       statusCode.BAD_REQUEST,
-    //       'Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
-    //     );
-    //   default:
-    //     return await requestResult(statusCode.OK, newUser);
-    // }
     //-- end with db query  ---
   } catch (error) {
     code = statusCode.INTERNAL_SERVER_ERROR;

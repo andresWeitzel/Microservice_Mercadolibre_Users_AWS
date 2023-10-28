@@ -1,15 +1,12 @@
 //Models
 const { User } = require("../../models/sequelize/user");
-//Enums
-const { statusName } = require("../../enums/database/status");
 //Helpers
 const { currentDateTime } = require("../../helpers/dates/date");
 const {
   checkSequelizeErrors,
 } = require("../../helpers/sequelize/errors/checkError");
 // Const
-const CONNECTION_ERROR_STATUS = statusName.CONNECTION_ERROR;
-const CONNECTION_REFUSED_STATUS = statusName.CONNECTION_REFUSED;
+
 //Vars
 let newUser;
 let msg;
@@ -60,7 +57,7 @@ const addUser = async function (
         .catch(async (error) => {
           msg = `Error in addUser function when trying to add a user. Caused by ${error}`;
           newUser = await checkSequelizeErrors(error, error.name);
-          console.log({'addUser': newUser});
+          console.log({ addUser: newUser });
         });
     } else {
       newUser = await checkSequelizeErrors(null, CONNECTION_REFUSED_STATUS);
