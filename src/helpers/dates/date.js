@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 //Const-vars
 let date;
 let dateNow;
@@ -15,18 +15,18 @@ const currentDateTime = async () => {
     date = new Date();
     dateNow =
       date.getFullYear() +
-      "-" +
-      ("00" + (date.getMonth() + 1)).slice(-2) +
-      "-" +
-      ("00" + date.getDate()).slice(-2) +
-      " " +
-      ("00" + date.getHours()).slice(-2) +
-      ":" +
-      ("00" + date.getMinutes()).slice(-2) +
-      ":" +
-      ("00" + date.getSeconds()).slice(-2);
+      '-' +
+      ('00' + (date.getMonth() + 1)).slice(-2) +
+      '-' +
+      ('00' + date.getDate()).slice(-2) +
+      ' ' +
+      ('00' + date.getHours()).slice(-2) +
+      ':' +
+      ('00' + date.getMinutes()).slice(-2) +
+      ':' +
+      ('00' + date.getSeconds()).slice(-2);
   } catch (error) {
-    msgResponse = "ERROR in currentDateTime() function.";
+    msgResponse = 'ERROR in currentDateTime() function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
   }

@@ -1,5 +1,5 @@
 //External Imports
-const { Validator } = require("node-input-validator");
+const { Validator } = require('node-input-validator');
 //Const/vars
 let validateCheck;
 let validatorObj;
@@ -36,26 +36,26 @@ const validateBodyAddUserParams = async (eventBody) => {
           eventBodyObj,
         },
         {
-          "eventBodyObj.data.nickname":
-            "required|string|minLength:4|maxLength:50",
-          "eventBodyObj.data.firstName":
-            "required|string|minLength:4|maxLength:50",
-          "eventBodyObj.data.lastName":
-            "required|string|minLength:4|maxLength:50",
-          "eventBodyObj.data.email":
-            "required|string|minLength:10|maxLength:100",
-          "eventBodyObj.data.identificationType":
-            "required|string|minLength:2|maxLength:20",
-          "eventBodyObj.data.identificationNumber":
-            "required|string|minLength:6|maxLength:20",
-          "eventBodyObj.data.countryId":
-            "required|string|minLength:2|maxLength:5",
-        }
+          'eventBodyObj.data.nickname':
+            'required|string|minLength:4|maxLength:50',
+          'eventBodyObj.data.firstName':
+            'required|string|minLength:4|maxLength:50',
+          'eventBodyObj.data.lastName':
+            'required|string|minLength:4|maxLength:50',
+          'eventBodyObj.data.email':
+            'required|string|minLength:10|maxLength:100',
+          'eventBodyObj.data.identificationType':
+            'required|string|minLength:2|maxLength:20',
+          'eventBodyObj.data.identificationNumber':
+            'required|string|minLength:6|maxLength:20',
+          'eventBodyObj.data.countryId':
+            'required|string|minLength:2|maxLength:5',
+        },
       );
       validateCheck = await validatorObj.check();
     }
   } catch (error) {
-    msgResponse = "ERROR in validateBodyAddUserParams() function.";
+    msgResponse = 'ERROR in validateBodyAddUserParams() function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
   }

@@ -1,20 +1,20 @@
-"use strict";
+'use strict';
 //Services
-const { updateUser } = require("../../services/users/update");
-const { getById } = require("../../services/users/get-by-id");
+const { updateUser } = require('../../services/users/update');
+const { getById } = require('../../services/users/get-by-id');
 //Enums
-const { statusCode } = require("../../enums/http/status-code");
-const { value } = require("../../enums/general/value");
-const { statusName } = require("../../enums/connection/status-name");
+const { statusCode } = require('../../enums/http/status-code');
+const { value } = require('../../enums/general/value');
+const { statusName } = require('../../enums/connection/status-name');
 //Helpers
-const { requestResult } = require("../../helpers/http/body-response");
+const { requestResult } = require('../../helpers/http/body-response');
 const {
   validateHeadersParams,
-} = require("../../helpers/http/request-headers-params");
+} = require('../../helpers/http/request-headers-params');
 const {
   validateBodyUpdateUserParams,
-} = require("../../helpers/http/users/request-body-update-user-params");
-const { validateAuthHeaders } = require("../../helpers/auth/headers");
+} = require('../../helpers/http/users/request-body-update-user-params');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
 
 //Const/Vars
 let newUser;
@@ -58,8 +58,8 @@ module.exports.handler = async (event) => {
     if (!validateReqParams) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, check missing or malformed headers",
-        event
+        'Bad request, check missing or malformed headers',
+        event,
       );
     }
 
@@ -68,8 +68,8 @@ module.exports.handler = async (event) => {
     if (!validateAuth) {
       return await requestResult(
         statusCode.UNAUTHORIZED,
-        "Not authenticated, check x_api_key and Authorization",
-        event
+        'Not authenticated, check x_api_key and Authorization',
+        event,
       );
     }
     //-- end with validation Headers  ---
@@ -83,8 +83,8 @@ module.exports.handler = async (event) => {
     if (!validateReqBodyParams) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, check request attributes. Missing or incorrect",
-        event
+        'Bad request, check request attributes. Missing or incorrect',
+        event,
       );
     }
     //-- end with validation Body  ---
@@ -98,7 +98,7 @@ module.exports.handler = async (event) => {
     if (oldUser == (0 || undefined || null)) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        "Bad request, check request attributes and object to update"
+        'Bad request, check request attributes and object to update',
       );
     }
 
@@ -153,26 +153,26 @@ module.exports.handler = async (event) => {
       identType,
       identNumber,
       countryId,
-      creationDate
+      creationDate,
     );
 
     switch (newUser) {
       case statusName.CONNECTION_REFUSED:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+          'ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
         );
       case statusName.CONNECTION_ERROR:
         return await requestResult(
           statusCode.INTERNAL_SERVER_ERROR,
-          "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+          'ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306.',
         );
       case 0:
       case undefined:
       case null:
         return await requestResult(
           statusCode.BAD_REQUEST,
-          "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+          'Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
         );
       default:
         newUser = await getById(userId);
@@ -182,7 +182,7 @@ module.exports.handler = async (event) => {
     //-- end with db query  ---
   } catch (error) {
     code = statusCode.INTERNAL_SERVER_ERROR;
-    msgResponse = "ERROR in update lambda function.";
+    msgResponse = 'ERROR in update lambda function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

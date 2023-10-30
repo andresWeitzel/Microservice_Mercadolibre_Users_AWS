@@ -1,7 +1,7 @@
 //External
-const { Sequelize } = require("sequelize");
+const { Sequelize } = require('sequelize');
 //Enums
-const { statusCode } = require("../enums/http/status-code");
+const { statusCode } = require('../enums/http/status-code');
 //Const-vars
 let msg;
 let code;
@@ -21,23 +21,22 @@ const dbConnection = new Sequelize(
       acquire: parseInt(process.env.DATABASE_POOL_ACQUIRE),
       idle: parseInt(process.env.DATABASE_POOL_IDLE),
     },
-  }
+  },
 );
 
 dbConnection
   .authenticate()
   .then(async () => {
-    msg = "Connection has been established successfully.";
+    msg = 'Connection has been established successfully.';
     code = statusCode.OK;
     console.log(msg);
   })
   .catch(async (error) => {
     code = statusCode.INTERNAL_SERVER_ERROR;
     msgResponse =
-      "ERROR in local-config db function. Unable to connect to the database";
+      'ERROR in local-config db function. Unable to connect to the database';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
-
   });
 
 module.exports = {

@@ -113,7 +113,7 @@ module.exports.handler = async (event) => {
     if (orderBy == (null || undefined)) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        'It is not possible to apply sorting based on the requested orderBy value. Invalid field'
+        'It is not possible to apply sorting based on the requested orderBy value. Invalid field',
       );
     }
 
@@ -122,7 +122,7 @@ module.exports.handler = async (event) => {
     if (orderAt == (null || undefined)) {
       return await requestResult(
         statusCode.BAD_REQUEST,
-        'It is not possible to apply sorting based on the requested orderAt value. Invalid field'
+        'It is not possible to apply sorting based on the requested orderAt value. Invalid field',
       );
     }
 

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 //Const/vars
 let validate;
 let msgResponse;
@@ -22,7 +22,7 @@ const validatePathParameters = async (object) => {
   } catch (error) {
     validate = false;
 
-    msgResponse = "ERROR in validatePathParameters() function.";
+    msgResponse = 'ERROR in validatePathParameters() function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
   }
