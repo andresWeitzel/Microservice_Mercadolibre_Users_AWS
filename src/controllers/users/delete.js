@@ -1,17 +1,49 @@
-'use strict';
+"use strict";
 //Services
-const { deleteUser } = require('../../services/users/delete');
+const { deleteUser } = require("../../services/users/delete");
 //Enums
-const { statusCode } = require('../../enums/http/status-code');
-const { statusName } = require('../../enums/connection/status-name');
+const { statusCode } = require("../../enums/http/status-code");
+const {
+  sequelizeConnection,
+  sequelizeConnectionDetails,
+} = require("../../enums/sequelize/errors");
+const {
+  validateHeadersMessage,
+} = require("../../enums/validation/errors/status-message");
 //Helpers
-const { requestResult } = require('../../helpers/http/body-response');
+const { requestResult } = require("../../helpers/http/body-response");
 const {
   validateHeadersParams,
-} = require('../../helpers/http/request-headers-params');
-const { validateAuthHeaders } = require('../../helpers/auth/headers');
-
-//Const/Vars
+} = require("../../helpers/http/request-headers-params");
+const { validateAuthHeaders } = require("../../helpers/auth/headers");
+//Const
+// validate msg
+const HEADERS_PARAMS_ERROR_MESSAGE =
+  validateHeadersMessage.HEADERS_PARAMS_ERROR_MESSAGE;
+const HEADERS_AUTH_ERROR_MESSAGE =
+  validateHeadersMessage.HEADERS_AUTH_ERROR_MESSAGE;
+//codes
+const INTERNAL_SERVER_ERROR_CODE = statusCode.INTERNAL_SERVER_ERROR;
+const BAD_REQUEST_CODE = statusCode.BAD_REQUEST;
+const UNAUTHORIZED_CODE = statusCode.UNAUTHORIZED;
+const OK_CODE = statusCode.OK;
+//connection_status
+const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
+const DB_CONNECTION_ERROR_STATUS_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_ERROR_DETAIL;
+const DB_CONNECTION_REFUSED_STATUS =
+  sequelizeConnection.CONNECTION_REFUSED_ERROR;
+const DB_CONNECTION_REFUSED_STATUS_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_REFUSED_DETAIL;
+const DB_INVALID_CONNECTION_ERROR =
+  sequelizeConnection.INVALID_CONNECTION_ERROR;
+const DB_INVALID_CONNECTION_ERROR_DETAILS =
+  sequelizeConnectionDetails.INVALID_CONNECTION_ERROR_DETAIL;
+const DB_CONNECTION_TIMEOUT_ERROR =
+  sequelizeConnection.CONNECTION_TIMEOUT_ERROR;
+const DB_CONNECTION_TIMEOUT_ERROR_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_TIMEOUT_ERROR_DETAIL;
+//Vars
 let eventHeaders;
 let validateAuth;
 let validateReqParams;
@@ -41,18 +73,15 @@ module.exports.handler = async (event) => {
 
     if (!validateReqParams) {
       return await requestResult(
-        statusCode.BAD_REQUEST,
-        'Bad request, check missing or malformed headers',
+        BAD_REQUEST_CODE,
+        HEADERS_PARAMS_ERROR_MESSAGE
       );
     }
 
     validateAuth = await validateAuthHeaders(eventHeaders);
 
     if (!validateAuth) {
-      return await requestResult(
-        statusCode.UNAUTHORIZED,
-        'Not authenticated, check x_api_key and Authorization',
-      );
+      return await requestResult(UNAUTHORIZED_CODE, HEADERS_AUTH_ERROR_MESSAGE);
     }
     //-- end with validation Headers  ---
 
@@ -63,34 +92,44 @@ module.exports.handler = async (event) => {
     checkDeleteUser = await deleteUser(userId);
 
     switch (checkDeleteUser) {
-      case statusName.CONNECTION_REFUSED:
+      case DB_CONNECTION_ERROR_STATUS:
         return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          'ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_CONNECTION_ERROR_STATUS_DETAILS
         );
-      case statusName.CONNECTION_ERROR:
+      case DB_CONNECTION_REFUSED_STATUS:
         return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          'ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306.',
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_CONNECTION_REFUSED_STATUS_DETAILS
+        );
+      case DB_INVALID_CONNECTION_ERROR:
+        return await requestResult(
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_INVALID_CONNECTION_ERROR_DETAILS
+        );
+      case DB_CONNECTION_TIMEOUT_ERROR:
+        return await requestResult(
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_CONNECTION_TIMEOUT_ERROR_DETAILS
         );
       case 0:
       case undefined:
       case null:
         return await requestResult(
-          statusCode.BAD_REQUEST,
-          'Bad request, a non-existent user cannot be deleted. Operation not allowed',
+          BAD_REQUEST_CODE,
+          "Bad request, a non-existent user cannot be deleted. Operation not allowed"
         );
       default:
         return await requestResult(
-          statusCode.OK,
-          'User has been deleted successfully.',
+          OK_CODE,
+          "User has been deleted successfully."
         );
     }
 
     //-- end with db query  ---
   } catch (error) {
-    code = statusCode.INTERNAL_SERVER_ERROR;
-    msgResponse = 'ERROR in delete-user lambda function.';
+    code = INTERNAL_SERVER_ERROR_CODE;
+    msgResponse = "ERROR in delete-user lambda function.";
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

@@ -1,25 +1,34 @@
-'use strict';
+"use strict";
 //Services
-const { addUser } = require('../../services/users/add');
+const { addUser } = require("../../services/users/add");
 //Enums
-const { statusCode } = require('../../enums/http/status-code');
+const { statusCode } = require("../../enums/http/status-code");
 const {
   sequelizeConnection,
   sequelizeConnectionDetails,
-} = require('../../enums/sequelize/errors');
+} = require("../../enums/sequelize/errors");
+const {
+  validateHeadersMessage,
+} = require("../../enums/validation/errors/status-message");
 //Helpers
-const { requestResult } = require('../../helpers/http/body-response');
+const { requestResult } = require("../../helpers/http/body-response");
 const {
   validateHeadersParams,
-} = require('../../helpers/http/request-headers-params');
+} = require("../../helpers/http/request-headers-params");
 const {
   validateBodyAddUserParams,
-} = require('../../helpers/http/users/request-body-add-user-params');
-const { validateAuthHeaders } = require('../../helpers/auth/headers');
+} = require("../../helpers/http/users/request-body-add-user-params");
+const { validateAuthHeaders } = require("../../helpers/auth/headers");
 // Const
+// validate msg
+const HEADERS_PARAMS_ERROR_MESSAGE =
+  validateHeadersMessage.HEADERS_PARAMS_ERROR_MESSAGE;
+const HEADERS_AUTH_ERROR_MESSAGE =
+  validateHeadersMessage.HEADERS_AUTH_ERROR_MESSAGE;
 //codes
 const INTERNAL_SERVER_ERROR_CODE = statusCode.INTERNAL_SERVER_ERROR;
 const BAD_REQUEST_CODE = statusCode.BAD_REQUEST;
+const UNAUTHORIZED_CODE = statusCode.UNAUTHORIZED;
 const OK_CODE = statusCode.OK;
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -75,18 +84,15 @@ module.exports.handler = async (event) => {
 
     if (!validateReqParams) {
       return await requestResult(
-        statusCode.BAD_REQUEST,
-        'Bad request, check missing or malformed headers',
+        BAD_REQUEST_CODE,
+        HEADERS_PARAMS_ERROR_MESSAGE
       );
     }
 
     validateAuth = await validateAuthHeaders(eventHeaders);
 
     if (!validateAuth) {
-      return await requestResult(
-        statusCode.UNAUTHORIZED,
-        'Not authenticated, check x_api_key and Authorization',
-      );
+      return await requestResult(UNAUTHORIZED_CODE, HEADERS_AUTH_ERROR_MESSAGE);
     }
     //-- end with validation Headers  ---
 
@@ -98,8 +104,8 @@ module.exports.handler = async (event) => {
 
     if (!validateReqBodyParams) {
       return await requestResult(
-        statusCode.BAD_REQUEST,
-        'Bad request, check request attributes. Missing or incorrect. CHECK: nickname, first_name and last_name (required|string|minLength:4|maxLength:50), email (required|string|minLength:10|maxLength:100), identification_type and identification_number (required|string|minLength:6|maxLength:20), country_id (required|string|minLength:2|maxLength:5)',
+        BAD_REQUEST_CODE,
+        "Bad request, check request attributes. Missing or incorrect. CHECK: nickname, first_name and last_name (required|string|minLength:4|maxLength:50), email (required|string|minLength:10|maxLength:100), identification_type and identification_number (required|string|minLength:6|maxLength:20), country_id (required|string|minLength:2|maxLength:5)"
       );
     }
     //-- end with validation Body  ---
@@ -121,39 +127,39 @@ module.exports.handler = async (event) => {
       email,
       identType,
       identNumber,
-      countryId,
+      countryId
     );
 
     switch (newUser) {
       case DB_CONNECTION_ERROR_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_ERROR_STATUS_DETAILS,
+          DB_CONNECTION_ERROR_STATUS_DETAILS
         );
       case DB_CONNECTION_REFUSED_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_REFUSED_STATUS_DETAILS,
+          DB_CONNECTION_REFUSED_STATUS_DETAILS
         );
       case DB_INVALID_CONNECTION_ERROR:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_INVALID_CONNECTION_ERROR_DETAILS,
+          DB_INVALID_CONNECTION_ERROR_DETAILS
         );
       case DB_CONNECTION_TIMEOUT_ERROR:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_TIMEOUT_ERROR_DETAILS,
+          DB_CONNECTION_TIMEOUT_ERROR_DETAILS
         );
       case 0:
       case undefined:
       case null:
         return await requestResult(
-          statusCode.BAD_REQUEST,
-          'Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
+          BAD_REQUEST_CODE,
+          "Bad request, could not add user. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
         );
       default:
-        if (typeof newUser === 'object' && newUser.hasOwnProperty('id')) {
+        if (typeof newUser === "object" && newUser.hasOwnProperty("id")) {
           return await requestResult(OK_CODE, newUser);
         }
         return await requestResult(BAD_REQUEST_CODE, newUser);
@@ -162,7 +168,7 @@ module.exports.handler = async (event) => {
     //-- end with db query  ---
   } catch (error) {
     code = INTERNAL_SERVER_ERROR_CODE;
-    msgResponse = 'ERROR in add-user lambda function.';
+    msgResponse = "ERROR in add-user lambda function.";
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

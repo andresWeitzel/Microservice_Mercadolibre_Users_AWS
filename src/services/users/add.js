@@ -1,12 +1,14 @@
 //Models
-const { User } = require('../../models/sequelize/user');
+const { User } = require("../../models/sequelize/user");
 //Helpers
-const { currentDateTime } = require('../../helpers/dates/date');
+const { currentDateTime } = require("../../helpers/dates/date");
 const {
   checkSequelizeErrors,
-} = require('../../helpers/sequelize/errors/checkError');
+} = require("../../helpers/sequelize/errors/checkError");
+const { sequelizeConnection } = require("../../enums/sequelize/errors");
 // Const
-
+//connection_status
+const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 //Vars
 let newUser;
 let msg;
@@ -32,7 +34,7 @@ const addUser = async function (
   email,
   identificationType,
   identificationNumber,
-  countryId,
+  countryId
 ) {
   try {
     newUser = null;
@@ -59,12 +61,12 @@ const addUser = async function (
           newUser = await checkSequelizeErrors(error, error.name);
         });
     } else {
-      newUser = await checkSequelizeErrors(null, CONNECTION_REFUSED_STATUS);
+      newUser = await checkSequelizeErrors(null, DB_CONNECTION_REFUSED_STATUS);
     }
   } catch (error) {
     msg = `Error in addUser function. Caused by ${error}`;
-    console.log(`${msg}. Stack error type : ${error.stack}`);
-    newUser = await checkSequelizeErrors(error, CONNECTION_ERROR_STATUS);
+    console.log(msg);
+    newUser = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
   }
   return newUser;
 };
