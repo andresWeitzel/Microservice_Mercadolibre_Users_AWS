@@ -1,14 +1,16 @@
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Helpers
-const { currentDateTime } = require("../../helpers/dates/date");
+const { currentDateTime } = require('../../helpers/dates/date');
 const {
   checkSequelizeErrors,
-} = require("../../helpers/sequelize/errors/checkError");
-const { sequelizeConnection } = require("../../enums/sequelize/errors");
+} = require('../../helpers/sequelize/errors/checkError');
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
+const DB_CONNECTION_REFUSED_STATUS =
+  sequelizeConnection.CONNECTION_REFUSED_ERROR;
 //Vars
 let newUser;
 let msg;
@@ -34,14 +36,14 @@ const addUser = async function (
   email,
   identificationType,
   identificationNumber,
-  countryId
+  countryId,
 ) {
   try {
     newUser = null;
     msg = null;
     dateNow = await currentDateTime();
 
-    if (User != null) {
+    if (User != (null && undefined)) {
       await User.create({
         nickname: nickname,
         first_name: firstName,

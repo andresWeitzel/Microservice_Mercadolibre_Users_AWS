@@ -5,11 +5,11 @@
  */
 const validateHeadersMessage = {
   HEADERS_PARAMS_ERROR_MESSAGE:
-    "Bad request, check missing or malformed headers",
+    'Bad request, check missing or malformed headers',
   HEADERS_AUTH_ERROR_MESSAGE:
-    "Not authenticated, check x_api_key and Authorization",
+    'Not authenticated, check x_api_key and Authorization',
 };
 
 module.exports = {
-    validateHeadersMessage
-}
+  validateHeadersMessage,
+};
