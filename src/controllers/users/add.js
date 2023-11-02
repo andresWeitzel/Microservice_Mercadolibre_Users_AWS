@@ -167,11 +167,10 @@ module.exports.handler = async (event) => {
 
     //-- end with db query  ---
   } catch (error) {
-    code = INTERNAL_SERVER_ERROR_CODE;
     msgResponse = 'ERROR in add-user lambda function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 
-    return await requestResult(code, msgResponse);
+    return await requestResult(INTERNAL_SERVER_ERROR_CODE, msgResponse);
   }
 };

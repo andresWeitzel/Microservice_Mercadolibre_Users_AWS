@@ -14,7 +14,6 @@ const DB_CONNECTION_REFUSED_STATUS =
 //Const/Vars
 let deletedUser;
 let msg;
-let idParam;
 
 /**
  * @description delete a user from the database according to his idParam
