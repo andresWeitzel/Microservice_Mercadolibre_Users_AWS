@@ -55,6 +55,14 @@ functions:
           path: /v1/users/list
           method: get
           private: true
+  getAllWithoutDates:
+    handler: src/controllers/users/get-all-without-date.handler
+    description: Function in charge of obtaining the paginated list of users without dates of the db
+    events:
+      - http:
+          path: /v1/users/list-without-dates
+          method: get
+          private: true      
   getById:
     handler: src/controllers/users/get-by-id.handler
     description: Function in charge of obtaining a user according to his id of the db

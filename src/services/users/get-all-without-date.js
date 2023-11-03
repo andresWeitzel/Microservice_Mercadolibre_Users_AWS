@@ -1,7 +1,6 @@
 //Models
 const { User } = require("../../models/sequelize/user");
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
 const {
   checkSequelizeErrors,
 } = require("../../helpers/sequelize/errors/checkError");
@@ -27,7 +26,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 const ORDER_BY_ERROR_MESSAGE = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_MESSAGE = sortingMessage.ORDER_AT_ERROR_MESSAGE;
 const GENERIC_ERROR_LOG_MESSAGE =
-  "Error in getAll service function. Caused by ";
+  "Error in getAllWithoutDate service function. Caused by ";
 //Vars
 let usersList;
 let msg;
@@ -39,13 +38,13 @@ let orderAt;
 let order;
 
 /**
- * @description gets all paged users with all their attributes
+ * @description gets all paged users with all their attributes without date
  * @param {event} event event type
  * @returns a list of paginated users
  * @example
- * [{"id":1,"nickname":"RAFA-CON","first_name":"Rafael","last_name":"Castro","email":"rafael_castro88@gmail.com","identification_type":"DNI","identification_number":"445938822","country_id":"AR","creation_date":"2023-02-22 21:18:11","update_date":"2023-02-22 21:18:11"},{"id".....]
+ * [{"id":1,"nickname":"RAFA-CON","first_name":"Rafael","last_name":"Castro","email":"rafael_castro88@gmail.com","identification_type":"DNI","identification_number":"445938822","country_id":"AR",{"id".....]
  */
-const getAll = async function (event) {
+const getAllWithoutDate = async function (event) {
   try {
     usersList = null;
     msg = null;
@@ -70,7 +69,6 @@ const getAll = async function (event) {
       orderBy = queryStrParams.orderBy ? queryStrParams.orderBy : orderBy;
       orderAt = queryStrParams.orderAt ? queryStrParams.orderAt : orderAt;
     }
-
     orderBy = await checkOrderBy(orderBy);
 
     if (orderBy == (null || undefined)) {
@@ -89,10 +87,7 @@ const getAll = async function (event) {
     if (User != null) {
       await User.findAll({
         attributes: {
-          include: [
-            await getDateFormat("creation_date"),
-            await getDateFormat("update_date"),
-          ],
+          exclude: ["creation_date", "update_date"],
         },
         limit: pageSizeNro,
         offset: pageNro,
@@ -104,7 +99,6 @@ const getAll = async function (event) {
         .catch(async (error) => {
           msg = GENERIC_ERROR_LOG_MESSAGE + error;
           console.log(msg);
-
           usersList = await checkSequelizeErrors(error, error.name);
         });
     } else {
@@ -124,5 +118,5 @@ const getAll = async function (event) {
 };
 
 module.exports = {
-  getAll,
+  getAllWithoutDate,
 };

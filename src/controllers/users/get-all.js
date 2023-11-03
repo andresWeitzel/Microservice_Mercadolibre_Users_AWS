@@ -111,7 +111,7 @@ module.exports.handler = async (event) => {
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          'Bad request, failed to obtain paginated users list.',
+          'Bad request, failed to obtain paginated users list. Check if exist to database',
         );
       default:
         if (typeof userList === 'object' && userList[0]?.hasOwnProperty('id')) {

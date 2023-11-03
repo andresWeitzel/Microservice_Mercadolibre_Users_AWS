@@ -1,16 +1,17 @@
 //Models
-const { User } = require('../../models/sequelize/user');
+const { User } = require("../../models/sequelize/user");
 //Helpers
 const {
   checkSequelizeErrors,
-} = require('../../helpers/sequelize/errors/checkError');
+} = require("../../helpers/sequelize/errors/checkError");
 //Enums
-const { sequelizeConnection } = require('../../enums/sequelize/errors');
+const { sequelizeConnection } = require("../../enums/sequelize/errors");
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
   sequelizeConnection.CONNECTION_REFUSED_ERROR;
+const GENERIC_ERROR_LOG_MESSAGE = "Error in addUser service function. Caused by ";
 //Const/Vars
 let deletedUser;
 let msg;
@@ -44,21 +45,21 @@ const deleteUser = async function (idParam) {
                 };
         })
         .catch(async (error) => {
-          msg = `Error in delete User model. Caused by ${error}`;
+          msg = GENERIC_ERROR_LOG_MESSAGE + error;
+          console.log(msg);
           deletedUser = await checkSequelizeErrors(error, error.name);
         });
     } else {
       deletedUser = await checkSequelizeErrors(
         null,
-        DB_CONNECTION_REFUSED_STATUS,
+        DB_CONNECTION_REFUSED_STATUS
       );
     }
   } catch (error) {
-    msg = `Error in deleteUser function. Caused by ${error}`;
-    console.error(`${msg}. Stack error type : ${error.stack}`);
+    msg = GENERIC_ERROR_LOG_MESSAGE + error;
+    console.log(msg);
     deletedUser = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
   }
-  console.log(deletedUser);
   return deletedUser;
 };
 
