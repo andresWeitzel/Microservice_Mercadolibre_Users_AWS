@@ -1,24 +1,24 @@
-"use strict";
+'use strict';
 //Services
-const { getById } = require("../../services/users/get-by-id");
+const { getById } = require('../../services/users/get-by-id');
 //Enums
-const { statusCode } = require("../../enums/http/status-code");
+const { statusCode } = require('../../enums/http/status-code');
 const {
   validateHeadersMessage,
-} = require("../../enums/validation/errors/status-message");
+} = require('../../enums/validation/errors/status-message');
 const {
-  sequelizeConnection,  
+  sequelizeConnection,
   sequelizeConnectionDetails,
-} = require("../../enums/sequelize/errors");
+} = require('../../enums/sequelize/errors');
 //Helpers
-const { requestResult } = require("../../helpers/http/body-response");
+const { requestResult } = require('../../helpers/http/body-response');
 const {
   validateHeadersParams,
-} = require("../../helpers/http/request-headers-params");
-const { validateAuthHeaders } = require("../../helpers/auth/headers");
+} = require('../../helpers/http/request-headers-params');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
 const {
   validatePathParameters,
-} = require("../../helpers/http/query-string-params");
+} = require('../../helpers/http/query-string-params');
 //Const
 // validate msg
 const HEADERS_PARAMS_ERROR_MESSAGE =
@@ -77,7 +77,7 @@ module.exports.handler = async (event) => {
     if (!validateReqParams) {
       return await requestResult(
         BAD_REQUEST_CODE,
-        HEADERS_PARAMS_ERROR_MESSAGE
+        HEADERS_PARAMS_ERROR_MESSAGE,
       );
     }
 
@@ -96,7 +96,7 @@ module.exports.handler = async (event) => {
     if (!validatePathParam) {
       return await requestResult(
         BAD_REQUEST_CODE,
-        "Bad request, the id passed as a parameter is not valid"
+        'Bad request, the id passed as a parameter is not valid',
       );
     }
     //-- end with path parameters  ---
@@ -109,39 +109,39 @@ module.exports.handler = async (event) => {
       case DB_CONNECTION_ERROR_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_ERROR_STATUS_DETAILS
+          DB_CONNECTION_ERROR_STATUS_DETAILS,
         );
       case DB_CONNECTION_REFUSED_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_REFUSED_STATUS_DETAILS
+          DB_CONNECTION_REFUSED_STATUS_DETAILS,
         );
       case DB_INVALID_CONNECTION_ERROR:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_INVALID_CONNECTION_ERROR_DETAILS
+          DB_INVALID_CONNECTION_ERROR_DETAILS,
         );
       case DB_CONNECTION_TIMEOUT_ERROR:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_TIMEOUT_ERROR_DETAILS
+          DB_CONNECTION_TIMEOUT_ERROR_DETAILS,
         );
       case 0:
       case undefined:
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          "Bad request, failed to obtain a users. Check if exist to database"
+          'Bad request, failed to obtain a users. Check if exist to database',
         );
       default:
-        if (typeof user === "object" && user.hasOwnProperty("id")) {
+        if (typeof user === 'object' && user.hasOwnProperty('id')) {
           return await requestResult(OK_CODE, user);
         }
         return await requestResult(BAD_REQUEST_CODE, user);
     }
     //-- end with db query  ---
   } catch (error) {
-    msgResponse = "ERROR in get-by-id lambda function.";
+    msgResponse = 'ERROR in get-by-id lambda function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

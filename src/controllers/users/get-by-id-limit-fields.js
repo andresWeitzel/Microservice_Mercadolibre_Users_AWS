@@ -1,8 +1,6 @@
 'use strict';
 //Services
-const {
-  getAllWithoutDate,
-} = require('../../services/users/get-all-without-date');
+const { getByIdLimit } = require('../../services/users/get-by-id-limit-fields');
 //Enums
 const { statusCode } = require('../../enums/http/status-code');
 const {
@@ -18,6 +16,9 @@ const {
   validateHeadersParams,
 } = require('../../helpers/http/request-headers-params');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
+const {
+  validatePathParameters,
+} = require('../../helpers/http/query-string-params');
 //Const
 // validate msg
 const HEADERS_PARAMS_ERROR_MESSAGE =
@@ -46,22 +47,25 @@ const DB_CONNECTION_TIMEOUT_ERROR =
 const DB_CONNECTION_TIMEOUT_ERROR_DETAILS =
   sequelizeConnectionDetails.CONNECTION_TIMEOUT_ERROR_DETAIL;
 //Vars
-let userList;
+//Const/Vars
+let user;
+let userId;
+let validateAuth;
 let eventHeaders;
 let validateReqParams;
-let validateAuth;
+let validatePathParam;
 let msgResponse;
 let msgLog;
 
 /**
- * @description gets all paged users without dates
+ * @description Get a user with id, nickname, email, identification and country attributes whose id matches the one passed as a parameter
  * @param {Object} event Object type
- * @returns a list of paginated users
+ * @returns a user according to his id
  */
 module.exports.handler = async (event) => {
   try {
-    //users
-    userList = null;
+    user = null;
+    userId = null;
     msgResponse = null;
     msgLog = null;
 
@@ -84,10 +88,24 @@ module.exports.handler = async (event) => {
     }
     //-- end with validation Headers  ---
 
-    //-- start with db query --
-    userList = await getAllWithoutDate(event);
+    //-- start with path parameters  ---
+    userId = await event.pathParameters.id;
 
-    switch (userList) {
+    validatePathParam = await validatePathParameters(userId);
+
+    if (!validatePathParam) {
+      return await requestResult(
+        BAD_REQUEST_CODE,
+        'Bad request, the id passed as a parameter is not valid',
+      );
+    }
+    //-- end with path parameters  ---
+
+    //-- start with db query  ---
+
+    user = await getByIdLimit(userId);
+
+    switch (user) {
       case DB_CONNECTION_ERROR_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
@@ -113,18 +131,17 @@ module.exports.handler = async (event) => {
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          'Bad request, failed to obtain paginated users list without dates. Check if exist to database',
+          'Bad request, failed to obtain a users. Check if exist to database',
         );
       default:
-        if (typeof userList === 'object' && userList[0]?.hasOwnProperty('id')) {
-          return await requestResult(OK_CODE, userList);
+        if (typeof user === 'object' && user.hasOwnProperty('id')) {
+          return await requestResult(OK_CODE, user);
         }
-        return await requestResult(BAD_REQUEST_CODE, userList);
+        return await requestResult(BAD_REQUEST_CODE, user);
     }
-
     //-- end with db query  ---
   } catch (error) {
-    msgResponse = 'ERROR in get-all-without-dates lambda function.';
+    msgResponse = 'ERROR in get-by-id-limit-fields lambda function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

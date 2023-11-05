@@ -1,17 +1,18 @@
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Helpers
-const { currentDateTime } = require("../../helpers/dates/date");
+const { currentDateTime } = require('../../helpers/dates/date');
 const {
   checkSequelizeErrors,
-} = require("../../helpers/sequelize/errors/checkError");
-const { sequelizeConnection } = require("../../enums/sequelize/errors");
+} = require('../../helpers/sequelize/errors/checkError');
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
   sequelizeConnection.CONNECTION_REFUSED_ERROR;
-const GENERIC_ERROR_LOG_MESSAGE = "Error in addUser service function. Caused by ";
+const GENERIC_ERROR_LOG_MESSAGE =
+  'Error in addUser service function. Caused by ';
 //Vars
 let newUser;
 let msg;
@@ -37,7 +38,7 @@ const addUser = async function (
   email,
   identificationType,
   identificationNumber,
-  countryId
+  countryId,
 ) {
   try {
     newUser = null;
