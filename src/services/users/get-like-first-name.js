@@ -48,7 +48,7 @@ const getLikeFirstName = async function (
         order: order,
       })
         .then((users) => {
-          usersList = users;
+          usersList = users.dataValues;
         })
         .catch((error) => {
           msg = `Error in getLikeFirstName User model. Caused by ${error}`;

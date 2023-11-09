@@ -42,7 +42,7 @@ const getLikeNickname = async function (nickName, pageSizeNro, pageNro, order) {
         order: order,
       })
         .then((users) => {
-          usersList = users;
+          usersList = users.dataValues;
         })
         .catch((error) => {
           msg = `Error in getLikeNickname User model. Caused by ${error}`;

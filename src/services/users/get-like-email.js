@@ -43,7 +43,7 @@ const getLikeEmail = async function (email, pageSizeNro, pageNro, order) {
         order: order,
       })
         .then((users) => {
-          usersList = users;
+          usersList = users.dataValues;
         })
         .catch((error) => {
           msg = `Error in getLikeEmail User model. Caused by ${error}`;

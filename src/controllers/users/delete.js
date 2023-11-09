@@ -10,7 +10,7 @@ const {
 const {
   validateHeadersMessage,
 } = require("../../enums/validation/errors/status-message");
-const { validateUser, validateUserDetails } = require("../../enums/http/validations");
+const { validateUser, validateUserDetails } = require("../../enums/validation/user/validations");
 //Helpers
 const { requestResult } = require("../../helpers/http/body-response");
 const {
@@ -46,9 +46,9 @@ const DB_CONNECTION_TIMEOUT_ERROR =
 const DB_CONNECTION_TIMEOUT_ERROR_DETAILS =
   sequelizeConnectionDetails.CONNECTION_TIMEOUT_ERROR_DETAIL;
 //Validations
-const VALIDATE_HEADER_DELETE_USER = validateUser.VALIDATE_HEADER_DELETE_USER;
-const VALIDATE_HEADER_DELETE_USER_DETAIL =
-  validateUserDetails.VALIDATE_HEADER_DELETE_USER_DETAIL;
+const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
+const VALIDATE_PATH_PARAMETER_USER_DETAIL =
+  validateUserDetails.VALIDATE_PATH_PARAMETER_USER_DETAIL;
 //Vars
 let eventHeaders;
 let validateAuth;
@@ -115,10 +115,10 @@ module.exports.handler = async (event) => {
           INTERNAL_SERVER_ERROR_CODE,
           DB_CONNECTION_TIMEOUT_ERROR_DETAILS
         );
-      case VALIDATE_HEADER_DELETE_USER:
+      case VALIDATE_PATH_PARAMETER_USER:
         return await requestResult(
           BAD_REQUEST_CODE,
-          VALIDATE_HEADER_DELETE_USER_DETAIL
+          VALIDATE_PATH_PARAMETER_USER_DETAIL
         );
       case 0:
       case undefined:

@@ -2,7 +2,7 @@
 const { User } = require("../../models/sequelize/user");
 //Enums
 const { sequelizeConnection } = require("../../enums/sequelize/errors");
-const { validateUser } = require("../../enums/http/validations");
+const { validateUser } = require("../../enums/validation/user/validations");
 //Helpers
 const { currentDateTime } = require("../../helpers/dates/date");
 const {
@@ -38,7 +38,7 @@ let updateDateParam;
 
 /**
  * @description add user to database
- * @param {object} event objetc type
+ * @param {object} event object type
  * @returns a json object with the transaction performed
  * @example
  * {"id":null,"nickname":"JUANROMAN","first_name":"Juan","last_name":"Roman","email":"juan_roman@gmail.com","identification_type":"DNI","identification_number":"2221233",.....}

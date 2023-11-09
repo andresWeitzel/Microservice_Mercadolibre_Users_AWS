@@ -48,7 +48,7 @@ const getLikeIdentificationType = async function (
         order: order,
       })
         .then((users) => {
-          usersList = users;
+          usersList = users.dataValues;
         })
         .catch((error) => {
           msg = `Error in getLikeIdentificationType User model. Caused by ${error}`;

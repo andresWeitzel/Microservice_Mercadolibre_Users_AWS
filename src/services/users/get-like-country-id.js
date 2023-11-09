@@ -122,7 +122,7 @@ const getLikeCountryId = async function (event) {
         order: order,
       })
         .then(async (users) => {
-          usersList = users;
+          usersList = users.dataValues;
         })
         .catch(async (error) => {
           msg = GENERIC_ERROR_LOG_MESSAGE + error;

@@ -13,7 +13,7 @@ const {
 const {
   validateUserDetails,
   validateUser,
-} = require("../../enums/http/validations");
+} = require("../../enums/validation/user/validations");
 //Helpers
 const { requestResult } = require("../../helpers/http/body-response");
 const {

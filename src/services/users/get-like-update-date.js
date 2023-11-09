@@ -53,7 +53,7 @@ const getLikeUpdateDate = async function (
         order: order,
       })
         .then((users) => {
-          usersList = users;
+          usersList = users.dataValues;
         })
         .catch((error) => {
           msg = `Error in getLikeUpdateDate User model. Caused by ${error}`;

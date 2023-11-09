@@ -43,7 +43,7 @@ const getById = async function (idParam) {
         },
       })
         .then(async (object) => {
-          user = object;
+          user = object.dataValues;
         })
         .catch(async (error) => {
           msg = GENERIC_ERROR_LOG_MESSAGE + error;

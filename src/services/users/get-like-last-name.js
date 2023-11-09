@@ -42,7 +42,7 @@ const getLikeLastName = async function (lastName, pageSizeNro, pageNro, order) {
         order: order,
       })
         .then((users) => {
-          usersList = users;
+          usersList = users.dataValues;
         })
         .catch((error) => {
           msg = `Error in getLikeLastName User model. Caused by ${error}`;

@@ -54,7 +54,7 @@ const getLikeCreationDate = async function (
         order: order,
       })
         .then((users) => {
-          usersList = users;
+          usersList = users.dataValues;
         })
         .catch((error) => {
           msg = `Error in getLikeCreationDate User model. Caused by ${error}`;
