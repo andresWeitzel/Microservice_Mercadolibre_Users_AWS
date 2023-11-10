@@ -83,7 +83,8 @@ const addUser = async function (event) {
         update_date: updateDateParam,
       })
         .then(async (userItem) => {
-          newUser = userItem.dataValues;
+
+          newUser = userItem != null ? userItem.dataValues : userItem;
         })
         .catch(async (error) => {
           msg = GENERIC_ERROR_LOG_MESSAGE + error;

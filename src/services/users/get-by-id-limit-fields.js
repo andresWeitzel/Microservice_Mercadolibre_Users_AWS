@@ -39,7 +39,7 @@ const getByIdLimit = async function (event) {
     userIdParam = null;
 
     //-- start with path parameters  ---
-    userIdParam = await event.pathParameters.id;
+    userIdParam = event.pathParameters.id;
 
     validatePathParam = await validatePathParameters(userIdParam);
 
@@ -55,7 +55,7 @@ const getByIdLimit = async function (event) {
         },
       })
         .then(async (object) => {
-          user = object.dataValues;
+          user = object != null ? object.dataValues : object;
         })
         .catch(async (error) => {
           msg = GENERIC_ERROR_LOG_MESSAGE + error;
