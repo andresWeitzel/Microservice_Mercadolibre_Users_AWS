@@ -16,6 +16,10 @@ const {
   validateHeadersParams,
 } = require('../../helpers/http/request-headers-params');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
+const {
+  sortingMessage,
+  sortingMessageDetail,
+} = require('../../enums/pagination/errors/status-message');
 //Const
 // validate msg
 const HEADERS_PARAMS_ERROR_MESSAGE =
@@ -43,6 +47,13 @@ const DB_CONNECTION_TIMEOUT_ERROR =
   sequelizeConnection.CONNECTION_TIMEOUT_ERROR;
 const DB_CONNECTION_TIMEOUT_ERROR_DETAILS =
   sequelizeConnectionDetails.CONNECTION_TIMEOUT_ERROR_DETAIL;
+//sorting messages
+const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
+const ORDER_BY_ERROR_DETAIL =
+  sortingMessageDetail.ORDER_BY_ERROR_MESSAGE_DETAIL;
+const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
+const ORDER_AT_ERROR_NAME_DETAIL =
+  sortingMessageDetail.ORDER_AT_ERROR_MESSAGE_DETAIL;
 //Vars
 let userList;
 let eventHeaders;
@@ -105,6 +116,13 @@ module.exports.handler = async (event) => {
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
           DB_CONNECTION_TIMEOUT_ERROR_DETAILS,
+        );
+      case ORDER_BY_ERROR_NAME:
+        return await requestResult(BAD_REQUEST_CODE, ORDER_BY_ERROR_DETAIL);
+      case ORDER_AT_ERROR_NAME:
+        return await requestResult(
+          BAD_REQUEST_CODE,
+          ORDER_AT_ERROR_NAME_DETAIL,
         );
       case 0:
       case undefined:

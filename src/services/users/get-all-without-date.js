@@ -1,18 +1,18 @@
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Helpers
 const {
   checkSequelizeErrors,
-} = require("../../helpers/sequelize/errors/checkError");
+} = require('../../helpers/sequelize/errors/checkError');
 const {
   checkOrderBy,
   checkOrderAt,
-} = require("../../helpers/pagination/users/order");
+} = require('../../helpers/pagination/users/order');
 //Enums
-const { sequelizeConnection } = require("../../enums/sequelize/errors");
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
 const {
   sortingMessage,
-} = require("../../enums/pagination/errors/status-message");
+} = require('../../enums/pagination/errors/status-message');
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -22,7 +22,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
 const GENERIC_ERROR_LOG_MESSAGE =
-  "Error in getAllWithoutDate service function. Caused by ";
+  'Error in getAllWithoutDate service function. Caused by ';
 //Vars
 let usersList;
 let msgLog;
@@ -46,20 +46,18 @@ const getAllWithoutDate = async function (event) {
     //pagination
     pageSizeNro = 5;
     pageNro = 0;
-    orderBy = "id";
-    orderAt = "ASC";
+    orderBy = 'id';
+    orderAt = 'ASC';
     msgLog = null;
 
     //-- start with pagination  ---
-    queryStrParams = event.queryStrParams;
+    queryStrParams = await event.queryStringParameters;
 
     if (queryStrParams != (null && undefined)) {
       pageSizeNro = queryStrParams.limit
-        ? parseInt(await queryStrParams.limit)
+        ? parseInt(queryStrParams.limit)
         : pageSizeNro;
-      pageNro = queryStrParams.page
-        ? parseInt(await queryStrParams.page)
-        : pageNro;
+      pageNro = queryStrParams.page ? parseInt(queryStrParams.page) : pageNro;
       orderBy = queryStrParams.orderBy ? queryStrParams.orderBy : orderBy;
       orderAt = queryStrParams.orderAt ? queryStrParams.orderAt : orderAt;
     }
@@ -81,21 +79,16 @@ const getAllWithoutDate = async function (event) {
     if (User != null) {
       await User.findAll({
         attributes: {
-          exclude: ["creation_date", "update_date"],
+          exclude: ['creation_date', 'update_date'],
         },
         limit: pageSizeNro,
         offset: pageNro,
         order: order,
+        raw: true, //Only dataValues
+        nest: true, //for formatting with internal objects
       })
-        .then( (users) => {
-         if(typeof users === 'object'){
-          usersList =  users.dataValues;
-         }else{
+        .then((users) => {
           usersList = users;
-         }
-          // console.log(typeof users);
-          // usersList = (typeof users === 'object') ? users.dataValues : users;
-          console.log(usersList);
         })
         .catch(async (error) => {
           msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
@@ -105,7 +98,7 @@ const getAllWithoutDate = async function (event) {
     } else {
       usersList = await checkSequelizeErrors(
         null,
-        DB_CONNECTION_REFUSED_STATUS
+        DB_CONNECTION_REFUSED_STATUS,
       );
     }
   } catch (error) {

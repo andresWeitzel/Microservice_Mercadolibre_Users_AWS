@@ -24,8 +24,8 @@ const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
   sequelizeConnection.CONNECTION_REFUSED_ERROR;
 //sorting messages
-const ORDER_BY_ERROR_MESSAGE = sortingMessage.ORDER_BY_ERROR_MESSAGE;
-const ORDER_AT_ERROR_MESSAGE = sortingMessage.ORDER_AT_ERROR_MESSAGE;
+const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
+const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
 const GENERIC_ERROR_LOG_MESSAGE =
   'Error in getAll service function. Caused by ';
 //Vars
@@ -58,15 +58,13 @@ const getAll = async function (event) {
     msgLog = null;
 
     //-- start with pagination  ---
-    queryStrParams = event.queryStrParams;
+    queryStrParams = await event.queryStringParameters;
 
     if (queryStrParams != (null && undefined)) {
       pageSizeNro = queryStrParams.limit
-        ? parseInt(await queryStrParams.limit)
+        ? parseInt(queryStrParams.limit)
         : pageSizeNro;
-      pageNro = queryStrParams.page
-        ? parseInt(await queryStrParams.page)
-        : pageNro;
+      pageNro = queryStrParams.page ? parseInt(queryStrParams.page) : pageNro;
       orderBy = queryStrParams.orderBy ? queryStrParams.orderBy : orderBy;
       orderAt = queryStrParams.orderAt ? queryStrParams.orderAt : orderAt;
     }
@@ -74,13 +72,13 @@ const getAll = async function (event) {
     orderBy = await checkOrderBy(orderBy);
 
     if (orderBy == (null || undefined)) {
-      return await requestResult(BAD_REQUEST_CODE, ORDER_BY_ERROR_MESSAGE);
+      return ORDER_BY_ERROR_NAME;
     }
 
     orderAt = await checkOrderAt(orderAt);
 
     if (orderAt == (null || undefined)) {
-      return await requestResult(BAD_REQUEST_CODE, ORDER_AT_ERROR_MESSAGE);
+      return ORDER_AT_ERROR_NAME;
     }
 
     order = [[orderBy, orderAt]];
@@ -97,9 +95,11 @@ const getAll = async function (event) {
         limit: pageSizeNro,
         offset: pageNro,
         order: order,
+        raw: true, //Only dataValues
+        nest: true, //for formatting with internal objects
       })
         .then(async (users) => {
-          usersList = users != null ? users.dataValues : users;
+          usersList = users;
         })
         .catch(async (error) => {
           msg = GENERIC_ERROR_LOG_MESSAGE + error;

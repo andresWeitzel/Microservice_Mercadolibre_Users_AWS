@@ -1,22 +1,25 @@
-"use strict";
+'use strict';
 //Services
-const { deleteUser } = require("../../services/users/delete");
+const { deleteUser } = require('../../services/users/delete');
 //Enums
-const { statusCode } = require("../../enums/http/status-code");
+const { statusCode } = require('../../enums/http/status-code');
 const {
   sequelizeConnection,
   sequelizeConnectionDetails,
-} = require("../../enums/sequelize/errors");
+} = require('../../enums/sequelize/errors');
 const {
   validateHeadersMessage,
-} = require("../../enums/validation/errors/status-message");
-const { validateUser, validateUserDetails } = require("../../enums/validation/user/validations");
+} = require('../../enums/validation/errors/status-message');
+const {
+  validateUser,
+  validateUserDetails,
+} = require('../../enums/validation/user/validations');
 //Helpers
-const { requestResult } = require("../../helpers/http/body-response");
+const { requestResult } = require('../../helpers/http/body-response');
 const {
   validateHeadersParams,
-} = require("../../helpers/http/request-headers-params");
-const { validateAuthHeaders } = require("../../helpers/auth/headers");
+} = require('../../helpers/http/request-headers-params');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
 
 //Const
 // validate msg
@@ -79,7 +82,7 @@ module.exports.handler = async (event) => {
     if (!validateReqParams) {
       return await requestResult(
         BAD_REQUEST_CODE,
-        HEADERS_PARAMS_ERROR_MESSAGE
+        HEADERS_PARAMS_ERROR_MESSAGE,
       );
     }
 
@@ -98,39 +101,39 @@ module.exports.handler = async (event) => {
       case DB_CONNECTION_ERROR_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_ERROR_STATUS_DETAILS
+          DB_CONNECTION_ERROR_STATUS_DETAILS,
         );
       case DB_CONNECTION_REFUSED_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_REFUSED_STATUS_DETAILS
+          DB_CONNECTION_REFUSED_STATUS_DETAILS,
         );
       case DB_INVALID_CONNECTION_ERROR:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_INVALID_CONNECTION_ERROR_DETAILS
+          DB_INVALID_CONNECTION_ERROR_DETAILS,
         );
       case DB_CONNECTION_TIMEOUT_ERROR:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_TIMEOUT_ERROR_DETAILS
+          DB_CONNECTION_TIMEOUT_ERROR_DETAILS,
         );
       case VALIDATE_PATH_PARAMETER_USER:
         return await requestResult(
           BAD_REQUEST_CODE,
-          VALIDATE_PATH_PARAMETER_USER_DETAIL
+          VALIDATE_PATH_PARAMETER_USER_DETAIL,
         );
       case 0:
       case undefined:
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          "Bad request, a non-existent user cannot be deleted. Operation not allowed"
+          'Bad request, a non-existent user cannot be deleted. Operation not allowed',
         );
       default:
         if (
-          typeof deletedUser === "object" &&
-          deletedUser.hasOwnProperty("objectDeleted")
+          typeof deletedUser === 'object' &&
+          deletedUser.hasOwnProperty('objectDeleted')
         ) {
           return await requestResult(OK_CODE, deletedUser);
         }
@@ -139,7 +142,7 @@ module.exports.handler = async (event) => {
 
     //-- end with db query  ---
   } catch (error) {
-    msgResponse = "ERROR in delete-user lambda function.";
+    msgResponse = 'ERROR in delete-user lambda function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

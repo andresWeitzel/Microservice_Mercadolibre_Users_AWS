@@ -1,16 +1,16 @@
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { sequelizeConnection } = require("../../enums/sequelize/errors");
-const { validateUser } = require("../../enums/validation/user/validations");
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
+const { validateUser } = require('../../enums/validation/user/validations');
 //Helpers
-const { currentDateTime } = require("../../helpers/dates/date");
+const { currentDateTime } = require('../../helpers/dates/date');
 const {
   checkSequelizeErrors,
-} = require("../../helpers/sequelize/errors/checkError");
+} = require('../../helpers/sequelize/errors/checkError');
 const {
   validateBodyAddUserParams,
-} = require("../../helpers/http/users/request-body-add-user-params");
+} = require('../../helpers/http/users/request-body-add-user-params');
 
 // Const
 //connection_status
@@ -18,7 +18,7 @@ const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
   sequelizeConnection.CONNECTION_REFUSED_ERROR;
 const GENERIC_ERROR_LOG_MESSAGE =
-  "Error in addUser service function. Caused by ";
+  'Error in addUser service function. Caused by ';
 //Validations
 const VALIDATE_BODY_ADD_USER = validateUser.VALIDATE_BODY_ADD_USER;
 //Vars
@@ -69,7 +69,6 @@ const addUser = async function (event) {
     creationDateParam = await currentDateTime();
     updateDateParam = await currentDateTime();
 
-
     if (User != (null && undefined)) {
       await User.create({
         nickname: nicknameParam,
@@ -83,7 +82,6 @@ const addUser = async function (event) {
         update_date: updateDateParam,
       })
         .then(async (userItem) => {
-
           newUser = userItem != null ? userItem.dataValues : userItem;
         })
         .catch(async (error) => {

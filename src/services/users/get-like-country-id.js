@@ -1,23 +1,25 @@
 //Externals
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { sequelizeConnection } = require("../../enums/sequelize/errors");
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
 const {
   sortingMessage,
-} = require("../../enums/pagination/errors/status-message");
-const { statusCode } = require("../../enums/http/status-code");
+} = require('../../enums/pagination/errors/status-message');
+const { statusCode } = require('../../enums/http/status-code');
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
+const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
 const {
   checkSequelizeErrors,
-} = require("../../helpers/sequelize/errors/checkError");
+} = require('../../helpers/sequelize/errors/checkError');
 const {
   checkOrderAt,
   checkOrderBy,
-} = require("../../helpers/pagination/users/order");
-const { validatePathParameters } = require("../../helpers/http/query-string-params");
+} = require('../../helpers/pagination/users/order');
+const {
+  validatePathParameters,
+} = require('../../helpers/http/query-string-params');
 // Const
 //connection_status
 //codes
@@ -30,7 +32,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 const ORDER_BY_ERROR_MESSAGE = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_MESSAGE = sortingMessage.ORDER_AT_ERROR_MESSAGE;
 const GENERIC_ERROR_LOG_MESSAGE =
-  "Error in getLikeCountryId service function. Caused by ";
+  'Error in getLikeCountryId service function. Caused by ';
 //vars
 let userList;
 let countryId;
@@ -58,8 +60,8 @@ const getLikeCountryId = async function (event) {
     //pagination
     pageSizeNro = 5;
     pageNro = 0;
-    orderBy = "id";
-    orderAt = "ASC";
+    orderBy = 'id';
+    orderAt = 'ASC';
     msgResponse = null;
     msgLog = null;
 
@@ -71,7 +73,7 @@ const getLikeCountryId = async function (event) {
     if (!validatePathParam) {
       return await requestResult(
         BAD_REQUEST_CODE,
-        "Bad request, the country id passed as a parameter is not valid"
+        'Bad request, the country id passed as a parameter is not valid',
       );
     }
     //-- end with path parameters  ---
@@ -82,9 +84,7 @@ const getLikeCountryId = async function (event) {
       pageSizeNro = queryStrParams.limit
         ? parseInt(queryStrParams.limit)
         : pageSizeNro;
-      pageNro = queryStrParams.page
-        ? parseInt(queryStrParams.page)
-        : pageNro;
+      pageNro = queryStrParams.page ? parseInt(queryStrParams.page) : pageNro;
       orderBy = queryStrParams.orderBy ? queryStrParams.orderBy : orderBy;
       orderAt = queryStrParams.orderAt ? queryStrParams.orderAt : orderAt;
     }
@@ -108,8 +108,8 @@ const getLikeCountryId = async function (event) {
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat("creation_date"),
-            await getDateFormat("update_date"),
+            await getDateFormat('creation_date'),
+            await getDateFormat('update_date'),
           ],
         },
         where: {
