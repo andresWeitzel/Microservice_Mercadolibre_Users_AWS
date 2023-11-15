@@ -14,11 +14,7 @@ const { sequelizeConnection } = require('../../enums/sequelize/errors');
 const {
   sortingMessage,
 } = require('../../enums/pagination/errors/status-message');
-const { statusCode } = require('../../enums/http/status-code');
 // Const
-//connection_status
-//codes
-const BAD_REQUEST_CODE = statusCode.BAD_REQUEST;
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
@@ -30,7 +26,7 @@ const GENERIC_ERROR_LOG_MESSAGE =
   'Error in getAll service function. Caused by ';
 //Vars
 let usersList;
-let msg;
+let msgLog;
 let queryStrParams;
 let pageSizeNro;
 let pageNro;
@@ -48,7 +44,6 @@ let order;
 const getAll = async function (event) {
   try {
     usersList = null;
-    msg = null;
     //pagination
     pageSizeNro = 5;
     pageNro = 0;
@@ -102,8 +97,8 @@ const getAll = async function (event) {
           usersList = users;
         })
         .catch(async (error) => {
-          msg = GENERIC_ERROR_LOG_MESSAGE + error;
-          console.log(msg);
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          console.log(msgLog);
 
           usersList = await checkSequelizeErrors(error, error.name);
         });
@@ -114,8 +109,8 @@ const getAll = async function (event) {
       );
     }
   } catch (error) {
-    msg = GENERIC_ERROR_LOG_MESSAGE + error;
-    console.log(msg);
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    console.log(msgLog);
 
     usersList = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
   }

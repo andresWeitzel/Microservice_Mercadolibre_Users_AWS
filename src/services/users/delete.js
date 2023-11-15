@@ -19,7 +19,7 @@ const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Const/Vars
 let deletedUser;
 let userIdParam;
-let msg;
+let msgLog;
 
 /**
  * @description delete a user from the database according to his userIdParam
@@ -31,7 +31,7 @@ let msg;
 const deleteUser = async function (event) {
   try {
     deletedUser = null;
-    msg = null;
+    msgLog = null;
 
     userIdParam = await event.pathParameters.id;
 
@@ -56,8 +56,8 @@ const deleteUser = async function (event) {
                 };
         })
         .catch(async (error) => {
-          msg = GENERIC_ERROR_LOG_MESSAGE + error;
-          console.log(msg);
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          console.log(msgLog);
           deletedUser = await checkSequelizeErrors(error, error.name);
         });
     } else {
@@ -67,8 +67,8 @@ const deleteUser = async function (event) {
       );
     }
   } catch (error) {
-    msg = GENERIC_ERROR_LOG_MESSAGE + error;
-    console.log(msg);
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    console.log(msgLog);
     deletedUser = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
   }
   return deletedUser;

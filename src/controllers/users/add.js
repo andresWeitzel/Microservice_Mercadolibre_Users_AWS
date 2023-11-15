@@ -52,6 +52,9 @@ const DB_CONNECTION_TIMEOUT_ERROR_DETAILS =
 const VALIDATE_BODY_ADD_USER = validateUser.VALIDATE_BODY_ADD_USER;
 const VALIDATE_BODY_ADD_USER_DETAIL =
   validateUserDetails.VALIDATE_BODY_ADD_USER_DETAIL;
+//Errors
+const ADD_USER_ERROR_DETAIL =
+  'Bad request, could not add user. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.';
 //Vars
 let newUser;
 let eventHeaders;
@@ -122,10 +125,7 @@ module.exports.handler = async (event) => {
       case 0:
       case undefined:
       case null:
-        return await requestResult(
-          BAD_REQUEST_CODE,
-          'Bad request, could not add user. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
-        );
+        return await requestResult(BAD_REQUEST_CODE, ADD_USER_ERROR_DETAIL);
       default:
         if (typeof newUser === 'object' && newUser.hasOwnProperty('id')) {
           return await requestResult(OK_CODE, newUser);

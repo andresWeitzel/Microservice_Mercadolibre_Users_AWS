@@ -21,7 +21,7 @@ const GENERIC_ERROR_LOG_MESSAGE =
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Vars
 let user;
-let msg;
+let msgLog;
 let userIdParam;
 let validatePathParam;
 
@@ -35,7 +35,7 @@ let validatePathParam;
 const getByIdLimit = async function (event) {
   try {
     user = null;
-    msg = null;
+    msgLog = null;
     userIdParam = null;
 
     //-- start with path parameters  ---
@@ -53,13 +53,15 @@ const getByIdLimit = async function (event) {
         attributes: {
           exclude: ['first_name', 'last_name', 'creation_date', 'update_date'],
         },
+        raw: true, //Only dataValues
+        nest: true, //for formatting with internal objects
       })
         .then(async (object) => {
-          user = object != null ? object.dataValues : object;
+          user = object;
         })
         .catch(async (error) => {
-          msg = GENERIC_ERROR_LOG_MESSAGE + error;
-          console.log(msg);
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          console.log(msgLog);
 
           user = await checkSequelizeErrors(error, error.name);
         });
@@ -67,8 +69,8 @@ const getByIdLimit = async function (event) {
       user = await checkSequelizeErrors(null, DB_CONNECTION_REFUSED_STATUS);
     }
   } catch (error) {
-    msg = GENERIC_ERROR_LOG_MESSAGE + error;
-    console.log(msg);
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    console.log(msgLog);
 
     user = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
   }

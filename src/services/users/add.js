@@ -25,7 +25,7 @@ const VALIDATE_BODY_ADD_USER = validateUser.VALIDATE_BODY_ADD_USER;
 let newUser;
 let eventBody;
 let validateReqBodyParams;
-let msg;
+let msgLog;
 let nicknameParam;
 let firstNameParam;
 let lastNameParam;
@@ -46,7 +46,7 @@ let updateDateParam;
 const addUser = async function (event) {
   try {
     newUser = null;
-    msg = null;
+    msgLog = null;
 
     //-- start with validation Body  ---
 
@@ -85,16 +85,16 @@ const addUser = async function (event) {
           newUser = userItem != null ? userItem.dataValues : userItem;
         })
         .catch(async (error) => {
-          msg = GENERIC_ERROR_LOG_MESSAGE + error;
-          console.log(msg);
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          console.log(msgLog);
           newUser = await checkSequelizeErrors(error, error.name);
         });
     } else {
       newUser = await checkSequelizeErrors(null, DB_CONNECTION_REFUSED_STATUS);
     }
   } catch (error) {
-    msg = GENERIC_ERROR_LOG_MESSAGE + error;
-    console.log(msg);
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    console.log(msgLog);
     newUser = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
   }
   return newUser;

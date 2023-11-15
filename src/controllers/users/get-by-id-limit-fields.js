@@ -51,6 +51,9 @@ const DB_CONNECTION_TIMEOUT_ERROR_DETAILS =
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 const VALIDATE_PATH_PARAMETER_USER_DETAIL =
   validateUserDetails.VALIDATE_PATH_PARAMETER_USER_DETAIL;
+//Errors
+const GET_BY_ID_USERS_ERROR_DETAIL =
+  'Bad request, failed to obtain a user based on id. Check if exist to database';
 //Vars
 let user;
 let validateAuth;
@@ -124,7 +127,7 @@ module.exports.handler = async (event) => {
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          'Bad request, failed to obtain a user based on id. Check if exist to database',
+          GET_BY_ID_USERS_ERROR_DETAIL,
         );
       default:
         if (typeof user === 'object' && user.hasOwnProperty('id')) {

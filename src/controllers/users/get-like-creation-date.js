@@ -5,37 +5,75 @@ const {
 } = require('../../services/users/get-like-creation-date');
 //Enums
 const { statusCode } = require('../../enums/http/status-code');
-const { value } = require('../../enums/general/value');
+const {
+  validateHeadersMessage,
+} = require('../../enums/validation/errors/status-message');
+const {
+  sequelizeConnection,
+  sequelizeConnectionDetails,
+} = require('../../enums/sequelize/errors');
+const {
+  sortingMessage,
+  sortingMessageDetail,
+} = require('../../enums/pagination/errors/status-message');
+const {
+  validateUser,
+  validateUserDetails,
+} = require('../../enums/validation/user/validations');
 //Helpers
 const { requestResult } = require('../../helpers/http/body-response');
 const {
   validateHeadersParams,
 } = require('../../helpers/http/request-headers-params');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
-const {
-  validatePathParameters,
-} = require('../../helpers/http/query-string-params');
-const { statusName } = require('../../enums/connection/status-name');
-const {
-  checkOrderBy,
-  checkOrderAt,
-} = require('../../helpers/pagination/users/order');
-//Const/Vars
+//Const
+// validate msg
+const HEADERS_PARAMS_ERROR_MESSAGE =
+  validateHeadersMessage.HEADERS_PARAMS_ERROR_MESSAGE;
+const HEADERS_AUTH_ERROR_MESSAGE =
+  validateHeadersMessage.HEADERS_AUTH_ERROR_MESSAGE;
+//codes
+const INTERNAL_SERVER_ERROR_CODE = statusCode.INTERNAL_SERVER_ERROR;
+const BAD_REQUEST_CODE = statusCode.BAD_REQUEST;
+const UNAUTHORIZED_CODE = statusCode.UNAUTHORIZED;
+const OK_CODE = statusCode.OK;
+//connection_status
+const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
+const DB_CONNECTION_ERROR_STATUS_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_ERROR_DETAIL;
+const DB_CONNECTION_REFUSED_STATUS =
+  sequelizeConnection.CONNECTION_REFUSED_ERROR;
+const DB_CONNECTION_REFUSED_STATUS_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_REFUSED_DETAIL;
+const DB_INVALID_CONNECTION_ERROR =
+  sequelizeConnection.INVALID_CONNECTION_ERROR;
+const DB_INVALID_CONNECTION_ERROR_DETAILS =
+  sequelizeConnectionDetails.INVALID_CONNECTION_ERROR_DETAIL;
+const DB_CONNECTION_TIMEOUT_ERROR =
+  sequelizeConnection.CONNECTION_TIMEOUT_ERROR;
+const DB_CONNECTION_TIMEOUT_ERROR_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_TIMEOUT_ERROR_DETAIL;
+//sorting messages
+const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
+const ORDER_BY_ERROR_DETAIL =
+  sortingMessageDetail.ORDER_BY_ERROR_MESSAGE_DETAIL;
+const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
+const ORDER_AT_ERROR_NAME_DETAIL =
+  sortingMessageDetail.ORDER_AT_ERROR_MESSAGE_DETAIL;
+//Validations
+const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
+const VALIDATE_PATH_PARAMETER_USER_DETAIL =
+  validateUserDetails.VALIDATE_PATH_PARAMETER_USER_DETAIL;
+//Errors
+const GET_ALL_USERS_ERROR_DETAIL =
+  'Bad request, could not get paginated list of users according to creation date. Try again.';
+//Vars
 let userList;
-let creationDate;
 let eventHeaders;
-let validate;
 let validateReqParams;
-let validatePathParam;
-let queryStrParams;
-let pageSizeNro;
-let pageNro;
+let validateAuth;
 let msgResponse;
 let msgLog;
-let code;
-let orderAt;
-let orderBy;
-let order;
 
 /**
  * @description get all paged users whose creationDate matches the passed as parameter
@@ -44,15 +82,10 @@ let order;
  */
 module.exports.handler = async (event) => {
   try {
+    //users
     userList = null;
-    creationDate = null;
-    pageSizeNro = 5;
-    pageNro = 0;
-    orderBy = 'id';
-    orderAt = 'ASC';
     msgResponse = null;
     msgLog = null;
-    code = null;
 
     //-- start with validation Headers  ---
     eventHeaders = await event.headers;
@@ -61,108 +94,73 @@ module.exports.handler = async (event) => {
 
     if (!validateReqParams) {
       return await requestResult(
-        statusCode.BAD_REQUEST,
-        'Bad request, check missing or malformed headers',
+        BAD_REQUEST_CODE,
+        HEADERS_PARAMS_ERROR_MESSAGE,
       );
     }
 
-    validate = await validateAuthHeaders(eventHeaders);
+    validateAuth = await validateAuthHeaders(eventHeaders);
 
-    if (!validate) {
-      return await requestResult(
-        statusCode.UNAUTHORIZED,
-        'Not authenticated, check x_api_key and Authorization',
-      );
+    if (!validateAuth) {
+      return await requestResult(UNAUTHORIZED_CODE, HEADERS_AUTH_ERROR_MESSAGE);
     }
     //-- end with validation Headers  ---
 
-    //-- start with path parameters  ---
-    creationDate = await event.pathParameters.creationDate;
-
-    validatePathParam = await validatePathParameters(creationDate);
-
-    if (!validatePathParam) {
-      return await requestResult(
-        statusCode.BAD_REQUEST,
-        'Bad request, the creation date passed as a parameter is not valid',
-      );
-    }
-    //-- end with path parameters  ---
-
-    //-- start with pagination  ---
-    queryStrParams = event.queryStringParameters;
-
-    if (queryStrParams != (null && undefined)) {
-      pageSizeNro = parseInt(await event.queryStringParameters.limit);
-      pageNro = parseInt(await event.queryStringParameters.page);
-      pageNro = event.queryStringParameters.page
-        ? parseInt(await event.queryStringParameters.page)
-        : pageNro;
-      orderBy = event.queryStringParameters.orderBy
-        ? event.queryStringParameters.orderBy
-        : orderBy;
-      orderAt = event.queryStringParameters.orderAt
-        ? event.queryStringParameters.orderAt
-        : orderAt;
-    }
-
-    orderBy = await checkOrderBy(orderBy);
-
-    if (orderBy == (null || undefined)) {
-      return await requestResult(
-        statusCode.BAD_REQUEST,
-        'It is not possible to apply sorting based on the requested orderBy value. Invalid field',
-      );
-    }
-
-    orderAt = await checkOrderAt(orderAt);
-
-    if (orderAt == (null || undefined)) {
-      return await requestResult(
-        statusCode.BAD_REQUEST,
-        'It is not possible to apply sorting based on the requested orderAt value. Invalid field',
-      );
-    }
-
-    order = [[orderBy, orderAt]];
-    //-- end with pagination  ---
-
     //-- start with db query  ---
-    userList = await getLikeCreationDate(
-      creationDate,
-      pageSizeNro,
-      pageNro,
-      order,
-    );
+    userList = await getLikeCreationDate(event);
 
     switch (userList) {
-      case statusName.CONNECTION_REFUSED:
+      case DB_CONNECTION_ERROR_STATUS:
         return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          'ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available',
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_CONNECTION_ERROR_STATUS_DETAILS,
         );
-      case statusName.CONNECTION_ERROR:
+      case DB_CONNECTION_REFUSED_STATUS:
         return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          'ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306.',
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_CONNECTION_REFUSED_STATUS_DETAILS,
+        );
+      case DB_INVALID_CONNECTION_ERROR:
+        return await requestResult(
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_INVALID_CONNECTION_ERROR_DETAILS,
+        );
+      case DB_CONNECTION_TIMEOUT_ERROR:
+        return await requestResult(
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_CONNECTION_TIMEOUT_ERROR_DETAILS,
+        );
+      case VALIDATE_PATH_PARAMETER_USER:
+        return await requestResult(
+          BAD_REQUEST_CODE,
+          VALIDATE_PATH_PARAMETER_USER_DETAIL,
+        );
+      case ORDER_BY_ERROR_NAME:
+        return await requestResult(BAD_REQUEST_CODE, ORDER_BY_ERROR_DETAIL);
+      case ORDER_AT_ERROR_NAME:
+        return await requestResult(
+          BAD_REQUEST_CODE,
+          ORDER_AT_ERROR_NAME_DETAIL,
         );
       case 0:
       case undefined:
       case null:
         return await requestResult(
-          statusCode.BAD_REQUEST,
-          'Bad request, could not get paginated list of users according to creation date. Try again.',
+          BAD_REQUEST_CODE,
+          GET_ALL_USERS_ERROR_DETAIL,
         );
       default:
-        return await requestResult(statusCode.OK, userList);
+        if (typeof userList === 'object' && userList[0]?.hasOwnProperty('id')) {
+          return await requestResult(OK_CODE, userList);
+        }
+        return await requestResult(BAD_REQUEST_CODE, userList);
     }
     //-- end with db query  ---
   } catch (error) {
-    code = statusCode.INTERNAL_SERVER_ERROR;
     msgResponse = 'ERROR in get-like-creation-date lambda function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 
-    return await requestResult(code, msgResponse);
+    return await requestResult(INTERNAL_SERVER_ERROR_CODE, msgResponse);
   }
 };

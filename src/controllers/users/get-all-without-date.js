@@ -56,6 +56,9 @@ const ORDER_BY_ERROR_DETAIL =
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME_DETAIL =
   sortingMessageDetail.ORDER_AT_ERROR_MESSAGE_DETAIL;
+//Errors
+const GET_ALL_USERS_ERROR_DETAIL =
+  'Bad request, failed to obtain paginated users list without dates. Check if exist to database';
 //Vars
 let userList;
 let eventHeaders;
@@ -131,7 +134,7 @@ module.exports.handler = async (event) => {
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          'Bad request, failed to obtain paginated users list without dates. Check if exist to database',
+          GET_ALL_USERS_ERROR_DETAIL,
         );
       default:
         if (typeof userList === 'object' && userList[0]?.hasOwnProperty('id')) {

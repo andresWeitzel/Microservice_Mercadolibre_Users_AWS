@@ -20,7 +20,6 @@ const {
   validateHeadersParams,
 } = require('../../helpers/http/request-headers-params');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
-
 //Const
 // validate msg
 const HEADERS_PARAMS_ERROR_MESSAGE =
@@ -52,6 +51,9 @@ const DB_CONNECTION_TIMEOUT_ERROR_DETAILS =
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 const VALIDATE_PATH_PARAMETER_USER_DETAIL =
   validateUserDetails.VALIDATE_PATH_PARAMETER_USER_DETAIL;
+//Errors
+const DELETE_USER_ERROR_DETAIL =
+  'Bad request, a non-existent user cannot be deleted. Operation not allowed';
 //Vars
 let eventHeaders;
 let validateAuth;
@@ -126,10 +128,7 @@ module.exports.handler = async (event) => {
       case 0:
       case undefined:
       case null:
-        return await requestResult(
-          BAD_REQUEST_CODE,
-          'Bad request, a non-existent user cannot be deleted. Operation not allowed',
-        );
+        return await requestResult(BAD_REQUEST_CODE, DELETE_USER_ERROR_DETAIL);
       default:
         if (
           typeof deletedUser === 'object' &&
