@@ -3,32 +3,99 @@ const { Op } = require('sequelize');
 //Models
 const { User } = require('../../models/sequelize/user');
 //Enums
-const { statusName } = require('../../enums/connection/status-name');
+const {
+  sortingMessage,
+} = require('../../enums/pagination/errors/status-message');
+const { validateUser } = require('../../enums/validation/user/validations');
 //Helpers
 const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
-//Const/Vars
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
+const {
+  validatePathParameters,
+} = require('../../helpers/http/query-string-params');
+const {
+  checkOrderAt,
+  checkOrderBy,
+} = require('../../helpers/pagination/users/order');
+// Const
+//connection_status
+const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
+const DB_CONNECTION_REFUSED_STATUS =
+  sequelizeConnection.CONNECTION_REFUSED_ERROR;
+//sorting messages
+const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
+const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
+const GENERIC_ERROR_LOG_MESSAGE =
+  'Error in getLikeIdentificationNumber service function. Caused by ';
+//Validations
+const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
+//Vars
 let usersList;
-let msg;
+let msgLog;
+let validatePathParam;
+let identificationNumberParam;
+let queryStrParams;
+let pageSizeNro;
+let pageNro;
+let orderBy;
+let orderAt;
+let order;
 
 /**
  * @description get all paged users whose identification number matches the passed as parameter
- * @param {String} identificationNumber String type
- * @param {Number} pageSizeNro Number type
- * @param {Number} pageNro Number type
- * @param {Object} order Array Object type
+ * @param {Object} event event type
  * @returns a list of paginated users
  * @example
  * [{"id":1,"nickname":"RAFA-CON","first_name":"Rafael","last_name":"Castro","email":"rafael_castro88@gmail.com","identification_type":"DNI","identification_number":"445938822","country_id":"AR","creation_date":"2023-02-12 21:18:11","update_date":"2023-02-12 21:18:11"},{"id".....]
  */
-const getLikeIdentificationNumber = async function (
-  identificationNumber,
-  pageSizeNro,
-  pageNro,
-  order,
-) {
+const getLikeIdentificationNumber = async function (event) {
   try {
     usersList = null;
-    msg = null;
+    //pagination
+    pageSizeNro = 5;
+    pageNro = 0;
+    orderBy = 'id';
+    orderAt = 'ASC';
+    msgResponse = null;
+    msgLog = null;
+
+    //-- start with path parameters  ---
+    identificationNumberParam = await event.pathParameters.identificationNumber;
+
+    validatePathParam = await validatePathParameters(identificationNumberParam);
+
+    if (!validatePathParam) {
+      return VALIDATE_PATH_PARAMETER_USER;
+    }
+    //-- end with path parameters  ---
+
+    //-- start with pagination  ---
+    queryStrParams = await event.queryStringParameters;
+
+    if (queryStrParams != (null && undefined)) {
+      pageSizeNro = queryStrParams.limit
+        ? parseInt(queryStrParams.limit)
+        : pageSizeNro;
+      pageNro = queryStrParams.page ? parseInt(queryStrParams.page) : pageNro;
+      orderBy = queryStrParams.orderBy ? queryStrParams.orderBy : orderBy;
+      orderAt = queryStrParams.orderAt ? queryStrParams.orderAt : orderAt;
+    }
+
+    orderBy = await checkOrderBy(orderBy);
+
+    if (orderBy == (null || undefined)) {
+      return ORDER_BY_ERROR_NAME;
+    }
+
+    orderAt = await checkOrderAt(orderAt);
+
+    if (orderAt == (null || undefined)) {
+      return ORDER_AT_ERROR_NAME;
+    }
+
+    order = [[orderBy, orderAt]];
+
+    //-- end with pagination  ---
 
     if (User != null) {
       await User.findAll({
@@ -40,30 +107,36 @@ const getLikeIdentificationNumber = async function (
         },
         where: {
           identification_number: {
-            [Op.like]: `%${identificationNumber}%`, //containing what is entered, less strictmatch
+            [Op.like]: `%${identificationNumberParam}%`, //containing what is entered, less strictmatch
           },
         },
         limit: pageSizeNro,
         offset: pageNro,
         order: order,
+        raw: true, //Only dataValues
+        nest: true, //for formatting with internal objects
       })
-        .then((users) => {
-          usersList = users.dataValues;
+        .then(async (users) => {
+          usersList = users;
         })
-        .catch((error) => {
-          msg = `Error in getLikeIdentificationNumber User model. Caused by ${error}`;
-          console.error(`${msg}. Stack error type : ${error.stack}`);
-          usersList = statusName.CONNECTION_ERROR;
+        .catch(async (error) => {
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          console.log(msgLog);
+
+          usersList = await checkSequelizeErrors(error, error.name);
         });
     } else {
-      usersList = statusName.CONNECTION_REFUSED;
+      usersList = await checkSequelizeErrors(
+        null,
+        DB_CONNECTION_REFUSED_STATUS,
+      );
     }
   } catch (error) {
-    msg = `Error in getLikeIdentificationNumber function. Caused by ${error}`;
-    console.error(`${msg}. Stack error type : ${error.stack}`);
-    usersList = statusName.CONNECTION_ERROR;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    console.log(msgLog);
+
+    usersList = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
   }
-  console.log(usersList);
   return usersList;
 };
 
