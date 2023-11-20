@@ -17,6 +17,9 @@ const {
   checkOrderAt,
   checkOrderBy,
 } = require('../../helpers/pagination/users/order');
+const {
+  checkSequelizeErrors,
+} = require('../../helpers/sequelize/errors/checkError');
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;

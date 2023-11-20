@@ -1,41 +1,66 @@
 'use strict';
 //Services
 const { updateUser } = require('../../services/users/update');
-const { getById } = require('../../services/users/get-by-id');
 //Enums
 const { statusCode } = require('../../enums/http/status-code');
-const { value } = require('../../enums/general/value');
-const { statusName } = require('../../enums/connection/status-name');
+const {
+  sequelizeConnection,
+  sequelizeConnectionDetails,
+} = require('../../enums/sequelize/errors');
+const {
+  validateHeadersMessage,
+} = require('../../enums/validation/errors/status-message');
+const {
+  validateUserDetails,
+  validateUser,
+} = require('../../enums/validation/user/validations');
 //Helpers
 const { requestResult } = require('../../helpers/http/body-response');
 const {
   validateHeadersParams,
 } = require('../../helpers/http/request-headers-params');
-const {
-  validateBodyUpdateUserParams,
-} = require('../../helpers/http/users/request-body-update-user-params');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
-
-//Const/Vars
-let newUser;
-let eventBody;
+// Const
+// validate msg
+const HEADERS_PARAMS_ERROR_MESSAGE =
+  validateHeadersMessage.HEADERS_PARAMS_ERROR_MESSAGE;
+const HEADERS_AUTH_ERROR_MESSAGE =
+  validateHeadersMessage.HEADERS_AUTH_ERROR_MESSAGE;
+//codes
+const INTERNAL_SERVER_ERROR_CODE = statusCode.INTERNAL_SERVER_ERROR;
+const BAD_REQUEST_CODE = statusCode.BAD_REQUEST;
+const UNAUTHORIZED_CODE = statusCode.UNAUTHORIZED;
+const OK_CODE = statusCode.OK;
+//connection_status
+const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
+const DB_CONNECTION_ERROR_STATUS_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_ERROR_DETAIL;
+const DB_CONNECTION_REFUSED_STATUS =
+  sequelizeConnection.CONNECTION_REFUSED_ERROR;
+const DB_CONNECTION_REFUSED_STATUS_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_REFUSED_DETAIL;
+const DB_INVALID_CONNECTION_ERROR =
+  sequelizeConnection.INVALID_CONNECTION_ERROR;
+const DB_INVALID_CONNECTION_ERROR_DETAILS =
+  sequelizeConnectionDetails.INVALID_CONNECTION_ERROR_DETAIL;
+const DB_CONNECTION_TIMEOUT_ERROR =
+  sequelizeConnection.CONNECTION_TIMEOUT_ERROR;
+const DB_CONNECTION_TIMEOUT_ERROR_DETAILS =
+  sequelizeConnectionDetails.CONNECTION_TIMEOUT_ERROR_DETAIL;
+//Validations
+const VALIDATE_BODY_UPDATE_USER = validateUser.VALIDATE_BODY_UPDATE_USER;
+const VALIDATE_BODY_UPDATE_USER_DETAIL =
+  validateUserDetails.VALIDATE_BODY_UPDATE_USER_DETAIL;
+//Errors
+const UPDATE_USER_ERROR_DETAIL =
+  'Bad request, could not updated user. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.';
+//Vars
+let updatedUser;
 let eventHeaders;
 let validateAuth;
 let validateReqParams;
-let validateReqBodyParams;
-let nickname;
-let firstName;
-let lastName;
-let oldUser;
-let userId;
-let email;
-let identType;
-let identNumber;
-let countryId;
-let creationDate;
 let msgResponse;
 let msgLog;
-let code;
 
 /**
  * @description update a user according to the parameters passed in the request body
@@ -45,10 +70,9 @@ let code;
 module.exports.handler = async (event) => {
   try {
     //Init
-    newUser = null;
+    updatedUser = null;
     msgResponse = null;
     msgLog = null;
-    code = null;
 
     //-- start with validation Headers  ---
     eventHeaders = await event.headers;
@@ -57,135 +81,65 @@ module.exports.handler = async (event) => {
 
     if (!validateReqParams) {
       return await requestResult(
-        statusCode.BAD_REQUEST,
-        'Bad request, check missing or malformed headers',
-        event,
+        BAD_REQUEST_CODE,
+        HEADERS_PARAMS_ERROR_MESSAGE,
       );
     }
 
     validateAuth = await validateAuthHeaders(eventHeaders);
 
     if (!validateAuth) {
-      return await requestResult(
-        statusCode.UNAUTHORIZED,
-        'Not authenticated, check x_api_key and Authorization',
-        event,
-      );
+      return await requestResult(UNAUTHORIZED_CODE, HEADERS_AUTH_ERROR_MESSAGE);
     }
     //-- end with validation Headers  ---
 
-    //-- start with validation Body  ---
+    updatedUser = await updateUser(event);
 
-    eventBody = JSON.parse(await event.body);
-
-    validateReqBodyParams = await validateBodyUpdateUserParams(eventBody);
-
-    if (!validateReqBodyParams) {
-      return await requestResult(
-        statusCode.BAD_REQUEST,
-        'Bad request, check request attributes. Missing or incorrect',
-        event,
-      );
-    }
-    //-- end with validation Body  ---
-
-    //-- start with db query  ---
-
-    userId = await event.pathParameters.id;
-
-    oldUser = await getById(userId);
-
-    if (oldUser == (0 || undefined || null)) {
-      return await requestResult(
-        statusCode.BAD_REQUEST,
-        'Bad request, check request attributes and object to update',
-      );
-    }
-
-    nickname =
-      eventBody.nickname == null || !eventBody.nickname.length
-        ? oldUser.nickname
-        : eventBody.nickname;
-
-    firstName =
-      eventBody.first_name == null || !eventBody.first_name.length
-        ? oldUser.first_name
-        : eventBody.first_name;
-
-    lastName =
-      eventBody.last_name == null || !eventBody.last_name.length
-        ? oldUser.last_name
-        : eventBody.last_name;
-
-    email =
-      eventBody.email == null || !eventBody.email.length
-        ? oldUser.email
-        : eventBody.email;
-
-    identType =
-      eventBody.identification_type == null ||
-      !eventBody.identification_type.length
-        ? oldUser.identification_type
-        : eventBody.identification_type;
-
-    identNumber =
-      eventBody.identification_number == null ||
-      !eventBody.identification_number.length
-        ? oldUser.identification_number
-        : eventBody.identification_number;
-
-    countryId =
-      eventBody.country_id == null || !eventBody.country_id.length
-        ? oldUser.country_id
-        : eventBody.country_id;
-
-    creationDate =
-      eventBody.creation_date == null || !eventBody.creation_date.length
-        ? oldUser.creation_date
-        : eventBody.creation_date;
-
-    newUser = await updateUser(
-      userId,
-      nickname,
-      firstName,
-      lastName,
-      email,
-      identType,
-      identNumber,
-      countryId,
-      creationDate,
-    );
-
-    switch (newUser) {
-      case statusName.CONNECTION_REFUSED:
+    switch (updatedUser) {
+      case DB_CONNECTION_ERROR_STATUS:
         return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          'ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_CONNECTION_ERROR_STATUS_DETAILS,
         );
-      case statusName.CONNECTION_ERROR:
+      case DB_CONNECTION_REFUSED_STATUS:
         return await requestResult(
-          statusCode.INTERNAL_SERVER_ERROR,
-          'ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306.',
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_CONNECTION_REFUSED_STATUS_DETAILS,
+        );
+      case DB_INVALID_CONNECTION_ERROR:
+        return await requestResult(
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_INVALID_CONNECTION_ERROR_DETAILS,
+        );
+      case DB_CONNECTION_TIMEOUT_ERROR:
+        return await requestResult(
+          INTERNAL_SERVER_ERROR_CODE,
+          DB_CONNECTION_TIMEOUT_ERROR_DETAILS,
+        );
+      case VALIDATE_BODY_UPDATE_USER:
+        return await requestResult(
+          BAD_REQUEST_CODE,
+          VALIDATE_BODY_UPDATE_USER_DETAIL,
         );
       case 0:
       case undefined:
       case null:
-        return await requestResult(
-          statusCode.BAD_REQUEST,
-          'Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.',
-        );
+        return await requestResult(BAD_REQUEST_CODE, UPDATE_USER_ERROR_DETAIL);
       default:
-        newUser = await getById(userId);
-
-        return await requestResult(statusCode.OK, newUser);
+        if (
+          typeof updatedUser === 'object' &&
+          updatedUser.hasOwnProperty('id')
+        ) {
+          return await requestResult(OK_CODE, updatedUser);
+        }
+        return await requestResult(BAD_REQUEST_CODE, updatedUser);
     }
     //-- end with db query  ---
   } catch (error) {
-    code = statusCode.INTERNAL_SERVER_ERROR;
-    msgResponse = 'ERROR in update lambda function.';
+    msgResponse = 'ERROR in update-user lambda function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 
-    return await requestResult(code, msgResponse);
+    return await requestResult(INTERNAL_SERVER_ERROR_CODE, msgResponse);
   }
 };

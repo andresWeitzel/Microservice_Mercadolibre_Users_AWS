@@ -11,7 +11,6 @@ const {
 const {
   validateBodyAddUserParams,
 } = require('../../helpers/http/users/request-body-add-user-params');
-
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
