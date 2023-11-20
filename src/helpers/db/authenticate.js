@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 //dbConfig
-const { dbConnection } = require("../../db/localConfig");
+const { dbConnection } = require('../../db/localConfig');
 //Const/vars
 let check;
 let msgResponse;
@@ -24,7 +24,7 @@ const checkDbAuthentication = async function () {
   } catch (error) {
     check = false;
 
-    msgResponse = "ERROR in checkDbAuthentication() function.";
+    msgResponse = 'ERROR in checkDbAuthentication() function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
   }

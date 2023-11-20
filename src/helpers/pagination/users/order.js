@@ -13,49 +13,49 @@ const checkOrderBy = async (orderBy) => {
     msgLog = null;
 
     switch (orderBy.toLowerCase()) {
-      case "id":
-        orderBy = "id";
+      case 'id':
+        orderBy = 'id';
         break;
-      case "nickname":
-        orderBy = "nickname";
+      case 'nickname':
+        orderBy = 'nickname';
         break;
-      case "first_name":
-      case "firstname":
-        orderBy = "first_name";
+      case 'first_name':
+      case 'firstname':
+        orderBy = 'first_name';
         break;
-      case "last_name":
-      case "lastname":
-        orderBy = "last_name";
+      case 'last_name':
+      case 'lastname':
+        orderBy = 'last_name';
         break;
-      case "email":
-        orderBy = "email";
+      case 'email':
+        orderBy = 'email';
         break;
-      case "identification_type":
-      case "identificationtype":
-        orderBy = "identification_type";
+      case 'identification_type':
+      case 'identificationtype':
+        orderBy = 'identification_type';
         break;
-      case "identification_number":
-      case "identificationnumber":
-        orderBy = "identification_number";
+      case 'identification_number':
+      case 'identificationnumber':
+        orderBy = 'identification_number';
         break;
-      case "country_id":
-      case "countryid":
-        orderBy = "country_id";
+      case 'country_id':
+      case 'countryid':
+        orderBy = 'country_id';
         break;
-      case "creation_date":
-      case "creationdate":
-        orderBy = "creation_date";
+      case 'creation_date':
+      case 'creationdate':
+        orderBy = 'creation_date';
         break;
-      case "update_date":
-      case "updatedate":
-        orderBy = "update_date";
+      case 'update_date':
+      case 'updatedate':
+        orderBy = 'update_date';
         break;
       default:
         orderBy = null;
     }
     return orderBy;
   } catch (error) {
-    msgResponse = "ERROR in checkOrderBy() helper function.";
+    msgResponse = 'ERROR in checkOrderBy() helper function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
     return null;
@@ -73,18 +73,18 @@ const checkOrderAt = async (orderAt) => {
     msgLog = null;
 
     switch (orderAt.toLowerCase()) {
-      case "asc":
-        orderAt = "ASC";
+      case 'asc':
+        orderAt = 'ASC';
         break;
-      case "desc":
-        orderAt = "DESC";
+      case 'desc':
+        orderAt = 'DESC';
         break;
       default:
         orderAt = null;
     }
     return orderAt;
   } catch (error) {
-    msgResponse = "ERROR in checkOrderAt() helper function.";
+    msgResponse = 'ERROR in checkOrderAt() helper function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
     return null;

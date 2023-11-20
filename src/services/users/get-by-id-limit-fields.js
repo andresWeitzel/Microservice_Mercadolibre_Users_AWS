@@ -4,7 +4,6 @@ const { User } = require('../../models/sequelize/user');
 const { sequelizeConnection } = require('../../enums/sequelize/errors');
 const { validateUser } = require('../../enums/validation/user/validations');
 //Helpers
-const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
 const {
   checkSequelizeErrors,
 } = require('../../helpers/sequelize/errors/checkError');
@@ -17,7 +16,7 @@ const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
   sequelizeConnection.CONNECTION_REFUSED_ERROR;
 const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in getById service function. Caused by ';
+  'Error in getByIdLimit service function. Caused by ';
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Vars
@@ -27,20 +26,20 @@ let userIdParam;
 let validatePathParam;
 
 /**
- * @description Get a user with all its attributes whose id matches the one passed as a parameter
+ * @description Get a user with id, nickname, email, identification and country attributes whose id matches the one passed as a parameter
  * @param {object} event object type
  * @returns a user according to his id
  * @example
- * {"id":2,"nickname":"JAVIER GONZALEZ","first_name":"Javier","last_name":"Gonzalez","email":"javiBoquita@gmail.com","identification_type":"DNI","identification_number":"2672268765","country_id":"AR","creation_date":"2023-04-23 21:18:11","update_date":"2023-04-23 21:18:11"}
+ * {"id":2,"nickname":"JAVIER GONZALEZ","email":"javiBoquita@gmail.com","identification_type":"DNI","identification_number":"2672268765","country_id":"AR"}
  */
-const getById = async function (event) {
+const getByIdLimit = async function (event) {
   try {
     user = null;
     msgLog = null;
     userIdParam = null;
 
     //-- start with path parameters  ---
-    userIdParam = await event.pathParameters.id;
+    userIdParam = event.pathParameters.id;
 
     validatePathParam = await validatePathParameters(userIdParam);
 
@@ -52,13 +51,10 @@ const getById = async function (event) {
     if (User != null) {
       await User.findByPk(userIdParam, {
         attributes: {
-          include: [
-            await getDateFormat('creation_date'),
-            await getDateFormat('update_date'),
-          ],
-          raw: true, //Only dataValues
-          nest: true, //for formatting with internal objects
+          exclude: ['first_name', 'last_name', 'creation_date', 'update_date'],
         },
+        raw: true, //Only dataValues
+        nest: true, //for formatting with internal objects
       })
         .then(async (object) => {
           user = object;
@@ -82,5 +78,5 @@ const getById = async function (event) {
 };
 
 module.exports = {
-  getById,
+  getByIdLimit,
 };

@@ -1,47 +1,77 @@
 //Models
 const { User } = require('../../models/sequelize/user');
+//Helpers
+const {
+  checkSequelizeErrors,
+} = require('../../helpers/sequelize/errors/checkError');
 //Enums
-const { statusName } = require('../../enums/connection/status-name');
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
+const { validateUser } = require('../../enums/validation/user/validations');
+// Const
+//connection_status
+const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
+const DB_CONNECTION_REFUSED_STATUS =
+  sequelizeConnection.CONNECTION_REFUSED_ERROR;
+const GENERIC_ERROR_LOG_MESSAGE =
+  'Error in addUser service function. Caused by ';
+//Validations
+const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Const/Vars
-let user;
-let msg;
+let deletedUser;
+let userIdParam;
+let msgLog;
 
 /**
- * @description delete a user from the database according to his id
- * @param {Integer} id Integer type
+ * @description delete a user from the database according to his userIdParam
+ * @param {object} event object type
  * @returns a json object with the transaction performed
  * @example
- * {"id":null,"nickname":"JUANROMAN","first_name":"Juan","last_name":"Roman","email":"juan_roman@gmail.com","identification_type":"DNI","identification_number":"2221233",.....}
+ * {"userIdParam":null,"nickname":"JUANROMAN","first_name":"Juan","last_name":"Roman","email":"juan_roman@gmail.com","idParamentification_type":"DNI","idParamentification_number":"2221233",.....}
  */
-const deleteUser = async function (id) {
+const deleteUser = async function (event) {
   try {
-    user = null;
-    msg = null;
+    deletedUser = null;
+    msgLog = null;
 
-    if (User != null) {
+    userIdParam = await event.pathParameters.id;
+
+    if (userIdParam == (null || undefined)) {
+      return VALIDATE_PATH_PARAMETER_USER;
+    }
+
+    if (User != (null && undefined)) {
       await User.destroy({
         where: {
-          id: id,
+          id: userIdParam,
         },
       })
-        .then((userItem) => {
-          user = userItem;
+        .then(async (userItem) => {
+          deletedUser =
+            userItem == 1
+              ? {
+                  objectDeleted: `User has been successfully deleted based on id ${userIdParam}`,
+                }
+              : {
+                  objectDeleted: `User based on id ${userIdParam} has not been deleted. Check if the user exists in the db.`,
+                };
         })
-        .catch((error) => {
-          msg = `Error in delete User model. Caused by ${error}`;
-          console.error(`${msg}. Stack error type : ${error.stack}`);
-          user = statusName.CONNECTION_ERROR;
+        .catch(async (error) => {
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          console.log(msgLog);
+          deletedUser = await checkSequelizeErrors(error, error.name);
         });
     } else {
-      user = statusName.CONNECTION_REFUSED;
+      deletedUser = await checkSequelizeErrors(
+        null,
+        DB_CONNECTION_REFUSED_STATUS,
+      );
     }
   } catch (error) {
-    msg = `Error in deleteUser function. Caused by ${error}`;
-    console.error(`${msg}. Stack error type : ${error.stack}`);
-    user = statusName.CONNECTION_ERROR;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    console.log(msgLog);
+    deletedUser = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
   }
-  console.log(user);
-  return user;
+  return deletedUser;
 };
 
 module.exports = {

@@ -1,6 +1,6 @@
 'use strict';
 //Services
-const { getLikeEmail } = require('../../services/users/get-like-email');
+const { getByIdLimit } = require('../../services/users/get-by-id-limit-fields');
 //Enums
 const { statusCode } = require('../../enums/http/status-code');
 const {
@@ -10,10 +10,6 @@ const {
   sequelizeConnection,
   sequelizeConnectionDetails,
 } = require('../../enums/sequelize/errors');
-const {
-  sortingMessage,
-  sortingMessageDetail,
-} = require('../../enums/pagination/errors/status-message');
 const {
   validateUser,
   validateUserDetails,
@@ -51,37 +47,29 @@ const DB_CONNECTION_TIMEOUT_ERROR =
   sequelizeConnection.CONNECTION_TIMEOUT_ERROR;
 const DB_CONNECTION_TIMEOUT_ERROR_DETAILS =
   sequelizeConnectionDetails.CONNECTION_TIMEOUT_ERROR_DETAIL;
-//sorting messages
-const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
-const ORDER_BY_ERROR_DETAIL =
-  sortingMessageDetail.ORDER_BY_ERROR_MESSAGE_DETAIL;
-const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
-const ORDER_AT_ERROR_NAME_DETAIL =
-  sortingMessageDetail.ORDER_AT_ERROR_MESSAGE_DETAIL;
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 const VALIDATE_PATH_PARAMETER_USER_DETAIL =
   validateUserDetails.VALIDATE_PATH_PARAMETER_USER_DETAIL;
 //Errors
-const GET_ALL_USERS_ERROR_DETAIL =
-  'Bad request, could not get paginated list of users according to email. Try again.';
+const GET_BY_ID_USERS_ERROR_DETAIL =
+  'Bad request, failed to obtain a user based on id. Check if exist to database';
 //Vars
-let userList;
+let user;
+let validateAuth;
 let eventHeaders;
 let validateReqParams;
-let validateAuth;
 let msgResponse;
 let msgLog;
 
 /**
- * @description get all paged users whose email matches the passed as parameter
+ * @description Get a user with id, nickname, email, identification and country attributes whose id matches the one passed as a parameter
  * @param {Object} event Object type
- * @returns a list of paginated users
+ * @returns a user according to his id
  */
 module.exports.handler = async (event) => {
   try {
-    //users
-    userList = null;
+    user = null;
     msgResponse = null;
     msgLog = null;
 
@@ -105,9 +93,10 @@ module.exports.handler = async (event) => {
     //-- end with validation Headers  ---
 
     //-- start with db query  ---
-    userList = await getLikeEmail(event);
 
-    switch (userList) {
+    user = await getByIdLimit(event);
+
+    switch (user) {
       case DB_CONNECTION_ERROR_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
@@ -133,29 +122,22 @@ module.exports.handler = async (event) => {
           BAD_REQUEST_CODE,
           VALIDATE_PATH_PARAMETER_USER_DETAIL,
         );
-      case ORDER_BY_ERROR_NAME:
-        return await requestResult(BAD_REQUEST_CODE, ORDER_BY_ERROR_DETAIL);
-      case ORDER_AT_ERROR_NAME:
-        return await requestResult(
-          BAD_REQUEST_CODE,
-          ORDER_AT_ERROR_NAME_DETAIL,
-        );
       case 0:
       case undefined:
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          GET_ALL_USERS_ERROR_DETAIL,
+          GET_BY_ID_USERS_ERROR_DETAIL,
         );
       default:
-        if (typeof userList === 'object' && userList[0]?.hasOwnProperty('id')) {
-          return await requestResult(OK_CODE, userList);
+        if (typeof user === 'object' && user.hasOwnProperty('id')) {
+          return await requestResult(OK_CODE, user);
         }
-        return await requestResult(BAD_REQUEST_CODE, userList);
+        return await requestResult(BAD_REQUEST_CODE, user);
     }
     //-- end with db query  ---
   } catch (error) {
-    msgResponse = 'ERROR in get-like-email lambda function.';
+    msgResponse = 'ERROR in get-by-id-limit-fields lambda function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

@@ -1,71 +1,102 @@
 //Models
 const { User } = require('../../models/sequelize/user');
 //Enums
-const { statusName } = require('../../enums/connection/status-name');
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
+const { validateUser } = require('../../enums/validation/user/validations');
 //Helpers
 const { currentDateTime } = require('../../helpers/dates/date');
-//Const/Vars
-let user;
-let msg;
-let dateNow;
+const {
+  checkSequelizeErrors,
+} = require('../../helpers/sequelize/errors/checkError');
+const {
+  validateBodyAddUserParams,
+} = require('../../helpers/http/users/request-body-add-user-params');
+// Const
+//connection_status
+const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
+const DB_CONNECTION_REFUSED_STATUS =
+  sequelizeConnection.CONNECTION_REFUSED_ERROR;
+const GENERIC_ERROR_LOG_MESSAGE =
+  'Error in addUser service function. Caused by ';
+//Validations
+const VALIDATE_BODY_ADD_USER = validateUser.VALIDATE_BODY_ADD_USER;
+//Vars
+let newUser;
+let eventBody;
+let validateReqBodyParams;
+let msgLog;
+let nicknameParam;
+let firstNameParam;
+let lastNameParam;
+let emailParam;
+let identTypeParam;
+let identNumberParam;
+let countryIdParam;
+let creationDateParam;
+let updateDateParam;
 
 /**
  * @description add user to database
- * @param {String} nickname String type
- * @param {String} firstName String type
- * @param {String} lastName String type
- * @param {String} email String type
- * @param {String} identificationType String type
- * @param {String} identificatioNumber String type
- * @param {String} countryId String type
+ * @param {object} event object type
  * @returns a json object with the transaction performed
  * @example
  * {"id":null,"nickname":"JUANROMAN","first_name":"Juan","last_name":"Roman","email":"juan_roman@gmail.com","identification_type":"DNI","identification_number":"2221233",.....}
  */
-const addUser = async function (
-  nickname,
-  firstName,
-  lastName,
-  email,
-  identificationType,
-  identificationNumber,
-  countryId,
-) {
+const addUser = async function (event) {
   try {
-    user = null;
-    msg = null;
-    dateNow = await currentDateTime();
+    newUser = null;
+    msgLog = null;
 
-    if (User != null) {
+    //-- start with validation Body  ---
+
+    eventBody = JSON.parse(await event.body);
+
+    validateReqBodyParams = await validateBodyAddUserParams(eventBody);
+
+    if (!validateReqBodyParams || eventBody == (null || undefined)) {
+      return VALIDATE_BODY_ADD_USER;
+    }
+    //-- end with validation Body  ---
+
+    nicknameParam = eventBody.nickname;
+    firstNameParam = eventBody.first_name;
+    lastNameParam = eventBody.last_name;
+    emailParam = eventBody.email;
+    identTypeParam = eventBody.identification_type;
+    identNumberParam = eventBody.identification_number;
+    countryIdParam = eventBody.country_id;
+    creationDateParam = await currentDateTime();
+    updateDateParam = await currentDateTime();
+
+    if (User != (null && undefined)) {
       await User.create({
-        nickname: nickname,
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        identification_type: identificationType,
-        identification_number: identificationNumber,
-        country_id: countryId,
-        creation_date: dateNow,
-        update_date: dateNow,
+        nickname: nicknameParam,
+        first_name: firstNameParam,
+        last_name: lastNameParam,
+        email: emailParam,
+        identification_type: identTypeParam,
+        identification_number: identNumberParam,
+        country_id: countryIdParam,
+        creation_date: creationDateParam,
+        update_date: updateDateParam,
       })
-        .then((userItem) => {
-          user = userItem;
+        .then(async (userItem) => {
+          newUser = userItem != null ? userItem.dataValues : userItem;
         })
-        .catch((error) => {
-          msg = `Error in create User model. Caused by ${error}`;
-          console.error(`${msg}. Stack error type : ${error.stack}`);
-          user = statusName.CONNECTION_ERROR;
+        .catch(async (error) => {
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          console.log(msgLog);
+          newUser = await checkSequelizeErrors(error, error.name);
         });
     } else {
-      user = statusName.CONNECTION_REFUSED;
+      newUser = await checkSequelizeErrors(null, DB_CONNECTION_REFUSED_STATUS);
     }
   } catch (error) {
-    msg = `Error in addUser function. Caused by ${error}`;
-    console.error(`${msg}. Stack error type : ${error.stack}`);
-    user = statusName.CONNECTION_ERROR;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    console.log(msgLog);
+    newUser = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
   }
-  console.log(user);
-  return user;
+  return newUser;
 };
 
 module.exports = {

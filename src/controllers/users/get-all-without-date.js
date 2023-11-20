@@ -1,6 +1,8 @@
 'use strict';
 //Services
-const { getLikeEmail } = require('../../services/users/get-like-email');
+const {
+  getAllWithoutDate,
+} = require('../../services/users/get-all-without-date');
 //Enums
 const { statusCode } = require('../../enums/http/status-code');
 const {
@@ -14,10 +16,6 @@ const {
   sortingMessage,
   sortingMessageDetail,
 } = require('../../enums/pagination/errors/status-message');
-const {
-  validateUser,
-  validateUserDetails,
-} = require('../../enums/validation/user/validations');
 //Helpers
 const { requestResult } = require('../../helpers/http/body-response');
 const {
@@ -58,13 +56,9 @@ const ORDER_BY_ERROR_DETAIL =
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME_DETAIL =
   sortingMessageDetail.ORDER_AT_ERROR_MESSAGE_DETAIL;
-//Validations
-const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
-const VALIDATE_PATH_PARAMETER_USER_DETAIL =
-  validateUserDetails.VALIDATE_PATH_PARAMETER_USER_DETAIL;
 //Errors
 const GET_ALL_USERS_ERROR_DETAIL =
-  'Bad request, could not get paginated list of users according to email. Try again.';
+  'Bad request, failed to obtain paginated users list without dates. Check if exist to database';
 //Vars
 let userList;
 let eventHeaders;
@@ -74,7 +68,7 @@ let msgResponse;
 let msgLog;
 
 /**
- * @description get all paged users whose email matches the passed as parameter
+ * @description gets all paged users without dates
  * @param {Object} event Object type
  * @returns a list of paginated users
  */
@@ -104,8 +98,8 @@ module.exports.handler = async (event) => {
     }
     //-- end with validation Headers  ---
 
-    //-- start with db query  ---
-    userList = await getLikeEmail(event);
+    //-- start with db query --
+    userList = await getAllWithoutDate(event);
 
     switch (userList) {
       case DB_CONNECTION_ERROR_STATUS:
@@ -128,11 +122,6 @@ module.exports.handler = async (event) => {
           INTERNAL_SERVER_ERROR_CODE,
           DB_CONNECTION_TIMEOUT_ERROR_DETAILS,
         );
-      case VALIDATE_PATH_PARAMETER_USER:
-        return await requestResult(
-          BAD_REQUEST_CODE,
-          VALIDATE_PATH_PARAMETER_USER_DETAIL,
-        );
       case ORDER_BY_ERROR_NAME:
         return await requestResult(BAD_REQUEST_CODE, ORDER_BY_ERROR_DETAIL);
       case ORDER_AT_ERROR_NAME:
@@ -153,9 +142,10 @@ module.exports.handler = async (event) => {
         }
         return await requestResult(BAD_REQUEST_CODE, userList);
     }
+
     //-- end with db query  ---
   } catch (error) {
-    msgResponse = 'ERROR in get-like-email lambda function.';
+    msgResponse = 'ERROR in get-all-without-dates lambda function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 
