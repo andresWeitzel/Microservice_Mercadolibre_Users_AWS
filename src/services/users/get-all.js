@@ -1,19 +1,19 @@
 //Models
-const { User } = require('../../models/sequelize/user');
+const { User } = require("../../models/sequelize/user");
 //Helpers
-const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
+const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
 const {
   checkSequelizeErrors,
-} = require('../../helpers/sequelize/errors/checkError');
+} = require("../../helpers/sequelize/errors/checkError");
 const {
   checkOrderBy,
   checkOrderAt,
-} = require('../../helpers/pagination/users/order');
+} = require("../../helpers/pagination/users/order");
 //Enums
-const { sequelizeConnection } = require('../../enums/sequelize/errors');
+const { sequelizeConnection } = require("../../enums/sequelize/errors");
 const {
   sortingMessage,
-} = require('../../enums/pagination/errors/status-message');
+} = require("../../enums/pagination/errors/status-message");
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -22,8 +22,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 //sorting messages
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
-const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in getAll service function. Caused by ';
+const GENERIC_ERROR_LOG_MESSAGE = "Error in getAll service function.";
 //Vars
 let usersList;
 let msgLog;
@@ -47,8 +46,8 @@ const getAll = async function (event) {
     //pagination
     pageSizeNro = 5;
     pageNro = 0;
-    orderBy = 'id';
-    orderAt = 'ASC';
+    orderBy = "id";
+    orderAt = "ASC";
     msgResponse = null;
     msgLog = null;
 
@@ -83,8 +82,8 @@ const getAll = async function (event) {
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat('creation_date'),
-            await getDateFormat('update_date'),
+            await getDateFormat("creation_date"),
+            await getDateFormat("update_date"),
           ],
         },
         limit: pageSizeNro,
@@ -97,7 +96,7 @@ const getAll = async function (event) {
           usersList = users;
         })
         .catch(async (error) => {
-          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
           console.log(msgLog);
 
           usersList = await checkSequelizeErrors(error, error.name);
@@ -105,11 +104,11 @@ const getAll = async function (event) {
     } else {
       usersList = await checkSequelizeErrors(
         null,
-        DB_CONNECTION_REFUSED_STATUS,
+        DB_CONNECTION_REFUSED_STATUS
       );
     }
   } catch (error) {
-    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
     console.log(msgLog);
 
     usersList = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);

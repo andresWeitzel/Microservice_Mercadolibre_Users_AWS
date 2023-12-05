@@ -1,22 +1,25 @@
 //Models
-const { User } = require('../../models/sequelize/user');
+const { User } = require("../../models/sequelize/user");
 //Helpers
 const {
   checkSequelizeErrors,
-} = require('../../helpers/sequelize/errors/checkError');
+} = require("../../helpers/sequelize/errors/checkError");
 //Enums
-const { sequelizeConnection } = require('../../enums/sequelize/errors');
-const { validateUser } = require('../../enums/validation/user/validations');
+const { sequelizeConnection } = require("../../enums/sequelize/errors");
+const { validateUser } = require("../../enums/validation/user/validations");
 // Const
+//delete operation
+const DELETE_OBJECT_DETAILS = "User has been successfully removed based on id ";
+const DELETE_OBJECT_ERROR_DETAILS =
+  "Check if the user you want to remove exists in the db. The user has not been removed based on the id ";
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
   sequelizeConnection.CONNECTION_REFUSED_ERROR;
-const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in addUser service function. Caused by ';
+const GENERIC_ERROR_LOG_MESSAGE = "Error in addUser service function.";
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
-//Const/Vars
+//Vars
 let deletedUser;
 let userIdParam;
 let msgLog;
@@ -49,25 +52,25 @@ const deleteUser = async function (event) {
           deletedUser =
             userItem == 1
               ? {
-                  objectDeleted: `User has been successfully deleted based on id ${userIdParam}`,
+                  objectDeleted: DELETE_OBJECT_DETAILS + userIdParam,
                 }
               : {
-                  objectDeleted: `User based on id ${userIdParam} has not been deleted. Check if the user exists in the db.`,
+                  objectDeleted: DELETE_OBJECT_ERROR_DETAILS + userIdParam,
                 };
         })
         .catch(async (error) => {
-          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
           console.log(msgLog);
           deletedUser = await checkSequelizeErrors(error, error.name);
         });
     } else {
       deletedUser = await checkSequelizeErrors(
         null,
-        DB_CONNECTION_REFUSED_STATUS,
+        DB_CONNECTION_REFUSED_STATUS
       );
     }
   } catch (error) {
-    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
     console.log(msgLog);
     deletedUser = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
   }

@@ -17,7 +17,7 @@ const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
   sequelizeConnection.CONNECTION_REFUSED_ERROR;
 const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in addUser service function. Caused by ';
+  'Error in addUser service function.';
 //Validations
 const VALIDATE_BODY_ADD_USER = validateUser.VALIDATE_BODY_ADD_USER;
 //Vars
@@ -84,7 +84,7 @@ const addUser = async function (event) {
           newUser = userItem != null ? userItem.dataValues : userItem;
         })
         .catch(async (error) => {
-          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
           console.log(msgLog);
           newUser = await checkSequelizeErrors(error, error.name);
         });
@@ -92,7 +92,7 @@ const addUser = async function (event) {
       newUser = await checkSequelizeErrors(null, DB_CONNECTION_REFUSED_STATUS);
     }
   } catch (error) {
-    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
     console.log(msgLog);
     newUser = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
   }

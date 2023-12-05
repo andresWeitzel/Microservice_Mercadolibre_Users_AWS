@@ -1,25 +1,25 @@
 //Externals
-const { Op } = require('sequelize');
+const { Op, Sequelize } = require("sequelize");
 //Models
-const { User } = require('../../models/sequelize/user');
+const { User } = require("../../models/sequelize/user");
 //Enums
-const { sequelizeConnection } = require('../../enums/sequelize/errors');
+const { sequelizeConnection } = require("../../enums/sequelize/errors");
 const {
   sortingMessage,
-} = require('../../enums/pagination/errors/status-message');
-const { validateUser } = require('../../enums/validation/user/validations');
+} = require("../../enums/pagination/errors/status-message");
+const { validateUser } = require("../../enums/validation/user/validations");
 //Helpers
-const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
+const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
 const {
   validatePathParameters,
-} = require('../../helpers/http/query-string-params');
+} = require("../../helpers/http/query-string-params");
 const {
   checkSequelizeErrors,
-} = require('../../helpers/sequelize/errors/checkError');
+} = require("../../helpers/sequelize/errors/checkError");
 const {
   checkOrderBy,
   checkOrderAt,
-} = require('../../helpers/pagination/users/order');
+} = require("../../helpers/pagination/users/order");
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -29,7 +29,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
 const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in getLikeEmail service function. Caused by ';
+  "Error in getLikeEmail service function.";
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Vars
@@ -56,9 +56,8 @@ const getLikeEmail = async function (event) {
     //pagination
     pageSizeNro = 5;
     pageNro = 0;
-    orderBy = 'id';
-    orderAt = 'ASC';
-    msgResponse = null;
+    orderBy = "id";
+    orderAt = "ASC";
     msgLog = null;
 
     //-- start with path parameters  ---
@@ -103,15 +102,17 @@ const getLikeEmail = async function (event) {
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat('creation_date'),
-            await getDateFormat('update_date'),
+            await getDateFormat("creation_date"),
+            await getDateFormat("update_date"),
           ],
         },
-        where: {
-          email: {
-            [Op.like]: `%${email}%`, //containing what is entered, less strictmatch
-          },
-        },
+        where: 
+          Sequelize.where(Sequelize.fn('lower', Sequelize.col('email')), Sequelize.fn('lower', `%${email}%`)),
+          // email: {
+            
+          //   [Sequelize.Op.iLike]: `%${email}%`, //containing what is entered, less strictmatch
+          // },
+        
         limit: pageSizeNro,
         offset: pageNro,
         order: order,
@@ -122,7 +123,7 @@ const getLikeEmail = async function (event) {
           usersList = users;
         })
         .catch(async (error) => {
-          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
           console.log(msgLog);
 
           usersList = await checkSequelizeErrors(error, error.name);
@@ -130,11 +131,11 @@ const getLikeEmail = async function (event) {
     } else {
       usersList = await checkSequelizeErrors(
         null,
-        DB_CONNECTION_REFUSED_STATUS,
+        DB_CONNECTION_REFUSED_STATUS
       );
     }
   } catch (error) {
-    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
     console.log(msgLog);
 
     usersList = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);

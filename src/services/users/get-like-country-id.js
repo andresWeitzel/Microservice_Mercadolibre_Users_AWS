@@ -1,25 +1,25 @@
 //Externals
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 //Models
-const { User } = require('../../models/sequelize/user');
+const { User } = require("../../models/sequelize/user");
 //Enums
-const { sequelizeConnection } = require('../../enums/sequelize/errors');
+const { sequelizeConnection } = require("../../enums/sequelize/errors");
 const {
   sortingMessage,
-} = require('../../enums/pagination/errors/status-message');
-const { validateUser } = require('../../enums/validation/user/validations');
+} = require("../../enums/pagination/errors/status-message");
+const { validateUser } = require("../../enums/validation/user/validations");
 //Helpers
-const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
+const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
 const {
   checkSequelizeErrors,
-} = require('../../helpers/sequelize/errors/checkError');
+} = require("../../helpers/sequelize/errors/checkError");
 const {
   checkOrderAt,
   checkOrderBy,
-} = require('../../helpers/pagination/users/order');
+} = require("../../helpers/pagination/users/order");
 const {
   validatePathParameters,
-} = require('../../helpers/http/query-string-params');
+} = require("../../helpers/http/query-string-params");
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -28,8 +28,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 //sorting messages
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
-const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in getLikeCountryId service function. Caused by ';
+const GENERIC_ERROR_LOG_MESSAGE = "Error in getLikeCountryId service function.";
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //vars
@@ -58,9 +57,8 @@ const getLikeCountryId = async function (event) {
     //pagination
     pageSizeNro = 5;
     pageNro = 0;
-    orderBy = 'id';
-    orderAt = 'ASC';
-    msgResponse = null;
+    orderBy = "id";
+    orderAt = "ASC";
     msgLog = null;
 
     //-- start with path parameters  ---
@@ -103,13 +101,13 @@ const getLikeCountryId = async function (event) {
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat('creation_date'),
-            await getDateFormat('update_date'),
+            await getDateFormat("creation_date"),
+            await getDateFormat("update_date"),
           ],
         },
         where: {
           country_id: {
-            [Op.like]: `%${countryId}%`, //containing what is entered, less strictmatch
+            [Op.iLike]: `%${countryId}%`, //containing what is entered, less strictmatch
           },
         },
         limit: pageSizeNro,
@@ -121,7 +119,7 @@ const getLikeCountryId = async function (event) {
           userList = users;
         })
         .catch(async (error) => {
-          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
           console.log(msgLog);
 
           userList = await checkSequelizeErrors(error, error.name);
@@ -130,7 +128,7 @@ const getLikeCountryId = async function (event) {
       userList = await checkSequelizeErrors(null, DB_CONNECTION_REFUSED_STATUS);
     }
   } catch (error) {
-    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
     console.log(msgLog);
 
     userList = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);

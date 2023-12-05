@@ -1,25 +1,25 @@
 //Externals
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 //Models
-const { User } = require('../../models/sequelize/user');
+const { User } = require("../../models/sequelize/user");
 //Enums
 const {
   sortingMessage,
-} = require('../../enums/pagination/errors/status-message');
-const { validateUser } = require('../../enums/validation/user/validations');
+} = require("../../enums/pagination/errors/status-message");
+const { validateUser } = require("../../enums/validation/user/validations");
 //Helpers
-const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
-const { sequelizeConnection } = require('../../enums/sequelize/errors');
+const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
+const { sequelizeConnection } = require("../../enums/sequelize/errors");
 const {
   validatePathParameters,
-} = require('../../helpers/http/query-string-params');
+} = require("../../helpers/http/query-string-params");
 const {
   checkOrderAt,
   checkOrderBy,
-} = require('../../helpers/pagination/users/order');
+} = require("../../helpers/pagination/users/order");
 const {
   checkSequelizeErrors,
-} = require('../../helpers/sequelize/errors/checkError');
+} = require("../../helpers/sequelize/errors/checkError");
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -29,7 +29,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
 const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in getLikeUpdateDate service function. Caused by ';
+  "Error in getLikeUpdateDate service function.";
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Vars
@@ -57,9 +57,8 @@ const getLikeUpdateDate = async function (event) {
     //pagination
     pageSizeNro = 5;
     pageNro = 0;
-    orderBy = 'id';
-    orderAt = 'ASC';
-    msgResponse = null;
+    orderBy = "id";
+    orderAt = "ASC";
     msgLog = null;
 
     //-- start with path parameters  ---
@@ -104,18 +103,18 @@ const getLikeUpdateDate = async function (event) {
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat('creation_date'),
-            await getDateFormat('update_date'),
+            await getDateFormat("creation_date"),
+            await getDateFormat("update_date"),
           ],
         },
         where: {
           [Op.and]: [
             //This case is for DATEONLY format
             Sequelize.where(
-              Sequelize.fn('DATE', Sequelize.col('update_date')),
+              Sequelize.fn("DATE", Sequelize.col("update_date")),
               {
                 [Op.eq]: updateDate,
-              },
+              }
             ),
           ],
         },
@@ -129,7 +128,7 @@ const getLikeUpdateDate = async function (event) {
           usersList = users;
         })
         .catch(async (error) => {
-          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
           console.log(msgLog);
 
           usersList = await checkSequelizeErrors(error, error.name);
@@ -137,11 +136,11 @@ const getLikeUpdateDate = async function (event) {
     } else {
       usersList = await checkSequelizeErrors(
         null,
-        DB_CONNECTION_REFUSED_STATUS,
+        DB_CONNECTION_REFUSED_STATUS
       );
     }
   } catch (error) {
-    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
     console.log(msgLog);
 
     usersList = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
