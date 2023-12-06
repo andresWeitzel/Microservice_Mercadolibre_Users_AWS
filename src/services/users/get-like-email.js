@@ -20,6 +20,7 @@ const {
   checkOrderBy,
   checkOrderAt,
 } = require("../../helpers/pagination/users/order");
+const { getLowerFormat } = require("../../helpers/sequelize/format/lower-format");
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -28,8 +29,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 //sorting messages
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
-const GENERIC_ERROR_LOG_MESSAGE =
-  "Error in getLikeEmail service function.";
+const GENERIC_ERROR_LOG_MESSAGE = "Error in getLikeEmail service function.";
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Vars
@@ -44,11 +44,11 @@ let orderAt;
 let order;
 
 /**
- * @description get all paged users whose email matches the passed as parameter.
+ * @description get all paged users whose emailParam matches the passed as parameter.
  * @param {Object} event event type
  * @returns a list of paginated users
  * @example
- * [{"id":1,"nickname":"RAFA-CON","first_name":"Rafael","last_name":"Castro","email":"rafael_castro88@gmail.com","identification_type":"DNI","identification_number":"445938822","country_id":"AR","creation_date":"2023-02-12 21:18:11","update_date":"2023-02-12 21:18:11"},{"id".....]
+ * [{"id":1,"nickname":"RAFA-CON","first_name":"Rafael","last_name":"Castro","emailParam":"rafael_castro88@gmail.com","identification_type":"DNI","identification_number":"445938822","country_id":"AR","creation_date":"2023-02-12 21:18:11","update_date":"2023-02-12 21:18:11"},{"id".....]
  */
 const getLikeEmail = async function (event) {
   try {
@@ -61,9 +61,9 @@ const getLikeEmail = async function (event) {
     msgLog = null;
 
     //-- start with path parameters  ---
-    email = await event.pathParameters.email;
+    emailParam = await event.pathParameters.email;
 
-    validatePathParam = await validatePathParameters(email);
+    validatePathParam = await validatePathParameters(emailParam);
 
     if (!validatePathParam) {
       return VALIDATE_PATH_PARAMETER_USER;
@@ -106,13 +106,7 @@ const getLikeEmail = async function (event) {
             await getDateFormat("update_date"),
           ],
         },
-        where: 
-          Sequelize.where(Sequelize.fn('lower', Sequelize.col('email')), Sequelize.fn('lower', `%${email}%`)),
-          // email: {
-            
-          //   [Sequelize.Op.iLike]: `%${email}%`, //containing what is entered, less strictmatch
-          // },
-        
+        where: await getLowerFormat("email", emailParam),
         limit: pageSizeNro,
         offset: pageNro,
         order: order,
@@ -120,6 +114,7 @@ const getLikeEmail = async function (event) {
         nest: true, //for formatting with internal objects
       })
         .then(async (users) => {
+          console.log(users);
           usersList = users;
         })
         .catch(async (error) => {

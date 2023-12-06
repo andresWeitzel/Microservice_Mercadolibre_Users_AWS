@@ -20,6 +20,7 @@ const {
 const {
   checkSequelizeErrors,
 } = require("../../helpers/sequelize/errors/checkError");
+const { getLowerFormat } = require("../../helpers/sequelize/format/lower-format");
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -107,11 +108,7 @@ const getLikeIdentificationType = async function (event) {
             await getDateFormat("update_date"),
           ],
         },
-        where: {
-          identification_type: {
-            [Op.iLike]: `%${identificationTypeParam}%`, //containing what is entered, less strictmatch
-          },
-        },
+        where: await getLowerFormat("identification_type", identificationTypeParam),
         limit: pageSizeNro,
         offset: pageNro,
         order: order,
