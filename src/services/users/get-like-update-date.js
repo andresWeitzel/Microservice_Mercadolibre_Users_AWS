@@ -20,6 +20,7 @@ const {
 const {
   checkSequelizeErrors,
 } = require("../../helpers/sequelize/errors/checkError");
+const { getDateOnlyFormat } = require("../../helpers/sequelize/format/date-only-format");
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -107,17 +108,7 @@ const getLikeUpdateDate = async function (event) {
             await getDateFormat("update_date"),
           ],
         },
-        where: {
-          [Op.and]: [
-            //This case is for DATEONLY format
-            Sequelize.where(
-              Sequelize.fn("DATE", Sequelize.col("update_date")),
-              {
-                [Op.eq]: updateDate,
-              }
-            ),
-          ],
-        },
+        where: await getDateOnlyFormat("update_date", updateDate),
         limit: pageSizeNro,
         offset: pageNro,
         order: order,

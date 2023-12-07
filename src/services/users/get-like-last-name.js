@@ -1,5 +1,3 @@
-//Externals
-const { Op } = require("sequelize");
 //Models
 const { User } = require("../../models/sequelize/user");
 //Enums

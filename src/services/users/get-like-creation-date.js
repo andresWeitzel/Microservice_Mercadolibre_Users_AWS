@@ -1,5 +1,3 @@
-//Externals
-const { Sequelize, Op } = require("sequelize");
 //Models
 const { User } = require("../../models/sequelize/user");
 //Enums
@@ -20,6 +18,7 @@ const {
   checkOrderAt,
   checkOrderBy,
 } = require("../../helpers/pagination/users/order");
+const { getDateOnlyFormat } = require("../../helpers/sequelize/format/date-only-format");
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -108,17 +107,7 @@ const getLikeCreationDate = async function (event) {
             await getDateFormat("update_date"),
           ],
         },
-        where: {
-          [Op.and]: [
-            //This case is for DATEONLY format
-            Sequelize.where(
-              Sequelize.fn("DATE", Sequelize.col("creation_date")),
-              {
-                [Op.eq]: creationDate,
-              }
-            ),
-          ],
-        },
+        where: await getDateOnlyFormat("creation_date", creationDate),
         limit: pageSizeNro,
         offset: pageNro,
         order: order,
