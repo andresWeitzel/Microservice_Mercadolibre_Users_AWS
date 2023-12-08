@@ -65,8 +65,10 @@ const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 const VALIDATE_PATH_PARAMETER_USER_DETAIL =
   validateUserDetails.VALIDATE_PATH_PARAMETER_USER_DETAIL;
 //Errors
-const GET_LIKE_COUNTRY_ID_USERS_ERROR_DETAIL =
+const GET_LIKE_COUNTRY_ID_USERS_BAD_REQUEST_DETAIL =
   'Bad request, failed to obtain paginated users list by country id. Check if exist to database';
+const GET_LIKE_COUNTRY_ID_USERS_ERROR_DETAIL =
+  'ERROR in get-like-country-id lambda function.';
 //Vars
 let userList;
 let eventHeaders;
@@ -146,7 +148,7 @@ module.exports.handler = async (event) => {
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          GET_LIKE_COUNTRY_ID_USERS_ERROR_DETAIL,
+          GET_LIKE_COUNTRY_ID_USERS_BAD_REQUEST_DETAIL,
         );
       default:
         if (typeof userList === 'object' && userList[0]?.hasOwnProperty('id')) {
@@ -156,7 +158,7 @@ module.exports.handler = async (event) => {
     }
     //-- end with db query  ---
   } catch (error) {
-    msgResponse = 'ERROR in get-like-country-id lambda function.';
+    msgResponse = GET_LIKE_COUNTRY_ID_USERS_ERROR_DETAIL;
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

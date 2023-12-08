@@ -1,25 +1,25 @@
-"use strict";
+'use strict';
 //Services
-const { addUser } = require("../../services/users/add");
+const { addUser } = require('../../services/users/add');
 //Enums
-const { statusCode } = require("../../enums/http/status-code");
+const { statusCode } = require('../../enums/http/status-code');
 const {
   sequelizeConnection,
   sequelizeConnectionDetails,
-} = require("../../enums/sequelize/errors");
+} = require('../../enums/sequelize/errors');
 const {
   validateHeadersMessage,
-} = require("../../enums/validation/errors/status-message");
+} = require('../../enums/validation/errors/status-message');
 const {
   validateUserDetails,
   validateUser,
-} = require("../../enums/validation/user/validations");
+} = require('../../enums/validation/user/validations');
 //Helpers
-const { requestResult } = require("../../helpers/http/body-response");
+const { requestResult } = require('../../helpers/http/body-response');
 const {
   validateHeadersParams,
-} = require("../../helpers/http/request-headers-params");
-const { validateAuthHeaders } = require("../../helpers/auth/headers");
+} = require('../../helpers/http/request-headers-params');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
 // Const
 // validate msg
 const HEADERS_PARAMS_ERROR_MESSAGE =
@@ -53,8 +53,8 @@ const VALIDATE_BODY_ADD_USER_DETAIL =
   validateUserDetails.VALIDATE_BODY_ADD_USER_DETAIL;
 //Errors
 const ADD_USER_BAD_REQUEST_DETAIL =
-  "Bad request, could not add user. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.";
-const ADD_USER_ERROR_DETAILS = "ERROR in add-user lambda function.";
+  'Bad request, could not add user. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.';
+const ADD_USER_ERROR_DETAILS = 'ERROR in add-user lambda function.';
 //Vars
 let newUser;
 let eventHeaders;
@@ -83,7 +83,7 @@ module.exports.handler = async (event) => {
     if (!validateReqParams) {
       return await requestResult(
         BAD_REQUEST_CODE,
-        HEADERS_PARAMS_ERROR_MESSAGE
+        HEADERS_PARAMS_ERROR_MESSAGE,
       );
     }
 
@@ -100,37 +100,37 @@ module.exports.handler = async (event) => {
       case DB_CONNECTION_ERROR_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_ERROR_STATUS_DETAILS
+          DB_CONNECTION_ERROR_STATUS_DETAILS,
         );
       case DB_CONNECTION_REFUSED_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_REFUSED_STATUS_DETAILS
+          DB_CONNECTION_REFUSED_STATUS_DETAILS,
         );
       case DB_INVALID_CONNECTION_ERROR:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_INVALID_CONNECTION_ERROR_DETAILS
+          DB_INVALID_CONNECTION_ERROR_DETAILS,
         );
       case DB_CONNECTION_TIMEOUT_ERROR:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_TIMEOUT_ERROR_DETAILS
+          DB_CONNECTION_TIMEOUT_ERROR_DETAILS,
         );
       case VALIDATE_BODY_ADD_USER:
         return await requestResult(
           BAD_REQUEST_CODE,
-          VALIDATE_BODY_ADD_USER_DETAIL
+          VALIDATE_BODY_ADD_USER_DETAIL,
         );
       case 0:
       case undefined:
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          ADD_USER_BAD_REQUEST_DETAIL
+          ADD_USER_BAD_REQUEST_DETAIL,
         );
       default:
-        if (typeof newUser === "object" && newUser.hasOwnProperty("id")) {
+        if (typeof newUser === 'object' && newUser.hasOwnProperty('id')) {
           return await requestResult(OK_CODE, newUser);
         }
         return await requestResult(BAD_REQUEST_CODE, newUser);

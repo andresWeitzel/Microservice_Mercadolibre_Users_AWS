@@ -1,22 +1,22 @@
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { sequelizeConnection } = require("../../enums/sequelize/errors");
-const { validateUser } = require("../../enums/validation/user/validations");
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
+const { validateUser } = require('../../enums/validation/user/validations');
 //Helpers
-const { currentDateTime } = require("../../helpers/dates/date");
+const { currentDateTime } = require('../../helpers/dates/date');
 const {
   checkSequelizeErrors,
-} = require("../../helpers/sequelize/errors/checkError");
+} = require('../../helpers/sequelize/errors/checkError');
 const {
   validateBodyUpdateUserParams,
-} = require("../../helpers/http/users/request-body-update-user-params");
+} = require('../../helpers/http/users/request-body-update-user-params');
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
   sequelizeConnection.CONNECTION_REFUSED_ERROR;
-const GENERIC_ERROR_LOG_MESSAGE = "Error in updateUser service function.";
+const GENERIC_ERROR_LOG_MESSAGE = 'Error in updateUser service function.';
 //validations
 const VALIDATE_BODY_UPDATE_USER = validateUser.VALIDATE_BODY_UPDATE_USER;
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
@@ -95,7 +95,7 @@ const updateUser = async function (event) {
           where: {
             id: userIdParam,
           },
-        }
+        },
       )
         .then(async (userItem) => {
           updatedUser = userItem != null ? userItem.dataValues : userItem;
@@ -108,7 +108,7 @@ const updateUser = async function (event) {
     } else {
       updatedUser = await checkSequelizeErrors(
         null,
-        DB_CONNECTION_REFUSED_STATUS
+        DB_CONNECTION_REFUSED_STATUS,
       );
     }
   } catch (error) {

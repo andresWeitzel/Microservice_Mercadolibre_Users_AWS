@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 //External
-const { Sequelize, Op } = require("sequelize");
+const { Sequelize, Op } = require('sequelize');
 //Const-vars
 let msgResponse;
 let msgLog;
@@ -15,14 +15,14 @@ let lowerFormat;
 const getLowerFormat = async (column, parameter) => {
   try {
     lowerFormat = Sequelize.where(
-      Sequelize.fn("lower", Sequelize.col(column)),
+      Sequelize.fn('lower', Sequelize.col(column)),
       {
         [Op.like]: `%${parameter}%`,
-      }
+      },
     );
     return lowerFormat;
   } catch (error) {
-    msgResponse = "ERROR in getLowerFormat() helper function.";
+    msgResponse = 'ERROR in getLowerFormat() helper function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
   }

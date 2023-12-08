@@ -65,8 +65,10 @@ const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 const VALIDATE_PATH_PARAMETER_USER_DETAIL =
   validateUserDetails.VALIDATE_PATH_PARAMETER_USER_DETAIL;
 //Errors
-const GET_ALL_USERS_ERROR_DETAIL =
+const GET_LIKE_IDENT_NUMBER_USERS_BAD_REQUEST_DETAIL =
   'Bad request, could not get paginated list of users according to first name. Try again.';
+const GET_LIKE_IDENT_NUMBER_USERS_ERROR_DETAIL =
+  'ERROR in get-like-identification-number lambda function.';
 //Vars
 let userList;
 let eventHeaders;
@@ -147,7 +149,7 @@ module.exports.handler = async (event) => {
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          GET_ALL_USERS_ERROR_DETAIL,
+          GET_LIKE_IDENT_NUMBER_USERS_BAD_REQUEST_DETAIL,
         );
       default:
         if (typeof userList === 'object' && userList[0]?.hasOwnProperty('id')) {
@@ -157,7 +159,7 @@ module.exports.handler = async (event) => {
     }
     //-- end with db query  ---
   } catch (error) {
-    msgResponse = 'ERROR in get-like-identification-number lambda function.';
+    msgResponse = GET_LIKE_IDENT_NUMBER_USERS_ERROR_DETAIL;
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

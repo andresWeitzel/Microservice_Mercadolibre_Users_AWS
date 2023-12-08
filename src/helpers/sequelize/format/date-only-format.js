@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 //External
-const { Sequelize, Op } = require("sequelize");
+const { Sequelize, Op } = require('sequelize');
 //Const-vars
 let msgResponse;
 let msgLog;
@@ -15,14 +15,14 @@ let dateOnlyFormat;
 const getDateOnlyFormat = async (column, parameter) => {
   try {
     dateOnlyFormat = Sequelize.where(
-      Sequelize.fn("DATE", Sequelize.col(column)),
+      Sequelize.fn('DATE', Sequelize.col(column)),
       {
         [Op.eq]: parameter,
-      }
+      },
     );
     return dateOnlyFormat;
   } catch (error) {
-    msgResponse = "ERROR in getDateOnlyFormat() helper function.";
+    msgResponse = 'ERROR in getDateOnlyFormat() helper function.';
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
   }

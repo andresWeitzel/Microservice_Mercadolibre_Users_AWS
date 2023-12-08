@@ -1,26 +1,28 @@
 //Externals
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { sequelizeConnection } = require("../../enums/sequelize/errors");
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
 const {
   sortingMessage,
-} = require("../../enums/pagination/errors/status-message");
-const { validateUser } = require("../../enums/validation/user/validations");
+} = require('../../enums/pagination/errors/status-message');
+const { validateUser } = require('../../enums/validation/user/validations');
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
+const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
 const {
   validatePathParameters,
-} = require("../../helpers/http/query-string-params");
+} = require('../../helpers/http/query-string-params');
 const {
   checkOrderAt,
   checkOrderBy,
-} = require("../../helpers/pagination/users/order");
+} = require('../../helpers/pagination/users/order');
 const {
   checkSequelizeErrors,
-} = require("../../helpers/sequelize/errors/checkError");
-const { getLowerFormat } = require("../../helpers/sequelize/format/lower-format");
+} = require('../../helpers/sequelize/errors/checkError');
+const {
+  getLowerFormat,
+} = require('../../helpers/sequelize/format/lower-format');
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -29,7 +31,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 //sorting messages
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
-const GENERIC_ERROR_LOG_MESSAGE = "Error in getLikeFirstName service function.";
+const GENERIC_ERROR_LOG_MESSAGE = 'Error in getLikeFirstName service function.';
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Vars
@@ -57,8 +59,8 @@ const getLikeFirstName = async function (event) {
     //pagination
     pageSizeNro = 5;
     pageNro = 0;
-    orderBy = "id";
-    orderAt = "ASC";
+    orderBy = 'id';
+    orderAt = 'ASC';
     msgLog = null;
 
     //-- start with path parameters  ---
@@ -103,11 +105,11 @@ const getLikeFirstName = async function (event) {
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat("creation_date"),
-            await getDateFormat("update_date"),
+            await getDateFormat('creation_date'),
+            await getDateFormat('update_date'),
           ],
         },
-        where: await getLowerFormat("first_name", firstName),
+        where: await getLowerFormat('first_name', firstName),
         limit: pageSizeNro,
         offset: pageNro,
         order: order,
@@ -126,7 +128,7 @@ const getLikeFirstName = async function (event) {
     } else {
       usersList = await checkSequelizeErrors(
         null,
-        DB_CONNECTION_REFUSED_STATUS
+        DB_CONNECTION_REFUSED_STATUS,
       );
     }
   } catch (error) {

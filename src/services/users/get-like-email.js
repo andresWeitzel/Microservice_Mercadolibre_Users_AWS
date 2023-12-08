@@ -1,26 +1,28 @@
 //Externals
-const { Op, Sequelize } = require("sequelize");
+const { Op, Sequelize } = require('sequelize');
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { sequelizeConnection } = require("../../enums/sequelize/errors");
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
 const {
   sortingMessage,
-} = require("../../enums/pagination/errors/status-message");
-const { validateUser } = require("../../enums/validation/user/validations");
+} = require('../../enums/pagination/errors/status-message');
+const { validateUser } = require('../../enums/validation/user/validations');
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
+const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
 const {
   validatePathParameters,
-} = require("../../helpers/http/query-string-params");
+} = require('../../helpers/http/query-string-params');
 const {
   checkSequelizeErrors,
-} = require("../../helpers/sequelize/errors/checkError");
+} = require('../../helpers/sequelize/errors/checkError');
 const {
   checkOrderBy,
   checkOrderAt,
-} = require("../../helpers/pagination/users/order");
-const { getLowerFormat } = require("../../helpers/sequelize/format/lower-format");
+} = require('../../helpers/pagination/users/order');
+const {
+  getLowerFormat,
+} = require('../../helpers/sequelize/format/lower-format');
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -29,7 +31,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 //sorting messages
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
-const GENERIC_ERROR_LOG_MESSAGE = "Error in getLikeEmail service function.";
+const GENERIC_ERROR_LOG_MESSAGE = 'Error in getLikeEmail service function.';
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Vars
@@ -56,8 +58,8 @@ const getLikeEmail = async function (event) {
     //pagination
     pageSizeNro = 5;
     pageNro = 0;
-    orderBy = "id";
-    orderAt = "ASC";
+    orderBy = 'id';
+    orderAt = 'ASC';
     msgLog = null;
 
     //-- start with path parameters  ---
@@ -102,11 +104,11 @@ const getLikeEmail = async function (event) {
       await User.findAll({
         attributes: {
           include: [
-            await getDateFormat("creation_date"),
-            await getDateFormat("update_date"),
+            await getDateFormat('creation_date'),
+            await getDateFormat('update_date'),
           ],
         },
-        where: await getLowerFormat("email", emailParam),
+        where: await getLowerFormat('email', emailParam),
         limit: pageSizeNro,
         offset: pageNro,
         order: order,
@@ -126,7 +128,7 @@ const getLikeEmail = async function (event) {
     } else {
       usersList = await checkSequelizeErrors(
         null,
-        DB_CONNECTION_REFUSED_STATUS
+        DB_CONNECTION_REFUSED_STATUS,
       );
     }
   } catch (error) {

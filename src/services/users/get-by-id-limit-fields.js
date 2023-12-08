@@ -1,21 +1,21 @@
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { sequelizeConnection } = require("../../enums/sequelize/errors");
-const { validateUser } = require("../../enums/validation/user/validations");
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
+const { validateUser } = require('../../enums/validation/user/validations');
 //Helpers
 const {
   checkSequelizeErrors,
-} = require("../../helpers/sequelize/errors/checkError");
+} = require('../../helpers/sequelize/errors/checkError');
 const {
   validatePathParameters,
-} = require("../../helpers/http/query-string-params");
+} = require('../../helpers/http/query-string-params');
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
   sequelizeConnection.CONNECTION_REFUSED_ERROR;
-const GENERIC_ERROR_LOG_MESSAGE = "Error in getByIdLimit service function.";
+const GENERIC_ERROR_LOG_MESSAGE = 'Error in getByIdLimit service function.';
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Vars
@@ -50,7 +50,7 @@ const getByIdLimit = async function (event) {
     if (User != null) {
       await User.findByPk(userIdParam, {
         attributes: {
-          exclude: ["first_name", "last_name", "creation_date", "update_date"],
+          exclude: ['first_name', 'last_name', 'creation_date', 'update_date'],
         },
         raw: true, //Only dataValues
         nest: true, //for formatting with internal objects

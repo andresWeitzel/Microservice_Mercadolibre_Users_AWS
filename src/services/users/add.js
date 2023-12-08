@@ -16,8 +16,7 @@ const {
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
   sequelizeConnection.CONNECTION_REFUSED_ERROR;
-const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in addUser service function.';
+const GENERIC_ERROR_LOG_MESSAGE = 'Error in addUser service function.';
 //Validations
 const VALIDATE_BODY_ADD_USER = validateUser.VALIDATE_BODY_ADD_USER;
 //Vars
