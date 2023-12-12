@@ -165,7 +165,7 @@ functions:
     events:
       - http:
           path: /v1/users/update-user/{id}
-          method: put
+          method: patch
           private: true
   delete:
     handler: src/controllers/users/delete.handler

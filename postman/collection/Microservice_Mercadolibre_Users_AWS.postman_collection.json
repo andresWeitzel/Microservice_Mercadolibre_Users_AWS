@@ -86,7 +86,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "     {\r\n            \"id\": 32,\r\n            \"nickname\": \"MARTIN-SUAREZ2221\",\r\n            \"first_name\": \"Martin2221\",\r\n            \"last_name\": \"Suarez2221\",\r\n            \"email\": \"martin_electro_todo@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"445938812313222\",\r\n            \"country_id\": \"AR12\",\r\n            \"creation_date\": \"2023-10-11 21:18:29\",\r\n            \"update_date\": \"2023-10-11 21:18:29\"\r\n        }"
+									"raw": "     {\r\n            \"nickname\": \"MARTIN-SUAREZ2221\",\r\n            \"first_name\": \"Martin2221\",\r\n            \"last_name\": \"Suarez2221\",\r\n            \"email\": \"martin_electro_todo@gmail.com\",\r\n            \"identification_type\": \"DNI\",\r\n            \"identification_number\": \"445938812313222\",\r\n            \"country_id\": \"AR12\",\r\n            \"creation_date\": \"2023-10-11 21:18:29\",\r\n            \"update_date\": \"2023-10-11 21:18:29\"\r\n        }"
 								},
 								"url": {
 									"raw": "{{base_url}}/v1/users/update-user/32",
@@ -213,6 +213,62 @@
 							"response": []
 						},
 						{
+							"name": "get all without dates",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{x-api-key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/v1/users/list-without-dates?page=0&limit=200&orderBy=id&orderAt=asc",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"users",
+										"list-without-dates"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "200"
+										},
+										{
+											"key": "orderBy",
+											"value": "id"
+										},
+										{
+											"key": "orderAt",
+											"value": "asc"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "get by id",
 							"request": {
 								"auth": {
@@ -237,7 +293,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{base_url}}/v1/users/id/4",
+									"raw": "{{base_url}}/v1/users/id/3",
 									"host": [
 										"{{base_url}}"
 									],
@@ -245,7 +301,46 @@
 										"v1",
 										"users",
 										"id",
-										"4"
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by id limit fields",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "{{x-api-key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/v1/users/id-limit-fields/5",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"users",
+										"id-limit-fields",
+										"5"
 									]
 								}
 							},
@@ -276,7 +371,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{base_url}}/v1/users/country-id/AR?page=0&limit=100&orderBy=firstName&orderAt=asc",
+									"raw": "{{base_url}}/v1/users/country-id/ar?page=0&limit=100&orderBy=firstName&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -284,7 +379,7 @@
 										"v1",
 										"users",
 										"country-id",
-										"AR"
+										"ar"
 									],
 									"query": [
 										{
@@ -390,7 +485,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{base_url}}/v1/users/email/a?page=0&limit=100&orderBy=email&orderAt=asc",
+									"raw": "{{base_url}}/v1/users/email/s?page=0&limit=100&orderBy=email&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -398,7 +493,7 @@
 										"v1",
 										"users",
 										"email",
-										"a"
+										"s"
 									],
 									"query": [
 										{
@@ -675,7 +770,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{base_url}}/v1/users/nickname/gabriela?page=0&limit=100&orderBy=country_id&orderAt=asc",
+									"raw": "{{base_url}}/v1/users/nickname/a?page=0&limit=100&orderBy=country_id&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -683,7 +778,7 @@
 										"v1",
 										"users",
 										"nickname",
-										"gabriela"
+										"a"
 									],
 									"query": [
 										{
@@ -732,7 +827,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{base_url}}/v1/users/creation-date/2023-04-30?page=0&limit=100&orderBy=creation_date&orderAt=asc",
+									"raw": "{{base_url}}/v1/users/creation-date/2023-04-30?page=0&limit=100&orderBy=email&orderAt=asc",
 									"host": [
 										"{{base_url}}"
 									],
@@ -753,7 +848,7 @@
 										},
 										{
 											"key": "orderBy",
-											"value": "creation_date"
+											"value": "email"
 										},
 										{
 											"key": "orderAt",
