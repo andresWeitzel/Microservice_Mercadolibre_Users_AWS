@@ -52,8 +52,10 @@ const VALIDATE_BODY_UPDATE_USER = validateUser.VALIDATE_BODY_UPDATE_USER;
 const VALIDATE_BODY_UPDATE_USER_DETAIL =
   validateUserDetails.VALIDATE_BODY_UPDATE_USER_DETAIL;
 //Errors
-const UPDATE_USER_ERROR_DETAIL =
+const UPDATE_USER_BAD_REQUEST_DETAIL =
   'Bad request, could not updated user. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.';
+  const UPDATE_USER_ERROR_DETAIL =
+  "ERROR in update lambda function.";   
 //Vars
 let updatedUser;
 let eventHeaders;
@@ -124,11 +126,11 @@ module.exports.handler = async (event) => {
       case 0:
       case undefined:
       case null:
-        return await requestResult(BAD_REQUEST_CODE, UPDATE_USER_ERROR_DETAIL);
+        return await requestResult(BAD_REQUEST_CODE, UPDATE_USER_BAD_REQUEST_DETAIL);
       default:
         if (
           typeof updatedUser === 'object' &&
-          updatedUser.hasOwnProperty('id')
+          updatedUser.hasOwnProperty('objectUpdated')
         ) {
           return await requestResult(OK_CODE, updatedUser);
         }
@@ -136,7 +138,7 @@ module.exports.handler = async (event) => {
     }
     //-- end with db query  ---
   } catch (error) {
-    msgResponse = 'ERROR in update-user lambda function.';
+    msgResponse = UPDATE_USER_ERROR_DETAIL;
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

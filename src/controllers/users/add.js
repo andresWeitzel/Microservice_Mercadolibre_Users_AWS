@@ -20,7 +20,6 @@ const {
   validateHeadersParams,
 } = require('../../helpers/http/request-headers-params');
 const { validateAuthHeaders } = require('../../helpers/auth/headers');
-
 // Const
 // validate msg
 const HEADERS_PARAMS_ERROR_MESSAGE =
@@ -53,8 +52,9 @@ const VALIDATE_BODY_ADD_USER = validateUser.VALIDATE_BODY_ADD_USER;
 const VALIDATE_BODY_ADD_USER_DETAIL =
   validateUserDetails.VALIDATE_BODY_ADD_USER_DETAIL;
 //Errors
-const ADD_USER_ERROR_DETAIL =
+const ADD_USER_BAD_REQUEST_DETAIL =
   'Bad request, could not add user. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.';
+const ADD_USER_ERROR_DETAILS = 'ERROR in add-user lambda function.';
 //Vars
 let newUser;
 let eventHeaders;
@@ -125,7 +125,10 @@ module.exports.handler = async (event) => {
       case 0:
       case undefined:
       case null:
-        return await requestResult(BAD_REQUEST_CODE, ADD_USER_ERROR_DETAIL);
+        return await requestResult(
+          BAD_REQUEST_CODE,
+          ADD_USER_BAD_REQUEST_DETAIL,
+        );
       default:
         if (typeof newUser === 'object' && newUser.hasOwnProperty('id')) {
           return await requestResult(OK_CODE, newUser);
@@ -133,7 +136,7 @@ module.exports.handler = async (event) => {
         return await requestResult(BAD_REQUEST_CODE, newUser);
     }
   } catch (error) {
-    msgResponse = 'ERROR in add-user lambda function.';
+    msgResponse = ADD_USER_ERROR_DETAILS;
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

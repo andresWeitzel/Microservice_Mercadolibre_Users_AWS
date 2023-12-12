@@ -52,8 +52,10 @@ const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 const VALIDATE_PATH_PARAMETER_USER_DETAIL =
   validateUserDetails.VALIDATE_PATH_PARAMETER_USER_DETAIL;
 //Errors
-const GET_BY_ID_USERS_ERROR_DETAIL =
+const GET_BY_ID_USERS_BAD_REQUEST_DETAIL =
   'Bad request, failed to obtain a user based on id. Check if exist to database';
+const GET_BY_ID_USERS_ERROR_DETAIL =
+  'ERROR in get-by-id-limit-fields lambda function.';
 //Vars
 let user;
 let validateAuth;
@@ -127,7 +129,7 @@ module.exports.handler = async (event) => {
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          GET_BY_ID_USERS_ERROR_DETAIL,
+          GET_BY_ID_USERS_BAD_REQUEST_DETAIL,
         );
       default:
         if (typeof user === 'object' && user.hasOwnProperty('id')) {
@@ -137,7 +139,7 @@ module.exports.handler = async (event) => {
     }
     //-- end with db query  ---
   } catch (error) {
-    msgResponse = 'ERROR in get-by-id-limit-fields lambda function.';
+    msgResponse = GET_BY_ID_USERS_ERROR_DETAIL;
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

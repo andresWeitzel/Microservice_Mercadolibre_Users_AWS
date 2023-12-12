@@ -52,8 +52,9 @@ const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 const VALIDATE_PATH_PARAMETER_USER_DETAIL =
   validateUserDetails.VALIDATE_PATH_PARAMETER_USER_DETAIL;
 //Errors
-const DELETE_USER_ERROR_DETAIL =
+const DELETE_USER_BAD_REQUEST_DETAIL =
   'Bad request, a non-existent user cannot be deleted. Operation not allowed';
+const DELETE_USER_ERROR_DETAIL = 'ERROR in delete-user lambda function.';
 //Vars
 let eventHeaders;
 let validateAuth;
@@ -61,8 +62,6 @@ let validateReqParams;
 let deletedUser;
 let msgResponse;
 let msgLog;
-
-//For review
 
 /**
  * @description delete a user according to the parameters passed in the request body
@@ -128,7 +127,10 @@ module.exports.handler = async (event) => {
       case 0:
       case undefined:
       case null:
-        return await requestResult(BAD_REQUEST_CODE, DELETE_USER_ERROR_DETAIL);
+        return await requestResult(
+          BAD_REQUEST_CODE,
+          DELETE_USER_BAD_REQUEST_DETAIL,
+        );
       default:
         if (
           typeof deletedUser === 'object' &&
@@ -141,7 +143,7 @@ module.exports.handler = async (event) => {
 
     //-- end with db query  ---
   } catch (error) {
-    msgResponse = 'ERROR in delete-user lambda function.';
+    msgResponse = DELETE_USER_ERROR_DETAIL;
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

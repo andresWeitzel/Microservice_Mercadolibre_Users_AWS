@@ -20,6 +20,9 @@ const {
 const {
   validatePathParameters,
 } = require('../../helpers/http/query-string-params');
+const {
+  getLowerFormat,
+} = require('../../helpers/sequelize/format/lower-format');
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -28,8 +31,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 //sorting messages
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
-const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in getLikeCountryId service function. Caused by ';
+const GENERIC_ERROR_LOG_MESSAGE = 'Error in getLikeCountryId service function.';
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //vars
@@ -60,7 +62,6 @@ const getLikeCountryId = async function (event) {
     pageNro = 0;
     orderBy = 'id';
     orderAt = 'ASC';
-    msgResponse = null;
     msgLog = null;
 
     //-- start with path parameters  ---
@@ -107,11 +108,7 @@ const getLikeCountryId = async function (event) {
             await getDateFormat('update_date'),
           ],
         },
-        where: {
-          country_id: {
-            [Op.like]: `%${countryId}%`, //containing what is entered, less strictmatch
-          },
-        },
+        where: await getLowerFormat('country_id', countryId),
         limit: pageSizeNro,
         order: order,
         raw: true, //Only dataValues
@@ -121,7 +118,7 @@ const getLikeCountryId = async function (event) {
           userList = users;
         })
         .catch(async (error) => {
-          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
           console.log(msgLog);
 
           userList = await checkSequelizeErrors(error, error.name);
@@ -130,7 +127,7 @@ const getLikeCountryId = async function (event) {
       userList = await checkSequelizeErrors(null, DB_CONNECTION_REFUSED_STATUS);
     }
   } catch (error) {
-    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
     console.log(msgLog);
 
     userList = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);

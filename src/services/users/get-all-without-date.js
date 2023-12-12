@@ -22,7 +22,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
 const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in getAllWithoutDate service function. Caused by ';
+  'Error in getAllWithoutDate service function.';
 //Vars
 let usersList;
 let msgLog;
@@ -91,7 +91,7 @@ const getAllWithoutDate = async function (event) {
           usersList = users;
         })
         .catch(async (error) => {
-          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
           console.log(msgLog);
           usersList = await checkSequelizeErrors(error, error.name);
         });
@@ -102,7 +102,7 @@ const getAllWithoutDate = async function (event) {
       );
     }
   } catch (error) {
-    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
     console.log(msgLog);
 
     usersList = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);

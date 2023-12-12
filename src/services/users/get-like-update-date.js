@@ -20,6 +20,9 @@ const {
 const {
   checkSequelizeErrors,
 } = require('../../helpers/sequelize/errors/checkError');
+const {
+  getDateOnlyFormat,
+} = require('../../helpers/sequelize/format/date-only-format');
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -29,7 +32,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
 const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in getLikeUpdateDate service function. Caused by ';
+  'Error in getLikeUpdateDate service function.';
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Vars
@@ -59,7 +62,6 @@ const getLikeUpdateDate = async function (event) {
     pageNro = 0;
     orderBy = 'id';
     orderAt = 'ASC';
-    msgResponse = null;
     msgLog = null;
 
     //-- start with path parameters  ---
@@ -108,17 +110,7 @@ const getLikeUpdateDate = async function (event) {
             await getDateFormat('update_date'),
           ],
         },
-        where: {
-          [Op.and]: [
-            //This case is for DATEONLY format
-            Sequelize.where(
-              Sequelize.fn('DATE', Sequelize.col('update_date')),
-              {
-                [Op.eq]: updateDate,
-              },
-            ),
-          ],
-        },
+        where: await getDateOnlyFormat('update_date', updateDate),
         limit: pageSizeNro,
         offset: pageNro,
         order: order,
@@ -129,7 +121,7 @@ const getLikeUpdateDate = async function (event) {
           usersList = users;
         })
         .catch(async (error) => {
-          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
           console.log(msgLog);
 
           usersList = await checkSequelizeErrors(error, error.name);
@@ -141,7 +133,7 @@ const getLikeUpdateDate = async function (event) {
       );
     }
   } catch (error) {
-    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
     console.log(msgLog);
 
     usersList = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);

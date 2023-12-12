@@ -22,8 +22,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 //sorting messages
 const ORDER_BY_ERROR_NAME = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
-const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in getAll service function. Caused by ';
+const GENERIC_ERROR_LOG_MESSAGE = 'Error in getAll service function.';
 //Vars
 let usersList;
 let msgLog;
@@ -97,7 +96,7 @@ const getAll = async function (event) {
           usersList = users;
         })
         .catch(async (error) => {
-          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
           console.log(msgLog);
 
           usersList = await checkSequelizeErrors(error, error.name);
@@ -109,7 +108,7 @@ const getAll = async function (event) {
       );
     }
   } catch (error) {
-    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
     console.log(msgLog);
 
     usersList = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);

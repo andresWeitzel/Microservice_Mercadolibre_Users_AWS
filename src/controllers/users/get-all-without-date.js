@@ -57,8 +57,10 @@ const ORDER_AT_ERROR_NAME = sortingMessage.ORDER_AT_ERROR_MESSAGE;
 const ORDER_AT_ERROR_NAME_DETAIL =
   sortingMessageDetail.ORDER_AT_ERROR_MESSAGE_DETAIL;
 //Errors
-const GET_ALL_USERS_ERROR_DETAIL =
+const GET_ALL_USERS_BAD_REQUEST_DETAIL =
   'Bad request, failed to obtain paginated users list without dates. Check if exist to database';
+const GET_ALL_USERS_ERROR_DETAIL =
+  'ERROR in get-all-without-dates lambda function.';
 //Vars
 let userList;
 let eventHeaders;
@@ -134,7 +136,7 @@ module.exports.handler = async (event) => {
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          GET_ALL_USERS_ERROR_DETAIL,
+          GET_ALL_USERS_BAD_REQUEST_DETAIL,
         );
       default:
         if (typeof userList === 'object' && userList[0]?.hasOwnProperty('id')) {
@@ -145,7 +147,7 @@ module.exports.handler = async (event) => {
 
     //-- end with db query  ---
   } catch (error) {
-    msgResponse = 'ERROR in get-all-without-dates lambda function.';
+    msgResponse = GET_ALL_USERS_ERROR_DETAIL;
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
 

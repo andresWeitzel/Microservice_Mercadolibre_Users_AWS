@@ -16,8 +16,7 @@ const {
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
 const DB_CONNECTION_REFUSED_STATUS =
   sequelizeConnection.CONNECTION_REFUSED_ERROR;
-const GENERIC_ERROR_LOG_MESSAGE =
-  'Error in getById service function. Caused by ';
+const GENERIC_ERROR_LOG_MESSAGE = 'Error in getById service function.';
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 //Vars
@@ -64,7 +63,7 @@ const getById = async function (event) {
           user = object;
         })
         .catch(async (error) => {
-          msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+          msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
           console.log(msgLog);
 
           user = await checkSequelizeErrors(error, error.name);
@@ -73,7 +72,7 @@ const getById = async function (event) {
       user = await checkSequelizeErrors(null, DB_CONNECTION_REFUSED_STATUS);
     }
   } catch (error) {
-    msgLog = GENERIC_ERROR_LOG_MESSAGE + error;
+    msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
     console.log(msgLog);
 
     user = await checkSequelizeErrors(error, DB_CONNECTION_ERROR_STATUS);
