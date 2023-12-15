@@ -15,7 +15,7 @@
 
 </div>  
 
-Microservicio para la gestión de usuarios ejemplificando parte de la arquitectura de desarrollo de ML, implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.
+Microservicio para la gestión de usuarios ejemplificando parte de la arquitectura de desarrollo de ML, implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Unit Test con Jest, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.
 
 *   [Repositorio base de datos](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 *   [Api Doc ML Usuarios](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
@@ -315,6 +315,7 @@ npm start
 | [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Inyección Automática de Módulos para Lambdas |
 | [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | Core Servicios AWS |
 | [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Manejo de Variables de Entorno |
+| [Jest](https://jestjs.io/) | 29.7 | Framework para pruebas unitarias, integración, etc. |
 | [Amazon Api Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) | 2.0 | Gestor, Autenticación, Control y Procesamiento de la Api |
 | [NodeJS](https://nodejs.org/en/) | 14.18.1  | Librería JS |
 | [Sequelize](https://sequelize.org/) | ^6.11.0 | ORM |
@@ -324,6 +325,7 @@ npm start
 | [Postman](https://www.postman.com/downloads/) | 10.11  | Cliente Http |
 | [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Símbolo del Sistema para linea de comandos |
 | [Git](https://git-scm.com/downloads) | 2.29.1  | Control de Versiones |
+| Otros | Otros |
 
 </br>
 
@@ -340,6 +342,8 @@ npm start
 | Prettier - Code formatter |
 | YAML - Autoformatter .yml |
 | Error Lens - Identificador de errores |
+| Tabnine - IA Code |
+| Otros - Otros |
 
 <br>
 

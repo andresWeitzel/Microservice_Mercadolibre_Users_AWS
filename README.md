@@ -15,7 +15,7 @@
 
 </div>  
 
-Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Amazon RDS, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
+Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
 
 *   [Database repository](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 *   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
@@ -315,6 +315,7 @@ npm start
 | [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Automatic Module Injection for Lambdas |
 | [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | Core Services AWS |
 | [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Management of Environment Variables |
+| [Jest](https://jestjs.io/) | 29.7 | Framework para pruebas unitarias, integración, etc. |
 | [Amazon Api Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) | 2.0 | API Manager, Authentication, Control and Processing |
 | [NodeJS](https://nodejs.org/en/) | 14.18.1  | js library |
 | [Sequelize](https://sequelize.org/) | ^6.11.0 | ORM |
@@ -324,6 +325,7 @@ npm start
 | [Postman](https://www.postman.com/downloads/) | 10.11  | http client |
 | [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Símbolo del Sistema para linea de comandos |
 | [Git](https://git-scm.com/downloads) | 2.29.1  | Version control |
+| Otros | Otros |
 
 </br>
 
@@ -340,6 +342,8 @@ npm start
 | Prettier - Code formatter |
 | YAML - Autoformatter .yml |
 | Error Lens - for errors and indent |
+| Tabnine - IA Code |
+| Otros - Otros | 
 
 <br>
 
