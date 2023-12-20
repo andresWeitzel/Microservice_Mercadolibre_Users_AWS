@@ -21,6 +21,12 @@ describe("- validateAuthHeaders helper (Unit Test)", () => {
       await expect(typeof validateAuthHeadersResult == "boolean").toBe(true);
     });
 
+    msg = "Should return a boolean passing other values.";
+    it(msg, async () => {
+      validateAuthHeadersResult = await validateAuthHeaders(EVENT_HEADERS_MOCK, EVENT_HEADERS_MOCK);
+      await expect(typeof validateAuthHeadersResult == "boolean").toBe(true);
+    });
+
     // msg =
     //   "Should return an object with the same values of the status code and the message passed as a parameter.";
 
