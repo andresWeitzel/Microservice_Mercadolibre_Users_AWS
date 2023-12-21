@@ -80,6 +80,7 @@ module.exports.handler = async (event) => {
 
     //-- start with validation Headers  ---
     eventHeaders = await event.headers;
+    
 
     validateReqParams = await validateHeadersParams(eventHeaders);
 
