@@ -1,29 +1,29 @@
-"use strict";
+'use strict';
 //Services
-const { getLikeLastName } = require("../../services/users/get-like-last-name");
+const { getLikeLastName } = require('../../services/users/get-like-last-name');
 //Enums
-const { statusCode } = require("../../enums/http/status-code");
+const { statusCode } = require('../../enums/http/status-code');
 const {
   validateHeadersMessage,
-} = require("../../enums/validation/errors/status-message");
+} = require('../../enums/validation/errors/status-message');
 const {
   sequelizeConnection,
   sequelizeConnectionDetails,
-} = require("../../enums/sequelize/errors");
+} = require('../../enums/sequelize/errors');
 const {
   sortingMessage,
   sortingMessageDetail,
-} = require("../../enums/pagination/errors/status-message");
+} = require('../../enums/pagination/errors/status-message');
 const {
   validateUser,
   validateUserDetails,
-} = require("../../enums/validation/user/validations");
+} = require('../../enums/validation/user/validations');
 //Helpers
-const { requestResult } = require("../../helpers/http/body-response");
+const { requestResult } = require('../../helpers/http/body-response');
 const {
   validateHeadersParams,
-} = require("../../helpers/http/request-headers-params");
-const { validateAuthHeaders } = require("../../helpers/auth/headers");
+} = require('../../helpers/http/request-headers-params');
+const { validateAuthHeaders } = require('../../helpers/auth/headers');
 //Const
 // validate msg
 const HEADERS_PARAMS_ERROR_MESSAGE =
@@ -64,12 +64,11 @@ const VALIDATE_PATH_PARAMETER_USER_DETAIL =
   validateUserDetails.VALIDATE_PATH_PARAMETER_USER_DETAIL;
 //Errors
 const GET_LIKE_LAST_NAME_BAD_REQUEST_DETAIL =
-  "Bad request, could not get paginated list of users according to the identification type. Try again.";
+  'Bad request, could not get paginated list of users according to the identification type. Try again.';
 const GET_LIKE_LAST_NAME_ERROR_DETAIL =
-  "ERROR in get-like-last-name lambda function.";
+  'ERROR in get-like-last-name lambda function.';
 //Vars
 let userList;
-let eventHeaders;
 let validateReqParams;
 let validateAuth;
 let msgResponse;
@@ -88,24 +87,22 @@ module.exports.handler = async (event) => {
     msgLog = null;
 
     //-- start with validation Headers  ---
-    eventHeaders = await event.headers;
 
-    validateReqParams = await validateHeadersParams(eventHeaders);
+    validateReqParams = await validateHeadersParams(event);
 
     if (!validateReqParams) {
       return await requestResult(
         BAD_REQUEST_CODE,
-        HEADERS_PARAMS_ERROR_MESSAGE
+        HEADERS_PARAMS_ERROR_MESSAGE,
       );
     }
 
-    validateAuth = await validateAuthHeaders(eventHeaders);
+    validateAuth = await validateAuthHeaders(event);
 
     if (!validateAuth) {
       return await requestResult(UNAUTHORIZED_CODE, HEADERS_AUTH_ERROR_MESSAGE);
     }
     //-- end with validation Headers  ---
-
     //-- start with db query  ---
     userList = await getLikeLastName(event);
 
@@ -113,44 +110,44 @@ module.exports.handler = async (event) => {
       case DB_CONNECTION_ERROR_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_ERROR_STATUS_DETAILS
+          DB_CONNECTION_ERROR_STATUS_DETAILS,
         );
       case DB_CONNECTION_REFUSED_STATUS:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_REFUSED_STATUS_DETAILS
+          DB_CONNECTION_REFUSED_STATUS_DETAILS,
         );
       case DB_INVALID_CONNECTION_ERROR:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_INVALID_CONNECTION_ERROR_DETAILS
+          DB_INVALID_CONNECTION_ERROR_DETAILS,
         );
       case DB_CONNECTION_TIMEOUT_ERROR:
         return await requestResult(
           INTERNAL_SERVER_ERROR_CODE,
-          DB_CONNECTION_TIMEOUT_ERROR_DETAILS
+          DB_CONNECTION_TIMEOUT_ERROR_DETAILS,
         );
       case VALIDATE_PATH_PARAMETER_USER:
         return await requestResult(
           BAD_REQUEST_CODE,
-          VALIDATE_PATH_PARAMETER_USER_DETAIL
+          VALIDATE_PATH_PARAMETER_USER_DETAIL,
         );
       case ORDER_BY_ERROR_NAME:
         return await requestResult(BAD_REQUEST_CODE, ORDER_BY_ERROR_DETAIL);
       case ORDER_AT_ERROR_NAME:
         return await requestResult(
           BAD_REQUEST_CODE,
-          ORDER_AT_ERROR_NAME_DETAIL
+          ORDER_AT_ERROR_NAME_DETAIL,
         );
       case 0:
       case undefined:
       case null:
         return await requestResult(
           BAD_REQUEST_CODE,
-          GET_LIKE_LAST_NAME_BAD_REQUEST_DETAIL
+          GET_LIKE_LAST_NAME_BAD_REQUEST_DETAIL,
         );
       default:
-        if (typeof userList === "object" && userList[0]?.hasOwnProperty("id")) {
+        if (typeof userList === 'object' && userList[0]?.hasOwnProperty('id')) {
           return await requestResult(OK_CODE, userList);
         }
         return await requestResult(BAD_REQUEST_CODE, userList);

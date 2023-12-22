@@ -122,15 +122,21 @@ npm i
 *   El script start configurado en el package.json del proyecto, es el encargado de levantar
     *   El plugin de serverless-offline
     *   El plugin remark-lint para archivos .md (se aplica solo el --output para check and autoformat sin terminar el proceso y poder ejecutar el script de serverless)
+    * Otros.
 
 ```json
-  "scripts": {
-    "check": "remark . --quiet --frail",
-    "format": "remark . --quiet --frail --output",
-    "format-md": "remark . --output",
-    "serverless-offline": "sls offline start",
-    "start": "npm run format-md && npm run serverless-offline"
-  },
+   "scripts": {
+      "serverless-offline": "sls offline start",
+        "start": "npm run format-md && npm run serverless-offline",
+        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
+        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
+        "check": "remark . --quiet --frail",
+        "format-remark": "remark . --quiet --frail --output",
+        "format-md": "remark . --output",
+        "test": "jest --verbose",
+        "test:watch": "jest --watch --verbose",
+        "test:cov": "jest --coverage --verbose"
+   },
 ```
 
 *   Ejecutamos la app desde terminal.
@@ -275,15 +281,21 @@ npm install remark-lint-table-cell-padding --save-dev
 *   El siguiente script (start), configurado en el package.json del proyecto, es el encargado de ejecutar
     *   El plugin de serverless-offline
     *   El plugin remark-lint para archivos .md
+    * Otros.
 
 ```json
-  "scripts": {
-    "check": "remark . --quiet --frail",
-    "format": "remark . --quiet --frail --output",
-    "format-md": "remark . --output",
-    "serverless-offline": "sls offline start",
-    "start": "npm run format-md && npm run serverless-offline"
-  },
+   "scripts": {
+      "serverless-offline": "sls offline start",
+        "start": "npm run format-md && npm run serverless-offline",
+        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
+        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
+        "check": "remark . --quiet --frail",
+        "format-remark": "remark . --quiet --frail --output",
+        "format-md": "remark . --output",
+        "test": "jest --verbose",
+        "test:watch": "jest --watch --verbose",
+        "test:cov": "jest --coverage --verbose"
+   },
 ```
 
 *   Ejecutamos la app desde terminal.
@@ -1121,6 +1133,10 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 *   [Validación de campos](https://www.npmjs.com/package/node-input-validator)
 *   [serverless-offline-ssm](https://www.serverless.com/plugins/serverless-offline-ssm)
 *   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
+
+#### Jest
+* [Uso de variables de entorno con jest (se agrega .env y jest.config.js)](https://stackoverflow.com/questions/48033841/test-process-env-with-jest)
+
 
 <br>
 

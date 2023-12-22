@@ -60,7 +60,6 @@ const GET_ALL_USERS_BAD_REQUEST_DETAIL =
 const GET_ALL_USERS_ERROR_DETAIL = 'ERROR in get-all lambda function.';
 //Vars
 let userList;
-let eventHeaders;
 let validateReqParams;
 let validateAuth;
 let msgResponse;
@@ -79,10 +78,8 @@ module.exports.handler = async (event) => {
     msgLog = null;
 
     //-- start with validation Headers  ---
-    eventHeaders = await event.headers;
-    
 
-    validateReqParams = await validateHeadersParams(eventHeaders);
+    validateReqParams = await validateHeadersParams(event);
 
     if (!validateReqParams) {
       return await requestResult(
@@ -91,7 +88,7 @@ module.exports.handler = async (event) => {
       );
     }
 
-    validateAuth = await validateAuthHeaders(eventHeaders);
+    validateAuth = await validateAuthHeaders(event);
 
     if (!validateAuth) {
       return await requestResult(UNAUTHORIZED_CODE, HEADERS_AUTH_ERROR_MESSAGE);

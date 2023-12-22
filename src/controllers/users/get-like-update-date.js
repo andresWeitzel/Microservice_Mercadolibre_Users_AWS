@@ -68,10 +68,9 @@ const VALIDATE_PATH_PARAMETER_USER_DETAIL =
 const GET_LIKE_UPDATE_DATE_USERS_BAD_REQUEST_DETAIL =
   'Bad request, could not get paginated list of users according to the update date. Try again.';
 const GET_LIKE_UPDATE_DATE_USERS_ERROR_DETAIL =
-  "ERROR in get-like-update-date lambda function.";  
+  'ERROR in get-like-update-date lambda function.';
 //Vars
 let userList;
-let eventHeaders;
 let validateReqParams;
 let validateAuth;
 let msgResponse;
@@ -90,9 +89,8 @@ module.exports.handler = async (event) => {
     msgLog = null;
 
     //-- start with validation Headers  ---
-    eventHeaders = await event.headers;
 
-    validateReqParams = await validateHeadersParams(eventHeaders);
+    validateReqParams = await validateHeadersParams(event);
 
     if (!validateReqParams) {
       return await requestResult(
@@ -101,7 +99,7 @@ module.exports.handler = async (event) => {
       );
     }
 
-    validateAuth = await validateAuthHeaders(eventHeaders);
+    validateAuth = await validateAuthHeaders(event);
 
     if (!validateAuth) {
       return await requestResult(UNAUTHORIZED_CODE, HEADERS_AUTH_ERROR_MESSAGE);

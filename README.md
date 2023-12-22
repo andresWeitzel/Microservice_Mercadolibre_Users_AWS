@@ -118,18 +118,24 @@ sls -v
 npm i
 ```
 
-*   The ssm variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding file (serverless\_ssm.yml) to the .gitignore.
+*   The ssm and env variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding files (serverless\_ssm.yml and .env) to the .gitignore.
 *   The start script configured in the project's package.json is responsible for launching
-    *   The serverless-offline plugin
-    *   The remark-lint plugin for .md files (only --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
+*   The serverless-offline plugin
+*   The remark-lint plugin for .md files (only --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
+* The test is for using jest
 
 ```json
    "scripts": {
-     "check": "remark . --quiet --frail",
-     "format": "remark . --quiet --frail --output",
-     "format-md": "remark . --output",
-     "serverless-offline": "sls offline start",
-     "start": "npm run format-md && npm run serverless-offline"
+      "serverless-offline": "sls offline start",
+        "start": "npm run format-md && npm run serverless-offline",
+        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
+        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
+        "check": "remark . --quiet --frail",
+        "format-remark": "remark . --quiet --frail --output",
+        "format-md": "remark . --output",
+        "test": "jest --verbose",
+        "test:watch": "jest --watch --verbose",
+        "test:cov": "jest --coverage --verbose"
    },
 ```
 
@@ -275,14 +281,20 @@ npm install remark-lint-table-cell-padding --save-dev
 *   The following script (start), configured in the project's package.json, is responsible for executing
     *   The serverless-offline plugin
     *   The remark-lint plugin for .md files
+    *  Others
 
 ```json
    "scripts": {
-     "check": "remark . --quiet --frail",
-     "format": "remark . --quiet --frail --output",
-     "format-md": "remark . --output",
-     "serverless-offline": "sls offline start",
-     "start": "npm run format-md && npm run serverless-offline"
+        "serverless-offline": "sls offline start",
+        "start": "npm run format-md && npm run serverless-offline",
+        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
+        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
+        "check": "remark . --quiet --frail",
+        "format-remark": "remark . --quiet --frail --output",
+        "format-md": "remark . --output",
+        "test": "jest --verbose",
+        "test:watch": "jest --watch --verbose",
+        "test:cov": "jest --coverage --verbose"
    },
 ```
 
@@ -1121,6 +1133,10 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 *   [Field validation](https://www.npmjs.com/package/node-input-validator)
 *   [serverless-offline-ssm](https://www.serverless.com/plugins/serverless-offline-ssm)
 *   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
+
+#### Jest
+* [Environment vars solution](https://stackoverflow.com/questions/48033841/test-process-env-with-jest)
+
 
 <br>
 
