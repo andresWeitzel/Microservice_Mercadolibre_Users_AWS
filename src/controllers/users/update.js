@@ -54,11 +54,9 @@ const VALIDATE_BODY_UPDATE_USER_DETAIL =
 //Errors
 const UPDATE_USER_BAD_REQUEST_DETAIL =
   'Bad request, could not updated user. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques.';
-  const UPDATE_USER_ERROR_DETAIL =
-  "ERROR in update lambda function.";   
+const UPDATE_USER_ERROR_DETAIL = 'ERROR in update lambda function.';
 //Vars
 let updatedUser;
-let eventHeaders;
 let validateAuth;
 let validateReqParams;
 let msgResponse;
@@ -77,9 +75,8 @@ module.exports.handler = async (event) => {
     msgLog = null;
 
     //-- start with validation Headers  ---
-    eventHeaders = await event.headers;
 
-    validateReqParams = await validateHeadersParams(eventHeaders);
+    validateReqParams = await validateHeadersParams(event);
 
     if (!validateReqParams) {
       return await requestResult(
@@ -88,7 +85,7 @@ module.exports.handler = async (event) => {
       );
     }
 
-    validateAuth = await validateAuthHeaders(eventHeaders);
+    validateAuth = await validateAuthHeaders(event);
 
     if (!validateAuth) {
       return await requestResult(UNAUTHORIZED_CODE, HEADERS_AUTH_ERROR_MESSAGE);
@@ -126,7 +123,10 @@ module.exports.handler = async (event) => {
       case 0:
       case undefined:
       case null:
-        return await requestResult(BAD_REQUEST_CODE, UPDATE_USER_BAD_REQUEST_DETAIL);
+        return await requestResult(
+          BAD_REQUEST_CODE,
+          UPDATE_USER_BAD_REQUEST_DETAIL,
+        );
       default:
         if (
           typeof updatedUser === 'object' &&

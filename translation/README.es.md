@@ -15,7 +15,7 @@
 
 </div>  
 
-Microservicio para la gestión de usuarios ejemplificando parte de la arquitectura de desarrollo de ML, implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.
+Microservicio para la gestión de usuarios ejemplificando parte de la arquitectura de desarrollo de ML, implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Unit Test con Jest, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.
 
 *   [Repositorio base de datos](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 *   [Api Doc ML Usuarios](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
@@ -122,15 +122,21 @@ npm i
 *   El script start configurado en el package.json del proyecto, es el encargado de levantar
     *   El plugin de serverless-offline
     *   El plugin remark-lint para archivos .md (se aplica solo el --output para check and autoformat sin terminar el proceso y poder ejecutar el script de serverless)
+    * Otros.
 
 ```json
-  "scripts": {
-    "check": "remark . --quiet --frail",
-    "format": "remark . --quiet --frail --output",
-    "format-md": "remark . --output",
-    "serverless-offline": "sls offline start",
-    "start": "npm run format-md && npm run serverless-offline"
-  },
+   "scripts": {
+      "serverless-offline": "sls offline start",
+        "start": "npm run format-md && npm run serverless-offline",
+        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
+        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
+        "check": "remark . --quiet --frail",
+        "format-remark": "remark . --quiet --frail --output",
+        "format-md": "remark . --output",
+        "test": "jest --verbose",
+        "test:watch": "jest --watch --verbose",
+        "test:cov": "jest --coverage --verbose"
+   },
 ```
 
 *   Ejecutamos la app desde terminal.
@@ -275,15 +281,21 @@ npm install remark-lint-table-cell-padding --save-dev
 *   El siguiente script (start), configurado en el package.json del proyecto, es el encargado de ejecutar
     *   El plugin de serverless-offline
     *   El plugin remark-lint para archivos .md
+    * Otros.
 
 ```json
-  "scripts": {
-    "check": "remark . --quiet --frail",
-    "format": "remark . --quiet --frail --output",
-    "format-md": "remark . --output",
-    "serverless-offline": "sls offline start",
-    "start": "npm run format-md && npm run serverless-offline"
-  },
+   "scripts": {
+      "serverless-offline": "sls offline start",
+        "start": "npm run format-md && npm run serverless-offline",
+        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
+        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
+        "check": "remark . --quiet --frail",
+        "format-remark": "remark . --quiet --frail --output",
+        "format-md": "remark . --output",
+        "test": "jest --verbose",
+        "test:watch": "jest --watch --verbose",
+        "test:cov": "jest --coverage --verbose"
+   },
 ```
 
 *   Ejecutamos la app desde terminal.
@@ -315,6 +327,7 @@ npm start
 | [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Inyección Automática de Módulos para Lambdas |
 | [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | Core Servicios AWS |
 | [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Manejo de Variables de Entorno |
+| [Jest](https://jestjs.io/) | 29.7 | Framework para pruebas unitarias, integración, etc. |
 | [Amazon Api Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) | 2.0 | Gestor, Autenticación, Control y Procesamiento de la Api |
 | [NodeJS](https://nodejs.org/en/) | 14.18.1  | Librería JS |
 | [Sequelize](https://sequelize.org/) | ^6.11.0 | ORM |
@@ -324,6 +337,7 @@ npm start
 | [Postman](https://www.postman.com/downloads/) | 10.11  | Cliente Http |
 | [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Símbolo del Sistema para linea de comandos |
 | [Git](https://git-scm.com/downloads) | 2.29.1  | Control de Versiones |
+| Otros | Otros |
 
 </br>
 
@@ -340,6 +354,8 @@ npm start
 | Prettier - Code formatter |
 | YAML - Autoformatter .yml |
 | Error Lens - Identificador de errores |
+| Tabnine - IA Code |
+| Otros - Otros |
 
 <br>
 
@@ -1117,6 +1133,10 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 *   [Validación de campos](https://www.npmjs.com/package/node-input-validator)
 *   [serverless-offline-ssm](https://www.serverless.com/plugins/serverless-offline-ssm)
 *   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
+
+#### Jest
+* [Uso de variables de entorno con jest (se agrega .env y jest.config.js)](https://stackoverflow.com/questions/48033841/test-process-env-with-jest)
+
 
 <br>
 

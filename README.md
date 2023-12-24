@@ -15,7 +15,7 @@
 
 </div>  
 
-Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Amazon RDS, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
+Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
 
 *   [Database repository](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 *   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
@@ -118,18 +118,24 @@ sls -v
 npm i
 ```
 
-*   The ssm variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding file (serverless\_ssm.yml) to the .gitignore.
+*   The ssm and env variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding files (serverless\_ssm.yml and .env) to the .gitignore.
 *   The start script configured in the project's package.json is responsible for launching
-    *   The serverless-offline plugin
-    *   The remark-lint plugin for .md files (only --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
+*   The serverless-offline plugin
+*   The remark-lint plugin for .md files (only --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
+* The test is for using jest
 
 ```json
    "scripts": {
-     "check": "remark . --quiet --frail",
-     "format": "remark . --quiet --frail --output",
-     "format-md": "remark . --output",
-     "serverless-offline": "sls offline start",
-     "start": "npm run format-md && npm run serverless-offline"
+      "serverless-offline": "sls offline start",
+        "start": "npm run format-md && npm run serverless-offline",
+        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
+        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
+        "check": "remark . --quiet --frail",
+        "format-remark": "remark . --quiet --frail --output",
+        "format-md": "remark . --output",
+        "test": "jest --verbose",
+        "test:watch": "jest --watch --verbose",
+        "test:cov": "jest --coverage --verbose"
    },
 ```
 
@@ -275,14 +281,20 @@ npm install remark-lint-table-cell-padding --save-dev
 *   The following script (start), configured in the project's package.json, is responsible for executing
     *   The serverless-offline plugin
     *   The remark-lint plugin for .md files
+    *  Others
 
 ```json
    "scripts": {
-     "check": "remark . --quiet --frail",
-     "format": "remark . --quiet --frail --output",
-     "format-md": "remark . --output",
-     "serverless-offline": "sls offline start",
-     "start": "npm run format-md && npm run serverless-offline"
+        "serverless-offline": "sls offline start",
+        "start": "npm run format-md && npm run serverless-offline",
+        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
+        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
+        "check": "remark . --quiet --frail",
+        "format-remark": "remark . --quiet --frail --output",
+        "format-md": "remark . --output",
+        "test": "jest --verbose",
+        "test:watch": "jest --watch --verbose",
+        "test:cov": "jest --coverage --verbose"
    },
 ```
 
@@ -315,6 +327,7 @@ npm start
 | [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Automatic Module Injection for Lambdas |
 | [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | Core Services AWS |
 | [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Management of Environment Variables |
+| [Jest](https://jestjs.io/) | 29.7 | Framework para pruebas unitarias, integración, etc. |
 | [Amazon Api Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) | 2.0 | API Manager, Authentication, Control and Processing |
 | [NodeJS](https://nodejs.org/en/) | 14.18.1  | js library |
 | [Sequelize](https://sequelize.org/) | ^6.11.0 | ORM |
@@ -324,6 +337,7 @@ npm start
 | [Postman](https://www.postman.com/downloads/) | 10.11  | http client |
 | [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Símbolo del Sistema para linea de comandos |
 | [Git](https://git-scm.com/downloads) | 2.29.1  | Version control |
+| Otros | Otros |
 
 </br>
 
@@ -340,6 +354,8 @@ npm start
 | Prettier - Code formatter |
 | YAML - Autoformatter .yml |
 | Error Lens - for errors and indent |
+| Tabnine - IA Code |
+| Otros - Otros | 
 
 <br>
 
@@ -1117,6 +1133,10 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 *   [Field validation](https://www.npmjs.com/package/node-input-validator)
 *   [serverless-offline-ssm](https://www.serverless.com/plugins/serverless-offline-ssm)
 *   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
+
+#### Jest
+* [Environment vars solution](https://stackoverflow.com/questions/48033841/test-process-env-with-jest)
+
 
 <br>
 

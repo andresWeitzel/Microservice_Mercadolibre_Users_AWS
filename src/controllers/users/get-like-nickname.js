@@ -66,10 +66,9 @@ const VALIDATE_PATH_PARAMETER_USER_DETAIL =
 const GET_LIKE_NICKNAME_USERS_BAD_REQUEST_DETAIL =
   'Bad request, could not get paginated list of users according to the nickname. Try again.';
 const GET_LIKE_NICKNAME_ERROR_DETAIL =
-  "ERROR in get-like-nickname lambda function.";  
+  'ERROR in get-like-nickname lambda function.';
 //Vars
 let userList;
-let eventHeaders;
 let validateReqParams;
 let validateAuth;
 let msgResponse;
@@ -88,9 +87,8 @@ module.exports.handler = async (event) => {
     msgLog = null;
 
     //-- start with validation Headers  ---
-    eventHeaders = await event.headers;
 
-    validateReqParams = await validateHeadersParams(eventHeaders);
+    validateReqParams = await validateHeadersParams(event);
 
     if (!validateReqParams) {
       return await requestResult(
@@ -99,7 +97,7 @@ module.exports.handler = async (event) => {
       );
     }
 
-    validateAuth = await validateAuthHeaders(eventHeaders);
+    validateAuth = await validateAuthHeaders(event);
 
     if (!validateAuth) {
       return await requestResult(UNAUTHORIZED_CODE, HEADERS_AUTH_ERROR_MESSAGE);

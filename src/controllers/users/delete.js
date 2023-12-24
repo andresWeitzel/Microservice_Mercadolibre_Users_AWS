@@ -56,7 +56,6 @@ const DELETE_USER_BAD_REQUEST_DETAIL =
   'Bad request, a non-existent user cannot be deleted. Operation not allowed';
 const DELETE_USER_ERROR_DETAIL = 'ERROR in delete-user lambda function.';
 //Vars
-let eventHeaders;
 let validateAuth;
 let validateReqParams;
 let deletedUser;
@@ -76,9 +75,8 @@ module.exports.handler = async (event) => {
     msgLog = null;
 
     //-- start with validation Headers  ---
-    eventHeaders = await event.headers;
 
-    validateReqParams = await validateHeadersParams(eventHeaders);
+    validateReqParams = await validateHeadersParams(event);
 
     if (!validateReqParams) {
       return await requestResult(
@@ -87,7 +85,7 @@ module.exports.handler = async (event) => {
       );
     }
 
-    validateAuth = await validateAuthHeaders(eventHeaders);
+    validateAuth = await validateAuthHeaders(event);
 
     if (!validateAuth) {
       return await requestResult(UNAUTHORIZED_CODE, HEADERS_AUTH_ERROR_MESSAGE);

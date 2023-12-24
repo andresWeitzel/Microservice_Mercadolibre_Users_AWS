@@ -10,7 +10,12 @@
     "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
     "check": "remark . --quiet --frail",
     "format-remark": "remark . --quiet --frail --output",
-    "format-md": "remark . --output"
+    "format-md": "remark . --output",
+    "test": "jest --verbose",
+    "test:watch": "jest --watch --verbose",
+    "test:cov": "jest --coverage --verbose",
+    "test:auth-helper": "jest --verbose ./src/test/unit-test/helpers/auth/*"
+
   },
   "repository": {
     "type": "git",
@@ -24,6 +29,8 @@
   },
   "homepage": "https://github.com/andresWeitzel/ApiRest_Mercadolibre_Serverless#readme",
   "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
     "remark-cli": "^11.0.0",
     "remark-lint-emphasis-marker": "^3.1.2",
     "remark-lint-list-item-indent": "^3.1.2",
@@ -31,17 +38,18 @@
     "remark-lint-table-cell-padding": "^4.1.3",
     "remark-preset-lint-consistent": "^5.1.2",
     "remark-preset-lint-recommended": "^6.1.3",
-    "serverless-offline": "^12.0.4",
-    "serverless-offline-ssm": "^6.2.0",
     "serverless": "^3.35.2",
-    "nodemon": "^3.0.1"
+    "serverless-offline": "^12.0.4",
+    "serverless-offline-ssm": "^6.2.0"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
     "mysql2": "^3.1.2",
     "node-input-validator": "^4.5.1",
     "prettier": "^2.8.8",
     "sequelize": "^6.29.0"
   },
+  
   "remarkConfig": {
     "settings": {
       "emphasis": "*",
@@ -61,7 +69,10 @@
         "remark-lint-strong-marker",
         "*"
       ],
-      ["remark-lint-heading-style", "atx" ]
+      [
+        "remark-lint-heading-style",
+        "atx"
+      ]
     ]
   }
 }

@@ -20,8 +20,7 @@ const GENERIC_ERROR_LOG_MESSAGE = 'Error in updateUser service function.';
 //validations
 const VALIDATE_BODY_UPDATE_USER = validateUser.VALIDATE_BODY_UPDATE_USER;
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
-const UPDATE_OBJECT_DETAILS =
-  'User has been successfully updated based on id ';
+const UPDATE_OBJECT_DETAILS = 'User has been successfully updated based on id ';
 const UPDATE_OBJECT_ERROR_DETAILS =
   'Check if the user you want to updated exists in the db. The user has not been updated based on the id ';
 //Vars
@@ -50,15 +49,15 @@ let updateDateParam;
 const updateUser = async function (event) {
   try {
     updatedUser = null;
-    nicknameParam=null;
-    firstNameParam=null;
-    lastNameParam=null;
-    emailParam=null;
-    identTypeParam=null;
-    identNumberParam= null;
-    countryIdParam=null;
-    creationDateParam=null;
-    updateDateParam=null;
+    nicknameParam = null;
+    firstNameParam = null;
+    lastNameParam = null;
+    emailParam = null;
+    identTypeParam = null;
+    identNumberParam = null;
+    countryIdParam = null;
+    creationDateParam = null;
+    updateDateParam = null;
     //Log
     msgLog = null;
 
@@ -83,12 +82,20 @@ const updateUser = async function (event) {
     //-- end with validation Body  ---
 
     nicknameParam = eventBody.nickname ? eventBody.nickname : nicknameParam;
-    firstNameParam = eventBody.first_name ? eventBody.first_name : firstNameParam;
+    firstNameParam = eventBody.first_name
+      ? eventBody.first_name
+      : firstNameParam;
     lastNameParam = eventBody.last_name ? eventBody.last_name : lastNameParam;
     emailParam = eventBody.email ? eventBody.email : emailParam;
-    identTypeParam = eventBody.identification_type ? eventBody.identification_type : identTypeParam;
-    identNumberParam = eventBody.identification_number ? eventBody.identNumberParam : identNumberParam;
-    countryIdParam = eventBody.country_id ? eventBody.country_id : countryIdParam;
+    identTypeParam = eventBody.identification_type
+      ? eventBody.identification_type
+      : identTypeParam;
+    identNumberParam = eventBody.identification_number
+      ? eventBody.identNumberParam
+      : identNumberParam;
+    countryIdParam = eventBody.country_id
+      ? eventBody.country_id
+      : countryIdParam;
     creationDateParam = await currentDateTime();
     updateDateParam = await currentDateTime();
 
@@ -113,13 +120,13 @@ const updateUser = async function (event) {
       )
         .then(async (userItem) => {
           updatedUser =
-          userItem[0] == 1
-            ? {
-                objectUpdated: UPDATE_OBJECT_DETAILS + userIdParam,
-              }
-            : {
-                objectUpdated: UPDATE_OBJECT_ERROR_DETAILS + userIdParam,
-              };
+            userItem[0] == 1
+              ? {
+                  objectUpdated: UPDATE_OBJECT_DETAILS + userIdParam,
+                }
+              : {
+                  objectUpdated: UPDATE_OBJECT_ERROR_DETAILS + userIdParam,
+                };
         })
         .catch(async (error) => {
           msgLog = GENERIC_ERROR_LOG_MESSAGE + `Caused by ${error}`;
