@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 //Environment vars
 const X_API_KEY = process.env.X_API_KEY;
 const BEARER_TOKEN = process.env.BEARER_TOKEN;
@@ -18,14 +18,13 @@ let msgLog;
 const validateAuthHeaders = async (event) => {
   try {
     eventHeaders = await event.headers;
-    console.log(eventHeaders);
 
-    if(eventHeaders == (null || undefined)){
+    if (eventHeaders == (null || undefined)) {
       return false;
     }
 
-    xApiKey = await eventHeaders['x-api-key'];
-    authorization = await eventHeaders['Authorization'];
+    xApiKey = await eventHeaders["x-api-key"];
+    authorization = await eventHeaders["Authorization"];
 
     validate =
       xApiKey != X_API_KEY ||
@@ -36,7 +35,7 @@ const validateAuthHeaders = async (event) => {
 
     return validate;
   } catch (error) {
-    msgResponse = 'ERROR in validateAuthHeaders() function.';
+    msgResponse = "ERROR in validateAuthHeaders() function.";
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
     return msgResponse;
