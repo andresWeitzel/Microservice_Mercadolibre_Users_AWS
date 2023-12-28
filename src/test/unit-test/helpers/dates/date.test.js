@@ -13,7 +13,7 @@ let currentDateTimeResult;
 describe("- currentDateTime helper (Unit Test)", () => {
   describe("1) Check cases for arguments.", () => {
     msg =
-      "Should return a string type if no arguments are passed (this function don´t has arguments)";
+      "Should return a string type if no arguments are passed (this function don't has arguments)";
     it(msg, async () => {
       currentDateTimeResult = await currentDateTime();
       await expect(typeof currentDateTimeResult == "string").toBe(true);
@@ -54,30 +54,21 @@ describe("- currentDateTime helper (Unit Test)", () => {
     });
   });
 
-  //   describe("3) Check cases for error.", () => {
+  describe("3) Check cases for error.", () => {
+    msg =
+      "Should not return a error message if no argument is passed to the function.";
+    it(msg, async () => {
+      await expect(async () => await currentDateTime()).not.toThrow(Error);
+      currentDateTimeResult = await currentDateTime();
+      await expect(typeof currentDateTimeResult == "string").toBe(true);
+    });
 
-  //     msg =
-  //     "Should not return a error message if no argument is passed to the function.";
-  //   it(msg, async () => {
-  //     await expect(async () => await getLocaleTimeZone()).not.toThrow(Error);
-  //     currentDateTimeResult = await getLocaleTimeZone();
-  //     await expect(typeof currentDateTimeResult == "string").toBe(true);
-
-  //   });
-
-  //     msg = "Should return a string value if a new Error is passed";
-  //     it(msg, async () => {
-  //       await expect(async () => await getLocaleTimeZone(new Error())).not.toThrow(
-  //         Error
-  //       );
-  //     });
-
-  //     msg =
-  //     "Should return a string type with the message 'ERROR in getLocaleTimeZone() helper function.' if a null are passed";
-  //     it(msg, async () => {
-  //       let ERROR_MESSAGE = 'ERROR in getLocaleTimeZone() helper function.';
-  //       currentDateTimeResult = await getLocaleTimeZone(null);
-  //        await expect(currentDateTimeResult).toMatch(ERROR_MESSAGE);
-  //     });
-  //   });
+    msg =
+      "Should return a string and not throw an Error if a new Error is passed";
+    it(msg, async () => {
+      currentDateTimeResult = await currentDateTime(new Error());
+      await expect(async () => currentDateTimeResult).not.toThrow(Error);
+      await expect(typeof currentDateTimeResult == "string").toBe(true);
+    });
+  });
 });

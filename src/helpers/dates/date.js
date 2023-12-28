@@ -1,5 +1,7 @@
 'use strict';
-//Const-vars
+//Const
+const CURRRENT_DATE_TIME_ERROR = 'ERROR in currentDateTime helper function.';
+//Vars
 let date;
 let dateNow;
 let msgResponse;
@@ -26,7 +28,7 @@ const currentDateTime = async () => {
       ':' +
       ('00' + date.getSeconds()).slice(-2);
   } catch (error) {
-    msgResponse = 'ERROR in currentDateTime() function.';
+    msgResponse = CURRRENT_DATE_TIME_ERROR;
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
   }
