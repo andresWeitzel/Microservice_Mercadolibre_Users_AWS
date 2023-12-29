@@ -15,7 +15,8 @@
     "test:watch": "jest --watch --verbose",
     "test:cov": "jest --coverage --verbose",
     "test:auth-helper": "jest --verbose ./src/test/unit-test/helpers/auth/*",
-    "test:dates-helper": "jest --verbose ./src/test/unit-test/helpers/dates/*"
+    "test:dates-helper": "jest --verbose ./src/test/unit-test/helpers/dates/*",
+    "test:db-helper": "jest --verbose ./src/test/unit-test/helpers/db/*"
 
   },
   "repository": {
