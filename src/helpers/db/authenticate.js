@@ -6,6 +6,7 @@ const CHECK_DB_AUTHENTICATION_ERROR =
   "ERROR in checkDbAuthentication helper function.";
 //Vars
 let check;
+let dbConnectionResult;
 let msgResponse;
 let msgLog;
 
@@ -14,25 +15,23 @@ let msgLog;
  * @returns a boolean depending on the connection to the db with sequelize
  */
 const checkDbAuthentication = async function () {
-  try {
-    check = false;
-    await dbConnection
-      .authenticate()
-      .then(() => {
-        check = true;
-      })
-      .catch((error) => {
-        check = false;
-        console.log(error);
-      });
-    return check;
-  } catch (error) {
-    check = false;
-    msgResponse = CHECK_DB_AUTHENTICATION_ERROR;
-    msgLog = msgResponse + `Caused by ${error}`;
-    console.log(msgLog);
-    return msgResponse;
-  }
+  check = false;
+  dbConnectionResult = null;
+
+  dbConnectionResult = await dbConnection
+    .authenticate()
+    .then(async () => {
+      check = true;
+      return check;
+    })
+    .catch(async (error) => {
+      msgResponse = CHECK_DB_AUTHENTICATION_ERROR;
+      msgLog = msgResponse + `Caused by ${error}`;
+      console.log(msgLog);
+      return msgResponse;
+    });
+
+  return dbConnectionResult;
 };
 
 module.exports = {

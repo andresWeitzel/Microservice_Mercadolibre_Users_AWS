@@ -12,24 +12,26 @@ let checkDbAuthenticationResult;
 describe("- checkDbAuthentication helper (Unit Test)", () => {
   describe("1) Check cases for arguments.", () => {
     msg =
-      "Should return a boolean type if no arguments are passed (this function don't has arguments)";
+      "Should return a boolean type if no arguments are passed and the mysql service is running (this function don't has arguments) ";
     it(msg, async () => {
       checkDbAuthenticationResult = await checkDbAuthentication();
       await expect(typeof checkDbAuthenticationResult == "boolean").toBe(true);
     });
 
     msg =
-      "Should return a boolean type if others arguments are passed (this function don't has arguments)";
+      "Should return a boolean type if others arguments are passed and the mysql service is running (this function don't has arguments)";
     it(msg, async () => {
       checkDbAuthenticationResult = await checkDbAuthentication(MOCK_BOOLEAN_VALUE);
       await expect(typeof checkDbAuthenticationResult == "boolean").toBe(true);
     });
 
-    // msg = "Should return a string type if others arguments are passed ";
-    // it(msg, async () => {
-    //   checkDbAuthenticationResult = await currentDateTime(TODAY_DATE);
-    //   await expect(typeof checkDbAuthenticationResult == "string").toBe(true);
-    // });
+    msg =
+    "Should return a boolean type if others arguments are passed and the mysql service is running (this function don't has arguments)";
+  it(msg, async () => {
+    checkDbAuthenticationResult = await checkDbAuthentication(null);
+    await expect(typeof checkDbAuthenticationResult == "boolean").toBe(true);
+  });
+
 
     // msg = "Should return a string type if a null value is passed";
     // it(msg, async () => {
