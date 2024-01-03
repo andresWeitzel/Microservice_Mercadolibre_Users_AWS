@@ -1,8 +1,12 @@
-'use strict';
+"use strict";
 //dbConfig
-const { dbConnection } = require('../../db/localConfig');
-//Const/vars
+const { dbConnection } = require("../../db/local-config");
+//Const
+const CHECK_DB_AUTHENTICATION_ERROR =
+  "ERROR in checkDbAuthentication helper function.";
+//Vars
 let check;
+let dbConnectionResult;
 let msgResponse;
 let msgLog;
 
@@ -11,25 +15,23 @@ let msgLog;
  * @returns a boolean depending on the connection to the db with sequelize
  */
 const checkDbAuthentication = async function () {
-  try {
-    await dbConnection
-      .authenticate()
-      .then(() => {
-        check = true;
-      })
-      .catch((error) => {
-        check = false;
-        console.log(error);
-      });
-  } catch (error) {
-    check = false;
+  check = false;
+  dbConnectionResult = null;
 
-    msgResponse = 'ERROR in checkDbAuthentication() function.';
-    msgLog = msgResponse + `Caused by ${error}`;
-    console.log(msgLog);
-  }
+  dbConnectionResult = await dbConnection
+    .authenticate()
+    .then(async () => {
+      check = true;
+      return check;
+    })
+    .catch(async (error) => {
+      msgResponse = CHECK_DB_AUTHENTICATION_ERROR;
+      msgLog = msgResponse + `Caused by ${error}`;
+      console.log(msgLog);
+      return msgResponse;
+    });
 
-  return check;
+  return dbConnectionResult;
 };
 
 module.exports = {
