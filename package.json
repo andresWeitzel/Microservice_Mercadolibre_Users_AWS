@@ -11,12 +11,13 @@
     "check": "remark . --quiet --frail",
     "format-remark": "remark . --quiet --frail --output",
     "format-md": "remark . --output",
-    "test": "jest --verbose",
+    "test": "jest --verbose --detectOpenHandles",
     "test:watch": "jest --watch --verbose --detectOpenHandles",
     "test:cov": "jest --coverage --verbose --detectOpenHandles",
-    "test:auth-helper": "jest --verbose --detectOpenHandles ./src/test/unit-test/helpers/auth/*",
-    "test:dates-helper": "jest --verbose --detectOpenHandles ./src/test/unit-test/helpers/dates/*",
-    "test:db-helper": "jest --verbose --detectOpenHandles ./src/test/unit-test/helpers/db/*"
+    "test:auth-helpers": "jest --verbose --detectOpenHandles ./src/test/unit-test/helpers/auth/*",
+    "test:dates-helpers": "jest --verbose --detectOpenHandles ./src/test/unit-test/helpers/dates/*",
+    "test:db-helpers": "jest --verbose --detectOpenHandles ./src/test/unit-test/helpers/db/*",
+    "test:http-helpers": "jest --verbose --detectOpenHandles ./src/test/unit-test/helpers/http/*"
 
   },
   "repository": {
