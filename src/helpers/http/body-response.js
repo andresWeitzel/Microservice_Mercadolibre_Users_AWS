@@ -1,25 +1,18 @@
-//Cont-vars
+//Cont
+const REQUEST_RESULT_ERROR_MESSAGE = 'ERROR in requestResult helper function.';
+//Vars
 let msgResponse;
 let msgLog;
+
+
 /**
- * @description get a json with the http status code, a message an
+ * @description Get a json with the http status code, a message an
  * @param {Number} statusCode Number type
  * @param {String} message String type
  * @returns a json for the lambda response
  */
 const requestResult = async (statusCode, message) => {
   try {
-    // if(typeof(message) == 'string') {
-    //   return {
-    //     statusCode: statusCode,
-    //     body: JSON.stringify(
-    //       {
-    //         message: message,
-    //       }
-    //     ),
-    //   };
-    // }
-
     return {
       statusCode: statusCode,
       body: JSON.stringify(
@@ -31,7 +24,7 @@ const requestResult = async (statusCode, message) => {
       ),
     };
   } catch (error) {
-    msgResponse = 'ERROR in requestResult() function.';
+    msgResponse = REQUEST_RESULT_ERROR_MESSAGE;
     msgLog = msgResponse + `Caused by ${error}`;
     console.log(msgLog);
   }
