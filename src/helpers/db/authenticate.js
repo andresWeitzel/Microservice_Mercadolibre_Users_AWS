@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 //dbConfig
-const { dbConnection } = require("../../db/local-config");
+const { dbConnection } = require('../../db/local-config');
 //Const
 const CHECK_DB_AUTHENTICATION_ERROR =
-  "ERROR in checkDbAuthentication helper function.";
+  'ERROR in checkDbAuthentication helper function.';
 //Vars
 let check;
 let dbConnectionResult;

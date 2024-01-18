@@ -122,7 +122,7 @@ npm i
 *   The start script configured in the project's package.json is responsible for launching
 *   The serverless-offline plugin
 *   The remark-lint plugin for .md files (only --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
-* The test is for using jest
+*   The test is for using jest
 
 ```json
    "scripts": {
@@ -281,7 +281,7 @@ npm install remark-lint-table-cell-padding --save-dev
 *   The following script (start), configured in the project's package.json, is responsible for executing
     *   The serverless-offline plugin
     *   The remark-lint plugin for .md files
-    *  Others
+    *   Others
 
 ```json
    "scripts": {
@@ -355,7 +355,7 @@ npm start
 | YAML - Autoformatter .yml |
 | Error Lens - for errors and indent |
 | Tabnine - IA Code |
-| Otros - Otros | 
+| Otros - Otros |
 
 <br>
 
@@ -1135,8 +1135,8 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 *   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
 
 #### Jest
-* [Environment vars solution](https://stackoverflow.com/questions/48033841/test-process-env-with-jest)
 
+*   [Environment vars solution](https://stackoverflow.com/questions/48033841/test-process-env-with-jest)
 
 <br>
 

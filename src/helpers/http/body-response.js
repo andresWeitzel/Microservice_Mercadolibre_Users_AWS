@@ -4,7 +4,6 @@ const REQUEST_RESULT_ERROR_MESSAGE = 'ERROR in requestResult helper function.';
 let msgResponse;
 let msgLog;
 
-
 /**
  * @description Get a json with the http status code, a message an
  * @param {Number} statusCode Number type

@@ -122,7 +122,7 @@ npm i
 *   El script start configurado en el package.json del proyecto, es el encargado de levantar
     *   El plugin de serverless-offline
     *   El plugin remark-lint para archivos .md (se aplica solo el --output para check and autoformat sin terminar el proceso y poder ejecutar el script de serverless)
-    * Otros.
+    *   Otros.
 
 ```json
    "scripts": {
@@ -281,7 +281,7 @@ npm install remark-lint-table-cell-padding --save-dev
 *   El siguiente script (start), configurado en el package.json del proyecto, es el encargado de ejecutar
     *   El plugin de serverless-offline
     *   El plugin remark-lint para archivos .md
-    * Otros.
+    *   Otros.
 
 ```json
    "scripts": {
@@ -1135,8 +1135,8 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 *   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
 
 #### Jest
-* [Uso de variables de entorno con jest (se agrega .env y jest.config.js)](https://stackoverflow.com/questions/48033841/test-process-env-with-jest)
 
+*   [Uso de variables de entorno con jest (se agrega .env y jest.config.js)](https://stackoverflow.com/questions/48033841/test-process-env-with-jest)
 
 <br>
 
