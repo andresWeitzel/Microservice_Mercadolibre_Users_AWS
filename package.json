@@ -51,13 +51,6 @@
     "prettier": "^2.8.8",
     "sequelize": "^6.29.0"
   },
-  "env": {
-    "browser": true,
-    "node": true,
-    "jasmine": true,
-    "jest": true,
-    "es6": true
-  },
   "remarkConfig": {
     "settings": {
       "emphasis": "*",
