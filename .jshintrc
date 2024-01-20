@@ -3,13 +3,5 @@
   //https://github.com/dense-analysis/ale/issues/2354
   "esversion": 6,
   //https://stackoverflow.com/questions/15894193/disabling-warning-about-require-function-in-jshint
-  "node": true,
-  //https://stackoverflow.com/questions/41324636/how-can-i-import-jest
-  "env": {
-    "browser": true,
-    "node": true,
-    "jasmine": true,
-    "jest": true,
-    "es6": true
-  }
+  "node": true
 }
