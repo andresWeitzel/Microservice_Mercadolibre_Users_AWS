@@ -4,7 +4,7 @@ const {
   checkDbAuthentication,
 } = require('../../../../helpers/db/authenticate');
 //Const
-const MOCK_BOOLEAN_VALUE = false;
+const MOCK_BOOLEAN_VALUE = process.env.MOCK_BOOLEAN_VALUE_01;
 //Vars
 let msg;
 let checkDbAuthenticationResult;
