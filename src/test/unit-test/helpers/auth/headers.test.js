@@ -31,6 +31,8 @@ const EVENT_HEADERS_WITH_API_KEY_VALID_AUTH_INVALID = {
 let msg;
 let validateAuthHeadersResult;
 
+//Review for catch cases
+
 describe('- validateAuthHeaders helper (Unit Test)', () => {
   describe('1) Check cases for argument.', () => {
     msg = 'Should return a boolean if passed values to all parameters.';
