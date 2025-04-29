@@ -8,12 +8,17 @@ const { fields } = require('../../enums/common/users');
 
 // Helpers
 const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
-const { checkSequelizeErrors } = require('../../helpers/sequelize/errors/checkError');
-const { validatePathParameters } = require('../../helpers/http/query-string-params');
+const {
+  checkSequelizeErrors,
+} = require('../../helpers/sequelize/errors/checkError');
+const {
+  validatePathParameters,
+} = require('../../helpers/http/query-string-params');
 
 // Constants
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
-const DB_CONNECTION_REFUSED_STATUS = sequelizeConnection.CONNECTION_REFUSED_ERROR;
+const DB_CONNECTION_REFUSED_STATUS =
+  sequelizeConnection.CONNECTION_REFUSED_ERROR;
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 const GENERIC_ERROR_LOG_MESSAGE = 'Error in getById service function.';
 

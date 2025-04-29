@@ -7,12 +7,17 @@ const { validateUser } = require('../../enums/validation/user/validations');
 const { fields } = require('../../enums/common/users');
 
 // Helpers
-const { checkSequelizeErrors } = require('../../helpers/sequelize/errors/checkError');
-const { validatePathParameters } = require('../../helpers/http/query-string-params');
+const {
+  checkSequelizeErrors,
+} = require('../../helpers/sequelize/errors/checkError');
+const {
+  validatePathParameters,
+} = require('../../helpers/http/query-string-params');
 
 // Constants
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
-const DB_CONNECTION_REFUSED_STATUS = sequelizeConnection.CONNECTION_REFUSED_ERROR;
+const DB_CONNECTION_REFUSED_STATUS =
+  sequelizeConnection.CONNECTION_REFUSED_ERROR;
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 const GENERIC_ERROR_LOG_MESSAGE = 'Error in getByIdLimit service function.';
 
@@ -40,7 +45,12 @@ const getByIdLimit = async (event) => {
       // Fetch user by primary key with specified attributes
       const user = await User.findByPk(userIdParam, {
         attributes: {
-          exclude: [fields.FIRST_NAME_NAME_VALUE, fields.LAST_NAME_NAME_VALUE, fields.CREATION_DATE_NAME_VALUE, fields.UPDATE_DATE_NAME_VALUE],
+          exclude: [
+            fields.FIRST_NAME_NAME_VALUE,
+            fields.LAST_NAME_NAME_VALUE,
+            fields.CREATION_DATE_NAME_VALUE,
+            fields.UPDATE_DATE_NAME_VALUE,
+          ],
         },
         raw: true, // Return plain objects
         nest: true, // Format nested objects

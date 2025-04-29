@@ -1,29 +1,29 @@
 //Models
-const { User } = require("../../models/sequelize/user");
+const { User } = require('../../models/sequelize/user');
 //Enums
-const { sequelizeConnection } = require("../../enums/sequelize/errors");
+const { sequelizeConnection } = require('../../enums/sequelize/errors');
 const {
   sortingMessage,
-} = require("../../enums/pagination/errors/status-message");
-const { validateUser } = require("../../enums/validation/user/validations");
-const { fields } = require("../../enums/common/users");
-const { orderAt } = require("../../enums/pagination/ordering/orderAt");
+} = require('../../enums/pagination/errors/status-message');
+const { validateUser } = require('../../enums/validation/user/validations');
+const { fields } = require('../../enums/common/users');
+const { orderAt } = require('../../enums/pagination/ordering/orderAt');
 
 //Helpers
-const { getDateFormat } = require("../../helpers/sequelize/format/date-format");
+const { getDateFormat } = require('../../helpers/sequelize/format/date-format');
 const {
   checkSequelizeErrors,
-} = require("../../helpers/sequelize/errors/checkError");
+} = require('../../helpers/sequelize/errors/checkError');
 const {
   checkOrderAt,
   checkOrderBy,
-} = require("../../helpers/pagination/users/order");
+} = require('../../helpers/pagination/users/order');
 const {
   validatePathParameters,
-} = require("../../helpers/http/query-string-params");
+} = require('../../helpers/http/query-string-params');
 const {
   getLowerFormat,
-} = require("../../helpers/sequelize/format/lower-format");
+} = require('../../helpers/sequelize/format/lower-format');
 // Const
 //connection_status
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
@@ -32,7 +32,7 @@ const DB_CONNECTION_REFUSED_STATUS =
 //sorting messages
 const ORDER_BY_ERROR_MESSAGE = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_MESSAGE = sortingMessage.ORDER_AT_ERROR_MESSAGE;
-const GENERIC_ERROR_LOG_MESSAGE = "Error in getLikeCountryId service function.";
+const GENERIC_ERROR_LOG_MESSAGE = 'Error in getLikeCountryId service function.';
 //Validations
 const VALIDATE_PATH_PARAMETER_USER = validateUser.VALIDATE_PATH_PARAMETER_USER;
 const DEFAULT_PAGE_SIZE = 5;
@@ -71,10 +71,10 @@ const getLikeCountryId = async function (event) {
     const pageSizeNro = parseInt(queryStrParams.limit) || DEFAULT_PAGE_SIZE;
     const pageNro = parseInt(queryStrParams.page) || DEFAULT_PAGE_NUMBER;
     const orderBy = await checkOrderBy(
-      queryStrParams.orderBy || DEFAULT_ORDER_BY
+      queryStrParams.orderBy || DEFAULT_ORDER_BY,
     );
     const orderAt = await checkOrderAt(
-      queryStrParams.orderAt || DEFAULT_ORDER_AT
+      queryStrParams.orderAt || DEFAULT_ORDER_AT,
     );
 
     if (!orderBy) return ORDER_BY_ERROR_MESSAGE;
