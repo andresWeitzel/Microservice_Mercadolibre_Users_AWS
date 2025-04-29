@@ -1,7 +1,7 @@
 
 ![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/MicroService_Users_ML.drawio.png)
 
- <div align="right" style="display: inline-block;">
+<div align="right" style="display: inline-block;">
   <img width="35" height="35" src="./doc/assets/icons/devops/png/aws.png" />
   <img width="35" height="35" src="./doc/assets/icons/aws/png/lambda.png" />
   <img width="42" height="42" src="./doc/assets/icons/aws/png/api-gateway.png" />
@@ -12,11 +12,12 @@
   <img width="40" height="40" src="./doc/assets/icons/frontend/png/vsc.png" />
   <img width="40" height="40" src="./doc/assets/icons/backend/png/postman.png" />
   <img width="44" height="40" src="./doc/assets/icons/backend/png/git.png" />
- </div> 
+</div> 
+
 
 <br>
 
- 
+<br>
 
 
 <div align="right">
