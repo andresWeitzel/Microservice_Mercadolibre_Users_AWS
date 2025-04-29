@@ -4,14 +4,14 @@
 <div align="right" style="display: inline-block;">
   <img width="35" height="35" src="./doc/assets/icons/devops/png/aws.png" />
   <img width="35" height="35" src="./doc/assets/icons/aws/png/lambda.png" />
-  <img width="42" height="42" src="./doc/assets/icons/aws/png/api-gateway.png" />
-  <img width="40" height="40" src="./doc/assets/icons/aws/png/parameter-store.png" />
+  <img width="42" height="40" src="./doc/assets/icons/aws/png/api-gateway.png" />
+  <img width="40" height="38" src="./doc/assets/icons/aws/png/parameter-store.png" />
   <img width="40" height="40" src="./doc/assets/icons/backend/javascript-typescript/png/nodejs.png" />
   <img width="40" height="40" src="./doc/assets/icons/backend/javascript-typescript/png/sequelize.png" />
-  <img width="35" height="42" src="./doc/assets/icons/aws/png/rds.png" />
-  <img width="40" height="40" src="./doc/assets/icons/frontend/png/vsc.png" />
-  <img width="40" height="40" src="./doc/assets/icons/backend/png/postman.png" />
-  <img width="44" height="40" src="./doc/assets/icons/backend/png/git.png" />
+  <img width="35" height="40" src="./doc/assets/icons/aws/png/rds.png" />
+  <img width="40" height="40" src="./doc/assets/icons/devops/png/vsc.png" />
+  <img width="40" height="40" src="./doc/assets/icons/devops/png/postman.png" />
+  <img width="44" height="40" src="./doc/assets/icons/devops/png/git.png" />
 </div> 
 
 
