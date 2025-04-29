@@ -30,7 +30,11 @@
 </div>
 
 
+<div align="center">
+
 # Microservice Mercadolibre Users AWS
+
+</div>  
 
 Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
 
