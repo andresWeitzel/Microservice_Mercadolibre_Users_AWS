@@ -1,30 +1,29 @@
 ![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/MicroService_Users_ML.drawio.png)
 
-<div style="display: flex; justify-content: space-between; align-items: center;">
-  <!-- Banderas a la izquierda -->
-  <div>
-    <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md" target="_blank">
-      <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/arg-flag.jpg" width="30" />
-    </a>
-    <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md" target="_blank">
-      <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/eeuu-flag.jpg" width="30" />
-    </a>
-  </div>
-
-  <!-- Íconos a la derecha -->
-  <div>
-    <img width="35" height="35" src="./doc/assets/icons/devops/png/aws.png" />
-    <img width="35" height="35" src="./doc/assets/icons/aws/png/lambda.png" />
-    <img width="42" height="42" src="./doc/assets/icons/aws/png/api-gateway.png" />
-    <img width="40" height="40" src="./doc/assets/icons/aws/png/parameter-store.png" />
-    <img width="40" height="40" src="./doc/assets/icons/backend/javascript-typescript/png/nodejs.png" />
-    <img width="40" height="40" src="./doc/assets/icons/backend/javascript-typescript/png/sequelize.png" />
-    <img width="35" height="42" src="./doc/assets/icons/aws/png/rds.png" />
-    <img width="40" height="40" src="./doc/assets/icons/frontend/png/vsc.png" />
-    <img width="40" height="40" src="./doc/assets/icons/backend/png/postman.png" />
-    <img width="44" height="40" src="./doc/assets/icons/backend/png/git.png" />
-  </div>
-</div>
+<table>
+  <tr>
+    <td align="left">
+      <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md" target="_blank">
+        <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/arg-flag.jpg" width="30" />
+      </a>
+      <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md" target="_blank">
+        <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/eeuu-flag.jpg" width="30" />
+      </a>
+    </td>
+    <td align="right">
+      <img width="35" height="35" src="./doc/assets/icons/devops/png/aws.png" />
+      <img width="35" height="35" src="./doc/assets/icons/aws/png/lambda.png" />
+      <img width="42" height="42" src="./doc/assets/icons/aws/png/api-gateway.png" />
+      <img width="40" height="40" src="./doc/assets/icons/aws/png/parameter-store.png" />
+      <img width="40" height="40" src="./doc/assets/icons/backend/javascript-typescript/png/nodejs.png" />
+      <img width="40" height="40" src="./doc/assets/icons/backend/javascript-typescript/png/sequelize.png" />
+      <img width="35" height="42" src="./doc/assets/icons/aws/png/rds.png" />
+      <img width="40" height="40" src="./doc/assets/icons/frontend/png/vsc.png" />
+      <img width="40" height="40" src="./doc/assets/icons/backend/png/postman.png" />
+      <img width="44" height="40" src="./doc/assets/icons/backend/png/git.png" />
+    </td>
+  </tr>
+</table>
 
 
 # Microservice Mercadolibre Users AWS
