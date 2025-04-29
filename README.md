@@ -13,20 +13,22 @@
   <img width="44" height="40" src="./doc/assets/icons/backend/png/git.png" />
  </div> 
 
-<div style="display: flex; align-items: center;">
+<table>
+  <tr>
+    <td>
+      <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md" target="_blank">
+        <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/arg-flag.jpg" width="40" height="25" />
+      </a>
+      <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md" target="_blank">
+        <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/eeuu-flag.jpg" width="40" height="25" />
+      </a>
+    </td>
+    <td>
+      <h1 style="margin-left: 10px;">Microservice Mercadolibre Users AWS</h1>
+    </td>
+  </tr>
+</table>
 
-  <div>
-    <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md" target="_blank">
-      <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/arg-flag.jpg" width="40" height="25" />
-    </a>
-    <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md" target="_blank">
-      <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/eeuu-flag.jpg" width="40" height="25" />
-    </a>
-  </div>
-
-  <h1 style="margin-left: 10px;">Microservice Mercadolibre Users AWS</h1>
-
-</div>
 
 
 
