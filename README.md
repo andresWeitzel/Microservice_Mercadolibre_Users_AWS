@@ -13,17 +13,21 @@
   <img width="44" height="40" src="./doc/assets/icons/backend/png/git.png" />
  </div> 
 
-<div align="center">
-    <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md" target="_blank"> 
-      <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/arg-flag.jpg" width="10%" height="10%" />
-  </a> 
-   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md" target="_blank">
-      <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/eeuu-flag.jpg" width="10%" height="10%" />
-  </a>
-    
-  # Microservice Mercadolibre Users AWS
+<div style="display: flex; align-items: center;">
+
+  <div>
+    <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md" target="_blank">
+      <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/arg-flag.jpg" width="40" height="25" />
+    </a>
+    <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md" target="_blank">
+      <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/eeuu-flag.jpg" width="40" height="25" />
+    </a>
+  </div>
+
+  <h1 style="margin-left: 10px;">Microservice Mercadolibre Users AWS</h1>
 
 </div>
+
 
 
 Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
