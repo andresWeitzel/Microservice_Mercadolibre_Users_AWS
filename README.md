@@ -1,27 +1,4 @@
 
-
-<div align="right" style="display: inline-block">
-  <div>
-    <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md" target="_blank">
-      <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/arg-flag.jpg" width="45" height="30" />
-    </a>
-    <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md" target="_blank">
-      <img src="https://raw.githubusercontent.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/master/doc/assets/translation/eeuu-flag.jpg" width="45" height="30" />
-    </a>
-  </div>
-</div>
-
-
-# Microservice Mercadolibre Users AWS
-
-Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
-
-*   [Database repository](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
-*   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
-*   [Playlist functionality test](https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/social-networks/yt.png" width="5%" height="5%" /> </a>
-
-<br>
-
 ![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/MicroService_Users_ML.drawio.png)
 
  <div align="right" style="display: inline-block;">
@@ -36,6 +13,30 @@ Microservice for user management exemplifying part of the ML development archite
   <img width="40" height="40" src="./doc/assets/icons/backend/png/postman.png" />
   <img width="44" height="40" src="./doc/assets/icons/backend/png/git.png" />
  </div> 
+
+<br>
+
+ 
+
+
+<div align="right">
+    <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md" target="_blank">
+      <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/arg-flag.jpg" width="10%" height="10%" />
+  </a> 
+   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md" target="_blank">
+      <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/eeuu-flag.jpg" width="10%" height="10%" />
+  </a> 
+</div>
+
+
+# Microservice Mercadolibre Users AWS
+
+Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
+
+*   [Database repository](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
+*   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
+*   [Playlist functionality test](https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/social-networks/yt.png" width="5%" height="5%" /> </a>
+
 
 
 <br>
