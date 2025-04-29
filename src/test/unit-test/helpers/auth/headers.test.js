@@ -36,7 +36,7 @@ describe('- validateAuthHeaders helper (Unit Test)', () => {
     msg = 'Should return a boolean if passed values to all parameters.';
     it(msg, async () => {
       validateAuthHeadersResult = await validateAuthHeaders(MOCK_EVENT_HEADERS);
-      console.log(EVENT_HEADERS_WITH_API_KEY_AUTH_VALID)
+      console.log(EVENT_HEADERS_WITH_API_KEY_AUTH_VALID);
       await expect(typeof validateAuthHeadersResult == 'boolean').toBe(true);
     });
 

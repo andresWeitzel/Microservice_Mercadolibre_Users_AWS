@@ -1,21 +1,30 @@
 // Models
 const { User } = require('../../models/sequelize/user');
 // Helpers
-const { checkSequelizeErrors } = require('../../helpers/sequelize/errors/checkError');
-const { checkOrderBy, checkOrderAt } = require('../../helpers/pagination/users/order');
+const {
+  checkSequelizeErrors,
+} = require('../../helpers/sequelize/errors/checkError');
+const {
+  checkOrderBy,
+  checkOrderAt,
+} = require('../../helpers/pagination/users/order');
 
 // Enums
 const { sequelizeConnection } = require('../../enums/sequelize/errors');
-const { sortingMessage } = require('../../enums/pagination/errors/status-message');
+const {
+  sortingMessage,
+} = require('../../enums/pagination/errors/status-message');
 const { fields } = require('../../enums/common/users');
 const { orderAt } = require('../../enums/pagination/ordering/orderAt');
 
 // Constants
 const DB_CONNECTION_ERROR_STATUS = sequelizeConnection.CONNECTION_ERROR;
-const DB_CONNECTION_REFUSED_STATUS = sequelizeConnection.CONNECTION_REFUSED_ERROR;
+const DB_CONNECTION_REFUSED_STATUS =
+  sequelizeConnection.CONNECTION_REFUSED_ERROR;
 const ORDER_BY_ERROR_MESSAGE = sortingMessage.ORDER_BY_ERROR_MESSAGE;
 const ORDER_AT_ERROR_MESSAGE = sortingMessage.ORDER_AT_ERROR_MESSAGE;
-const GENERIC_ERROR_LOG_MESSAGE = 'Error in getAllWithoutDate service function.';
+const GENERIC_ERROR_LOG_MESSAGE =
+  'Error in getAllWithoutDate service function.';
 const DEFAULT_PAGE_SIZE = 5;
 const DEFAULT_PAGE_NUMBER = 0;
 const DEFAULT_ORDER_BY = fields.ID_NAME_VALUE;
@@ -33,8 +42,12 @@ const getAllWithoutDate = async (event) => {
     // Pagination parameters
     const pageSizeNro = parseInt(queryStrParams.limit) || DEFAULT_PAGE_SIZE;
     const pageNro = parseInt(queryStrParams.page) || DEFAULT_PAGE_NUMBER;
-    const orderBy = await checkOrderBy(queryStrParams.orderBy || DEFAULT_ORDER_BY);
-    const orderAt = await checkOrderAt(queryStrParams.orderAt || DEFAULT_ORDER_AT);
+    const orderBy = await checkOrderBy(
+      queryStrParams.orderBy || DEFAULT_ORDER_BY,
+    );
+    const orderAt = await checkOrderAt(
+      queryStrParams.orderAt || DEFAULT_ORDER_AT,
+    );
 
     if (!orderBy) return ORDER_BY_ERROR_MESSAGE;
     if (!orderAt) return ORDER_AT_ERROR_MESSAGE;
@@ -48,7 +61,10 @@ const getAllWithoutDate = async (event) => {
     try {
       const usersList = await User.findAll({
         attributes: {
-          exclude: [fields.CREATION_DATE_NAME_VALUE, fields.UPDATE_DATE_NAME_VALUE],
+          exclude: [
+            fields.CREATION_DATE_NAME_VALUE,
+            fields.UPDATE_DATE_NAME_VALUE,
+          ],
         },
         limit: pageSizeNro,
         offset: pageNro * pageSizeNro,

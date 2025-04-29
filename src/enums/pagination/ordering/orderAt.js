@@ -1,8 +1,8 @@
-const orderAt={
-ASC:'asc',
-DESC:'desc',
-}
+const orderAt = {
+  ASC: 'asc',
+  DESC: 'desc',
+};
 
-module.exports={
-    orderAt
-}
+module.exports = {
+  orderAt,
+};
