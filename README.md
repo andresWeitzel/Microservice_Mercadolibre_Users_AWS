@@ -13,7 +13,7 @@
   <img width="44" height="40" src="./doc/assets/icons/backend/png/git.png" />
  </div> 
 
-<table>
+<table border="0">
   <tr>
     <td>
       <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md" target="_blank">
@@ -28,6 +28,7 @@
     </td>
   </tr>
 </table>
+
 
 
 
