@@ -32,7 +32,13 @@
 
 <div align="center">
 
-# Microservice Mercadolibre Users AWS
+# Microservice Mercadolibre Users AWS 
+<a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md" target="_blank">
+  <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/arg-flag.jpg" width="40" height="30" style="margin-bottom: 4px"/>
+</a> 
+<a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md" target="_blank">
+  <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/eeuu-flag.jpg" width="40" height="30" style="margin-bottom: 4px"/>
+</a>
 
 </div>  
 
