@@ -1,7 +1,13 @@
-
 ![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/MicroService_Users_ML.drawio.png)
 
-<div align="right" style="display: inline-block;">
+<div align="center">
+
+# Microservice Mercadolibre Users AWS
+
+[![Spanish](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/arg-flag.jpg)](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md)
+[![English](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/eeuu-flag.jpg)](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md)
+
+<div>
   <img width="35" height="35" src="./doc/assets/icons/devops/png/aws.png" />
   <img width="35" height="35" src="./doc/assets/icons/aws/png/lambda.png" />
   <img width="42" height="40" src="./doc/assets/icons/aws/png/api-gateway.png" />
@@ -12,25 +18,8 @@
   <img width="40" height="40" src="./doc/assets/icons/devops/png/vsc.png" />
   <img width="40" height="40" src="./doc/assets/icons/devops/png/postman.png" />
   <img width="44" height="40" src="./doc/assets/icons/devops/png/git.png" />
-</div> 
+</div>
 
-
-<br>
-
-<br>
-
-
-
-
-
-<div align="center" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-  <h1 style="margin: 0;">Microservice Mercadolibre Users AWS</h1>
-  <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md" target="_blank">
-    <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/arg-flag.jpg" width="30" height="20" style="vertical-align: middle;"/>
-  </a> 
-  <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md" target="_blank">
-    <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/eeuu-flag.jpg" width="30" height="20" style="vertical-align: middle;"/>
-  </a>
 </div>
 
 Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
