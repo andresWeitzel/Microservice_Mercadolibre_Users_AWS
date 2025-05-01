@@ -4,8 +4,14 @@
 
 # Microservice Mercadolibre Users AWS
 
-[![Spanish](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/arg-flag.jpg)](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md)
-[![English](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/translation/eeuu-flag.jpg)](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md)
+<div>
+  <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md">
+    <img width="45" height="45" src="./doc/assets/translation/arg-flag.jpg" />
+  </a>
+  <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md">
+    <img width="45" height="45" src="./doc/assets/translation/eeuu-flag.jpg" />
+  </a>
+</div>
 
 <div>
   <img width="35" height="35" src="./doc/assets/icons/devops/png/aws.png" />
