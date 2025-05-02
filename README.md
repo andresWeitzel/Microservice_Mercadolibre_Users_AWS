@@ -20,18 +20,10 @@
 
 <div align="right">
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md">
-    <picture>
-      <source media="(max-width: 640px)" srcset="./doc/assets/translation/arg-flag.jpg" width="45" height="35">
-      <source media="(min-width: 641px)" srcset="./doc/assets/translation/arg-flag.jpg" width="55" height="40">
-      <img width="55" height="40" src="./doc/assets/translation/arg-flag.jpg" alt="Spanish" style="margin: 0 5px;"/>
-    </picture>
+    <img width="65" height="40" src="./doc/assets/translation/arg-flag.jpg" />
   </a>
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md">
-    <picture>
-      <source media="(max-width: 640px)" srcset="./doc/assets/translation/eeuu-flag.jpg" width="45" height="35">
-      <source media="(min-width: 641px)" srcset="./doc/assets/translation/eeuu-flag.jpg" width="55" height="40">
-      <img width="55" height="40" src="./doc/assets/translation/eeuu-flag.jpg" alt="English" style="margin: 0 5px;"/>
-    </picture>
+    <img width="65" height="40" src="./doc/assets/translation/eeuu-flag.jpg" />
   </a>
 </div>
 
