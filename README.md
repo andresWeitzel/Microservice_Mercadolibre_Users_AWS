@@ -13,7 +13,7 @@
   <img width="30" height="30" src="./doc/assets/icons/devops/png/vsc.png" />
    <img width="23" height="23" src="./doc/assets/icons/devops/png/docker.png" />
 
-</div>
+</div> 
 
 <br>
 
@@ -22,10 +22,10 @@
 <div align="right">
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md">
     <img width="65" height="40" src="./doc/assets/translation/arg-flag.jpg" />
-  </a>
+  </a> 
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md">
     <img width="65" height="40" src="./doc/assets/translation/eeuu-flag.jpg" />
-  </a>
+  </a> 
 </div>
 
 <div align="center">
@@ -39,7 +39,7 @@ Microservice for user management exemplifying part of the ML development archite
 *   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
 *   [Playlist functionality test](https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/social-networks/yt.png" width="5%" height="5%" /> </a>
 
- <br>
+<br>
 
 ## Index 📜
 
@@ -602,14 +602,14 @@ curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
 --data-raw '{
-    "nickname": "VALE18BNX",
-    "first_name": "Valeria",
-    "last_name": "Castro",
-    "email": "vale_18_nnbs@gmail.com",
-    "identification_type": "DNI",
-    "identification_number": "3987261233",
-    "country_id": "AR12"
-}'
+            "nickname": "VALE18BNX",
+            "first_name": "Valeria",
+            "last_name": "Castro",
+            "email": "vale_18_nnbs@gmail.com",
+            "identification_type": "DNI",
+            "identification_number": "3987261233",
+            "country_id": "AR12"
+        }'
 ```
 
 ###### Response (200 OK)
@@ -667,16 +667,16 @@ curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/26
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
 --data-raw '{
-    "nickname": "VALE18BNX EDITED",
-    "first_name": "Valeria EDITED",
-    "last_name": "Castro",
-    "email": "vale_18_nnbs@gmail.com",
-    "identification_type": "DNI",
-    "identification_number": "3987261233",
-    "country_id": "AR12",
-    "creation_date": "2023-06-28 16:46:31",
-    "update_date": "2023-06-28 16:46:31"
-}'
+            "nickname": "VALE18BNX EDITED",
+            "first_name": "Valeria EDITED",
+            "last_name": "Castro",
+            "email": "vale_18_nnbs@gmail.com",
+            "identification_type": "DNI",
+            "identification_number": "3987261233",
+            "country_id": "AR12",
+            "creation_date": "2023-06-28 16:46:31",
+            "update_date": "2023-06-28 16:46:31"
+        }'
 ```
 
 ###### Response (200 OK)
@@ -796,7 +796,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 <details>
   <summary>See</summary>
 
-<br>
+ <br>
 
 #### AWS Services and Tools
 

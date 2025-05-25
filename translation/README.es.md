@@ -21,10 +21,10 @@
 <div align="right">
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md">
     <img width="65" height="40" src="../doc/assets/translation/arg-flag.jpg" />
-  </a>
+  </a> 
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md">
     <img width="65" height="40" src="../doc/assets/translation/eeuu-flag.jpg" />
-  </a>
+  </a> 
 </div>
 
 <div align="center">
@@ -52,7 +52,7 @@ Microservicio para la gestión de usuarios ejemplificando parte de la arquitectu
 *   [1.0) Descripción del Proyecto.](#10-descripción-)
 *   [1.1) Ejecución del Proyecto.](#11-ejecución-del-proyecto-)
 *   [1.2) Configuración del proyecto desde cero](#12-configuración-del-proyecto-desde-cero-)
-*   [1.3) Tecnologías.](#13-tecnologías-)
+*   [1.3) Docker Setup y Migración de Base de Datos](#13-docker-setup-y-migración-de-base-de-datos-)
 
 ### Sección 2) Endpoints y Ejemplos
 
@@ -167,8 +167,8 @@ docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
 
 *   Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless\_ssm.yml) al .gitignore.
 *   El script start configurado en el package.json del proyecto, es el encargado de levantar
-*   El plugin de serverless-offline
-*   El plugin remark-lint para archivos .md (se aplica solo el --output para check and autoformat sin terminar el proceso y poder ejecutar el script de serverless)
+    *   El plugin de serverless-offline
+    *   El plugin remark-lint para archivos .md (se aplica solo el --output para check and autoformat sin terminar el proceso y poder ejecutar el script de serverless)
 
 *   Ejecutamos la app desde terminal.
 
@@ -346,6 +346,96 @@ npm start
 
 </details>
 
+### 1.3) Docker Setup y Migración de Base de Datos [🔝](#índice-)
+
+<details>
+  <summary>Ver</summary>
+
+<br>
+
+#### 1.3.1) Configuración de Base de Datos con Docker
+
+1. **Configuración de Docker Compose**
+   ```yaml
+   version: '3.8'
+   services:
+     mysql:
+       image: mysql:8.0
+       container_name: mercadolibre_users_mysql
+       environment:
+         MYSQL_ROOT_PASSWORD: root
+         MYSQL_DATABASE: microdb_mercadolibre
+         MYSQL_USER: mercadolibre_user
+         MYSQL_PASSWORD: mercadolibre_pass
+       ports:
+         - "3306:3306"
+       volumes:
+         - mysql_data:/var/lib/mysql
+         - ./init:/docker-entrypoint-initdb.d
+       command: --default-authentication-plugin=mysql_native_password
+       healthcheck:
+         test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+         interval: 10s
+         timeout: 5s
+         retries: 5
+
+   volumes:
+     mysql_data:
+   ```
+
+2. **Comandos Docker Esenciales**
+   ```bash
+   # Iniciar el contenedor
+   docker-compose up -d
+
+   # Verificar estado
+   docker ps
+
+   # Resetear la base de datos
+   docker-compose down -v
+   docker-compose up -d
+
+   # Ver logs
+   docker-compose logs mysql
+
+   # Acceder a MySQL
+   docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
+   ```
+
+3. **Datos de Ejemplo**
+   ```sql
+   -- Ejemplo de inserción de usuario
+   INSERT INTO users (nickname, first_name, last_name, email, identification_type, identification_number, country_id)
+   VALUES ('USER123', 'Juan', 'Pérez', 'juan@example.com', 'DNI', '12345678', 'AR');
+
+   -- Ejemplo de inserción de producto
+   INSERT INTO products (title, price, currency_id, available_quantity, condition)
+   VALUES ('iPhone 12', 999.99, 'USD', 10, 'new');
+   ```
+
+#### 1.3.2) Proceso de Migración
+
+1. **Inicialización de la Base de Datos**
+   - La base de datos se crea automáticamente al iniciar el contenedor
+   - Los scripts de inicialización se ejecutan en orden alfabético
+   - Los datos persisten entre reinicios gracias al volumen Docker
+
+2. **Estructura de Archivos**
+   ```
+   init/
+   ├── 01_microdb_mercadolibre_DDL.sql    # Estructura de tablas
+   └── 02_microdb_mercadolibre_DML_INSERTS.sql  # Datos iniciales
+   ```
+
+3. **Consideraciones**
+   - Los datos persisten en el volumen `mysql_data`
+   - Para resetear la base de datos, eliminar el volumen
+   - Las credenciales están en el archivo `docker-compose.yml`
+
+<br>
+
+</details>
+
 ### 1.3) Tecnologías [🔝](#índice-)
 
 <details>
@@ -446,89 +536,72 @@ npm start
   <summary>Ver</summary>
 <br>
 
-### 2.1.0) Variables en Postman
+#### 2.1.0) Variables en Postman
 
-| **Variable** | **Initial value** | **Current value** |\
-| ------------- | ------------- | ------------- |
-| base\_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
-| x-api-key | f98d8cd98h73s204e3456998ecl9427j  | f98d8cd98h73s204e3456998ecl9427j |
-| bearer\_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV\_adQssw5c  | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV\_adQssw5c |
+| **Variable** | **Valor Inicial** | **Valor Actual** |
+|-------------|------------------|------------------|
+| base_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
+| x-api-key | f98d8cd98h73s204e3456998ecl9427j | f98d8cd98h73s204e3456998ecl9427j |
+| bearer_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... |
 
 <br>
 
-### 2.1.1) Operaciones de tipo GET
+#### 2.1.1) Operaciones de tipo GET
 
-### Conexión base de datos
+##### Conexión base de datos
 
-#### Request (GET) | Code Snippet
-
-```postman
+###### Request (GET)
+```bash
 curl --location 'http://localhost:4000/dev/v1/db-connection' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
 --data ''
 ```
 
-#### Response (200 OK)
-
-```postman
+###### Response (200 OK)
+```json
 {
     "message": "Connection has been established successfully."
 }
 ```
 
-#### Response (400 Bad Request)
-
-```postman
+###### Response (400 Bad Request)
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
 ```
 
-#### Response (400 Bad Request)
-
-```postman
-{
-    "message": "Bad request, could not get the paginated list of users."
-}
-```
-
-#### Response (401 Unauthorized)
-
-```postman
+###### Response (401 Unauthorized)
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
-#### Response (500 Internal Server Error)
-
-```postman
+###### Response (500 Internal Server Error)
+```json
 {
     "message": "Error in connection lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
 }
 ```
 
-#### Other responses
-
 <br>
 
-### Obtener Usuarios paginados
+##### Obtener Usuarios paginados
 
-#### Request (GET) | Code Snippet
-
-```postman
+###### Request (GET)
+```bash
 curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
 --data ''
 ```
 
-#### Response (200 OK)
-
-```postman
+###### Response (200 OK)
+```json
 {
     "message": [
         {
@@ -559,7 +632,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
 ```postman
 {
@@ -567,7 +640,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
 ```postman
 {
@@ -575,7 +648,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 }
 ```
 
-#### Response (401 Unauthorized)
+###### Response (401 Unauthorized)
 
 ```postman
 {
@@ -583,7 +656,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
 ```postman
 {
@@ -591,7 +664,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
 ```postman
 {
@@ -599,7 +672,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
 ```postman
 {
@@ -607,7 +680,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 }
 ```
 
-#### Other responses
+###### Other responses
 
 <br>
 
@@ -1120,7 +1193,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 <details>
   <summary>Ver</summary>
 
-<br>
+ <br>
 
 #### Servicios y Herramientas AWS
 
