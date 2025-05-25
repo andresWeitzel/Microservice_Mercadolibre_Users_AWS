@@ -3,14 +3,15 @@
 <div align="right">
   <img width="25" height="25" src="../doc/assets/icons/devops/png/aws.png" />
   <img width="25" height="25" src="../doc/assets/icons/aws/png/lambda.png" />
+  <img width="27" height="27" src="../doc/assets/icons/devops/png/postman.png" />
+  <img width="29" height="27" src="../doc/assets/icons/devops/png/git.png" />
   <img width="28" height="27" src="../doc/assets/icons/aws/png/api-gateway.png" />
   <img width="27" height="25" src="../doc/assets/icons/aws/png/parameter-store.png" />
   <img width="27" height="27" src="../doc/assets/icons/backend/javascript-typescript/png/nodejs.png" />
   <img width="27" height="27" src="../doc/assets/icons/backend/javascript-typescript/png/sequelize.png" />
   <img width="25" height="27" src="../doc/assets/icons/aws/png/rds.png" />
-  <img width="27" height="27" src="../doc/assets/icons/devops/png/vsc.png" />
-  <img width="27" height="27" src="../doc/assets/icons/devops/png/postman.png" />
-  <img width="29" height="27" src="../doc/assets/icons/devops/png/git.png" />
+  <img width="30" height="30" src="../doc/assets/icons/devops/png/vsc.png" />
+  <img width="23" height="23" src="../doc/assets/icons/devops/png/docker.png" />
 </div> 
 
 <br>
@@ -26,16 +27,14 @@
   </a>
 </div>
 
-
 <div align="center">
 
 # Microservice Mercadolibre Users AWS
 
 </div>  
 
-Microservicio para la gestión de usuarios ejemplificando parte de la arquitectura de desarrollo de ML, implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Unit Test con Jest, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.
+Microservicio para la gestión de usuarios ejemplificando parte de la arquitectura de desarrollo de ML, implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Unit Test con Jest, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.
 
-*   [Repositorio base de datos](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 *   [Api Doc ML Usuarios](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
 *   [Playlist prueba de funcionalidad](https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/social-networks/yt.png" width="5%" height="5%" />
 
@@ -136,26 +135,40 @@ sls -v
 npm i
 ```
 
+*   **Configuración de la Base de Datos con Docker**
+
+1. Asegúrate de tener Docker instalado en tu sistema (para Windows, usa [Docker Desktop](https://www.docker.com/products/docker-desktop/))
+
+2. Inicia y construye el contenedor de MySQL:
+```bash
+docker-compose up -d
+```
+
+3. Verifica que el contenedor esté corriendo:
+```bash
+docker ps
+```
+
+4. Si necesitas resetear la base de datos:
+```bash
+docker-compose down -v
+docker-compose up -d
+```
+
+5. Para ver los logs de la base de datos:
+```bash
+docker-compose logs mysql
+```
+
+6. Para acceder directamente a MySQL:
+```bash
+docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
+```
+
 *   Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless\_ssm.yml) al .gitignore.
 *   El script start configurado en el package.json del proyecto, es el encargado de levantar
-    *   El plugin de serverless-offline
-    *   El plugin remark-lint para archivos .md (se aplica solo el --output para check and autoformat sin terminar el proceso y poder ejecutar el script de serverless)
-    *   Otros.
-
-```json
-   "scripts": {
-      "serverless-offline": "sls offline start",
-        "start": "npm run format-md && npm run serverless-offline",
-        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
-        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
-        "check": "remark . --quiet --frail",
-        "format-remark": "remark . --quiet --frail --output",
-        "format-md": "remark . --output",
-        "test": "jest --verbose",
-        "test:watch": "jest --watch --verbose",
-        "test:cov": "jest --coverage --verbose"
-   },
-```
+*   El plugin de serverless-offline
+*   El plugin remark-lint para archivos .md (se aplica solo el --output para check and autoformat sin terminar el proceso y poder ejecutar el script de serverless)
 
 *   Ejecutamos la app desde terminal.
 
@@ -1107,54 +1120,76 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 <details>
   <summary>Ver</summary>
 
- <br>
+<br>
 
-#### Configuración
+#### Servicios y Herramientas AWS
 
-*   [Cómo usar Sequelize con Node.js y MySQL](https://jasonwatmore.com/post/2022/06/26/nodejs-mysql-connect-to-mysql-database-with-sequelize-mysql2)
-*   [Videotutorial Recomendado](https://www.youtube.com/watch?v=im7THL67z0c)
+*   [Documentación de AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
+*   [Mejores Prácticas de API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/best-practices.html)
+*   [Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
+*   [Documentación de Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
+*   [AWS CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html)
+*   [Mejores Prácticas de AWS IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
 
-#### Herramientas
+#### Framework Serverless
 
-*   [Herramienta de Diseño AWS app.diagrams.net](https://app.diagrams.net/?splash=0\&libs=aws4)
+*   [Documentación del Framework Serverless](https://www.serverless.com/framework/docs)
+*   [Plugins del Framework Serverless](https://www.serverless.com/plugins)
+*   [Plugin Serverless Offline](https://www.serverless.com/plugins/serverless-offline)
+*   [Plugin Serverless SSM](https://www.serverless.com/plugins/serverless-offline-ssm)
+*   [Documentación OpenAPI con Serverless](https://www.serverless.com/plugins/serverless-openapi-documentation)
+*   [Auto Swagger con Serverless](https://www.npmjs.com/package/serverless-auto-swagger)
 
-#### Sequelize
+#### Base de Datos y ORM
 
-*   [Modelos y Operadores](https://sequelize.org/docs/v6/core-concepts/model-querying-basics/)
+*   [Documentación de Sequelize](https://sequelize.org/docs/v6/)
+*   [Documentación de MySQL](https://dev.mysql.com/doc/)
+*   [Imagen Docker de MySQL](https://hub.docker.com/_/mysql)
+*   [Documentación de Docker Compose](https://docs.docker.com/compose/)
+*   [Migraciones con Sequelize](https://sequelize.org/docs/v6/other-topics/migrations/)
+*   [Asociaciones con Sequelize](https://sequelize.org/docs/v6/core-concepts/assocs/)
 
-#### Mercadolibre
+#### Testing y Desarrollo
 
-*   [Usuarios y aplicaciones](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
-*   [Descripción de usuarios](https://developers.mercadolibre.com.ar/es_ar/producto-consulta-usuarios)
+*   [Documentación de Jest](https://jestjs.io/docs/getting-started)
+*   [Documentación de Node.js](https://nodejs.org/en/docs/)
+*   [Documentación de Postman](https://learning.postman.com/docs/getting-started/introduction/)
+*   [Documentación de VS Code](https://code.visualstudio.com/docs)
+*   [Documentación de Git](https://git-scm.com/doc)
+*   [Documentación de Docker Desktop](https://docs.docker.com/desktop/)
 
-#### Swagger con Serverless
+#### Diseño de API y Mejores Prácticas
 
-*   [Autoswagger](https://www.npmjs.com/package/serverless-auto-swagger)
-*   [Documentation serverless api](https://levelup.gitconnected.com/documenting-your-serverless-solutions-509f1928564b)
+*   [Mejores Prácticas REST API](https://restfulapi.net/)
+*   [Mejores Prácticas de Seguridad API](https://owasp.org/www-project-api-security/)
+*   [Especificación OpenAPI](https://swagger.io/specification/)
+*   [Mejores Prácticas de Documentación API](https://idratherbewriting.com/learnapidoc/)
+*   [Códigos de Estado HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
 
-#### Open Apiv3 con Serverless
+#### API de Mercadolibre
 
-*   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
+*   [Documentación de la API de Mercadolibre](https://developers.mercadolibre.com.ar/es_ar/api-docs)
+*   [API de Usuarios de Mercadolibre](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
+*   [API de Productos de Mercadolibre](https://developers.mercadolibre.com.ar/es_ar/productos)
+*   [Autenticación de Mercadolibre](https://developers.mercadolibre.com.ar/es_ar/autenticacion-y-autorizacion)
 
-#### Api Gateway
+#### Herramientas y Recursos de Desarrollo
 
-*   [Buenas Prácticas Api-Gateway](https://docs.aws.amazon.com/whitepapers/latest/best-practices-api-gateway-private-apis-integration/rest-api.html)
-*   [Creación de Api-keys personalizadas](https://towardsaws.com/protect-your-apis-by-creating-api-keys-using-serverless-framework-fe662ad37447)
-*   [Configuración propiedades Api Gateway](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml)
+*   [Herramienta de Diseño AWS (draw.io)](https://app.diagrams.net/?splash=0&libs=aws4)
+*   [Ejemplos de Colecciones Postman](https://www.postman.com/collection/)
+*   [Extensiones VS Code para AWS](https://aws.amazon.com/visualstudiocode/)
+*   [Docker Hub](https://hub.docker.com/)
+*   [GitHub Actions](https://docs.github.com/en/actions)
+*   [Mejores Prácticas de Node.js](https://github.com/goldbergyoni/nodebestpractices)
 
-#### Serverless frameworks
+#### Comunidad y Recursos de Aprendizaje
 
-*   [Plugins](https://www.serverless.com/plugins)
-
-#### Librerías/Plugins
-
-*   [Validación de campos](https://www.npmjs.com/package/node-input-validator)
-*   [serverless-offline-ssm](https://www.serverless.com/plugins/serverless-offline-ssm)
-*   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
-
-#### Jest
-
-*   [Uso de variables de entorno con jest (se agrega .env y jest.config.js)](https://stackoverflow.com/questions/48033841/test-process-env-with-jest)
+*   [AWS Community Builders](https://aws.amazon.com/developer/community/community-builders/)
+*   [Foro del Framework Serverless](https://forum.serverless.com/)
+*   [Stack Overflow](https://stackoverflow.com/questions/tagged/aws-lambda)
+*   [Canal de YouTube de AWS](https://www.youtube.com/user/AmazonWebServices)
+*   [YouTube del Framework Serverless](https://www.youtube.com/c/Serverless)
+*   [Blog de Desarrolladores de Mercadolibre](https://developers.mercadolibre.com.ar/blog)
 
 <br>
 

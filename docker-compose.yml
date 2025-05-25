@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mercadolibre_users_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: microdb_mercadolibre
+      MYSQL_USER: mercadolibre_user
+      MYSQL_PASSWORD: mercadolibre_pass
+      # Configuración de rendimiento
+      MYSQL_INNODB_BUFFER_POOL_SIZE: 256M
+      MYSQL_INNODB_LOG_FILE_SIZE: 64M
+      MYSQL_INNODB_LOG_BUFFER_SIZE: 16M
+      MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT: 2
+      MYSQL_INNODB_FLUSH_METHOD: O_DIRECT
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+    networks:
+      - mercadolibre_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    command: --default-authentication-plugin=mysql_native_password
+             --character-set-server=utf8mb4
+             --collation-server=utf8mb4_unicode_ci
+             --innodb_buffer_pool_size=256M
+             --innodb_log_file_size=64M
+             --innodb_log_buffer_size=16M
+             --innodb_flush_log_at_trx_commit=2
+             --innodb_flush_method=O_DIRECT
+
+volumes:
+  mysql_data:
+    name: mercadolibre_mysql_data
+
+networks:
+  mercadolibre_network:
+    name: mercadolibre_network
+    driver: bridge 
