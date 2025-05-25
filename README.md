@@ -423,17 +423,29 @@ INSERT INTO products (id, site_id, title, subtitle, seller_id, category_id, offi
 #### GET type operations:
 
 *   http://localhost:4000/dev/v1/test
+
 *   http://localhost:4000/dev/v1/db-connection
+
 *   http://localhost:4000/dev/v1/users/list
+
 *   http://localhost:4000/dev/v1/users/id/{user-id}
+
 *   http://localhost:4000/dev/v1/users/country-id/{country-id}
+
 *   http://localhost:4000/dev/v1/users/email/{email}
+
 *   http://localhost:4000/dev/v1/users/first-name/{first-name}
+
 *   http://localhost:4000/dev/v1/users/identification-number/{ident-number}
+
 *   http://localhost:4000/dev/v1/users/identification-type/{ident-type}
+
 *   http://localhost:4000/dev/v1/users/last-name/{last-name}
+
 *   http://localhost:4000/dev/v1/users/nickname/{nickname}
+
 *   http://localhost:4000/dev/v1/users/creation-date/{creation-date}
+
 *   http://localhost:4000/dev/v1/users/update-date/{update-date}
 
 *   `All endpoints are optional paginated except /test, /db-connection and /id/{user-id}}`
@@ -852,7 +864,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 #### Development Tools and Resources
 
-*   [AWS Design Tool (draw.io)](https://app.diagrams.net/?splash=0&libs=aws4)
+*   [AWS Design Tool (draw.io)](https://app.diagrams.net/?splash=0\&libs=aws4)
 *   [Postman Collection Examples](https://www.postman.com/collection/)
 *   [VS Code Extensions for AWS](https://aws.amazon.com/visualstudiocode/)
 *   [Docker Hub](https://hub.docker.com/)

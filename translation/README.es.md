@@ -136,37 +136,41 @@ sls -v
 npm i
 ```
 
-*   **Configuración de la Base de Datos con Docker**
+*   Asegúrate de tener Docker instalado en tu sistema (para Windows, usa [Docker Desktop](https://www.docker.com/products/docker-desktop/))
 
-1. Asegúrate de tener Docker instalado en tu sistema (para Windows, usa [Docker Desktop](https://www.docker.com/products/docker-desktop/))
+*   Inicia y construye el contenedor de MySQL:
 
-2. Inicia y construye el contenedor de MySQL:
 ```bash
 docker-compose up -d
 ```
 
-3. Verifica que el contenedor esté corriendo:
+*   Verifica que el contenedor esté corriendo:
+
 ```bash
 docker ps
 ```
 
-4. Si necesitas resetear la base de datos:
+*   Si necesitas resetear la base de datos:
+
 ```bash
 docker-compose down -v
 docker-compose up -d
 ```
 
-5. Para ver los logs de la base de datos:
+*   Para ver los logs de la base de datos:
+
 ```bash
 docker-compose logs mysql
 ```
 
-6. Para acceder directamente a MySQL:
+*   Para acceder directamente a MySQL:
+
 ```bash
 docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
 ```
 
 *   Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless\_ssm.yml) al .gitignore.
+
 *   El script start configurado en el package.json del proyecto, es el encargado de levantar
     *   El plugin de serverless-offline
     *   El plugin remark-lint para archivos .md (se aplica solo el --output para check and autoformat sin terminar el proceso y poder ejecutar el script de serverless)
@@ -330,6 +334,39 @@ npm install remark-lint-table-cell-padding --save-dev
    },
 ```
 
+*   Asegúrate de tener Docker instalado en tu sistema (para Windows, usa [Docker Desktop](https://www.docker.com/products/docker-desktop/))
+
+*   Inicia y construye el contenedor de MySQL:
+
+```bash
+docker-compose up -d
+```
+
+*   Verifica que el contenedor esté corriendo:
+
+```bash
+docker ps
+```
+
+*   Si necesitas resetear la base de datos:
+
+```bash
+docker-compose down -v
+docker-compose up -d
+```
+
+*   Para ver los logs de la base de datos:
+
+```bash
+docker-compose logs mysql
+```
+
+*   Para acceder directamente a MySQL:
+
+```bash
+docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
+```
+
 *   Ejecutamos la app desde terminal.
 
 ```git
@@ -356,82 +393,80 @@ npm start
 
 #### 1.3.1) Configuración de Base de Datos con Docker
 
-1. **Configuración de Docker Compose**
-   ```yaml
-   version: '3.8'
-   services:
-     mysql:
-       image: mysql:8.0
-       container_name: mercadolibre_users_mysql
-       environment:
-         MYSQL_ROOT_PASSWORD: root
-         MYSQL_DATABASE: microdb_mercadolibre
-         MYSQL_USER: mercadolibre_user
-         MYSQL_PASSWORD: mercadolibre_pass
-       ports:
-         - "3306:3306"
-       volumes:
-         - mysql_data:/var/lib/mysql
-         - ./init:/docker-entrypoint-initdb.d
-       command: --default-authentication-plugin=mysql_native_password
-       healthcheck:
-         test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-         interval: 10s
-         timeout: 5s
-         retries: 5
+1.  **Configuración de Docker Compose**
+    ```yaml
+    version: '3.8'
+    services:
+      mysql:
+        image: mysql:8.0
+        container_name: mercadolibre_users_mysql
+        environment:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: microdb_mercadolibre
+          MYSQL_USER: mercadolibre_user
+          MYSQL_PASSWORD: mercadolibre_pass
+        ports:
+          - "3306:3306"
+        volumes:
+          - mysql_data:/var/lib/mysql
+          - ./init:/docker-entrypoint-initdb.d
+        command: --default-authentication-plugin=mysql_native_password
+        healthcheck:
+          test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+          interval: 10s
+          timeout: 5s
+          retries: 5
 
-   volumes:
-     mysql_data:
-   ```
+    volumes:
+      mysql_data:
+    ```
 
-2. **Comandos Docker Esenciales**
-   ```bash
-   # Iniciar el contenedor
-   docker-compose up -d
+2.  **Comandos Docker Esenciales**
+    ```bash
+    # Iniciar el contenedor
+    docker-compose up -d
 
-   # Verificar estado
-   docker ps
+    # Verificar estado
+    docker ps
 
-   # Resetear la base de datos
-   docker-compose down -v
-   docker-compose up -d
+    # Resetear la base de datos
+    docker-compose down -v
+    docker-compose up -d
 
-   # Ver logs
-   docker-compose logs mysql
+    # Ver logs
+    docker-compose logs mysql
 
-   # Acceder a MySQL
-   docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
-   ```
+    # Acceder a MySQL
+    docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
+    ```
 
-3. **Datos de Ejemplo**
-   ```sql
-   -- Ejemplo de inserción de usuario
-   INSERT INTO users (nickname, first_name, last_name, email, identification_type, identification_number, country_id)
-   VALUES ('USER123', 'Juan', 'Pérez', 'juan@example.com', 'DNI', '12345678', 'AR');
+3.  **Datos de Ejemplo**
+    ```sql
+    -- Ejemplo de inserción de usuario
+    INSERT INTO users (nickname, first_name, last_name, email, identification_type, identification_number, country_id)
+    VALUES ('USER123', 'Juan', 'Pérez', 'juan@example.com', 'DNI', '12345678', 'AR');
 
-   -- Ejemplo de inserción de producto
-   INSERT INTO products (title, price, currency_id, available_quantity, condition)
-   VALUES ('iPhone 12', 999.99, 'USD', 10, 'new');
-   ```
+    -- Ejemplo de inserción de producto
+    INSERT INTO products (title, price, currency_id, available_quantity, condition)
+    VALUES ('iPhone 12', 999.99, 'USD', 10, 'new');
+    ```
 
 #### 1.3.2) Proceso de Migración
 
-1. **Inicialización de la Base de Datos**
-   - La base de datos se crea automáticamente al iniciar el contenedor
-   - Los scripts de inicialización se ejecutan en orden alfabético
-   - Los datos persisten entre reinicios gracias al volumen Docker
+1.  **Inicialización de la Base de Datos**
+    *   La base de datos se crea automáticamente al iniciar el contenedor
+    *   Los scripts de inicialización se ejecutan en orden alfabético
+    *   Los datos persisten entre reinicios gracias al volumen Docker
 
-2. **Estructura de Archivos**
-   ```
-   init/
-   ├── 01_microdb_mercadolibre_DDL.sql    # Estructura de tablas
-   └── 02_microdb_mercadolibre_DML_INSERTS.sql  # Datos iniciales
-   ```
+2.  **Estructura de Archivos**
+    init/
+    ├── 01\_microdb\_mercadolibre\_DDL.sql    # Estructura de tablas
+    └── 02\_microdb\_mercadolibre\_DML\_INSERTS.sql  # Datos iniciales
 
-3. **Consideraciones**
-   - Los datos persisten en el volumen `mysql_data`
-   - Para resetear la base de datos, eliminar el volumen
-   - Las credenciales están en el archivo `docker-compose.yml`
+3.  **Consideraciones**
+    *   Los datos persisten en el volumen `mysql_data`
+    *   Para resetear la base de datos, eliminar el volumen
+    *   Las credenciales están en el archivo `docker-compose.yml`
 
 <br>
 
@@ -541,9 +576,9 @@ npm start
 
 | **Variable** | **Valor Inicial** | **Valor Actual** |
 |-------------|------------------|------------------|
-| base_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
+| base\_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
 | x-api-key | f98d8cd98h73s204e3456998ecl9427j | f98d8cd98h73s204e3456998ecl9427j |
-| bearer_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... |
+| bearer\_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... |
 
 <br>
 
@@ -552,6 +587,7 @@ npm start
 ##### Conexión base de datos
 
 ###### Request (GET)
+
 ```bash
 curl --location 'http://localhost:4000/dev/v1/db-connection' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
@@ -561,6 +597,7 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
 ```
 
 ###### Response (200 OK)
+
 ```json
 {
     "message": "Connection has been established successfully."
@@ -568,6 +605,7 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
 ```
 
 ###### Response (400 Bad Request)
+
 ```json
 {
     "message": "Bad request, check missing or malformed headers"
@@ -575,6 +613,7 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
 ```
 
 ###### Response (401 Unauthorized)
+
 ```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
@@ -582,6 +621,7 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
 ```
 
 ###### Response (500 Internal Server Error)
+
 ```json
 {
     "message": "Error in connection lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
@@ -593,6 +633,7 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
 ##### Obtener Usuarios paginados
 
 ###### Request (GET)
+
 ```bash
 curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
@@ -602,6 +643,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 ```
 
 ###### Response (200 OK)
+
 ```json
 {
     "message": [
@@ -1249,7 +1291,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 #### Herramientas y Recursos de Desarrollo
 
-*   [Herramienta de Diseño AWS (draw.io)](https://app.diagrams.net/?splash=0&libs=aws4)
+*   [Herramienta de Diseño AWS (draw.io)](https://app.diagrams.net/?splash=0\&libs=aws4)
 *   [Ejemplos de Colecciones Postman](https://www.postman.com/collection/)
 *   [Extensiones VS Code para AWS](https://aws.amazon.com/visualstudiocode/)
 *   [Docker Hub](https://hub.docker.com/)
