@@ -53,6 +53,7 @@ Microservicio para la gestión de usuarios ejemplificando parte de la arquitectu
 *   [1.1) Ejecución del Proyecto.](#11-ejecución-del-proyecto-)
 *   [1.2) Configuración del proyecto desde cero](#12-configuración-del-proyecto-desde-cero-)
 *   [1.3) Docker Setup y Migración de Base de Datos](#13-docker-setup-y-migración-de-base-de-datos-)
+*   [1.4) Tecnologías.](#14-tecnologías-)
 
 ### Sección 2) Endpoints y Ejemplos
 
@@ -436,7 +437,7 @@ npm start
 
 </details>
 
-### 1.3) Tecnologías [🔝](#índice-)
+### 1.4) Tecnologías [🔝](#índice-)
 
 <details>
   <summary>Ver</summary>
