@@ -5,8 +5,8 @@ BEARER_TOKEN : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3
 
 # Database
 DATABASE_NAME : 'microdb_mercadolibre' 
-DATABASE_USER : 'root'
-DATABASE_PASSWORD : ''
+DATABASE_USER : 'mercadolibre_user'
+DATABASE_PASSWORD : 'mercadolibre_pass'
 DATABASE_HOST : '127.0.0.1'
 DATABASE_PORT : 3306
 DATABASE_DIALECT : 'mysql'

@@ -1,17 +1,18 @@
 ![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/MicroService_Users_ML.drawio.png)
 
-
 <div align="right">
   <img width="25" height="25" src="./doc/assets/icons/devops/png/aws.png" />
   <img width="25" height="25" src="./doc/assets/icons/aws/png/lambda.png" />
+    <img width="27" height="27" src="./doc/assets/icons/devops/png/postman.png" />
+  <img width="29" height="27" src="./doc/assets/icons/devops/png/git.png" />
   <img width="28" height="27" src="./doc/assets/icons/aws/png/api-gateway.png" />
   <img width="27" height="25" src="./doc/assets/icons/aws/png/parameter-store.png" />
   <img width="27" height="27" src="./doc/assets/icons/backend/javascript-typescript/png/nodejs.png" />
   <img width="27" height="27" src="./doc/assets/icons/backend/javascript-typescript/png/sequelize.png" />
   <img width="25" height="27" src="./doc/assets/icons/aws/png/rds.png" />
-  <img width="27" height="27" src="./doc/assets/icons/devops/png/vsc.png" />
-  <img width="27" height="27" src="./doc/assets/icons/devops/png/postman.png" />
-  <img width="29" height="27" src="./doc/assets/icons/devops/png/git.png" />
+  <img width="30" height="30" src="./doc/assets/icons/devops/png/vsc.png" />
+   <img width="23" height="23" src="./doc/assets/icons/devops/png/docker.png" />
+
 </div>
 
 <br>
@@ -33,10 +34,8 @@
 
 </div>  
 
+Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
 
-Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
-
-*   [Database repository](https://github.com/andresWeitzel/Microdb_MercadoLibre_Mysql)
 *   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
 *   [Playlist functionality test](https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/watch?v=oLSrmqMq0Zs\&list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/social-networks/yt.png" width="5%" height="5%" /> </a>
 
@@ -118,7 +117,7 @@ git clone https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS
 cd 'projectName'
 ```
 
-*   We install the latest LTS version of [Nodejs(v18)](https://nodejs.org/en/download)
+*   We install the LTS version of [Nodejs(v18)](https://nodejs.org/en/download)
 *   We install the Serverless Framework globally if we have not already done so
 
 ```git
@@ -137,26 +136,46 @@ sls -v
 npm i
 ```
 
-*   The ssm and env variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding files (serverless\_ssm.yml and .env) to the .gitignore.
-*   The start script configured in the project's package.json is responsible for launching
-*   The serverless-offline plugin
-*   The remark-lint plugin for .md files (only --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
-*   The test is for using jest
+*   Make sure Docker are installed on your system (for Windows, use [Docker Desktop]([https://nodejs.org/en/download]\(https://www.docker.com/products/docker-desktop/\)))
 
-```json
-   "scripts": {
-      "serverless-offline": "sls offline start",
-        "start": "npm run format-md && npm run serverless-offline",
-        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
-        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
-        "check": "remark . --quiet --frail",
-        "format-remark": "remark . --quiet --frail --output",
-        "format-md": "remark . --output",
-        "test": "jest --verbose",
-        "test:watch": "jest --watch --verbose",
-        "test:cov": "jest --coverage --verbose"
-   },
+*   Start and build the MySQL database container:
+
+```bash
+docker-compose up -d
 ```
+
+*   Verify the container is running:
+
+```bash
+docker ps
+```
+
+*   If you need to reset the database:
+
+```bash
+docker-compose down -v
+docker-compose up -d
+```
+
+*   To view database logs:
+
+```bash
+docker-compose logs mysql
+```
+
+*   To access MySQL directly:
+
+```bash
+docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
+```
+
+*   The ssm and env variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding files (serverless\_ssm.yml and .env) to the .gitignore.
+
+*   The start script configured in the project's package.json is responsible for launching
+
+*   The serverless-offline plugin
+
+*   The remark-lint plugin for .md files (only --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
 
 *   We run the app from terminal.
 
@@ -174,7 +193,6 @@ npm start
 <br>
 
 </details>
- <br>
 
 ### 1.2) Project setup from scratch [🔝](#index-)
 
@@ -202,135 +220,145 @@ npm install -g serverless
 sls -v
 ```
 
-*   We initialize a serverles template
+*   Make sure Docker are installed on your system (for Windows, use [Docker Desktop]([https://nodejs.org/en/download]\(https://www.docker.com/products/docker-desktop/\)))
 
-```git
-serverless create --template aws-nodejs
+*   Start and build the MySQL database container:
+
+```bash
+docker-compose up -d
 ```
 
-*   We initialize an npm project
+*   Verify the container is running:
 
-```git
-npm init -y
+```bash
+docker ps
 ```
 
-*   We install serverless offline
+*   If you need to reset the database:
 
-```git
-npm i serverless-offline --save-dev
+```bash
+docker-compose down -v
+docker-compose up -d
 ```
 
-*   We install serverless ssm
+*   To view database logs:
 
-```git
-npm i serverless-offline-ssm --save-dev
+```bash
+docker-compose logs mysql
 ```
 
-```yml
-plugins:
-   - serverless-offline-ssm
-   - serverless-offline
+*   To access MySQL directly:
 
+```bash
+docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
 ```
 
-*   We will configure a standard markdown file format for the project via [remark-lint](https://github.com/remarkjs/remark-lint#example-check-markdown-on-the-api)
+</details>
 
-```git
-npm install remark-cli remark-preset-lint-consistent remark-preset-lint-recommended remark-lint-list-item-indent --save-dev
+### 1.3) Docker Setup and Database Migration [🔝](#index-)
 
-npm install remark-lint-emphasis-marker remark-lint-strong-marker --save-dev
-
-npm install remark-lint-table-cell-padding --save-dev
-```
-
-*   Then we add the configuration for the scripts from the package.json
-
-```json
-   "scripts": {
-     "check": "remark . --quiet --frail",
-     "format": "remark . --quiet --frail --output",
-   },
-```
-
-*   In my case, I want an autoformat to be applied for each execution, we execute the scripts together (only the --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
-
-```json
-   "scripts": {
-     "check": "remark . --quiet --frail",
-     "format": "remark . --quiet --frail --output",
-     "format-md": "remark . --output",
-     "serverless-offline": "sls offline start",
-     "start": "npm run format-md && npm run serverless-offline"
-   },
-```
-
-*   Then we add the remark configs, at the end, in the package.json
-
-```json
-  "remarkConfig": {
-     "settings": {
-       "emphasis": "*",
-       "strong": "*"
-     },
-     "plugins": [
-        "remark-preset-lint-consistent",
-       "remark-preset-lint-recommended",
-       "remark-lint",
-       "remark-lint-table-cell-padding",
-       [
-         "remark-lint-list-item-indent",
-         "tab size"
-       ],
-       [
-         "remark-lint-emphasis-marker",
-         "*"
-       ],
-       [
-         "remark-lint-strong-marker",
-         "*"
-       ]
-     ]
-   }
-```
-
-*   For more information about it, visit the [official page](https://github.com/remarkjs/remark-lint#example-check-markdown-on-the-api)
-
-*   The ssm variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding file (serverless\_ssm.yml) to the .gitignore.
-
-*   The following script (start), configured in the project's package.json, is responsible for executing
-    *   The serverless-offline plugin
-    *   The remark-lint plugin for .md files
-    *   Others
-
-```json
-   "scripts": {
-        "serverless-offline": "sls offline start",
-        "start": "npm run format-md && npm run serverless-offline",
-        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
-        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
-        "check": "remark . --quiet --frail",
-        "format-remark": "remark . --quiet --frail --output",
-        "format-md": "remark . --output",
-        "test": "jest --verbose",
-        "test:watch": "jest --watch --verbose",
-        "test:cov": "jest --coverage --verbose"
-   },
-```
-
-*   We run the app from terminal.
-
-```git
-npm start
-```
-
-*   If a message appears indicating that port 4000 is already in use, we can terminate all dependent processes and run the app again
-
-```git
-npx kill-port 4000
-npm start
-```
+<details>
+  <summary>See</summary>
 
 <br>
+
+#### Database Setup with Docker
+
+The project uses Docker to manage the MySQL database. Here's how to set it up:
+
+1.  Make sure you have Docker and Docker Compose installed on your system.
+
+2.  The database configuration is defined in `docker-compose.yml`:
+
+```yaml
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mercadolibre_users_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: microdb_mercadolibre
+      MYSQL_USER: mercadolibre_user
+      MYSQL_PASSWORD: mercadolibre_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+```
+
+3.  Database initialization scripts are located in the `init` directory:
+    *   `01_microdb_mercadolibre_DDL.sql`: Creates database and tables
+    *   `02_microdb_mercadolibre_DML_INSERTS.sql`: Inserts initial data
+
+#### Docker Commands
+
+Here are the essential Docker commands for managing the database:
+
+```bash
+# Start the database container
+docker-compose up -d
+
+# Stop the container
+docker-compose down
+
+# Stop and remove volumes (to reset database)
+docker-compose down -v
+
+# View container logs
+docker-compose logs mysql
+
+# Access MySQL container
+docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
+```
+
+#### Database Reset
+
+If you need to reset the database to its initial state:
+
+1.  Stop the container and remove volumes:
+
+```bash
+docker-compose down -v
+```
+
+2.  Recreate the container:
+
+```bash
+docker-compose up -d
+```
+
+This will:
+
+*   Create a fresh database
+*   Execute all DDL scripts to create tables
+*   Insert initial data from DML scripts
+
+#### Sample Data
+
+The database comes pre-populated with sample data including:
+
+*   Users and user details
+*   Addresses and address details
+*   Sellers information
+*   Products and product details
+
+Example of user data:
+
+```sql
+INSERT INTO users (id, nickname, first_name, last_name, email, identification_type, identification_number, country_id, creation_date, update_date) VALUES
+(1, 'RAFA-CON', 'Rafael', 'Castro', 'rafael_castro88@gmail.com', 'DNI', '445938822', 'AR', NOW(), NOW()),
+(2, 'JAVIER GONZALEZ', 'Javier', 'Gonzalez', 'javiBoquita@gmail.com', 'DNI', '2672268765', 'AR', NOW(), NOW());
+```
+
+Example of product data:
+
+```sql
+INSERT INTO products (id, site_id, title, subtitle, seller_id, category_id, official_store_id, price, base_price, original_price, initial_quantity, available_quantity, creation_date, update_date) VALUES
+(1, 'MLA', 'iPhone 13 Pro Max 256GB', 'Nuevo, sellado, con garantía oficial de Apple', 1, 'MLA1055', NULL, 1200000.00, 1200000.00, 1200000.00, 10, 8, NOW(), NOW()),
+(2, 'MLA', 'Samsung Galaxy S21 Ultra', 'Último modelo, libre de fábrica', 2, 'MLA1055', NULL, 950000.00, 950000.00, 950000.00, 15, 12, NOW(), NOW());
+```
 
 </details>
 
@@ -389,7 +417,9 @@ npm start
 <details>
   <summary>See</summary>
 
-### GET type operations:
+<br>
+
+#### GET type operations:
 
 *   http://localhost:4000/dev/v1/test
 *   http://localhost:4000/dev/v1/db-connection
@@ -404,21 +434,22 @@ npm start
 *   http://localhost:4000/dev/v1/users/nickname/{nickname}
 *   http://localhost:4000/dev/v1/users/creation-date/{creation-date}
 *   http://localhost:4000/dev/v1/users/update-date/{update-date}
+
 *   `All endpoints are optional paginated except /test, /db-connection and /id/{user-id}}`
 
-### POST type operations:
+#### POST type operations:
 
 *   http://localhost:4000/dev/v1/users/add-user/
 
-### PUT type operations:
+#### PUT type operations:
 
 *   http://localhost:4000/dev/v1/users/update-user/{user-id}
 
-### DELETE type operations:
+#### DELETE type operations:
 
 *   http://localhost:4000/dev/v1/users/delete-user/{user-id}
 
-### Clarifications
+#### Clarifications
 
 *   {required-value}
 *   Default pagination: ?page=0\&limit=5
@@ -434,9 +465,9 @@ npm start
   <summary>See</summary>
 <br>
 
-### 2.1.0) Variables in Postman
+#### 2.1.0) Variables in Postman
 
-| **Variable** | **Initial value** | **Current value** |\
+| **Variable** | **Initial value** | **Current value** |
 | ------------- | ------------- | ------------- |
 | base\_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
 | x-api-key | f98d8cd98h73s204e3456998ecl9427j  | f98d8cd98h73s204e3456998ecl9427j |
@@ -444,13 +475,13 @@ npm start
 
 <br>
 
-### 2.1.1) GET type operations
+#### 2.1.1) GET type operations
 
-### Database connection
+##### Database connection
 
-#### Request (GET) | Code Snippet
+###### Request (GET) | Code Snippet
 
-```postman
+```bash
 curl --location 'http://localhost:4000/dev/v1/db-connection' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
@@ -458,55 +489,43 @@ curl --location 'http://localhost:4000/dev/v1/db-connection' \
 --data ''
 ```
 
-#### Response (200 OK)
+###### Response (200 OK)
 
-```postman
+```json
 {
     "message": "Connection has been established successfully."
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (401 Unauthorized)
 
-```postman
-{
-    "message": "Bad request, could not get the paginated list of users."
-}
-```
-
-#### Response (401 Unauthorized)
-
-```postman
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
     "message": "Error in connection lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
 }
 ```
 
-#### Other responses
+##### Get Paged Users
 
-<br>
+###### Request (GET) | Code Snippet
 
-### Get Paged Users
-
-#### Request (GET) | Code Snippet
-
-```postman
+```bash
 curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
@@ -514,9 +533,9 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 --data ''
 ```
 
-#### Response (200 OK)
+###### Response (200 OK)
 
-```postman
+```json
 {
     "message": [
         {
@@ -547,292 +566,55 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (401 Unauthorized)
 
-```postman
-{
-    "message": "Bad request, could not get the paginated list of users."
-}
-```
-
-#### Response (401 Unauthorized)
-
-```postman
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
     "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
 }
 ```
 
-#### Response (500 Internal Server Error)
+#### 2.1.2) POST type operations
 
-```postman
-{
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
-}
-```
+##### Add a User
 
-#### Response (500 Internal Server Error)
+###### Request (POST) | Code Snippet
 
-```postman
-{
-    "message": "Error in getAll lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
-}
-```
-
-#### Other responses
-
-<br>
-
-### Get a User based on their id
-
-#### Request (GET) | Code Snippet
-
-```postman
-curl --location 'http://localhost:4000/dev/v1/users/id/4' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
---header 'Content-Type: application/json' \
---header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j'
-```
-
-#### Response (200 OK)
-
-```postman
-{
-    "message": {
-        "id": 4,
-        "nickname": "GABRIELA JIMENEZ",
-        "first_name": "Gabriela",
-        "last_name": "Jimenez",
-        "email": "gabriela.consultas@hotmail.com",
-        "identification_type": "DNI",
-        "identification_number": "410871223",
-        "country_id": "AR",
-        "creation_date": "2023-03-20 21:02:33",
-        "update_date": "2023-03-20 21:02:33"
-    }
-}
-```
-
-#### Response (400 Bad Request)
-
-```postman
-{
-    "message": "Bad request, check missing or malformed headers"
-}
-```
-
-#### Response (400 Bad Request)
-
-```postman
-{
-    "message": "Bad request, could not fetch user based on id."
-}
-```
-
-#### Response (400 Bad Request)
-
-```postman
-{
-    "message": "Bad request, the id passed as a parameter is not valid."
-}
-```
-
-#### Response (401 Unauthorized)
-
-```postman
-{
-    "message": "Not authenticated, check x_api_key and Authorization"
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "Error in getById lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
-}
-```
-
-#### Other responses
-
-<br>
-
-### Get paginated list of Users according to their country-id
-
-#### Request (GET) | Code Snippet
-
-```postman
-curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
---header 'Content-Type: application/json' \
---header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
---data ''
-```
-
-#### Response
-
-```postman
-{
-    "message": [
-        {
-            "id": 3,
-            "nickname": "HECTOR SS G",
-            "first_name": "Hector",
-            "last_name": "Gomez",
-            "email": "hectorGomez78@gmail.com",
-            "identification_type": "DNI",
-            "identification_number": "2172265827",
-            "country_id": "AR",
-            "creation_date": "2023-03-20 21:02:33",
-            "update_date": "2023-03-20 21:02:33"
-        },
-        {
-            "id": 4,
-            "nickname": "GABRIELA JIMENEZ",
-            "first_name": "Gabriela",
-            "last_name": "Jimenez",
-            "email": "gabriela.consultas@hotmail.com",
-            "identification_type": "DNI",
-            "identification_number": "410871223",
-            "country_id": "AR",
-            "creation_date": "2023-03-20 21:02:33",
-            "update_date": "2023-03-20 21:02:33"
-        },
-        {
-            "id": 5,
-            "nickname": "GUSTA G K",
-            "first_name": "Gustavo",
-            "last_name": "Gomez",
-            "email": "gustavo_andaluz@gmail.com",
-            "identification_type": "PASAPORTE",
-            "identification_number": "748000221",
-            "country_id": "AR",
-            "creation_date": "2023-03-20 21:02:33",
-            "update_date": "2023-03-20 21:02:33"
-        }
-    ]
-}
-```
-
-#### Response (400 Bad Request)
-
-```postman
-{
-    "message": "Bad request, check missing or malformed headers"
-}
-```
-
-#### Response (400 Bad Request)
-
-```postman
-{
-    "message": "Bad request, could not get paginated list of users according to country id. Try again."
-}
-```
-
-#### Response (400 Bad Request)
-
-```postman
-{
-    "message": "Bad request, the country id passed as a parameter is not valid."
-}
-```
-
-#### Response (401 Unauthorized)
-
-```postman
-{
-    "message": "Not authenticated, check x_api_key and Authorization"
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "Error in getLikeCountryId lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
-}
-```
-
-#### Other responses
-
-<br>
-
-*   OTHER GET OPERATIONS (SEE POSTMAN COLLECTION)
-
-### 2.1.2) POST type operations
-
-### Add a User
-
-#### Request (POST) | code snippet
-
-```postman
+```bash
 curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
---data-raw '   {
-            "nickname": "VALE18BNX",
-            "first_name": "Valeria",
-            "last_name": "Castro",
-            "email": "vale_18_nnbs@gmail.com",
-            "identification_type": "DNI",
-            "identification_number": "3987261233",
-            "country_id": "AR12"
-        }'
+--data-raw '{
+    "nickname": "VALE18BNX",
+    "first_name": "Valeria",
+    "last_name": "Castro",
+    "email": "vale_18_nnbs@gmail.com",
+    "identification_type": "DNI",
+    "identification_number": "3987261233",
+    "country_id": "AR12"
+}'
 ```
 
-#### Response (200 OK)
+###### Response (200 OK)
 
-```postman
+```json
 {
     "message": {
         "id": null,
@@ -849,93 +631,57 @@ curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (401 Unauthorized)
 
-```postman
-{
-    "message": "Bad request, check request attributes. Missing or incorrect. CHECK: nickname, first_name and last_name (required|string|minLength:4|maxLength:50), email (required|string|minLength:10|maxLength:100), identification_type and identification_number (required|string|minLength:6|maxLength:20), country_id (required|string|minLength:2|maxLength:5)"
-}
-```
-
-#### Response (400 Bad Request)
-
-```postman
-{
-    "message": "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
-}
-```
-
-#### Response (401 Unauthorized)
-
-```postman
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
-    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
 }
 ```
 
-#### Response (500 Internal Server Error)
+#### 2.1.3) PUT type operations
 
-```postman
-{
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
-}
-```
+##### Edit a User
 
-#### Response (500 Internal Server Error)
+###### Request (PUT) | Code Snippet
 
-```postman
-{
-    "message": "Error in addUser lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
-}
-```
-
-#### Other responses
-
-<br>
-
-### 2.1.3) PUT type operations
-
-### Edit a User
-
-#### Request (PUT) | Code
-
-```postman
+```bash
 curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/26' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
---data-raw '     {
-            "nickname": "VALE18BNX EDITED",
-            "first_name": "Valeria EDITED",
-            "last_name": "Castro",
-            "email": "vale_18_nnbs@gmail.com",
-            "identification_type": "DNI",
-            "identification_number": "3987261233",
-            "country_id": "AR12",
-            "creation_date": "2023-06-28 16:46:31",
-            "update_date": "2023-06-28 16:46:31"
-        }'
+--data-raw '{
+    "nickname": "VALE18BNX EDITED",
+    "first_name": "Valeria EDITED",
+    "last_name": "Castro",
+    "email": "vale_18_nnbs@gmail.com",
+    "identification_type": "DNI",
+    "identification_number": "3987261233",
+    "country_id": "AR12",
+    "creation_date": "2023-06-28 16:46:31",
+    "update_date": "2023-06-28 16:46:31"
+}'
 ```
 
-#### Response (200 OK)
+###### Response (200 OK)
 
-```postman
+```json
 {
     "message": {
         "id": 26,
@@ -952,71 +698,37 @@ curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/26
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (401 Unauthorized)
 
-```postman
-{
-    "message": "Bad request, check request attributes and object to update"
-}
-```
-
-#### Response (400 Bad Request)
-
-```postman
-{
-    "message": "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
-}
-```
-
-#### Response (401 Unauthorized)
-
-```postman
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
-    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
 }
 ```
 
-#### Response (500 Internal Server Error)
+#### 2.1.4) DELETE type operations
 
-```postman
-{
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
-}
-```
+##### Delete a User
 
-#### Response (500 Internal Server Error)
+###### Request (DELETE) | Code Snippet
 
-```postman
-{
-    "message": "Error in updateUser lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
-}
-```
-
-<br>
-
-### 2.1.4) DELETE type operations
-
-### Delete a User
-
-#### Request (DELETE) | Code snippet
-
-```postman
+```bash
 curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user/26' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
@@ -1024,59 +736,35 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 --data ''
 ```
 
-#### Response (200 OK)
+###### Response (200 OK)
 
-```postman
+```json
 {
     "message": "User has been deleted successfully."
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (401 Unauthorized)
 
-```postman
-{
-    "message": "Bad request, a non-existent user cannot be deleted. Operation not allowed"
-}
-```
-
-#### Response (401 Unauthorized)
-
-```postman
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
-    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "Error in deleteUser lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
 }
 ```
 
@@ -1103,59 +791,81 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 </details>
 
-### 3.1) References [🔝](#índice-)
+### 3.1) References [🔝](#index-)
 
 <details>
   <summary>See</summary>
 
- <br>
+<br>
 
-#### Configuration
+#### AWS Services and Tools
 
-*   [How to use Sequelize with Node.js and MySQL](https://jasonwatmore.com/post/2022/06/26/nodejs-mysql-connect-to-mysql-database-with-sequelize-mysql2)
-*   [Recommended Video Tutorial](https://www.youtube.com/watch?v=im7THL67z0c)
+*   [AWS Lambda Documentation](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
+*   [API Gateway Best Practices](https://docs.aws.amazon.com/apigateway/latest/developerguide/best-practices.html)
+*   [Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
+*   [Amazon RDS Documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
+*   [AWS CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html)
+*   [AWS IAM Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
 
-#### Tools
+#### Serverless Framework
 
-*   [AWS Design Tool app.diagrams.net](https://app.diagrams.net/?splash=0\&libs=aws4)
+*   [Serverless Framework Documentation](https://www.serverless.com/framework/docs)
+*   [Serverless Framework Plugins](https://www.serverless.com/plugins)
+*   [Serverless Offline Plugin](https://www.serverless.com/plugins/serverless-offline)
+*   [Serverless SSM Plugin](https://www.serverless.com/plugins/serverless-offline-ssm)
+*   [Serverless OpenAPI Documentation](https://www.serverless.com/plugins/serverless-openapi-documentation)
+*   [Serverless Auto Swagger](https://www.npmjs.com/package/serverless-auto-swagger)
 
-#### Sequelize
+#### Database and ORM
 
-*   [Models and Operators](https://sequelize.org/docs/v6/core-concepts/model-querying-basics/)
+*   [Sequelize Documentation](https://sequelize.org/docs/v6/)
+*   [MySQL Documentation](https://dev.mysql.com/doc/)
+*   [Docker MySQL Image](https://hub.docker.com/_/mysql)
+*   [Docker Compose Documentation](https://docs.docker.com/compose/)
+*   [Sequelize Migrations](https://sequelize.org/docs/v6/other-topics/migrations/)
+*   [Sequelize Associations](https://sequelize.org/docs/v6/core-concepts/assocs/)
 
-#### Free market
+#### Testing and Development
 
-*   [Users and applications](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
-*   [Description of users](https://developers.mercadolibre.com.ar/es_ar/producto-consulta-usuarios)
+*   [Jest Documentation](https://jestjs.io/docs/getting-started)
+*   [Node.js Documentation](https://nodejs.org/en/docs/)
+*   [Postman Documentation](https://learning.postman.com/docs/getting-started/introduction/)
+*   [VS Code Documentation](https://code.visualstudio.com/docs)
+*   [Git Documentation](https://git-scm.com/doc)
+*   [Docker Desktop Documentation](https://docs.docker.com/desktop/)
 
-#### Swagger with Serverless
+#### API Design and Best Practices
 
-*   [Autoswagger](https://www.npmjs.com/package/serverless-auto-swagger)
-*   [Documentation serverless api](https://levelup.gitconnected.com/documenting-your-serverless-solutions-509f1928564b)
+*   [REST API Best Practices](https://restfulapi.net/)
+*   [API Security Best Practices](https://owasp.org/www-project-api-security/)
+*   [OpenAPI Specification](https://swagger.io/specification/)
+*   [API Documentation Best Practices](https://idratherbewriting.com/learnapidoc/)
+*   [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
 
-#### Open Apiv3 with Serverless
+#### Mercadolibre API
 
-*   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
+*   [Mercadolibre API Documentation](https://developers.mercadolibre.com.ar/es_ar/api-docs)
+*   [Mercadolibre Users API](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
+*   [Mercadolibre Products API](https://developers.mercadolibre.com.ar/es_ar/productos)
+*   [Mercadolibre Authentication](https://developers.mercadolibre.com.ar/es_ar/autenticacion-y-autorizacion)
 
-#### API Gateway
+#### Development Tools and Resources
 
-*   [Best Api-Gateway Practices](https://docs.aws.amazon.com/whitepapers/latest/best-practices-api-gateway-private-apis-integration/rest-api.html)
-*   [Creating Custom Api-keys](https://towardsaws.com/protect-your-apis-by-creating-api-keys-using-serverless-framework-fe662ad37447)
-*   [Gateway Api properties configuration](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml)
+*   [AWS Design Tool (draw.io)](https://app.diagrams.net/?splash=0&libs=aws4)
+*   [Postman Collection Examples](https://www.postman.com/collection/)
+*   [VS Code Extensions for AWS](https://aws.amazon.com/visualstudiocode/)
+*   [Docker Hub](https://hub.docker.com/)
+*   [GitHub Actions](https://docs.github.com/en/actions)
+*   [Node.js Best Practices](https://github.com/goldbergyoni/nodebestpractices)
 
-#### Serverless frameworks
+#### Community and Learning Resources
 
-*   [Plugins](https://www.serverless.com/plugins)
-
-#### Libraries/Plugins
-
-*   [Field validation](https://www.npmjs.com/package/node-input-validator)
-*   [serverless-offline-ssm](https://www.serverless.com/plugins/serverless-offline-ssm)
-*   [serverless open api ](https://www.serverless.com/plugins/serverless-openapi-documentation)
-
-#### Jest
-
-*   [Environment vars solution](https://stackoverflow.com/questions/48033841/test-process-env-with-jest)
+*   [AWS Community Builders](https://aws.amazon.com/developer/community/community-builders/)
+*   [Serverless Framework Forum](https://forum.serverless.com/)
+*   [Stack Overflow](https://stackoverflow.com/questions/tagged/aws-lambda)
+*   [AWS YouTube Channel](https://www.youtube.com/user/AmazonWebServices)
+*   [Serverless Framework YouTube](https://www.youtube.com/c/Serverless)
+*   [Mercadolibre Developers Blog](https://developers.mercadolibre.com.ar/blog)
 
 <br>
 
