@@ -44,25 +44,26 @@ Microservice for user management exemplifying part of the ML development archite
 ## Index 📜
 
 <details>
- <summary> See </summary>
+ <summary> View </summary>
 
  <br>
 
-### Sección 1) Description, configuration and technologies.
+### Section 1) Description, configuration and technologies.
 
-*   [1.0) Project description.](#10-description-)
-*   [1.1) Project execution.](#11-project-execution-)
-*   [1.2) Project setup from scratch](#12-project-setup-from-scratch-)
-*   [1.3) Technologies.](#13-technologies-)
+*   [1.0) Project Description.](#10-project-description-)
+*   [1.1) Project Execution.](#11-project-execution-)
+*   [1.2) Project Configuration from Scratch](#12-project-configuration-from-scratch-)
+*   [1.3) Docker Setup and Database Migration](#13-docker-setup-and-database-migration-)
+*   [1.4) Technologies.](#14-technologies-)
 
-### Sección 2) Endpoints and Examples
+### Section 2) Endpoints and Examples
 
-*   [2.0) Endpoints and resources.](#20-endpoints-and-resources-)
+*   [2.0) EndPoints and resources.](#20-endpoints-and-resources-)
 *   [2.1) Examples.](#21-examples-)
 
-### Sección 3) Functionality test and references
+### Section 3) Functionality Test and References
 
-*   [3.0) Functionality test.](#30-functionality-test-and-references-)
+*   [3.0) Functionality Test.](#30-functionality-test-)
 *   [3.1) References.](#31-references-)
 
 <br>
@@ -71,9 +72,9 @@ Microservice for user management exemplifying part of the ML development archite
 
 <br>
 
-## Sección 1) Description, configuration and technologies.
+## Section 1) Description, configuration and technologies.
 
-### 1.0) Description [🔝](#index-)
+### 1.0) Project Description [🔝](#index-)
 
 <details>
   <summary>See</summary>
@@ -99,7 +100,7 @@ Microservice for user management exemplifying part of the ML development archite
 
 </details>
 
-### 1.1) Project execution [🔝](#index-)
+### 1.1) Project Execution [🔝](#index-)
 
 <details>
   <summary>See</summary>
@@ -194,7 +195,7 @@ npm start
 
 </details>
 
-### 1.2) Project setup from scratch [🔝](#index-)
+### 1.2) Project Configuration from Scratch [🔝](#index-)
 
 <details>
   <summary>Ver</summary>
@@ -362,7 +363,7 @@ INSERT INTO products (id, site_id, title, subtitle, seller_id, category_id, offi
 
 </details>
 
-### 1.3) Technologies [🔝](#index-)
+### 1.4) Technologies [🔝](#index-)
 
 <details>
   <summary>See</summary>
@@ -410,7 +411,7 @@ INSERT INTO products (id, site_id, title, subtitle, seller_id, category_id, offi
 
 <br>
 
-## Sección 2) Endpoints and Examples.
+## Section 2) Endpoints and Examples.
 
 ### 2.0) Endpoints and resources [🔝](#index-)
 
@@ -776,7 +777,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 ## Section 3) Functionality Testing and References.
 
-### 3.0) Functionality test [🔝](#index-)
+### 3.0) Functionality Test [🔝](#index-)
 
 <details>
   <summary>See</summary>
