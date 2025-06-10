@@ -1,6 +1,6 @@
 <div align="right">
   
-[Status](./doc/assets/icons/badges/status-completed.svg)
+![Status](./doc/assets/icons/badges/status-completed.svg)
 
 </div> 
 
