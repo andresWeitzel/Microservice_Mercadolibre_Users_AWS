@@ -1,4 +1,6 @@
-![Status](./doc/assets/icons/badges/status-completed.svg)
+<div align="right">
+[Status](./doc/assets/icons/badges/status-completed.svg)
+</div> 
 
 ![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/MicroService_Users_ML.drawio.png)
 
@@ -38,7 +40,6 @@
 <div align="center">
 
 # Microservice Mercadolibre Users AWS 
-
 
 </div>  
 
