@@ -19,6 +19,8 @@
 
 <br>
 
+<br>
+
 <div align="right">
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md">
     <img width="65" height="40" src="./doc/assets/translation/arg-flag.jpg" />
@@ -28,9 +30,13 @@
   </a> 
 </div>
 
+
+<br>
+
 <div align="center">
 
-# Microservice Mercadolibre Users AWS
+# Microservice Mercadolibre Users AWS ![Status](./doc/assets/icons/badges/status-completed.svg)
+
 
 </div>  
 
