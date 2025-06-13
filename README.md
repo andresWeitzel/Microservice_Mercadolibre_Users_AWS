@@ -242,23 +242,23 @@ npm start
 
 2.  **Essential Docker Commands**
     These commands are essential for managing your Docker environment:
-```bash
-    # Start container in detached mode (runs in background)
-docker-compose up -d
-
-    # Check container status and health
-docker ps
-
-    # Reset database (removes all data and recreates container)
-docker-compose down -v
-docker-compose up -d
-
-    # View database logs for troubleshooting
-docker-compose logs mysql
-
-    # Access MySQL command line interface
-docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
-```
+    ```bash
+        # Start container in detached mode (runs in background)
+    docker-compose up -d
+    
+        # Check container status and health
+    docker ps
+    
+        # Reset database (removes all data and recreates container)
+    docker-compose down -v
+    docker-compose up -d
+    
+        # View database logs for troubleshooting
+    docker-compose logs mysql
+    
+        # Access MySQL command line interface
+    docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
+    ```
 
 3.  **Sample Data**
     Here are some example queries to populate your database:
@@ -347,7 +347,7 @@ docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
 
 2.  **Database Backup and Restore**
     Commands for database maintenance:
-```bash
+    ```bash
     # Create a full database backup
     docker exec mercadolibre_users_mysql mysqldump -u mercadolibre_user -p microdb_mercadolibre > backup.sql
 
@@ -364,7 +364,7 @@ docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
     # Inspect container configuration
     docker inspect mercadolibre_users_mysql
 
-# View container logs
+    # View container logs
     docker logs mercadolibre_users_mysql
 
     # Monitor container resource usage
@@ -418,11 +418,11 @@ docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
 5.  **Common Issues and Solutions**
     Solutions for frequent problems:
     *   **Port Conflict**: If port 3306 is already in use
-```bash
-        # Find process using port
-        netstat -ano | findstr :3306
-        # Kill process
-        taskkill /PID <process_id> /F
+        ```bash
+            # Find process using port
+            netstat -ano | findstr :3306
+            # Kill process
+            taskkill /PID <process_id> /F
         ```
     
     *   **Container Won't Start**: Check logs for errors
@@ -434,7 +434,7 @@ docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
         ```
     
     *   **Database Connection Issues**: Verify credentials and network
-```bash
+        ```bash
         # Test connection
         docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
         # Check network
