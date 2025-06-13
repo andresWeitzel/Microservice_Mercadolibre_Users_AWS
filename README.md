@@ -58,9 +58,8 @@ Microservice for user management exemplifying part of the ML development archite
 
 *   [1.0) Project Description.](#10-project-description-)
 *   [1.1) Project Execution.](#11-project-execution-)
-*   [1.2) Project Configuration from Scratch](#12-project-configuration-from-scratch-)
-*   [1.3) Docker Setup and Database Migration](#13-docker-setup-and-database-migration-)
-*   [1.4) Technologies.](#14-technologies-)
+*   [1.2) Docker Setup and Database Migration](#12-docker-setup-and-database-migration-)
+*   [1.3) Technologies.](#13-technologies-)
 
 ### Section 2) Endpoints and Examples
 
@@ -143,7 +142,7 @@ sls -v
 npm i
 ```
 
-*   Make sure Docker are installed on your system (for Windows, use [Docker Desktop]([https://nodejs.org/en/download]\(https://www.docker.com/products/docker-desktop/\)))
+*   `Important` : Make sure Docker are installed on your system (for Windows, use [Docker Desktop]([https://nodejs.org/en/download]\(https://www.docker.com/products/docker-desktop/\)))
 
 *   Start and build the MySQL database container:
 
@@ -157,20 +156,20 @@ docker-compose up -d
 docker ps
 ```
 
-*   If you need to reset the database:
+*   If you need to reset the database (optional) :
 
 ```bash
 docker-compose down -v
 docker-compose up -d
 ```
 
-*   To view database logs:
+*   To view database logs (optional):
 
 ```bash
 docker-compose logs mysql
 ```
 
-*   To access MySQL directly:
+*   To access MySQL directly  (optional):
 
 ```bash
 docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
@@ -190,7 +189,7 @@ docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
 npm start
 ```
 
-*   If a message appears indicating that port 4000 is already in use, we can terminate all dependent processes and run the app again
+*   If a message appears indicating that port 4000 is already in use, we can terminate all dependent processes and run the app again  (optional) : 
 
 ```git
 npx kill-port 4000
@@ -201,215 +200,318 @@ npm start
 
 </details>
 
-### 1.2) Project Configuration from Scratch [🔝](#index-)
 
-<details>
-  <summary>Ver</summary>
 
- <br>
-
-*   We create a work environment through some ide, after creating a folder we position ourselves on it
-
-```git
-cd 'projectName'
-```
-
-*   We install the latest LTS version of [Nodejs(v18)](https://nodejs.org/en/download)
-*   We install the Serverless Framework globally if we have not already done so
-
-```git
-npm install -g serverless
-```
-
-*   We verify the version of Serverless installed
-
-```git
-sls -v
-```
-
-*   Make sure Docker are installed on your system (for Windows, use [Docker Desktop]([https://nodejs.org/en/download]\(https://www.docker.com/products/docker-desktop/\)))
-
-*   Start and build the MySQL database container:
-
-```bash
-docker-compose up -d
-```
-
-*   Verify the container is running:
-
-```bash
-docker ps
-```
-
-*   If you need to reset the database:
-
-```bash
-docker-compose down -v
-docker-compose up -d
-```
-
-*   To view database logs:
-
-```bash
-docker-compose logs mysql
-```
-
-*   To access MySQL directly:
-
-```bash
-docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
-```
-
-</details>
-
-### 1.3) Docker Setup and Database Migration [🔝](#index-)
+### 1.2) Docker Setup and Database Migration [🔝](#index-)
 
 <details>
   <summary>See</summary>
 
 <br>
 
-#### Database Setup with Docker
+#### 1.2.1) Database Configuration with Docker
 
-The project uses Docker to manage the MySQL database. Here's how to set it up:
+1.  **Docker Compose Configuration**
+    The following configuration sets up a MySQL 8.0 container with persistent storage and automatic initialization:
+    ```yaml
+    version: '3.8'
+    services:
+      mysql:
+        image: mysql:8.0
+        container_name: mercadolibre_users_mysql
+        environment:
+          MYSQL_ROOT_PASSWORD: root          # Root password for MySQL
+          MYSQL_DATABASE: microdb_mercadolibre  # Database name
+          MYSQL_USER: mercadolibre_user      # Application user
+          MYSQL_PASSWORD: mercadolibre_pass  # Application user password
+        ports:
+          - "3306:3306"                      # Maps container port to host port
+        volumes:
+          - mysql_data:/var/lib/mysql        # Persistent data storage
+          - ./init:/docker-entrypoint-initdb.d  # Initialization scripts
+        command: --default-authentication-plugin=mysql_native_password  # Authentication method
+        healthcheck:
+          test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]  # Health check command
+          interval: 10s                      # Check every 10 seconds
+          timeout: 5s                        # Timeout after 5 seconds
+          retries: 5                         # Retry 5 times before marking unhealthy
 
-1.  Make sure you have Docker and Docker Compose installed on your system.
-
-2.  The database configuration is defined in `docker-compose.yml`:
-
-```yaml
-version: '3.8'
-services:
-  mysql:
-    image: mysql:8.0
-    container_name: mercadolibre_users_mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: microdb_mercadolibre
-      MYSQL_USER: mercadolibre_user
-      MYSQL_PASSWORD: mercadolibre_pass
-    ports:
-      - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
-      - ./init:/docker-entrypoint-initdb.d
-```
+      mysql_data:                            # Named volume for data persistence
+    ```
 
-3.  Database initialization scripts are located in the `init` directory:
-    *   `01_microdb_mercadolibre_DDL.sql`: Creates database and tables
-    *   `02_microdb_mercadolibre_DML_INSERTS.sql`: Inserts initial data
-
-#### Docker Commands
-
-Here are the essential Docker commands for managing the database:
-
+2.  **Essential Docker Commands**
+    These commands are essential for managing your Docker environment:
 ```bash
-# Start the database container
+    # Start container in detached mode (runs in background)
 docker-compose up -d
 
-# Stop the container
-docker-compose down
+    # Check container status and health
+docker ps
 
-# Stop and remove volumes (to reset database)
+    # Reset database (removes all data and recreates container)
 docker-compose down -v
+docker-compose up -d
 
-# View container logs
+    # View database logs for troubleshooting
 docker-compose logs mysql
 
-# Access MySQL container
+    # Access MySQL command line interface
 docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
 ```
 
-#### Database Reset
+3.  **Sample Data**
+    Here are some example queries to populate your database:
+    ```sql
+    -- Sample user insertion with all required fields
+    INSERT INTO users (
+        nickname, 
+        first_name, 
+        last_name, 
+        email, 
+        identification_type, 
+        identification_number, 
+        country_id
+    ) VALUES (
+        'USER123',
+        'John',
+        'Doe',
+        'john@example.com',
+        'DNI',
+        '12345678',
+        'AR'
+    );
 
-If you need to reset the database to its initial state:
+    -- Sample product insertion
+    INSERT INTO products (
+        title, 
+        price, 
+        currency_id, 
+        available_quantity, 
+        condition
+    ) VALUES (
+        'iPhone 12',
+        999.99,
+        'USD',
+        10,
+        'new'
+    );
+    ```
 
-1.  Stop the container and remove volumes:
+#### 1.2.2) Migration Process
 
+1.  **Database Initialization**
+    The database setup process follows these steps:
+    *   When the container starts, it automatically creates the database specified in MYSQL_DATABASE
+    *   The initialization scripts in the `./init` directory are executed in alphabetical order
+    *   Data persists between container restarts thanks to the Docker volume `mysql_data`
+    *   The first script (01_*) typically contains table definitions
+    *   The second script (02_*) typically contains initial data
+
+2.  **File Structure**
+    The initialization process uses this file structure:
+    ```
+    init/
+    ├── 01_microdb_mercadolibre_DDL.sql     # Database schema and table definitions
+    └── 02_microdb_mercadolibre_DML_INSERTS.sql  # Initial data and seed records
+    ```
+
+3.  **Considerations**
+    Important points to remember:
+    *   The `mysql_data` volume ensures your data persists even if the container is removed
+    *   To completely reset the database, you need to remove the volume using `docker-compose down -v`
+    *   Database credentials are defined in the `docker-compose.yml` file
+    *   The container uses MySQL 8.0 with native password authentication
+    *   The database is accessible on port 3306 of your host machine
+
+#### 1.2.3) Additional Docker Commands and Examples
+
+1.  **Container Management**
+    Advanced container management commands:
+    ```bash
+    # Stop all containers gracefully
+    docker-compose down
+
+    # Remove all containers, networks, and volumes
+    docker-compose down -v
+
+    # Rebuild containers with latest changes
+    docker-compose build
+
+    # View container logs in real-time (follow mode)
+    docker-compose logs -f mysql
+
+    # Execute interactive shell in container
+    docker exec -it mercadolibre_users_mysql bash
+    ```
+
+2.  **Database Backup and Restore**
+    Commands for database maintenance:
 ```bash
-docker-compose down -v
-```
+    # Create a full database backup
+    docker exec mercadolibre_users_mysql mysqldump -u mercadolibre_user -p microdb_mercadolibre > backup.sql
 
-2.  Recreate the container:
+    # Restore database from backup
+    docker exec -i mercadolibre_users_mysql mysql -u mercadolibre_user -p microdb_mercadolibre < backup.sql
+    ```
 
+3.  **Troubleshooting**
+    Common troubleshooting commands:
+    ```bash
+    # Check container status and details
+    docker ps -a
+
+    # Inspect container configuration
+    docker inspect mercadolibre_users_mysql
+
+# View container logs
+    docker logs mercadolibre_users_mysql
+
+    # Monitor container resource usage
+    docker stats mercadolibre_users_mysql
+    ```
+
+4.  **Additional Sample Queries**
+    Useful SQL queries for common operations:
+    ```sql
+    -- Create new user with all fields
+    INSERT INTO users (
+        nickname, 
+        first_name, 
+        last_name, 
+        email, 
+        identification_type, 
+        identification_number, 
+        country_id
+    ) VALUES (
+        'MARIA123',
+        'Maria',
+        'Garcia',
+        'maria.garcia@example.com',
+        'PASSPORT',
+        'AB123456',
+        'ES'
+    );
+
+    -- Update user information
+    UPDATE users 
+    SET email = 'new.email@example.com',
+        update_date = CURRENT_TIMESTAMP
+    WHERE id = 1;
+
+    -- Delete user
+    DELETE FROM users 
+    WHERE id = 1;
+
+    -- Search users by country with pagination
+    SELECT * FROM users 
+    WHERE country_id = 'AR' 
+    ORDER BY creation_date DESC
+    LIMIT 10 OFFSET 0;
+
+    -- Count users by country
+    SELECT country_id, COUNT(*) as user_count 
+    FROM users 
+    GROUP BY country_id;
+    ```
+
+5.  **Common Issues and Solutions**
+    Solutions for frequent problems:
+    *   **Port Conflict**: If port 3306 is already in use
 ```bash
-docker-compose up -d
-```
+        # Find process using port
+        netstat -ano | findstr :3306
+        # Kill process
+        taskkill /PID <process_id> /F
+        ```
+    
+    *   **Container Won't Start**: Check logs for errors
+        ```bash
+        # View detailed logs
+        docker-compose logs mysql
+        # Check container status
+        docker ps -a
+        ```
+    
+    *   **Database Connection Issues**: Verify credentials and network
+```bash
+        # Test connection
+        docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
+        # Check network
+        docker network ls
+        docker network inspect <network_name>
+        ```
 
-This will:
+6.  **Performance Optimization**
+    Tips for optimizing database performance:
+    *   Adjust MySQL configuration in `my.cnf`:
+        ```ini
+        [mysqld]
+        innodb_buffer_pool_size = 256M    # Buffer pool size for InnoDB
+        max_connections = 100             # Maximum concurrent connections
+        query_cache_size = 32M           # Query cache size
+        ```
+    
+    *   Monitor performance:
+        ```sql
+        -- Check slow queries
+        SHOW VARIABLES LIKE '%slow%';
+        
+        -- Check connection status
+        SHOW STATUS LIKE '%onn%';
+        
+        -- Check table status
+        SHOW TABLE STATUS;
+        
+        -- Check process list
+        SHOW PROCESSLIST;
+        ```
 
-*   Create a fresh database
-*   Execute all DDL scripts to create tables
-*   Insert initial data from DML scripts
-
-#### Sample Data
-
-The database comes pre-populated with sample data including:
-
-*   Users and user details
-*   Addresses and address details
-*   Sellers information
-*   Products and product details
-
-Example of user data:
-
-```sql
-INSERT INTO users (id, nickname, first_name, last_name, email, identification_type, identification_number, country_id, creation_date, update_date) VALUES
-(1, 'RAFA-CON', 'Rafael', 'Castro', 'rafael_castro88@gmail.com', 'DNI', '445938822', 'AR', NOW(), NOW()),
-(2, 'JAVIER GONZALEZ', 'Javier', 'Gonzalez', 'javiBoquita@gmail.com', 'DNI', '2672268765', 'AR', NOW(), NOW());
-```
-
-Example of product data:
-
-```sql
-INSERT INTO products (id, site_id, title, subtitle, seller_id, category_id, official_store_id, price, base_price, original_price, initial_quantity, available_quantity, creation_date, update_date) VALUES
-(1, 'MLA', 'iPhone 13 Pro Max 256GB', 'Nuevo, sellado, con garantía oficial de Apple', 1, 'MLA1055', NULL, 1200000.00, 1200000.00, 1200000.00, 10, 8, NOW(), NOW()),
-(2, 'MLA', 'Samsung Galaxy S21 Ultra', 'Último modelo, libre de fábrica', 2, 'MLA1055', NULL, 950000.00, 950000.00, 950000.00, 15, 12, NOW(), NOW());
-```
+<br>
 
 </details>
 
-### 1.4) Technologies [🔝](#index-)
+### 1.3) Technologies [🔝](#index-)
 
 <details>
   <summary>See</summary>
 
  <br>
 
-| **Technologies** | **Version** | **Purpose** |\
-| ------------- | ------------- | ------------- |
+| **Technologies** | **Version** | **Purpose** |
+|-----------------|-------------|-------------|
 | [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Automatic Module Injection for Lambdas |
-| [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | Core Services AWS |
-| [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Management of Environment Variables |
-| [Jest](https://jestjs.io/) | 29.7 | Framework para pruebas unitarias, integración, etc. |
+| [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | AWS Services Core |
+| [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Environment Variables Management |
+| [Jest](https://jestjs.io/) | 29.7 | Framework for unit testing, integration, etc. |
 | [Amazon Api Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) | 2.0 | API Manager, Authentication, Control and Processing |
-| [NodeJS](https://nodejs.org/en/) | 14.18.1  | js library |
+| [NodeJS](https://nodejs.org/en/) | 14.18.1  | JS Library |
 | [Sequelize](https://sequelize.org/) | ^6.11.0 | ORM |
-| [Mysql](https://www.mysql.com/) | 10.1 | SGDB |
-| [XAMPP](https://www.apachefriends.org/es/index.html) | 3.2.2 | Server package |
+| [Mysql](https://www.mysql.com/) | 10.1 | DBMS |
+| [XAMPP](https://www.apachefriends.org/es/index.html) | 3.2.2 | Server Package |
 | [VSC](https://code.visualstudio.com/docs) | 1.72.2  | IDE |
-| [Postman](https://www.postman.com/downloads/) | 10.11  | http client |
-| [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Símbolo del Sistema para linea de comandos |
-| [Git](https://git-scm.com/downloads) | 2.29.1  | Version control |
-| Otros | Otros |
+| [Postman](https://www.postman.com/downloads/) | 10.11  | Http Client |
+| [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Command Line Interface |
+| [Git](https://git-scm.com/downloads) | 2.29.1  | Version Control |
+| Others | Others | Others |
 
-</br>
+<br>
 
 | **Plugin** |
-| -------------  |
+|------------|
 | [Serverless Plugin](https://www.serverless.com/plugins/) |
 | [serverless-offline](https://www.npmjs.com/package/serverless-offline) |
 | [serverless-offline-ssm](https://www.npmjs.com/package/serverless-offline-ssm) |
 
-</br>
+<br>
 
-| **Extensión** |\
-| -------------  |
+| **Extension** |
+|---------------|
 | Prettier - Code formatter |
 | YAML - Autoformatter .yml |
-| Error Lens - for errors and indent |
-| Tabnine - IA Code |
-| Otros - Otros |
+| Error Lens - Error identifier |
+| Tabnine - AI Code |
+| Others - Others |
 
 <br>
 
@@ -481,71 +583,27 @@ INSERT INTO products (id, site_id, title, subtitle, seller_id, category_id, offi
 ### 2.1) Examples [🔝](#index-)
 
 <details>
-  <summary>See</summary>
+  <summary>View</summary>
 <br>
 
-#### 2.1.0) Variables in Postman
+#### 2.1.0) Postman Variables
 
-| **Variable** | **Initial value** | **Current value** |
-| ------------- | ------------- | ------------- |
-| base\_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
-| x-api-key | f98d8cd98h73s204e3456998ecl9427j  | f98d8cd98h73s204e3456998ecl9427j |
-| bearer\_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV\_adQssw5c  | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV\_adQssw5c |
+| **Variable** | **Initial Value** | **Current Value** |
+|-------------|------------------|------------------|
+| base_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
+| x-api-key | f98d8cd98h73s204e3456998ecl9427j | f98d8cd98h73s204e3456998ecl9427j |
+| bearer_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c |
 
 <br>
 
-#### 2.1.1) GET type operations
+#### 2.1.1) GET Operations
 
-##### Database connection
+##### Get Users List
 
-###### Request (GET) | Code Snippet
-
-```bash
-curl --location 'http://localhost:4000/dev/v1/db-connection' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
---header 'Content-Type: application/json' \
---header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
---data ''
-```
-
-###### Response (200 OK)
-
-```json
-{
-    "message": "Connection has been established successfully."
-}
-```
-
-###### Response (400 Bad Request)
-
-```json
-{
-    "message": "Bad request, check missing or malformed headers"
-}
-```
-
-###### Response (401 Unauthorized)
-
-```json
-{
-    "message": "Not authenticated, check x_api_key and Authorization"
-}
-```
-
-###### Response (500 Internal Server Error)
-
-```json
-{
-    "message": "Error in connection lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
-}
-```
-
-##### Get Paged Users
-
-###### Request (GET) | Code Snippet
+###### Request (GET)
 
 ```bash
-curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
+curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2&orderBy=id&orderAt=asc' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
@@ -593,6 +651,14 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 }
 ```
 
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, could not get the paginated list of users."
+}
+```
+
 ###### Response (401 Unauthorized)
 
 ```json
@@ -609,11 +675,259 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 }
 ```
 
-#### 2.1.2) POST type operations
+<br>
 
-##### Add a User
+##### Get Users List Without Dates
 
-###### Request (POST) | Code Snippet
+###### Request (GET)
+
+```bash
+curl --location 'http://localhost:4000/dev/v1/users/list-without-dates?page=0&limit=2&orderBy=id&orderAt=asc' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--data ''
+```
+
+###### Response (200 OK)
+
+```json
+{
+    "message": [
+        {
+            "id": 3,
+            "nickname": "HECTOR SS G",
+            "first_name": "Hector",
+            "last_name": "Gomez",
+            "email": "hectorGomez78@gmail.com",
+            "identification_type": "DNI",
+            "identification_number": "2172265827",
+            "country_id": "AR"
+        },
+        {
+            "id": 4,
+            "nickname": "GABRIELA JIMENEZ",
+            "first_name": "Gabriela",
+            "last_name": "Jimenez",
+            "email": "gabriela.consultas@hotmail.com",
+            "identification_type": "DNI",
+            "identification_number": "410871223",
+            "country_id": "AR"
+        }
+    ]
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, could not get the paginated list of users."
+}
+```
+
+###### Response (401 Unauthorized)
+
+```json
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
+}
+```
+
+###### Response (500 Internal Server Error)
+
+```json
+{
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+}
+```
+
+<br>
+
+##### Get User by ID
+
+###### Request (GET)
+
+```bash
+curl --location 'http://localhost:4000/dev/v1/users/id/4' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j'
+```
+
+###### Response (200 OK)
+
+```json
+{
+    "message": {
+        "id": 4,
+        "nickname": "GABRIELA JIMENEZ",
+        "first_name": "Gabriela",
+        "last_name": "Jimenez",
+        "email": "gabriela.consultas@hotmail.com",
+        "identification_type": "DNI",
+        "identification_number": "410871223",
+        "country_id": "AR",
+        "creation_date": "2023-03-20 21:02:33",
+        "update_date": "2023-03-20 21:02:33"
+    }
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, could not fetch user based on id."
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, the id passed as a parameter is not valid."
+}
+```
+
+###### Response (401 Unauthorized)
+
+```json
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
+}
+```
+
+###### Response (500 Internal Server Error)
+
+```json
+{
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+}
+```
+
+<br>
+
+##### Get Users by Country
+
+###### Request (GET)
+
+```bash
+curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--data ''
+```
+
+###### Response (200 OK)
+
+```json
+{
+    "message": [
+        {
+            "id": 3,
+            "nickname": "HECTOR SS G",
+            "first_name": "Hector",
+            "last_name": "Gomez",
+            "email": "hectorGomez78@gmail.com",
+            "identification_type": "DNI",
+            "identification_number": "2172265827",
+            "country_id": "AR",
+            "creation_date": "2023-03-20 21:02:33",
+            "update_date": "2023-03-20 21:02:33"
+        },
+        {
+            "id": 4,
+            "nickname": "GABRIELA JIMENEZ",
+            "first_name": "Gabriela",
+            "last_name": "Jimenez",
+            "email": "gabriela.consultas@hotmail.com",
+            "identification_type": "DNI",
+            "identification_number": "410871223",
+            "country_id": "AR",
+            "creation_date": "2023-03-20 21:02:33",
+            "update_date": "2023-03-20 21:02:33"
+        },
+        {
+            "id": 5,
+            "nickname": "GUSTA G K",
+            "first_name": "Gustavo",
+            "last_name": "Gomez",
+            "email": "gustavo_andaluz@gmail.com",
+            "identification_type": "PASAPORTE",
+            "identification_number": "748000221",
+            "country_id": "AR",
+            "creation_date": "2023-03-20 21:02:33",
+            "update_date": "2023-03-20 21:02:33"
+        }
+    ]
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, could not get paginated list of users according to country id. Try again."
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, the country id passed as a parameter is not valid."
+}
+```
+
+###### Response (401 Unauthorized)
+
+```json
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
+}
+```
+
+###### Response (500 Internal Server Error)
+
+```json
+{
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+}
+```
+
+<br>
+
+#### 2.1.2) POST Operations
+
+##### Add User
+
+###### Request (POST)
 
 ```bash
 curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
@@ -621,14 +935,14 @@ curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
 --data-raw '{
-            "nickname": "VALE18BNX",
-            "first_name": "Valeria",
-            "last_name": "Castro",
-            "email": "vale_18_nnbs@gmail.com",
-            "identification_type": "DNI",
-            "identification_number": "3987261233",
-            "country_id": "AR12"
-        }'
+    "nickname": "MARTIN-SUAREZ",
+    "first_name": "Martin",
+    "last_name": "Suarez",
+    "email": "martin_electro_todo@gmail.com",
+    "identification_type": "DNI",
+    "identification_number": "4459388222",
+    "country_id": "AR12"
+}'
 ```
 
 ###### Response (200 OK)
@@ -637,12 +951,12 @@ curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
 {
     "message": {
         "id": null,
-        "nickname": "VALE18BNX",
-        "first_name": "Valeria",
-        "last_name": "Castro",
-        "email": "vale_18_nnbs@gmail.com",
+        "nickname": "MARTIN-SUAREZ",
+        "first_name": "Martin",
+        "last_name": "Suarez",
+        "email": "martin_electro_todo@gmail.com",
         "identification_type": "DNI",
-        "identification_number": "3987261233",
+        "identification_number": "4459388222",
         "country_id": "AR12",
         "creation_date": "2023-06-28T16:46:31.000Z",
         "update_date": "2023-06-28T16:46:31.000Z"
@@ -658,6 +972,22 @@ curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
 }
 ```
 
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, check request attributes. Missing or incorrect. CHECK: nickname, first_name and last_name (required|string|minLength:4|maxLength:50), email (required|string|minLength:10|maxLength:100), identification_type and identification_number (required|string|minLength:6|maxLength:20), country_id (required|string|minLength:2|maxLength:5)"
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+}
+```
+
 ###### Response (401 Unauthorized)
 
 ```json
@@ -670,32 +1000,34 @@ curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
 
 ```json
 {
-    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
 }
 ```
 
-#### 2.1.3) PUT type operations
+<br>
 
-##### Edit a User
+#### 2.1.3) PUT Operations
 
-###### Request (PUT) | Code Snippet
+##### Update User
+
+###### Request (PUT)
 
 ```bash
-curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/26' \
+curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/32' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
 --data-raw '{
-            "nickname": "VALE18BNX EDITED",
-            "first_name": "Valeria EDITED",
-            "last_name": "Castro",
-            "email": "vale_18_nnbs@gmail.com",
-            "identification_type": "DNI",
-            "identification_number": "3987261233",
-            "country_id": "AR12",
-            "creation_date": "2023-06-28 16:46:31",
-            "update_date": "2023-06-28 16:46:31"
-        }'
+    "nickname": "MARTIN-SUAREZ2221",
+    "first_name": "Martin2221",
+    "last_name": "Suarez2221",
+    "email": "martin_electro_todo@gmail.com",
+    "identification_type": "DNI",
+    "identification_number": "445938812313222",
+    "country_id": "AR12",
+    "creation_date": "2023-10-11 21:18:29",
+    "update_date": "2023-10-11 21:18:29"
+}'
 ```
 
 ###### Response (200 OK)
@@ -703,16 +1035,16 @@ curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/26
 ```json
 {
     "message": {
-        "id": 26,
-        "nickname": "VALE18BNX EDITED",
-        "first_name": "Valeria EDITED",
-        "last_name": "Castro",
-        "email": "vale_18_nnbs@gmail.com",
+        "id": 32,
+        "nickname": "MARTIN-SUAREZ2221",
+        "first_name": "Martin2221",
+        "last_name": "Suarez2221",
+        "email": "martin_electro_todo@gmail.com",
         "identification_type": "DNI",
-        "identification_number": "3987261233",
+        "identification_number": "445938812313222",
         "country_id": "AR12",
-        "creation_date": "2023-06-28 19:46:31",
-        "update_date": "2023-06-28 16:53:17"
+        "creation_date": "2023-10-11 21:18:29",
+        "update_date": "2023-10-11 21:18:29"
     }
 }
 ```
@@ -725,6 +1057,22 @@ curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/26
 }
 ```
 
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, check request attributes and object to update"
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
+}
+```
+
 ###### Response (401 Unauthorized)
 
 ```json
@@ -737,18 +1085,20 @@ curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/26
 
 ```json
 {
-    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
 }
 ```
 
-#### 2.1.4) DELETE type operations
+<br>
 
-##### Delete a User
+#### 2.1.4) DELETE Operations
 
-###### Request (DELETE) | Code Snippet
+##### Delete User
+
+###### Request (DELETE)
 
 ```bash
-curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user/26' \
+curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user/18' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
@@ -771,6 +1121,14 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 }
 ```
 
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, a non-existent user cannot be deleted. Operation not allowed"
+}
+```
+
 ###### Response (401 Unauthorized)
 
 ```json
@@ -783,7 +1141,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 ```json
 {
-    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
 }
 ```
 

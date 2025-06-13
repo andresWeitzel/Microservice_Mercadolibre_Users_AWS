@@ -55,9 +55,8 @@ Microservicio para la gestión de usuarios ejemplificando parte de la arquitectu
 
 *   [1.0) Descripción del Proyecto.](#10-descripción-)
 *   [1.1) Ejecución del Proyecto.](#11-ejecución-del-proyecto-)
-*   [1.2) Configuración del proyecto desde cero](#12-configuración-del-proyecto-desde-cero-)
-*   [1.3) Docker Setup y Migración de Base de Datos](#13-docker-setup-y-migración-de-base-de-datos-)
-*   [1.4) Tecnologías.](#14-tecnologías-)
+*   [1.2) Docker Setup y Migración de Base de Datos](#12-docker-setup-y-migración-de-base-de-datos-)
+*   [1.3) Tecnologías.](#13-tecnologías-)
 
 ### Sección 2) Endpoints y Ejemplos
 
@@ -140,7 +139,7 @@ sls -v
 npm i
 ```
 
-*   Asegúrate de tener Docker instalado en tu sistema (para Windows, usa [Docker Desktop](https://www.docker.com/products/docker-desktop/))
+*   `Importante` : Asegúrate de tener Docker instalado en tu sistema (para Windows, usa [Docker Desktop](https://www.docker.com/products/docker-desktop/))
 
 *   Inicia y construye el contenedor de MySQL:
 
@@ -148,26 +147,26 @@ npm i
 docker-compose up -d
 ```
 
-*   Verifica que el contenedor esté corriendo:
+*   Verifica que el contenedor esté corriendo (Opcional) :
 
 ```bash
 docker ps
 ```
 
-*   Si necesitas resetear la base de datos:
+*   Si necesitas resetear la base de datos (Opcional) :
 
 ```bash
 docker-compose down -v
 docker-compose up -d
 ```
 
-*   Para ver los logs de la base de datos:
+*   Para ver los logs de la base de datos (Opcional) :
 
 ```bash
 docker-compose logs mysql
 ```
 
-*   Para acceder directamente a MySQL:
+*   Para acceder directamente a MySQL (Opcional) :
 
 ```bash
 docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
@@ -185,199 +184,7 @@ docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
 npm start
 ```
 
-*   Si se presenta algún mensaje indicando qué el puerto 4000 ya está en uso, podemos terminar todos los procesos dependientes y volver a ejecutar la app
-
-```git
-npx kill-port 4000
-npm start
-```
-
-<br>
-
-</details>
- <br>
-
-### 1.2) Configuración del proyecto desde cero [🔝](#índice-)
-
-<details>
-  <summary>Ver</summary>
-
- <br>
-
-*   Creamos un entorno de trabajo a través de algún ide, luego de crear una carpeta nos posicionamos sobre la misma
-
-```git
-cd 'projectName'
-```
-
-*   Instalamos la última versión LTS de [Nodejs(v18)](https://nodejs.org/en/download)
-*   Instalamos Serverless Framework de forma global si es que aún no lo hemos realizado
-
-```git
-npm install -g serverless
-```
-
-*   Verificamos la versión de Serverless instalada
-
-```git
-sls -v
-```
-
-*   Inicializamos un template de serverles
-
-```git
-serverless create --template aws-nodejs
-```
-
-*   Inicializamos un proyecto npm
-
-```git
-npm init -y
-```
-
-*   Instalamos serverless offline
-
-```git
-npm i serverless-offline --save-dev
-```
-
-*   Instalamos serverless ssm
-
-```git
-npm i serverless-offline-ssm --save-dev
-```
-
-```yml
-plugins:
-  - serverless-offline-ssm
-  - serverless-offline
-
-```
-
-*   Configuraremos un formato estándar de archivos markdown para el proyecto a través de [remark-lint](https://github.com/remarkjs/remark-lint#example-check-markdown-on-the-api)
-
-```git
-npm install remark-cli remark-preset-lint-consistent remark-preset-lint-recommended remark-lint-list-item-indent --save-dev
-
-npm install remark-lint-emphasis-marker remark-lint-strong-marker --save-dev
-
-npm install remark-lint-table-cell-padding --save-dev
-```
-
-*   Luego agregamos la configuración para los scripts desde el package.json
-
-```json
-  "scripts": {
-    "check": "remark . --quiet --frail",
-    "format": "remark . --quiet --frail --output",
-  },
-```
-
-*   En mi caso, quiero que se aplique un autoformato por cada ejecución, ejecutamos los scripts juntos(se aplica solo el --output para check and autoformat sin terminar el proceso y poder ejecutar el script de serverless)
-
-```json
-  "scripts": {
-    "check": "remark . --quiet --frail",
-    "format": "remark . --quiet --frail --output",
-    "format-md": "remark . --output",
-    "serverless-offline": "sls offline start",
-    "start": "npm run format-md && npm run serverless-offline"
-  },
-```
-
-*   Luego agregamos los remark configs, al final, en el package.json
-
-```json
- "remarkConfig": {
-    "settings": {
-      "emphasis": "*",
-      "strong": "*"
-    },
-    "plugins": [
-       "remark-preset-lint-consistent",
-      "remark-preset-lint-recommended",
-      "remark-lint",
-      "remark-lint-table-cell-padding",
-      [
-        "remark-lint-list-item-indent",
-        "tab-size"
-      ],
-      [
-        "remark-lint-emphasis-marker",
-        "*"
-      ],
-      [
-        "remark-lint-strong-marker",
-        "*"
-      ]
-    ]
-  }
-```
-
-*   Para más información al respecto, visitar la [página oficial](https://github.com/remarkjs/remark-lint#example-check-markdown-on-the-api)
-
-*   Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless\_ssm.yml) al .gitignore.
-
-*   El siguiente script (start), configurado en el package.json del proyecto, es el encargado de ejecutar
-    *   El plugin de serverless-offline
-    *   El plugin remark-lint para archivos .md
-    *   Otros.
-
-```json
-   "scripts": {
-      "serverless-offline": "sls offline start",
-        "start": "npm run format-md && npm run serverless-offline",
-        "start:dev": "nodemon -e js,ts,yml,json --exec \"sls offline start\"",
-        "format-prettier": "prettier --write \"{src,test}/**/*.{js,ts}\"",
-        "check": "remark . --quiet --frail",
-        "format-remark": "remark . --quiet --frail --output",
-        "format-md": "remark . --output",
-        "test": "jest --verbose",
-        "test:watch": "jest --watch --verbose",
-        "test:cov": "jest --coverage --verbose"
-   },
-```
-
-*   Asegúrate de tener Docker instalado en tu sistema (para Windows, usa [Docker Desktop](https://www.docker.com/products/docker-desktop/))
-
-*   Inicia y construye el contenedor de MySQL:
-
-```bash
-docker-compose up -d
-```
-
-*   Verifica que el contenedor esté corriendo:
-
-```bash
-docker ps
-```
-
-*   Si necesitas resetear la base de datos:
-
-```bash
-docker-compose down -v
-docker-compose up -d
-```
-
-*   Para ver los logs de la base de datos:
-
-```bash
-docker-compose logs mysql
-```
-
-*   Para acceder directamente a MySQL:
-
-```bash
-docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
-```
-
-*   Ejecutamos la app desde terminal.
-
-```git
-npm start
-```
-
-*   Si se presenta algún mensaje indicando qué el puerto 4000 ya está en uso, podemos terminar todos los procesos dependientes y volver a ejecutar la app
+*   Si se presenta algún mensaje indicando qué el puerto 4000 ya está en uso, podemos terminar todos los procesos dependientes y volver a ejecutar la app (Opcional) :
 
 ```git
 npx kill-port 4000
@@ -388,16 +195,18 @@ npm start
 
 </details>
 
-### 1.3) Docker Setup y Migración de Base de Datos [🔝](#índice-)
+
+### 1.2) Docker Setup y Migración de Base de Datos [🔝](#índice-)
 
 <details>
   <summary>Ver</summary>
 
-<br>
+ <br>
 
-#### 1.3.1) Configuración de Base de Datos con Docker
+#### 1.2.1) Configuración de Base de Datos con Docker
 
 1.  **Configuración de Docker Compose**
+    La siguiente configuración establece un contenedor MySQL 8.0 con almacenamiento persistente e inicialización automática:
     ```yaml
     version: '3.8'
     services:
@@ -405,86 +214,266 @@ npm start
         image: mysql:8.0
         container_name: mercadolibre_users_mysql
         environment:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: microdb_mercadolibre
-          MYSQL_USER: mercadolibre_user
-          MYSQL_PASSWORD: mercadolibre_pass
+          MYSQL_ROOT_PASSWORD: root          # Contraseña root para MySQL
+          MYSQL_DATABASE: microdb_mercadolibre  # Nombre de la base de datos
+          MYSQL_USER: mercadolibre_user      # Usuario de la aplicación
+          MYSQL_PASSWORD: mercadolibre_pass  # Contraseña del usuario de la aplicación
         ports:
-          - "3306:3306"
+          - "3306:3306"                      # Mapea el puerto del contenedor al puerto del host
         volumes:
-          - mysql_data:/var/lib/mysql
-          - ./init:/docker-entrypoint-initdb.d
-        command: --default-authentication-plugin=mysql_native_password
+          - mysql_data:/var/lib/mysql        # Almacenamiento persistente de datos
+          - ./init:/docker-entrypoint-initdb.d  # Scripts de inicialización
+        command: --default-authentication-plugin=mysql_native_password  # Método de autenticación
         healthcheck:
-          test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-          interval: 10s
-          timeout: 5s
-          retries: 5
+          test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]  # Comando de verificación de salud
+          interval: 10s                      # Verificar cada 10 segundos
+          timeout: 5s                        # Tiempo de espera después de 5 segundos
+          retries: 5                         # Reintentar 5 veces antes de marcar como no saludable
 
     volumes:
-      mysql_data:
+      mysql_data:                            # Volumen nombrado para persistencia de datos
     ```
 
 2.  **Comandos Docker Esenciales**
+    Estos comandos son esenciales para gestionar tu entorno Docker:
     ```bash
-    # Iniciar el contenedor
+    # Iniciar contenedor en modo detached (ejecuta en segundo plano)
     docker-compose up -d
 
-    # Verificar estado
+    # Verificar estado y salud del contenedor
     docker ps
 
-    # Resetear la base de datos
+    # Resetear base de datos (elimina todos los datos y recrea el contenedor)
     docker-compose down -v
     docker-compose up -d
 
-    # Ver logs
+    # Ver logs de la base de datos para solución de problemas
     docker-compose logs mysql
 
-    # Acceder a MySQL
+    # Acceder a la interfaz de línea de comandos de MySQL
     docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
     ```
 
 3.  **Datos de Ejemplo**
+    Aquí hay algunos ejemplos de consultas para poblar tu base de datos:
     ```sql
-    -- Ejemplo de inserción de usuario
-    INSERT INTO users (nickname, first_name, last_name, email, identification_type, identification_number, country_id)
-    VALUES ('USER123', 'Juan', 'Pérez', 'juan@example.com', 'DNI', '12345678', 'AR');
+    -- Inserción de usuario de ejemplo con todos los campos requeridos
+    INSERT INTO users (
+        nickname, 
+        first_name, 
+        last_name, 
+        email, 
+        identification_type, 
+        identification_number, 
+        country_id
+    ) VALUES (
+        'USER123',
+        'Juan',
+        'Pérez',
+        'juan@example.com',
+        'DNI',
+        '12345678',
+        'AR'
+    );
 
-    -- Ejemplo de inserción de producto
-    INSERT INTO products (title, price, currency_id, available_quantity, condition)
-    VALUES ('iPhone 12', 999.99, 'USD', 10, 'new');
+    -- Inserción de producto de ejemplo
+    INSERT INTO products (
+        title, 
+        price, 
+        currency_id, 
+        available_quantity, 
+        condition
+    ) VALUES (
+        'iPhone 12',
+        999.99,
+        'USD',
+        10,
+        'new'
+    );
     ```
 
-#### 1.3.2) Proceso de Migración
+#### 1.2.2) Proceso de Migración
 
 1.  **Inicialización de la Base de Datos**
-    *   La base de datos se crea automáticamente al iniciar el contenedor
-    *   Los scripts de inicialización se ejecutan en orden alfabético
-    *   Los datos persisten entre reinicios gracias al volumen Docker
+    El proceso de configuración de la base de datos sigue estos pasos:
+    *   Cuando el contenedor inicia, automáticamente crea la base de datos especificada en MYSQL_DATABASE
+    *   Los scripts de inicialización en el directorio `./init` se ejecutan en orden alfabético
+    *   Los datos persisten entre reinicios del contenedor gracias al volumen Docker `mysql_data`
+    *   El primer script (01_*) típicamente contiene las definiciones de tablas
+    *   El segundo script (02_*) típicamente contiene los datos iniciales
 
 2.  **Estructura de Archivos**
+    El proceso de inicialización utiliza esta estructura de archivos:
+    ```
     init/
-    ├── 01\_microdb\_mercadolibre\_DDL.sql    # Estructura de tablas
-    └── 02\_microdb\_mercadolibre\_DML\_INSERTS.sql  # Datos iniciales
+    ├── 01_microdb_mercadolibre_DDL.sql     # Esquema de base de datos y definiciones de tablas
+    └── 02_microdb_mercadolibre_DML_INSERTS.sql  # Datos iniciales y registros semilla
+    ```
 
 3.  **Consideraciones**
-    *   Los datos persisten en el volumen `mysql_data`
-    *   Para resetear la base de datos, eliminar el volumen
-    *   Las credenciales están en el archivo `docker-compose.yml`
+    Puntos importantes a recordar:
+    *   El volumen `mysql_data` asegura que tus datos persistan incluso si el contenedor es eliminado
+    *   Para resetear completamente la base de datos, necesitas eliminar el volumen usando `docker-compose down -v`
+    *   Las credenciales de la base de datos están definidas en el archivo `docker-compose.yml`
+    *   El contenedor usa MySQL 8.0 con autenticación de contraseña nativa
+    *   La base de datos es accesible en el puerto 3306 de tu máquina host
+
+#### 1.2.3) Comandos Docker Adicionales y Ejemplos
+
+1.  **Gestión de Contenedores**
+    Comandos avanzados de gestión de contenedores:
+    ```bash
+    # Detener todos los contenedores de forma segura
+    docker-compose down
+
+    # Eliminar todos los contenedores, redes y volúmenes
+    docker-compose down -v
+
+    # Reconstruir contenedores con los últimos cambios
+    docker-compose build
+
+    # Ver logs del contenedor en tiempo real (modo seguimiento)
+    docker-compose logs -f mysql
+
+    # Ejecutar shell interactivo en el contenedor
+    docker exec -it mercadolibre_users_mysql bash
+    ```
+
+2.  **Respaldo y Restauración de Base de Datos**
+    Comandos para mantenimiento de la base de datos:
+    ```bash
+    # Crear un respaldo completo de la base de datos
+    docker exec mercadolibre_users_mysql mysqldump -u mercadolibre_user -p microdb_mercadolibre > backup.sql
+
+    # Restaurar base de datos desde respaldo
+    docker exec -i mercadolibre_users_mysql mysql -u mercadolibre_user -p microdb_mercadolibre < backup.sql
+    ```
+
+3.  **Solución de Problemas**
+    Comandos comunes para solución de problemas:
+    ```bash
+    # Verificar estado y detalles del contenedor
+    docker ps -a
+
+    # Inspeccionar configuración del contenedor
+    docker inspect mercadolibre_users_mysql
+
+    # Ver logs del contenedor
+    docker logs mercadolibre_users_mysql
+
+    # Monitorear uso de recursos del contenedor
+    docker stats mercadolibre_users_mysql
+    ```
+
+4.  **Consultas SQL Adicionales**
+    Consultas SQL útiles para operaciones comunes:
+    ```sql
+    -- Crear nuevo usuario con todos los campos
+    INSERT INTO users (
+        nickname, 
+        first_name, 
+        last_name, 
+        email, 
+        identification_type, 
+        identification_number, 
+        country_id
+    ) VALUES (
+        'MARIA123',
+        'Maria',
+        'Garcia',
+        'maria.garcia@example.com',
+        'PASAPORTE',
+        'AB123456',
+        'ES'
+    );
+
+    -- Actualizar información de usuario
+    UPDATE users 
+    SET email = 'nuevo.email@example.com',
+        update_date = CURRENT_TIMESTAMP
+    WHERE id = 1;
+
+    -- Eliminar usuario
+    DELETE FROM users 
+    WHERE id = 1;
+
+    -- Buscar usuarios por país con paginación
+    SELECT * FROM users 
+    WHERE country_id = 'AR' 
+    ORDER BY creation_date DESC
+    LIMIT 10 OFFSET 0;
+
+    -- Contar usuarios por país
+    SELECT country_id, COUNT(*) as cantidad_usuarios 
+    FROM users 
+    GROUP BY country_id;
+    ```
+
+5.  **Problemas Comunes y Soluciones**
+    Soluciones para problemas frecuentes:
+    *   **Conflicto de Puerto**: Si el puerto 3306 ya está en uso
+        ```bash
+        # Encontrar proceso usando el puerto
+        netstat -ano | findstr :3306
+        # Terminar proceso
+        taskkill /PID <id_proceso> /F
+        ```
+    
+    *   **Contenedor No Inicia**: Verificar logs para errores
+        ```bash
+        # Ver logs detallados
+        docker-compose logs mysql
+        # Verificar estado del contenedor
+        docker ps -a
+        ```
+
+    *   **Problemas de Conexión a Base de Datos**: Verificar credenciales y red
+        ```bash
+        # Probar conexión
+        docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
+        # Verificar red
+        docker network ls
+        docker network inspect <nombre_red>
+        ```
+
+6.  **Optimización de Rendimiento**
+    Consejos para optimizar el rendimiento de la base de datos:
+    *   Ajustar configuración de MySQL en `my.cnf`:
+        ```ini
+        [mysqld]
+        innodb_buffer_pool_size = 256M    # Tamaño del buffer pool para InnoDB
+        max_connections = 100             # Máximo de conexiones concurrentes
+        query_cache_size = 32M           # Tamaño de caché de consultas
+        ```
+    
+    *   Monitorear rendimiento:
+        ```sql
+        -- Verificar consultas lentas
+        SHOW VARIABLES LIKE '%slow%';
+        
+        -- Verificar estado de conexiones
+        SHOW STATUS LIKE '%onn%';
+        
+        -- Verificar estado de tablas
+        SHOW TABLE STATUS;
+        
+        -- Verificar lista de procesos
+        SHOW PROCESSLIST;
+        ```
 
 <br>
 
 </details>
 
-### 1.4) Tecnologías [🔝](#índice-)
+### 1.3) Tecnologías [🔝](#índice-)
 
 <details>
   <summary>Ver</summary>
 
  <br>
 
-| **Tecnologías** | **Versión** | **Finalidad** |\
-| ------------- | ------------- | ------------- |
+| **Tecnologías** | **Versión** | **Finalidad** |
+|----------------|-------------|---------------|
 | [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Inyección Automática de Módulos para Lambdas |
 | [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | Core Servicios AWS |
 | [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Manejo de Variables de Entorno |
@@ -498,20 +487,20 @@ npm start
 | [Postman](https://www.postman.com/downloads/) | 10.11  | Cliente Http |
 | [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Símbolo del Sistema para linea de comandos |
 | [Git](https://git-scm.com/downloads) | 2.29.1  | Control de Versiones |
-| Otros | Otros |
+| Otros | Otros | Otros |
 
 </br>
 
 | **Plugin** |
-| -------------  |
+|------------|
 | [Serverless Plugin](https://www.serverless.com/plugins/) |
 | [serverless-offline](https://www.npmjs.com/package/serverless-offline) |
 | [serverless-offline-ssm](https://www.npmjs.com/package/serverless-offline-ssm) |
 
 </br>
 
-| **Extensión** |\
-| -------------  |
+| **Extensión** |
+|---------------|
 | Prettier - Code formatter |
 | YAML - Autoformatter .yml |
 | Error Lens - Identificador de errores |
@@ -580,67 +569,21 @@ npm start
 
 | **Variable** | **Valor Inicial** | **Valor Actual** |
 |-------------|------------------|------------------|
-| base\_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
+| base_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
 | x-api-key | f98d8cd98h73s204e3456998ecl9427j | f98d8cd98h73s204e3456998ecl9427j |
-| bearer\_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... |
+| bearer_token | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c | Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c |
 
 <br>
 
 #### 2.1.1) Operaciones de tipo GET
 
-##### Conexión base de datos
+##### Obtener Lista de Usuarios
 
 ###### Request (GET)
 
 ```bash
-curl --location 'http://localhost:4000/dev/v1/db-connection' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
---header 'Content-Type: application/json' \
---header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
---data ''
-```
-
-###### Response (200 OK)
-
-```json
-{
-    "message": "Connection has been established successfully."
-}
-```
-
-###### Response (400 Bad Request)
-
-```json
-{
-    "message": "Bad request, check missing or malformed headers"
-}
-```
-
-###### Response (401 Unauthorized)
-
-```json
-{
-    "message": "Not authenticated, check x_api_key and Authorization"
-}
-```
-
-###### Response (500 Internal Server Error)
-
-```json
-{
-    "message": "Error in connection lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
-}
-```
-
-<br>
-
-##### Obtener Usuarios paginados
-
-###### Request (GET)
-
-```bash
-curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
+curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2&orderBy=id&orderAt=asc' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
 --data ''
@@ -681,7 +624,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 
 ###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
@@ -689,7 +632,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 
 ###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, could not get the paginated list of users."
 }
@@ -697,7 +640,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 
 ###### Response (401 Unauthorized)
 
-```postman
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
@@ -705,46 +648,103 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2' \
 
 ###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
     "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
 }
 ```
 
-###### Response (500 Internal Server Error)
+<br>
 
-```postman
+##### Obtener Lista de Usuarios sin Fechas
+
+###### Request (GET)
+
+```bash
+curl --location 'http://localhost:4000/dev/v1/users/list-without-dates?page=0&limit=2&orderBy=id&orderAt=asc' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--data ''
+```
+
+###### Response (200 OK)
+
+```json
 {
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
+    "message": [
+        {
+            "id": 3,
+            "nickname": "HECTOR SS G",
+            "first_name": "Hector",
+            "last_name": "Gomez",
+            "email": "hectorGomez78@gmail.com",
+            "identification_type": "DNI",
+            "identification_number": "2172265827",
+            "country_id": "AR"
+        },
+        {
+            "id": 4,
+            "nickname": "GABRIELA JIMENEZ",
+            "first_name": "Gabriela",
+            "last_name": "Jimenez",
+            "email": "gabriela.consultas@hotmail.com",
+            "identification_type": "DNI",
+            "identification_number": "410871223",
+            "country_id": "AR"
+        }
+    ]
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, check missing or malformed headers"
+}
+```
+
+###### Response (400 Bad Request)
+
+```json
+{
+    "message": "Bad request, could not get the paginated list of users."
+}
+```
+
+###### Response (401 Unauthorized)
+
+```json
+{
+    "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
 ###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
-    "message": "Error in getAll lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
+    "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
 }
 ```
-
-###### Other responses
 
 <br>
 
-### Obtener un Usuario según su id
+##### Obtener Usuario por ID
 
-#### Request (GET) | Code Snippet
+###### Request (GET)
 
-```postman
+```bash
 curl --location 'http://localhost:4000/dev/v1/users/id/4' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j'
 ```
 
-#### Response (200 OK)
+###### Response (200 OK)
 
-```postman
+```json
 {
     "message": {
         "id": 4,
@@ -761,71 +761,53 @@ curl --location 'http://localhost:4000/dev/v1/users/id/4' \
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, could not fetch user based on id."
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, the id passed as a parameter is not valid."
 }
 ```
 
-#### Response (401 Unauthorized)
+###### Response (401 Unauthorized)
 
-```postman
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
     "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
 }
 ```
 
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "Error in getById lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
-}
-```
-
-#### Other responses
-
 <br>
 
-### Obtener listado paginado de Usuarios según su country-id
+##### Obtener Usuarios por País
 
-#### Request (GET) | Code Snippet
+###### Request (GET)
 
-```postman
+```bash
 curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
@@ -833,9 +815,9 @@ curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3
 --data ''
 ```
 
-#### Response
+###### Response (200 OK)
 
-```postman
+```json
 {
     "message": [
         {
@@ -878,102 +860,82 @@ curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, could not get paginated list of users according to country id. Try again."
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, the country id passed as a parameter is not valid."
 }
 ```
 
-#### Response (401 Unauthorized)
+###### Response (401 Unauthorized)
 
-```postman
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
     "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. Verify that it is active or available"
 }
 ```
 
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "Error in getLikeCountryId lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
-}
-```
-
-#### Other responses
-
 <br>
 
-*   OTHER GET OPERATIONS (SEE POSTMAN COLLECTION)
+#### 2.1.2) Operaciones de tipo POST
 
-### 2.1.2) Operaciones de tipo POST
+##### Agregar un Usuario
 
-### Agregar un Usuario
+###### Request (POST)
 
-#### Request (POST) | Code snippet
-
-```postman
+```bash
 curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
---data-raw '   {
-            "nickname": "VALE18BNX",
-            "first_name": "Valeria",
-            "last_name": "Castro",
-            "email": "vale_18_nnbs@gmail.com",
+--data-raw '{
+    "nickname": "MARTIN-SUAREZ",
+    "first_name": "Martin",
+    "last_name": "Suarez",
+    "email": "martin_electro_todo@gmail.com",
             "identification_type": "DNI",
-            "identification_number": "3987261233",
+    "identification_number": "4459388222",
             "country_id": "AR12"
         }'
 ```
 
-#### Response (200 OK)
+###### Response (200 OK)
 
-```postman
+```json
 {
     "message": {
         "id": null,
-        "nickname": "VALE18BNX",
-        "first_name": "Valeria",
-        "last_name": "Castro",
-        "email": "vale_18_nnbs@gmail.com",
+        "nickname": "MARTIN-SUAREZ",
+        "first_name": "Martin",
+        "last_name": "Suarez",
+        "email": "martin_electro_todo@gmail.com",
         "identification_type": "DNI",
-        "identification_number": "3987261233",
+        "identification_number": "4459388222",
         "country_id": "AR12",
         "creation_date": "2023-06-28T16:46:31.000Z",
         "update_date": "2023-06-28T16:46:31.000Z"
@@ -981,234 +943,184 @@ curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check request attributes. Missing or incorrect. CHECK: nickname, first_name and last_name (required|string|minLength:4|maxLength:50), email (required|string|minLength:10|maxLength:100), identification_type and identification_number (required|string|minLength:6|maxLength:20), country_id (required|string|minLength:2|maxLength:5)"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
 }
 ```
 
-#### Response (401 Unauthorized)
+###### Response (401 Unauthorized)
 
-```postman
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
     "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
 }
 ```
 
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "Error in addUser lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
-}
-```
-
-#### Other responses
-
 <br>
 
-### 2.1.3) Operaciones de tipo PUT
+#### 2.1.3) Operaciones de tipo PUT
 
-### Editar un Usuario
+##### Editar un Usuario
 
-#### Request (PUT) | Code
+###### Request (PUT)
 
-```postman
-curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/26' \
+```bash
+curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/32' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
---data-raw '     {
-            "nickname": "VALE18BNX EDITED",
-            "first_name": "Valeria EDITED",
-            "last_name": "Castro",
-            "email": "vale_18_nnbs@gmail.com",
+--data-raw '{
+    "nickname": "MARTIN-SUAREZ2221",
+    "first_name": "Martin2221",
+    "last_name": "Suarez2221",
+    "email": "martin_electro_todo@gmail.com",
             "identification_type": "DNI",
-            "identification_number": "3987261233",
+    "identification_number": "445938812313222",
             "country_id": "AR12",
-            "creation_date": "2023-06-28 16:46:31",
-            "update_date": "2023-06-28 16:46:31"
+    "creation_date": "2023-10-11 21:18:29",
+    "update_date": "2023-10-11 21:18:29"
         }'
 ```
 
-#### Response (200 OK)
+###### Response (200 OK)
 
-```postman
+```json
 {
     "message": {
-        "id": 26,
-        "nickname": "VALE18BNX EDITED",
-        "first_name": "Valeria EDITED",
-        "last_name": "Castro",
-        "email": "vale_18_nnbs@gmail.com",
+        "id": 32,
+        "nickname": "MARTIN-SUAREZ2221",
+        "first_name": "Martin2221",
+        "last_name": "Suarez2221",
+        "email": "martin_electro_todo@gmail.com",
         "identification_type": "DNI",
-        "identification_number": "3987261233",
+        "identification_number": "445938812313222",
         "country_id": "AR12",
-        "creation_date": "2023-06-28 19:46:31",
-        "update_date": "2023-06-28 16:53:17"
+        "creation_date": "2023-10-11 21:18:29",
+        "update_date": "2023-10-11 21:18:29"
     }
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check request attributes and object to update"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, could not add user.CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
 }
 ```
 
-#### Response (401 Unauthorized)
+###### Response (401 Unauthorized)
 
-```postman
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
     "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
 }
 ```
 
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "Error in updateUser lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
-}
-```
-
 <br>
 
-### 2.1.4) Operaciones de tipo DELETE
+#### 2.1.4) Operaciones de tipo DELETE
 
-### Eliminar un Usuario
+##### Eliminar un Usuario
 
-#### Request (DELETE) | Code snippet
+###### Request (DELETE)
 
-```postman
-curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user/26' \
+```bash
+curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user/18' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
 --data ''
 ```
 
-#### Response (200 OK)
+###### Response (200 OK)
 
-```postman
+```json
 {
     "message": "User has been deleted successfully."
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, check missing or malformed headers"
 }
 ```
 
-#### Response (400 Bad Request)
+###### Response (400 Bad Request)
 
-```postman
+```json
 {
     "message": "Bad request, a non-existent user cannot be deleted. Operation not allowed"
 }
 ```
 
-#### Response (401 Unauthorized)
+###### Response (401 Unauthorized)
 
-```postman
+```json
 {
     "message": "Not authenticated, check x_api_key and Authorization"
 }
 ```
 
-#### Response (500 Internal Server Error)
+###### Response (500 Internal Server Error)
 
-```postman
+```json
 {
     "message": "ECONNREFUSED. An error has occurred with the connection or query to the database. CHECK: The first_name next together the last_name should be uniques. The identification_type next together the identification_number should be uniques."
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "ERROR. An error has occurred in the process operations and queries with the database Caused by SequelizeConnectionRefusedError: connect ECONNREFUSED 127.0.0.1:3306."
-}
-```
-
-#### Response (500 Internal Server Error)
-
-```postman
-{
-    "message": "Error in deleteUser lambda. Caused by Error: throw a new error to check for the exception caught by lambda"
 }
 ```
 
@@ -1229,7 +1141,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 #### Tipos de Operaciones | [Ver](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
 
-![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/playlist.png)
+![Index app](../doc/assets/playlist.png)
 
 <br>
 
