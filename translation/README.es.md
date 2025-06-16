@@ -1139,7 +1139,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 <br>
 
-#### [Watch video](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
+#### [Ver video](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
 
   <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y">
     <img src="../doc/assets/playlist.png" />
