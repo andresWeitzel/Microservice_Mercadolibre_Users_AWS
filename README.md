@@ -1160,9 +1160,11 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 <br>
 
-#### Types of operations | [See](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
+#### [Watch video](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
 
-![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/playlist.png)
+  <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y">
+    <img src="./doc/assets/playlist.png" />
+  </a> 
 
 <br>
 
