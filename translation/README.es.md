@@ -33,7 +33,7 @@
 
 <div align="center">
 
-# Microservice Mercadolibre Users AWS ![Status](../doc/assets/icons/badges/status-completed.svg)
+# Microservice Mercadolibre Users AWS ![(status-completed)](../doc/assets/icons/badges/status-completed.svg)
 
 </div>  
 
