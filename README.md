@@ -44,7 +44,7 @@ Microservice for user management exemplifying part of the ML development archite
 
 *   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
 *   [Playlist functionality test](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="./doc/assets/social-networks/yt.png" width="25" /> </a>
-*   [Postman Collection](./postman/collections/Microservice_Mercadolibre_Users_AWS.postman_collection.json) - Complete API testing collection included in the project
+*   [Postman Collection](./postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json)
 
 <br>
 
