@@ -35,7 +35,7 @@
 
 </div>  
 
-Microservicio para la gestión de usuarios ejemplificando parte de la arquitectura de desarrollo de ML, implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Unit Test con Jest, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.`Última actualización: 16/11/25`
+Microservicio para la gestión de usuarios ejemplificando parte de la arquitectura de desarrollo de ML, implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Unit Test con Jest, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.
 
 *   [Api Doc ML Usuarios](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
 *   [Postman Collection](../postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json)   
@@ -48,7 +48,11 @@ Microservicio para la gestión de usuarios ejemplificando parte de la arquitectu
 <details>
  <summary> Ver </summary>
 
- <br>
+<div align="right">
+
+`Última actualización: 16/11/25` 
+
+</div>
 
 ### Sección 1) Descripción, configuración y tecnologías.
 

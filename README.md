@@ -29,7 +29,7 @@
   </a> 
 </div>
 
-
+ 
 <br>
 
 <div align="center">
@@ -38,7 +38,7 @@
 
 </div>  
 
-Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English. `Latest update: 16/11/25`
+Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
 
 *   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
 *   [Postman Collection](./postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json)   
@@ -51,7 +51,11 @@ Microservice for user management exemplifying part of the ML development archite
 <details>
  <summary> View </summary>
 
- <br>
+<div align="right">
+
+`Latest update: 16/11/25` 
+
+</div>
 
 ### Section 1) Description, configuration and technologies.
 
