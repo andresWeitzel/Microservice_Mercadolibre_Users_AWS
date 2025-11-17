@@ -20,10 +20,10 @@
 
 <div align="right">
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md">
-    <img width="65" height="40" src="../doc/assets/translation/arg-flag.jpg" />
+    <img src="../doc/assets/translation/arg-flag.jpg" width="65" height="40" />
   </a> 
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md">
-    <img width="65" height="40" src="../doc/assets/translation/eeuu-flag.jpg" />
+    <img src="../doc/assets/translation/eeuu-flag.jpg" width="65" height="40" />
   </a> 
 </div>
 
@@ -31,13 +31,14 @@
 
 <div align="center">
 
-# Microservice Mercadolibre Users AWS ![Status](../doc/assets/icons/badges/status-completed.svg)
+# Microservice Mercadolibre Users AWS ![(status-completed)](../doc/assets/icons/badges/status-completed.svg)
 
 </div>  
 
 Microservicio para la gestión de usuarios ejemplificando parte de la arquitectura de desarrollo de ML, implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Unit Test con Jest, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.`Última actualización: 16/11/25`
 
 *   [Api Doc ML Usuarios](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
+*   [Postman Collection](../postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json)   
 *   [Playlist prueba de funcionalidad](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="../doc/assets/social-networks/yt.png" width="25" /> </a>
 
 <br>
@@ -119,10 +120,10 @@ cd 'projectName'
 ```
 
 *   Instalamos la última versión LTS de [Nodejs(v18)](https://nodejs.org/en/download)
-*   Instalamos Serverless Framework de forma global si es que aún no lo hemos realizado
+*   Instalamos el Serverless Framework globalmente si aún no lo hemos hecho. Recomiendo la version tres asi no nos pide credenciales. Se puede usar la ultima version cuatro sin problemas (es de pago)
 
 ```git
-npm install -g serverless
+npm install -g serverless@3
 ```
 
 *   Verificamos la versión de Serverless instalada
@@ -1137,9 +1138,11 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 <br>
 
-#### Tipos de Operaciones | [Ver](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
+#### [Ver video](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
 
-![Index app](../doc/assets/playlist.png)
+  <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y">
+    <img src="../doc/assets/playlist.png" />
+  </a> 
 
 <br>
 

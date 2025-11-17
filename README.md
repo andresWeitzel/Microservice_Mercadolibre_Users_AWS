@@ -22,10 +22,10 @@
 
 <div align="right">
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md">
-    <img width="65" height="40" src="./doc/assets/translation/arg-flag.jpg" />
+    <img src="./doc/assets/translation/arg-flag.jpg" width="65" height="40" />
   </a> 
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md">
-    <img width="65" height="40" src="./doc/assets/translation/eeuu-flag.jpg" />
+    <img src="./doc/assets/translation/eeuu-flag.jpg" width="65" height="40" />
   </a> 
 </div>
 
@@ -34,13 +34,14 @@
 
 <div align="center">
 
-# Microservice Mercadolibre Users AWS ![Status](./doc/assets/icons/badges/status-completed.svg)
+# Microservice Mercadolibre Users AWS ![(status-completed)](./doc/assets/icons/badges/status-completed.svg)
 
 </div>  
 
 Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
 
 *   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
+*   [Postman Collection](./postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json)   
 *   [Playlist functionality test](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="./doc/assets/social-networks/yt.png" width="25" /> </a>
 
 <br>
@@ -122,10 +123,10 @@ cd 'projectName'
 ```
 
 *   We install the LTS version of [Nodejs(v18)](https://nodejs.org/en/download)
-*   We install the Serverless Framework globally if we have not already done so
+*   We install the Serverless Framework globally if we haven't already. I recommend version 3 so we don't need credentials. You can use the latest version 4 without any problems (it's paid).
 
 ```git
-npm install -g serverless
+npm install -g serverless@3
 ```
 
 *   We verify the version of Serverless installed
@@ -1158,9 +1159,11 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 <br>
 
-#### Types of operations | [See](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
+#### [Watch video](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
 
-![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/playlist.png)
+  <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y">
+    <img src="./doc/assets/playlist.png" />
+  </a> 
 
 <br>
 
