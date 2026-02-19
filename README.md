@@ -49,7 +49,7 @@ Microservice for user management exemplifying part of the ML development archite
 ## Index 📜
 
 <details>
- <summary> View </summary>
+ <summary>View Details</summary>
 
 <div align="right">
 
@@ -85,7 +85,7 @@ Microservice for user management exemplifying part of the ML development archite
 ### 1.0) Project Description [🔝](#index-)
 
 <details>
-  <summary>See</summary>
+  <summary>View Details</summary>
 
  <br>
 
@@ -111,7 +111,7 @@ Microservice for user management exemplifying part of the ML development archite
 ### 1.1) Project Execution [🔝](#index-)
 
 <details>
-  <summary>See</summary>
+  <summary>View Details</summary>
 <br>
 
 *   Once a work environment has been created through some IDE, we clone the project
@@ -208,7 +208,7 @@ npm start
 ### 1.2) Docker Setup and Database Migration [🔝](#index-)
 
 <details>
-  <summary>See</summary>
+  <summary>View Details</summary>
 
 <br>
 
@@ -477,7 +477,7 @@ npm start
 ### 1.3) Technologies [🔝](#index-)
 
 <details>
-  <summary>See</summary>
+  <summary>View Details</summary>
 
  <br>
 
@@ -527,7 +527,7 @@ npm start
 ### 2.0) Endpoints and resources [🔝](#index-)
 
 <details>
-  <summary>See</summary>
+  <summary>View Details</summary>
 
 <br>
 
@@ -586,7 +586,7 @@ npm start
 ### 2.1) Examples [🔝](#index-)
 
 <details>
-  <summary>View</summary>
+  <summary>View Details</summary>
 <br>
 
 #### 2.1.0) Postman Variables
@@ -1159,7 +1159,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 ### 3.0) Functionality Test [🔝](#index-)
 
 <details>
-  <summary>See</summary>
+  <summary>View Details</summary>
 
 <br>
 
@@ -1176,7 +1176,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 ### 3.1) References [🔝](#index-)
 
 <details>
-  <summary>See</summary>
+  <summary>View Details</summary>
 
  <br>
 

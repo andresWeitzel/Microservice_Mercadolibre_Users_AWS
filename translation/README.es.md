@@ -46,7 +46,7 @@ Microservicio para la gestión de usuarios ejemplificando parte de la arquitectu
 ## Índice 📜
 
 <details>
- <summary> Ver </summary>
+ <summary>Ver Detalles</summary>
 
 <div align="right">
 
@@ -82,7 +82,7 @@ Microservicio para la gestión de usuarios ejemplificando parte de la arquitectu
 ### 1.0) Descripción [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver Detalles</summary>
 
  <br>
 
@@ -108,7 +108,7 @@ Microservicio para la gestión de usuarios ejemplificando parte de la arquitectu
 ### 1.1) Ejecución del Proyecto [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver Detalles</summary>
 <br>
 
 *   Una vez creado un entorno de trabajo a través de algún ide, clonamos el proyecto
@@ -202,7 +202,7 @@ npm start
 ### 1.2) Docker Setup y Migración de Base de Datos [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver Detalles</summary>
 
  <br>
 
@@ -471,7 +471,7 @@ npm start
 ### 1.3) Tecnologías [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver Detalles</summary>
 
  <br>
 
@@ -521,7 +521,7 @@ npm start
 ### 2.0) Endpoints y recursos [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver Detalles</summary>
 
 ### Operaciones de tipo GET:
 
@@ -565,7 +565,7 @@ npm start
 ### 2.1) Ejemplos [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver Detalles</summary>
 <br>
 
 #### 2.1.0) Variables en Postman
@@ -1138,7 +1138,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 ### 3.0) Prueba de funcionalidad [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver Detalles</summary>
 
 <br>
 
@@ -1155,7 +1155,7 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 ### 3.1) Referencias [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver Detalles</summary>
 
  <br>
 
