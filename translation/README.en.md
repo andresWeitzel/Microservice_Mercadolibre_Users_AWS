@@ -1,17 +1,18 @@
+
 ![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/MicroService_Users_ML.drawio.png)
 
 <div align="right">
-  <img width="25" height="25" src="../doc/assets/icons/devops/png/aws.png" />
-  <img width="25" height="25" src="../doc/assets/icons/aws/png/lambda.png" />
-  <img width="27" height="27" src="../doc/assets/icons/devops/png/postman.png" />
-  <img width="29" height="27" src="../doc/assets/icons/devops/png/git.png" />
-  <img width="28" height="27" src="../doc/assets/icons/aws/png/api-gateway.png" />
-  <img width="27" height="25" src="../doc/assets/icons/aws/png/parameter-store.png" />
-  <img width="27" height="27" src="../doc/assets/icons/backend/javascript-typescript/png/nodejs.png" />
-  <img width="27" height="27" src="../doc/assets/icons/backend/javascript-typescript/png/sequelize.png" />
-  <img width="25" height="27" src="../doc/assets/icons/aws/png/rds.png" />
-  <img width="30" height="30" src="../doc/assets/icons/devops/png/vsc.png" />
-  <img width="23" height="23" src="../doc/assets/icons/devops/png/docker.png" />
+  <img width="16" height="16" src="../doc/assets/icons/devops/png/aws.png" />
+  <img width="16" height="16" src="../doc/assets/icons/aws/png/lambda.png" />
+  <img width="16" height="16" src="../doc/assets/icons/devops/png/postman.png" />
+  <img width="16" height="16" src="../doc/assets/icons/devops/png/git.png" />
+  <img width="16" height="16" src="../doc/assets/icons/aws/png/api-gateway.png" />
+  <img width="16" height="16" src="../doc/assets/icons/aws/png/parameter-store.png" />
+  <img width="16" height="16" src="../doc/assets/icons/backend/javascript-typescript/png/nodejs.png" />
+  <img width="16" height="16" src="../doc/assets/icons/backend/javascript-typescript/png/sequelize.png" />
+  <img width="16" height="16" src="../doc/assets/icons/aws/png/rds.png" />
+  <img width="16" height="16" src="../doc/assets/icons/devops/png/vsc.png" />
+  <img width="16" height="16" src="../doc/assets/icons/devops/png/docker.png" />
 </div> 
 
 <br>
@@ -19,14 +20,15 @@
 <br>
 
 <div align="right">
-  <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.es.md">
-    <img src="../doc/assets/translation/arg-flag.jpg" width="65" height="40" />
-  </a> 
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md">
-    <img src="../doc/assets/translation/eeuu-flag.jpg" width="65" height="40" />
+    <img src="../doc/assets/translation/arg-flag.jpg" width="52" height="32" />
+  </a> 
+  <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.en.md">
+    <img src="../doc/assets/translation/eeuu-flag.jpg" width="52" height="32" />
   </a> 
 </div>
 
+ 
 <br>
 
 <div align="center">
@@ -35,41 +37,41 @@
 
 </div>  
 
-Microservicio para la gestión de usuarios ejemplificando parte de la arquitectura de desarrollo de ML, implementada con Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Unit Test con Jest, entre otros. Los servicios de aws se prueban en local. El código del proyecto y la documentación de este (menos doc técnica), ha sido desarrollado/a en inglés.
+Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
 
-*   [Api Doc ML Usuarios](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
+*   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
 *   [Postman Collection](../postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json)   
-*   [Playlist prueba de funcionalidad](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="../doc/assets/social-networks/yt.png" width="25" /> </a>
+*   [Playlist functionality test](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="../doc/assets/social-networks/yt.png" width="16" /> </a>
 
 <br>
 
-## Índice 📜
+## Index 📜
 
 <details>
- <summary>Ver detalles</summary>
+ <summary>View details</summary>
 
 <div align="right">
 
-`Última actualización: 16/11/25` 
+`Latest update: 16/11/25` 
 
 </div>
 
-### Sección 1) Descripción, configuración y tecnologías.
+### Section 1) Description, configuration and technologies.
 
-*   [1.0) Descripción del Proyecto.](#10-descripción-)
-*   [1.1) Ejecución del Proyecto.](#11-ejecución-del-proyecto-)
-*   [1.2) Docker Setup y Migración de Base de Datos](#12-docker-setup-y-migración-de-base-de-datos-)
-*   [1.3) Tecnologías.](#13-tecnologías-)
+*   [1.0) Project Description.](#10-project-description-)
+*   [1.1) Project Execution.](#11-project-execution-)
+*   [1.2) Docker Setup and Database Migration](#12-docker-setup-and-database-migration-)
+*   [1.3) Technologies.](#13-technologies-)
 
-### Sección 2) Endpoints y Ejemplos
+### Section 2) Endpoints and Examples
 
-*   [2.0) EndPoints y recursos.](#20-endpoints-y-recursos-)
-*   [2.1) Ejemplos.](#21-ejemplos-)
+*   [2.0) EndPoints and resources.](#20-endpoints-and-resources-)
+*   [2.1) Examples.](#21-examples-)
 
-### Sección 3) Prueba de funcionalidad y Referencias
+### Section 3) Functionality Test and References
 
-*   [3.0) Prueba de funcionalidad.](#30-prueba-de-funcionalidad-)
-*   [3.1) Referencias.](#31-referencias-)
+*   [3.0) Functionality Test.](#30-functionality-test-)
+*   [3.1) References.](#31-references-)
 
 <br>
 
@@ -77,117 +79,119 @@ Microservicio para la gestión de usuarios ejemplificando parte de la arquitectu
 
 <br>
 
-## Sección 1) Descripción, configuración y tecnologías.
+## Section 1) Description, configuration and technologies.
 
-### 1.0) Descripción [🔝](#índice-)
+### 1.0) Project Description [🔝](#index-)
 
 <details>
-  <summary>Ver detalles</summary>
+  <summary>View details</summary>
 
  <br>
 
-### 1.0.0) Descripción General
+### 1.0.0) General description
 
-*   El Microservicio está diseñado bajo la arquitectura MVC. Dicha arquitectura consta y está dividida en la capa de modelo (definición de la tabla user), la capa de servicio (la conexión y transacciones hacia la db con sequelize) y la capa controller (las lambdas implementadas).
-*   Cada lambda realiza la comprobación de autenticación de token, las que esperan un evento de tipo body comprueban dichos campos y toda la lógica a realizar se abstrae de la misma para desacoplar funcionalidades junto con bajo acoplamiento.
-*   Los endpoints que permiten la devolución de más de un objeto según lógica de búsqueda aplicada se manejan con paginados caso de ser requerido. Se aplica paginación por defecto.
+*   The Microservice is designed under the MVC architecture. This architecture consists of and is divided into the model layer (definition of the user table), the service layer (the connection and transactions to the db with sequelize) and the controller layer (the implemented lambdas).
+*   Each lambda performs the token authentication check, those that wait for a body type event check these fields and all the logic to be performed is abstracted from it to decouple functionalities together with low coupling.
+*   Endpoints that allow the return of more than one object according to the applied search logic are handled with pagination if required. Default pagination is applied.
 
-### 1.0.1) Descripción Arquitectura y Funcionamiento
+### 1.0.1) Description Architecture and Operation
 
-*   La imagen de la arquitectura de aws empleada describe el flujo de funcionamiento del microservicio de forma general. Cualquier petición hacia el microservicio parte desde un cliente (Postman, servidor, etc).
-*   `Paso 0` : Dicha solicitud es recibida por el api-gateway y solamente se validará si es que dentro de los encabezados de dicha solicitud se encuentra la x-api-key correcta.
-*   `Pasos 1A, 1B, etc` : Todos estos pasos corresponden a un endpoint con su recurso especifico. Por ej. para getAllUsers (1A) es http://localhost:4000/dev/users/list ....revisar dichos endpoints en [sección endpoints](#sección-2-endpoints-y-ejemplos). Cada lambda realiza comprobación de x-api-key y token.
-*   `Pasos 2` : Las lambdas realizan las validaciones de las ssm correspondientes con el System Manager Paramater Store.. validan token, valores de conexión con la db etc.
-*   `Pasos 3` : Las lambdas realizan las transacciones y operaciones necesarias con la db (Mysql).
-*   `Aclaraciones` : Se emula dicho funcionamiento dentro de la misma red y en entorno local con los plugins de serverless correspondientes.
+*   The image of the AWS architecture used describes the operating flow of the microservice in a general way. Any request to the microservice starts from a client (Postman, server, etc.).
+*   `Step 0`: This request is received by the api-gateway and will only be validated if the correct x-api-key is found within the headers of said request.
+*   `Steps 1A, 1B, etc`: All these steps correspond to an endpoint with its specific resource. For ex. for getAllUsers (1A) it is http://localhost:4000/dev/users/list ....check those endpoints in [endpoints section](#section-2-endpoints-and-examples). Each lambda performs x-api-key and token checking.
+*   `Steps 2`: The lambdas perform the validations of the corresponding ssm with the System Manager Paramater Store... they validate token, connection values with the db, etc.
+*   `Steps 3`: The lambdas perform the necessary transactions and operations with the db (Mysql).
+*   `Clarifications`: This operation is emulated within the same network and in a local environment with the corresponding serverless plugins.
 
 <br>
 
 </details>
 
-### 1.1) Ejecución del Proyecto [🔝](#índice-)
+### 1.1) Project Execution [🔝](#index-)
 
 <details>
-  <summary>Ver detalles</summary>
+  <summary>View details</summary>
 <br>
 
-*   Una vez creado un entorno de trabajo a través de algún ide, clonamos el proyecto
+*   Once a work environment has been created through some IDE, we clone the project
 
 ```git
 git clone https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS
 ```
 
-*   Nos posicionamos sobre el proyecto
+*   We position ourselves on the project
 
 ```git
 cd 'projectName'
 ```
 
-*   Instalamos la última versión LTS de [Nodejs(v18)](https://nodejs.org/en/download)
-*   Instalamos el Serverless Framework globalmente si aún no lo hemos hecho. Recomiendo la version tres asi no nos pide credenciales. Se puede usar la ultima version cuatro sin problemas (es de pago)
+*   We install the LTS version of [Nodejs(v18)](https://nodejs.org/en/download)
+*   We install the Serverless Framework globally if we haven't already. I recommend version 3 so we don't need credentials. You can use the latest version 4 without any problems (it's paid).
 
 ```git
 npm install -g serverless@3
 ```
 
-*   Verificamos la versión de Serverless instalada
+*   We verify the version of Serverless installed
 
 ```git
 sls -v
 ```
 
-*   Instalamos todos los paquetes necesarios
+*   We install all the necessary packages
 
 ```git
 npm i
 ```
 
-*   `Importante` : Asegúrate de tener Docker instalado en tu sistema (para Windows, usa [Docker Desktop](https://www.docker.com/products/docker-desktop/))
+*   `Important` : Make sure Docker are installed on your system (for Windows, use [Docker Desktop]([https://nodejs.org/en/download]\(https://www.docker.com/products/docker-desktop/\)))
 
-*   Inicia y construye el contenedor de MySQL:
+*   Start and build the MySQL database container:
 
 ```bash
 docker-compose up -d
 ```
 
-*   Verifica que el contenedor esté corriendo (Opcional) :
+*   Verify the container is running:
 
 ```bash
 docker ps
 ```
 
-*   Si necesitas resetear la base de datos (Opcional) :
+*   If you need to reset the database (optional) :
 
 ```bash
 docker-compose down -v
 docker-compose up -d
 ```
 
-*   Para ver los logs de la base de datos (Opcional) :
+*   To view database logs (optional):
 
 ```bash
 docker-compose logs mysql
 ```
 
-*   Para acceder directamente a MySQL (Opcional) :
+*   To access MySQL directly  (optional):
 
 ```bash
 docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
 ```
 
-*   Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless\_ssm.yml) al .gitignore.
+*   The ssm and env variables used in the project are maintained to simplify the project configuration process. It is recommended to add the corresponding files (serverless\_ssm.yml and .env) to the .gitignore.
 
-*   El script start configurado en el package.json del proyecto, es el encargado de levantar
-    *   El plugin de serverless-offline
-    *   El plugin remark-lint para archivos .md (se aplica solo el --output para check and autoformat sin terminar el proceso y poder ejecutar el script de serverless)
+*   The start script configured in the project's package.json is responsible for launching
 
-*   Ejecutamos la app desde terminal.
+*   The serverless-offline plugin
+
+*   The remark-lint plugin for .md files (only --output is applied for check and autoformat without terminating the process and being able to execute the serverless script)
+
+*   We run the app from terminal.
 
 ```git
 npm start
 ```
 
-*   Si se presenta algún mensaje indicando qué el puerto 4000 ya está en uso, podemos terminar todos los procesos dependientes y volver a ejecutar la app (Opcional) :
+*   If a message appears indicating that port 4000 is already in use, we can terminate all dependent processes and run the app again  (optional) : 
 
 ```git
 npx kill-port 4000
@@ -199,17 +203,18 @@ npm start
 </details>
 
 
-### 1.2) Docker Setup y Migración de Base de Datos [🔝](#índice-)
+
+### 1.2) Docker Setup and Database Migration [🔝](#index-)
 
 <details>
-  <summary>Ver detalles</summary>
+  <summary>View details</summary>
 
- <br>
+<br>
 
-#### 1.2.1) Configuración de Base de Datos con Docker
+#### 1.2.1) Database Configuration with Docker
 
-1.  **Configuración de Docker Compose**
-    La siguiente configuración establece un contenedor MySQL 8.0 con almacenamiento persistente e inicialización automática:
+1.  **Docker Compose Configuration**
+    The following configuration sets up a MySQL 8.0 container with persistent storage and automatic initialization:
     ```yaml
     version: '3.8'
     services:
@@ -217,50 +222,50 @@ npm start
         image: mysql:8.0
         container_name: mercadolibre_users_mysql
         environment:
-          MYSQL_ROOT_PASSWORD: root          # Contraseña root para MySQL
-          MYSQL_DATABASE: microdb_mercadolibre  # Nombre de la base de datos
-          MYSQL_USER: mercadolibre_user      # Usuario de la aplicación
-          MYSQL_PASSWORD: mercadolibre_pass  # Contraseña del usuario de la aplicación
+          MYSQL_ROOT_PASSWORD: root          # Root password for MySQL
+          MYSQL_DATABASE: microdb_mercadolibre  # Database name
+          MYSQL_USER: mercadolibre_user      # Application user
+          MYSQL_PASSWORD: mercadolibre_pass  # Application user password
         ports:
-          - "3306:3306"                      # Mapea el puerto del contenedor al puerto del host
+          - "3306:3306"                      # Maps container port to host port
         volumes:
-          - mysql_data:/var/lib/mysql        # Almacenamiento persistente de datos
-          - ./init:/docker-entrypoint-initdb.d  # Scripts de inicialización
-        command: --default-authentication-plugin=mysql_native_password  # Método de autenticación
+          - mysql_data:/var/lib/mysql        # Persistent data storage
+          - ./init:/docker-entrypoint-initdb.d  # Initialization scripts
+        command: --default-authentication-plugin=mysql_native_password  # Authentication method
         healthcheck:
-          test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]  # Comando de verificación de salud
-          interval: 10s                      # Verificar cada 10 segundos
-          timeout: 5s                        # Tiempo de espera después de 5 segundos
-          retries: 5                         # Reintentar 5 veces antes de marcar como no saludable
+          test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]  # Health check command
+          interval: 10s                      # Check every 10 seconds
+          timeout: 5s                        # Timeout after 5 seconds
+          retries: 5                         # Retry 5 times before marking unhealthy
 
     volumes:
-      mysql_data:                            # Volumen nombrado para persistencia de datos
+      mysql_data:                            # Named volume for data persistence
     ```
 
-2.  **Comandos Docker Esenciales**
-    Estos comandos son esenciales para gestionar tu entorno Docker:
+2.  **Essential Docker Commands**
+    These commands are essential for managing your Docker environment:
     ```bash
-    # Iniciar contenedor en modo detached (ejecuta en segundo plano)
+        # Start container in detached mode (runs in background)
     docker-compose up -d
-
-    # Verificar estado y salud del contenedor
+    
+        # Check container status and health
     docker ps
-
-    # Resetear base de datos (elimina todos los datos y recrea el contenedor)
+    
+        # Reset database (removes all data and recreates container)
     docker-compose down -v
     docker-compose up -d
-
-    # Ver logs de la base de datos para solución de problemas
+    
+        # View database logs for troubleshooting
     docker-compose logs mysql
-
-    # Acceder a la interfaz de línea de comandos de MySQL
+    
+        # Access MySQL command line interface
     docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
     ```
 
-3.  **Datos de Ejemplo**
-    Aquí hay algunos ejemplos de consultas para poblar tu base de datos:
+3.  **Sample Data**
+    Here are some example queries to populate your database:
     ```sql
-    -- Inserción de usuario de ejemplo con todos los campos requeridos
+    -- Sample user insertion with all required fields
     INSERT INTO users (
         nickname, 
         first_name, 
@@ -271,15 +276,15 @@ npm start
         country_id
     ) VALUES (
         'USER123',
-        'Juan',
-        'Pérez',
-        'juan@example.com',
+        'John',
+        'Doe',
+        'john@example.com',
         'DNI',
         '12345678',
         'AR'
     );
 
-    -- Inserción de producto de ejemplo
+    -- Sample product insertion
     INSERT INTO products (
         title, 
         price, 
@@ -295,83 +300,83 @@ npm start
     );
     ```
 
-#### 1.2.2) Proceso de Migración
+#### 1.2.2) Migration Process
 
-1.  **Inicialización de la Base de Datos**
-    El proceso de configuración de la base de datos sigue estos pasos:
-    *   Cuando el contenedor inicia, automáticamente crea la base de datos especificada en MYSQL_DATABASE
-    *   Los scripts de inicialización en el directorio `./init` se ejecutan en orden alfabético
-    *   Los datos persisten entre reinicios del contenedor gracias al volumen Docker `mysql_data`
-    *   El primer script (01_*) típicamente contiene las definiciones de tablas
-    *   El segundo script (02_*) típicamente contiene los datos iniciales
+1.  **Database Initialization**
+    The database setup process follows these steps:
+    *   When the container starts, it automatically creates the database specified in MYSQL_DATABASE
+    *   The initialization scripts in the `./init` directory are executed in alphabetical order
+    *   Data persists between container restarts thanks to the Docker volume `mysql_data`
+    *   The first script (01_*) typically contains table definitions
+    *   The second script (02_*) typically contains initial data
 
-2.  **Estructura de Archivos**
-    El proceso de inicialización utiliza esta estructura de archivos:
+2.  **File Structure**
+    The initialization process uses this file structure:
     ```
     init/
-    ├── 01_microdb_mercadolibre_DDL.sql     # Esquema de base de datos y definiciones de tablas
-    └── 02_microdb_mercadolibre_DML_INSERTS.sql  # Datos iniciales y registros semilla
+    ├── 01_microdb_mercadolibre_DDL.sql     # Database schema and table definitions
+    └── 02_microdb_mercadolibre_DML_INSERTS.sql  # Initial data and seed records
     ```
 
-3.  **Consideraciones**
-    Puntos importantes a recordar:
-    *   El volumen `mysql_data` asegura que tus datos persistan incluso si el contenedor es eliminado
-    *   Para resetear completamente la base de datos, necesitas eliminar el volumen usando `docker-compose down -v`
-    *   Las credenciales de la base de datos están definidas en el archivo `docker-compose.yml`
-    *   El contenedor usa MySQL 8.0 con autenticación de contraseña nativa
-    *   La base de datos es accesible en el puerto 3306 de tu máquina host
+3.  **Considerations**
+    Important points to remember:
+    *   The `mysql_data` volume ensures your data persists even if the container is removed
+    *   To completely reset the database, you need to remove the volume using `docker-compose down -v`
+    *   Database credentials are defined in the `docker-compose.yml` file
+    *   The container uses MySQL 8.0 with native password authentication
+    *   The database is accessible on port 3306 of your host machine
 
-#### 1.2.3) Comandos Docker Adicionales y Ejemplos
+#### 1.2.3) Additional Docker Commands and Examples
 
-1.  **Gestión de Contenedores**
-    Comandos avanzados de gestión de contenedores:
+1.  **Container Management**
+    Advanced container management commands:
     ```bash
-    # Detener todos los contenedores de forma segura
+    # Stop all containers gracefully
     docker-compose down
 
-    # Eliminar todos los contenedores, redes y volúmenes
+    # Remove all containers, networks, and volumes
     docker-compose down -v
 
-    # Reconstruir contenedores con los últimos cambios
+    # Rebuild containers with latest changes
     docker-compose build
 
-    # Ver logs del contenedor en tiempo real (modo seguimiento)
+    # View container logs in real-time (follow mode)
     docker-compose logs -f mysql
 
-    # Ejecutar shell interactivo en el contenedor
+    # Execute interactive shell in container
     docker exec -it mercadolibre_users_mysql bash
     ```
 
-2.  **Respaldo y Restauración de Base de Datos**
-    Comandos para mantenimiento de la base de datos:
+2.  **Database Backup and Restore**
+    Commands for database maintenance:
     ```bash
-    # Crear un respaldo completo de la base de datos
+    # Create a full database backup
     docker exec mercadolibre_users_mysql mysqldump -u mercadolibre_user -p microdb_mercadolibre > backup.sql
 
-    # Restaurar base de datos desde respaldo
+    # Restore database from backup
     docker exec -i mercadolibre_users_mysql mysql -u mercadolibre_user -p microdb_mercadolibre < backup.sql
     ```
 
-3.  **Solución de Problemas**
-    Comandos comunes para solución de problemas:
+3.  **Troubleshooting**
+    Common troubleshooting commands:
     ```bash
-    # Verificar estado y detalles del contenedor
+    # Check container status and details
     docker ps -a
 
-    # Inspeccionar configuración del contenedor
+    # Inspect container configuration
     docker inspect mercadolibre_users_mysql
 
-    # Ver logs del contenedor
+    # View container logs
     docker logs mercadolibre_users_mysql
 
-    # Monitorear uso de recursos del contenedor
+    # Monitor container resource usage
     docker stats mercadolibre_users_mysql
     ```
 
-4.  **Consultas SQL Adicionales**
-    Consultas SQL útiles para operaciones comunes:
+4.  **Additional Sample Queries**
+    Useful SQL queries for common operations:
     ```sql
-    -- Crear nuevo usuario con todos los campos
+    -- Create new user with all fields
     INSERT INTO users (
         nickname, 
         first_name, 
@@ -385,82 +390,82 @@ npm start
         'Maria',
         'Garcia',
         'maria.garcia@example.com',
-        'PASAPORTE',
+        'PASSPORT',
         'AB123456',
         'ES'
     );
 
-    -- Actualizar información de usuario
+    -- Update user information
     UPDATE users 
-    SET email = 'nuevo.email@example.com',
+    SET email = 'new.email@example.com',
         update_date = CURRENT_TIMESTAMP
     WHERE id = 1;
 
-    -- Eliminar usuario
+    -- Delete user
     DELETE FROM users 
     WHERE id = 1;
 
-    -- Buscar usuarios por país con paginación
+    -- Search users by country with pagination
     SELECT * FROM users 
     WHERE country_id = 'AR' 
     ORDER BY creation_date DESC
     LIMIT 10 OFFSET 0;
 
-    -- Contar usuarios por país
-    SELECT country_id, COUNT(*) as cantidad_usuarios 
+    -- Count users by country
+    SELECT country_id, COUNT(*) as user_count 
     FROM users 
     GROUP BY country_id;
     ```
 
-5.  **Problemas Comunes y Soluciones**
-    Soluciones para problemas frecuentes:
-    *   **Conflicto de Puerto**: Si el puerto 3306 ya está en uso
+5.  **Common Issues and Solutions**
+    Solutions for frequent problems:
+    *   **Port Conflict**: If port 3306 is already in use
         ```bash
-        # Encontrar proceso usando el puerto
-        netstat -ano | findstr :3306
-        # Terminar proceso
-        taskkill /PID <id_proceso> /F
+            # Find process using port
+            netstat -ano | findstr :3306
+            # Kill process
+            taskkill /PID <process_id> /F
         ```
     
-    *   **Contenedor No Inicia**: Verificar logs para errores
+    *   **Container Won't Start**: Check logs for errors
         ```bash
-        # Ver logs detallados
+        # View detailed logs
         docker-compose logs mysql
-        # Verificar estado del contenedor
+        # Check container status
         docker ps -a
         ```
-
-    *   **Problemas de Conexión a Base de Datos**: Verificar credenciales y red
+    
+    *   **Database Connection Issues**: Verify credentials and network
         ```bash
-        # Probar conexión
+        # Test connection
         docker exec -it mercadolibre_users_mysql mysql -u mercadolibre_user -p
-        # Verificar red
+        # Check network
         docker network ls
-        docker network inspect <nombre_red>
+        docker network inspect <network_name>
         ```
 
-6.  **Optimización de Rendimiento**
-    Consejos para optimizar el rendimiento de la base de datos:
-    *   Ajustar configuración de MySQL en `my.cnf`:
+6.  **Performance Optimization**
+    Tips for optimizing database performance:
+    *   Adjust MySQL configuration in `my.cnf`:
         ```ini
         [mysqld]
-        innodb_buffer_pool_size = 256M    # Tamaño del buffer pool para InnoDB
-        max_connections = 100             # Máximo de conexiones concurrentes
-        query_cache_size = 32M           # Tamaño de caché de consultas
+        innodb_buffer_pool_size = 256M    # Buffer pool size for InnoDB
+        max_connections = 100             # Maximum concurrent connections
+        query_cache_size = 32M           # Query cache size
         ```
     
-    *   Monitorear rendimiento:
+    *   Monitor performance:
         ```sql
-        -- Verificar consultas lentas
+        -- Check slow queries
         SHOW VARIABLES LIKE '%slow%';
         
-        -- Verificar estado de conexiones
+        -- Check connection status
         SHOW STATUS LIKE '%onn%';
         
-        -- Verificar estado de tablas
+        -- Check table status
         SHOW TABLE STATUS;
         
-        -- Verificar lista de procesos
+        -- Check process list
         SHOW PROCESSLIST;
         ```
 
@@ -468,31 +473,31 @@ npm start
 
 </details>
 
-### 1.3) Tecnologías [🔝](#índice-)
+### 1.3) Technologies [🔝](#index-)
 
 <details>
-  <summary>Ver detalles</summary>
+  <summary>View details</summary>
 
  <br>
 
-| **Tecnologías** | **Versión** | **Finalidad** |
-|----------------|-------------|---------------|
-| [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Inyección Automática de Módulos para Lambdas |
-| [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | Core Servicios AWS |
-| [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Manejo de Variables de Entorno |
-| [Jest](https://jestjs.io/) | 29.7 | Framework para pruebas unitarias, integración, etc. |
-| [Amazon Api Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) | 2.0 | Gestor, Autenticación, Control y Procesamiento de la Api |
-| [NodeJS](https://nodejs.org/en/) | 14.18.1  | Librería JS |
+| **Technologies** | **Version** | **Purpose** |
+|-----------------|-------------|-------------|
+| [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Automatic Module Injection for Lambdas |
+| [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | AWS Services Core |
+| [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Environment Variables Management |
+| [Jest](https://jestjs.io/) | 29.7 | Framework for unit testing, integration, etc. |
+| [Amazon Api Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) | 2.0 | API Manager, Authentication, Control and Processing |
+| [NodeJS](https://nodejs.org/en/) | 14.18.1  | JS Library |
 | [Sequelize](https://sequelize.org/) | ^6.11.0 | ORM |
-| [Mysql](https://www.mysql.com/) | 10.1 | SGDB |
-| [XAMPP](https://www.apachefriends.org/es/index.html) | 3.2.2 | Paquete de servidores |
+| [Mysql](https://www.mysql.com/) | 10.1 | DBMS |
+| [XAMPP](https://www.apachefriends.org/es/index.html) | 3.2.2 | Server Package |
 | [VSC](https://code.visualstudio.com/docs) | 1.72.2  | IDE |
-| [Postman](https://www.postman.com/downloads/) | 10.11  | Cliente Http |
-| [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Símbolo del Sistema para linea de comandos |
-| [Git](https://git-scm.com/downloads) | 2.29.1  | Control de Versiones |
-| Otros | Otros | Otros |
+| [Postman](https://www.postman.com/downloads/) | 10.11  | Http Client |
+| [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Command Line Interface |
+| [Git](https://git-scm.com/downloads) | 2.29.1  | Version Control |
+| Others | Others | Others |
 
-</br>
+<br>
 
 | **Plugin** |
 |------------|
@@ -500,15 +505,15 @@ npm start
 | [serverless-offline](https://www.npmjs.com/package/serverless-offline) |
 | [serverless-offline-ssm](https://www.npmjs.com/package/serverless-offline-ssm) |
 
-</br>
+<br>
 
-| **Extensión** |
+| **Extension** |
 |---------------|
 | Prettier - Code formatter |
 | YAML - Autoformatter .yml |
-| Error Lens - Identificador de errores |
-| Tabnine - IA Code |
-| Otros - Otros |
+| Error Lens - Error identifier |
+| Tabnine - AI Code |
+| Others - Others |
 
 <br>
 
@@ -516,61 +521,76 @@ npm start
 
 <br>
 
-## Sección 2) Endpoints y Ejemplos.
+## Section 2) Endpoints and Examples.
 
-### 2.0) Endpoints y recursos [🔝](#índice-)
+### 2.0) Endpoints and resources [🔝](#index-)
 
 <details>
-  <summary>Ver detalles</summary>
+  <summary>View details</summary>
 
-### Operaciones de tipo GET:
+<br>
+
+#### GET type operations:
 
 *   http://localhost:4000/dev/v1/test
-*   http://localhost:4000/dev/v1/db-connection
-*   http://localhost:4000/dev/v1/users/list
-*   http://localhost:4000/dev/v1/users/id/{user-id}
-*   http://localhost:4000/dev/v1/users/country-id/{country-id}
-*   http://localhost:4000/dev/v1/users/email/{email}
-*   http://localhost:4000/dev/v1/users/first-name/{first-name}
-*   http://localhost:4000/dev/v1/users/identification-number/{ident-number}
-*   http://localhost:4000/dev/v1/users/identification-type/{ident-type}
-*   http://localhost:4000/dev/v1/users/last-name/{last-name}
-*   http://localhost:4000/dev/v1/users/nickname/{nickname}
-*   http://localhost:4000/dev/v1/users/creation-date/{creation-date}
-*   http://localhost:4000/dev/v1/users/update-date/{update-date}
-*   `Todos los endpoints son paginados opcionales menos el /test, /db-connection y /id/{user-id}`
 
-### Operaciones de tipo POST:
+*   http://localhost:4000/dev/v1/db-connection
+
+*   http://localhost:4000/dev/v1/users/list
+
+*   http://localhost:4000/dev/v1/users/id/{user-id}
+
+*   http://localhost:4000/dev/v1/users/country-id/{country-id}
+
+*   http://localhost:4000/dev/v1/users/email/{email}
+
+*   http://localhost:4000/dev/v1/users/first-name/{first-name}
+
+*   http://localhost:4000/dev/v1/users/identification-number/{ident-number}
+
+*   http://localhost:4000/dev/v1/users/identification-type/{ident-type}
+
+*   http://localhost:4000/dev/v1/users/last-name/{last-name}
+
+*   http://localhost:4000/dev/v1/users/nickname/{nickname}
+
+*   http://localhost:4000/dev/v1/users/creation-date/{creation-date}
+
+*   http://localhost:4000/dev/v1/users/update-date/{update-date}
+
+*   `All endpoints are optional paginated except /test, /db-connection and /id/{user-id}}`
+
+#### POST type operations:
 
 *   http://localhost:4000/dev/v1/users/add-user/
 
-### Operaciones de tipo PUT:
+#### PUT type operations:
 
 *   http://localhost:4000/dev/v1/users/update-user/{user-id}
 
-### Operaciones de tipo DELETE:
+#### DELETE type operations:
 
 *   http://localhost:4000/dev/v1/users/delete-user/{user-id}
 
-### Aclaraciones
+#### Clarifications
 
-*   {valor-requerido}
-*   Paginado por defecto : ?page=0\&limit=5
-*   Paginado opcional : ?page={nro}\&limit={nro}
+*   {required-value}
+*   Default pagination: ?page=0\&limit=5
+*   Optional pagination: ?page={nro}\&limit={nro}
 
 <br>
 
 </details>
 
-### 2.1) Ejemplos [🔝](#índice-)
+### 2.1) Examples [🔝](#index-)
 
 <details>
-  <summary>Ver detalles</summary>
+  <summary>View details</summary>
 <br>
 
-#### 2.1.0) Variables en Postman
+#### 2.1.0) Postman Variables
 
-| **Variable** | **Valor Inicial** | **Valor Actual** |
+| **Variable** | **Initial Value** | **Current Value** |
 |-------------|------------------|------------------|
 | base_url | http://localhost:4000/dev/ | http://localhost:4000/dev/ |
 | x-api-key | f98d8cd98h73s204e3456998ecl9427j | f98d8cd98h73s204e3456998ecl9427j |
@@ -578,9 +598,9 @@ npm start
 
 <br>
 
-#### 2.1.1) Operaciones de tipo GET
+#### 2.1.1) GET Operations
 
-##### Obtener Lista de Usuarios
+##### Get Users List
 
 ###### Request (GET)
 
@@ -659,7 +679,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list?page=0&limit=2&orderBy=
 
 <br>
 
-##### Obtener Lista de Usuarios sin Fechas
+##### Get Users List Without Dates
 
 ###### Request (GET)
 
@@ -734,7 +754,7 @@ curl --location 'http://localhost:4000/dev/v1/users/list-without-dates?page=0&li
 
 <br>
 
-##### Obtener Usuario por ID
+##### Get User by ID
 
 ###### Request (GET)
 
@@ -806,7 +826,7 @@ curl --location 'http://localhost:4000/dev/v1/users/id/4' \
 
 <br>
 
-##### Obtener Usuarios por País
+##### Get Users by Country
 
 ###### Request (GET)
 
@@ -905,9 +925,9 @@ curl --location 'http://localhost:4000/dev/v1/users/country-id/AR?page=0&limit=3
 
 <br>
 
-#### 2.1.2) Operaciones de tipo POST
+#### 2.1.2) POST Operations
 
-##### Agregar un Usuario
+##### Add User
 
 ###### Request (POST)
 
@@ -921,10 +941,10 @@ curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
     "first_name": "Martin",
     "last_name": "Suarez",
     "email": "martin_electro_todo@gmail.com",
-            "identification_type": "DNI",
+    "identification_type": "DNI",
     "identification_number": "4459388222",
-            "country_id": "AR12"
-        }'
+    "country_id": "AR12"
+}'
 ```
 
 ###### Response (200 OK)
@@ -988,9 +1008,9 @@ curl --location 'http://localhost:4000/dev/v1/users/add-user/' \
 
 <br>
 
-#### 2.1.3) Operaciones de tipo PUT
+#### 2.1.3) PUT Operations
 
-##### Editar un Usuario
+##### Update User
 
 ###### Request (PUT)
 
@@ -1004,12 +1024,12 @@ curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/32
     "first_name": "Martin2221",
     "last_name": "Suarez2221",
     "email": "martin_electro_todo@gmail.com",
-            "identification_type": "DNI",
+    "identification_type": "DNI",
     "identification_number": "445938812313222",
-            "country_id": "AR12",
+    "country_id": "AR12",
     "creation_date": "2023-10-11 21:18:29",
     "update_date": "2023-10-11 21:18:29"
-        }'
+}'
 ```
 
 ###### Response (200 OK)
@@ -1073,9 +1093,9 @@ curl --location --request PUT 'http://localhost:4000/dev/v1/users/update-user/32
 
 <br>
 
-#### 2.1.4) Operaciones de tipo DELETE
+#### 2.1.4) DELETE Operations
 
-##### Eliminar un Usuario
+##### Delete User
 
 ###### Request (DELETE)
 
@@ -1133,16 +1153,16 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 <br>
 
-## Sección 3) Prueba de funcionalidad y Referencias.
+## Section 3) Functionality Testing and References.
 
-### 3.0) Prueba de funcionalidad [🔝](#índice-)
+### 3.0) Functionality Test [🔝](#index-)
 
 <details>
-  <summary>Ver detalles</summary>
+  <summary>View details</summary>
 
 <br>
 
-#### [Ver video](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
+#### [Watch video](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y)
 
   <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y">
     <img src="../doc/assets/playlist.png" />
@@ -1152,81 +1172,81 @@ curl --location --request DELETE 'http://localhost:4000/dev/v1/users/delete-user
 
 </details>
 
-### 3.1) Referencias [🔝](#índice-)
+### 3.1) References [🔝](#index-)
 
 <details>
-  <summary>Ver detalles</summary>
+  <summary>View details</summary>
 
  <br>
 
-#### Servicios y Herramientas AWS
+#### AWS Services and Tools
 
-*   [Documentación de AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
-*   [Mejores Prácticas de API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/best-practices.html)
+*   [AWS Lambda Documentation](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
+*   [API Gateway Best Practices](https://docs.aws.amazon.com/apigateway/latest/developerguide/best-practices.html)
 *   [Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
-*   [Documentación de Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
+*   [Amazon RDS Documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
 *   [AWS CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html)
-*   [Mejores Prácticas de AWS IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
+*   [AWS IAM Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
 
-#### Framework Serverless
+#### Serverless Framework
 
-*   [Documentación del Framework Serverless](https://www.serverless.com/framework/docs)
-*   [Plugins del Framework Serverless](https://www.serverless.com/plugins)
-*   [Plugin Serverless Offline](https://www.serverless.com/plugins/serverless-offline)
-*   [Plugin Serverless SSM](https://www.serverless.com/plugins/serverless-offline-ssm)
-*   [Documentación OpenAPI con Serverless](https://www.serverless.com/plugins/serverless-openapi-documentation)
-*   [Auto Swagger con Serverless](https://www.npmjs.com/package/serverless-auto-swagger)
+*   [Serverless Framework Documentation](https://www.serverless.com/framework/docs)
+*   [Serverless Framework Plugins](https://www.serverless.com/plugins)
+*   [Serverless Offline Plugin](https://www.serverless.com/plugins/serverless-offline)
+*   [Serverless SSM Plugin](https://www.serverless.com/plugins/serverless-offline-ssm)
+*   [Serverless OpenAPI Documentation](https://www.serverless.com/plugins/serverless-openapi-documentation)
+*   [Serverless Auto Swagger](https://www.npmjs.com/package/serverless-auto-swagger)
 
-#### Base de Datos y ORM
+#### Database and ORM
 
-*   [Documentación de Sequelize](https://sequelize.org/docs/v6/)
-*   [Documentación de MySQL](https://dev.mysql.com/doc/)
-*   [Imagen Docker de MySQL](https://hub.docker.com/_/mysql)
-*   [Documentación de Docker Compose](https://docs.docker.com/compose/)
-*   [Migraciones con Sequelize](https://sequelize.org/docs/v6/other-topics/migrations/)
-*   [Asociaciones con Sequelize](https://sequelize.org/docs/v6/core-concepts/assocs/)
+*   [Sequelize Documentation](https://sequelize.org/docs/v6/)
+*   [MySQL Documentation](https://dev.mysql.com/doc/)
+*   [Docker MySQL Image](https://hub.docker.com/_/mysql)
+*   [Docker Compose Documentation](https://docs.docker.com/compose/)
+*   [Sequelize Migrations](https://sequelize.org/docs/v6/other-topics/migrations/)
+*   [Sequelize Associations](https://sequelize.org/docs/v6/core-concepts/assocs/)
 
-#### Testing y Desarrollo
+#### Testing and Development
 
-*   [Documentación de Jest](https://jestjs.io/docs/getting-started)
-*   [Documentación de Node.js](https://nodejs.org/en/docs/)
-*   [Documentación de Postman](https://learning.postman.com/docs/getting-started/introduction/)
-*   [Documentación de VS Code](https://code.visualstudio.com/docs)
-*   [Documentación de Git](https://git-scm.com/doc)
-*   [Documentación de Docker Desktop](https://docs.docker.com/desktop/)
+*   [Jest Documentation](https://jestjs.io/docs/getting-started)
+*   [Node.js Documentation](https://nodejs.org/en/docs/)
+*   [Postman Documentation](https://learning.postman.com/docs/getting-started/introduction/)
+*   [VS Code Documentation](https://code.visualstudio.com/docs)
+*   [Git Documentation](https://git-scm.com/doc)
+*   [Docker Desktop Documentation](https://docs.docker.com/desktop/)
 
-#### Diseño de API y Mejores Prácticas
+#### API Design and Best Practices
 
-*   [Mejores Prácticas REST API](https://restfulapi.net/)
-*   [Mejores Prácticas de Seguridad API](https://owasp.org/www-project-api-security/)
-*   [Especificación OpenAPI](https://swagger.io/specification/)
-*   [Mejores Prácticas de Documentación API](https://idratherbewriting.com/learnapidoc/)
-*   [Códigos de Estado HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+*   [REST API Best Practices](https://restfulapi.net/)
+*   [API Security Best Practices](https://owasp.org/www-project-api-security/)
+*   [OpenAPI Specification](https://swagger.io/specification/)
+*   [API Documentation Best Practices](https://idratherbewriting.com/learnapidoc/)
+*   [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
 
-#### API de Mercadolibre
+#### Mercadolibre API
 
-*   [Documentación de la API de Mercadolibre](https://developers.mercadolibre.com.ar/es_ar/api-docs)
-*   [API de Usuarios de Mercadolibre](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
-*   [API de Productos de Mercadolibre](https://developers.mercadolibre.com.ar/es_ar/productos)
-*   [Autenticación de Mercadolibre](https://developers.mercadolibre.com.ar/es_ar/autenticacion-y-autorizacion)
+*   [Mercadolibre API Documentation](https://developers.mercadolibre.com.ar/es_ar/api-docs)
+*   [Mercadolibre Users API](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
+*   [Mercadolibre Products API](https://developers.mercadolibre.com.ar/es_ar/productos)
+*   [Mercadolibre Authentication](https://developers.mercadolibre.com.ar/es_ar/autenticacion-y-autorizacion)
 
-#### Herramientas y Recursos de Desarrollo
+#### Development Tools and Resources
 
-*   [Herramienta de Diseño AWS (draw.io)](https://app.diagrams.net/?splash=0\&libs=aws4)
-*   [Ejemplos de Colecciones Postman](https://www.postman.com/collection/)
-*   [Extensiones VS Code para AWS](https://aws.amazon.com/visualstudiocode/)
+*   [AWS Design Tool (draw.io)](https://app.diagrams.net/?splash=0\&libs=aws4)
+*   [Postman Collection Examples](https://www.postman.com/collection/)
+*   [VS Code Extensions for AWS](https://aws.amazon.com/visualstudiocode/)
 *   [Docker Hub](https://hub.docker.com/)
 *   [GitHub Actions](https://docs.github.com/en/actions)
-*   [Mejores Prácticas de Node.js](https://github.com/goldbergyoni/nodebestpractices)
+*   [Node.js Best Practices](https://github.com/goldbergyoni/nodebestpractices)
 
-#### Comunidad y Recursos de Aprendizaje
+#### Community and Learning Resources
 
 *   [AWS Community Builders](https://aws.amazon.com/developer/community/community-builders/)
-*   [Foro del Framework Serverless](https://forum.serverless.com/)
+*   [Serverless Framework Forum](https://forum.serverless.com/)
 *   [Stack Overflow](https://stackoverflow.com/questions/tagged/aws-lambda)
-*   [Canal de YouTube de AWS](https://www.youtube.com/user/AmazonWebServices)
-*   [YouTube del Framework Serverless](https://www.youtube.com/c/Serverless)
-*   [Blog de Desarrolladores de Mercadolibre](https://developers.mercadolibre.com.ar/blog)
+*   [AWS YouTube Channel](https://www.youtube.com/user/AmazonWebServices)
+*   [Serverless Framework YouTube](https://www.youtube.com/c/Serverless)
+*   [Mercadolibre Developers Blog](https://developers.mercadolibre.com.ar/blog)
 
 <br>
 
