@@ -38,7 +38,7 @@
 
 </div>  
 
-Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code is in English. Documentation is available in Spanish and English.
+An API ready for your platform to manage users with the same approach as Mercado Libre. It brings together nickname, personal data, email, identification, and country, with per-field search, paginated listings, and authenticated create, update, and delete, so that information stays centralized, filterable, and ready to integrate with the rest of your services.
 
 *   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
 *   [Postman Collection](../postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json)   
