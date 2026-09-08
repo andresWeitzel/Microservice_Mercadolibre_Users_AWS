@@ -21,10 +21,10 @@
 
 <div align="right">
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md">
-    <img src="../doc/assets/translation/arg-flag.jpg" width="52" height="32" />
+    <img src="../doc/assets/translation/arg-flag.jpg" width="64" height="40" />
   </a> 
   <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.en.md">
-    <img src="../doc/assets/translation/eeuu-flag.jpg" width="52" height="32" />
+    <img src="../doc/assets/translation/eeuu-flag.jpg" width="64" height="40" />
   </a> 
 </div>
 
