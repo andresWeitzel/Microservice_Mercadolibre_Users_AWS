@@ -41,11 +41,11 @@
 An API ready for your platform to manage users with the same approach as Mercado Libre. It brings together nickname, personal data, email, identification, and country, with per-field search, paginated listings, and authenticated create, update, and delete, so that information stays centralized, filterable, and ready to integrate with the rest of your services.
 
 <div align="left">
-<a href="https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones" target="_blank" rel="noopener noreferrer" title="API Doc"><img src="../doc/assets/icons/detail-actions/api-doc-pill.svg" alt="API Doc" height="30" border="0" /></a>
+<a href="https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones" target="_blank" rel="noopener noreferrer" title="API Doc"><img src="../doc/assets/icons/detail-actions/api-doc-pill.svg" alt="API Doc" width="108" height="30" border="0" /></a>
 <br>
-<a href="../postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json" target="_blank" rel="noopener noreferrer" title="Postman collection"><img src="../doc/assets/icons/detail-actions/postman-pill.svg" alt="Postman" height="30" border="0" /></a>
+<a href="../postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json" target="_blank" rel="noopener noreferrer" title="Postman collection"><img src="../doc/assets/icons/detail-actions/postman-pill.svg" alt="Postman" width="108" height="30" border="0" /></a>
 <br>
-<a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank" rel="noopener noreferrer" title="Playlist"><img src="../doc/assets/icons/detail-actions/playlist-pill.svg" alt="Playlist" height="30" border="0" /></a>
+<a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank" rel="noopener noreferrer" title="Playlist"><img src="../doc/assets/icons/detail-actions/playlist-pill.svg" alt="Playlist" width="108" height="30" border="0" /></a>
 </div>
 
 <br>
