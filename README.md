@@ -38,9 +38,13 @@
 
 Una API lista para que tu plataforma gestione usuarios con el mismo criterio que Mercado Libre. Reúne nickname, datos personales, email, identificación y país, con búsquedas por campo, listados paginados y alta, edición y baja autenticadas, para que esa información quede centralizada, filtrable y lista para integrarse con el resto de tus servicios.
 
-*   [Api Doc ML Usuarios](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
-*   [Postman Collection](./postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json)   
-*   [Playlist prueba de funcionalidad](https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y) <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank"> <img src="./doc/assets/social-networks/yt.png" width="16" /> </a>
+<div align="left">
+<a href="https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones" target="_blank" rel="noopener noreferrer" title="API Doc"><img src="./doc/assets/icons/detail-actions/api-doc-pill.svg" alt="API Doc" width="116" height="30" border="0" /></a>
+<br>
+<a href="./postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json" target="_blank" rel="noopener noreferrer" title="Colección de Postman"><img src="./doc/assets/icons/detail-actions/postman-pill.svg" alt="Postman" width="116" height="30" border="0" /></a>
+<br>
+<a href="https://www.youtube.com/playlist?list=PLCl11UFjHurB9JzGtm5e8-yp52IcZDs5y" target="_blank" rel="noopener noreferrer" title="Playlist"><img src="./doc/assets/icons/detail-actions/playlist-pill.svg" alt="Playlist" width="116" height="30" border="0" /></a>
+</div>
 
 <br>
 
