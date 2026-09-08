@@ -1,18 +1,19 @@
 
-![Index app](https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/doc/assets/MicroService_Users_ML.drawio.png)
-
+<div align="center">
+<img src="../doc/assets/MicroService_Users_ML.drawio.png" alt="Index app" />
 <div align="right">
-  <img width="16" height="16" src="../doc/assets/icons/devops/png/aws.png" />
-  <img width="16" height="16" src="../doc/assets/icons/aws/png/lambda.png" />
-  <img width="16" height="16" src="../doc/assets/icons/devops/png/postman.png" />
-  <img width="16" height="16" src="../doc/assets/icons/devops/png/git.png" />
-  <img width="16" height="16" src="../doc/assets/icons/aws/png/api-gateway.png" />
-  <img width="16" height="16" src="../doc/assets/icons/aws/png/parameter-store.png" />
-  <img width="16" height="16" src="../doc/assets/icons/backend/javascript-typescript/png/nodejs.png" />
-  <img width="16" height="16" src="../doc/assets/icons/backend/javascript-typescript/png/sequelize.png" />
-  <img width="16" height="16" src="../doc/assets/icons/aws/png/rds.png" />
-  <img width="16" height="16" src="../doc/assets/icons/devops/png/vsc.png" />
-  <img width="16" height="16" src="../doc/assets/icons/devops/png/docker.png" />
+<img width="16" height="16" src="../doc/assets/icons/devops/png/aws.png" alt="AWS" />
+<img width="16" height="16" src="../doc/assets/icons/aws/png/lambda.png" alt="Lambda" />
+<img width="16" height="16" src="../doc/assets/icons/devops/png/postman.png" alt="Postman" />
+<img width="16" height="16" src="../doc/assets/icons/devops/png/git.png" alt="Git" />
+<img width="16" height="16" src="../doc/assets/icons/aws/png/api-gateway.png" alt="API Gateway" />
+<img width="16" height="16" src="../doc/assets/icons/aws/png/parameter-store.png" alt="Parameter Store" />
+<img width="16" height="16" src="../doc/assets/icons/backend/javascript-typescript/png/nodejs.png" alt="Node.js" />
+<img width="16" height="16" src="../doc/assets/icons/backend/javascript-typescript/png/sequelize.png" alt="Sequelize" />
+<img width="16" height="16" src="../doc/assets/icons/aws/png/rds.png" alt="RDS" />
+<img width="16" height="16" src="../doc/assets/icons/devops/png/vsc.png" alt="VS Code" />
+<img width="16" height="16" src="../doc/assets/icons/devops/png/docker.png" alt="Docker" />
+</div>
 </div> 
 
 <br>
@@ -20,11 +21,11 @@
 <br>
 
 <div align="right">
-  <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md">
-    <img src="../doc/assets/translation/arg-flag.jpg" width="64" height="40" />
+  <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/README.md" title="Español">
+    <img src="../doc/assets/translation/arg-flag.jpg" width="64" height="40" alt="Español" title="Español" />
   </a> 
-  <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.en.md">
-    <img src="../doc/assets/translation/eeuu-flag.jpg" width="64" height="40" />
+  <a href="https://github.com/andresWeitzel/Microservice_Mercadolibre_Users_AWS/blob/master/translation/README.en.md" title="Inglés">
+    <img src="../doc/assets/translation/eeuu-flag.jpg" width="64" height="40" alt="Inglés" title="Inglés" />
   </a> 
 </div>
 
@@ -37,7 +38,7 @@
 
 </div>  
 
-Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code and its documentation (less technical doc) have been developed in English.
+Microservice for user management exemplifying part of the ML development architecture, implemented with Systems Manager Parameter Store, Api-Gateway, Serverless-Framework, Lambda, NodeJs, Sequelize, Mysql, Docker, Docker-compose, Amazon RDS, Unit Test with Jest, among others. AWS services are tested locally. The project code is in English. Documentation is available in Spanish and English.
 
 *   [Api Doc ML Users](https://developers.mercadolibre.com.ar/es_ar/usuarios-y-aplicaciones)
 *   [Postman Collection](../postman/collection/Microservice_Mercadolibre_Users_AWS.postman_collection.json)   
